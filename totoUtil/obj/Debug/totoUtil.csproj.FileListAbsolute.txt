@@ -1,0 +1,8 @@
+C:\Users\Renaud\Documents\SharpDevelop Projects\totoUtil\totoUtil\bin\Debug\totoUtil.exe.config
+C:\Users\Renaud\Documents\SharpDevelop Projects\totoUtil\totoUtil\bin\Debug\totoUtil.exe
+C:\Users\Renaud\Documents\SharpDevelop Projects\totoUtil\totoUtil\bin\Debug\totoUtil.pdb
+C:\Users\Renaud\Documents\SharpDevelop Projects\totoUtil\totoUtil\obj\Debug\totoUtil.csprojResolveAssemblyReference.cache
+C:\Users\Renaud\Documents\SharpDevelop Projects\totoUtil\totoUtil\obj\Debug\totoUtil.MainForm.resources
+C:\Users\Renaud\Documents\SharpDevelop Projects\totoUtil\totoUtil\obj\Debug\totoUtil.csproj.GenerateResource.Cache
+C:\Users\Renaud\Documents\SharpDevelop Projects\totoUtil\totoUtil\obj\Debug\totoUtil.exe
+C:\Users\Renaud\Documents\SharpDevelop Projects\totoUtil\totoUtil\obj\Debug\totoUtil.pdb
