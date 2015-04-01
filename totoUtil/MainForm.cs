@@ -131,6 +131,8 @@ namespace totoUtil
 			tippedTextBox.Text = "";
 			const String NONE = "NONE";
 			
+			List<String> rtfTippedList = new List<string>();
+			
 			Dictionary<String, String> dicoTipAction = new Dictionary<String, String>();
 			BaseCollection coll = new BaseCollection();
 			
@@ -165,7 +167,10 @@ namespace totoUtil
 					if ((toI > 0) && (gameI > 0)) {
 						String to = ligne.Substring(toI + 4, (gameI - toI) - 3).Trim();
 						String game = ligne.Substring(gameI + 3).Trim();
-						tippedTextBox.Text = (tippedTextBox.Text + when + " " + to + " " + game + "\r\n");
+						//tippedTextBox.Text = (tippedTextBox.Text + when + " " + to + " " + game + "\r\n");
+						
+						//tippedTextBox.Text = (when + " " + to + " " + game + "\r\n");
+						
 						
 						
 						//					richTextBox1.SelectionColor = Color.Red;
@@ -173,6 +178,7 @@ namespace totoUtil
 						//richTextBox1.Select(6, 30);
 						//richTextBox1.SelectionColor = Color.Pink;
 						
+						richTextBox1.Clear();
 						colorit(richTextBox1, "["+when +" to ", Color.Blue);
 						//richTextBox1.BackColor =Color.Blue;
 						
@@ -185,6 +191,8 @@ namespace totoUtil
 						//richTextBox1.BackColor=Color.OrangeRed;
 						colorit(richTextBox1, " "+game+"\r\n", Color.OrangeRed);
 						//richTextBox1.AppendText(game+"\r\n");
+						
+						rtfTippedList.Add(richTextBox1.Rtf);
 					}
 					
 
@@ -227,6 +235,22 @@ namespace totoUtil
 				}
 			}
 			
+			richTextBox1.Clear();
+			
+			List <String> finalList ;
+			if (rtfTippedList.Count>10) {
+				finalList= rtfTippedList.GetRange(rtfTippedList.Count -10, 10);
+			} else {
+				finalList=rtfTippedList;
+			}
+			for(int idx =0;idx<finalList.Count;idx++) {
+				String tip=finalList[idx];
+					richTextBox1.Rtf+=tip;
+			}
+			tippedTextBox.Text=tippedTextBox.Name;
+//			foreach(String s2 in rtfTippedList) {
+//				richTextBox1.Rtf=s2;
+//			}
 			
 			//tipTxtbox.Text = retour;
 			//descente du dictionaire, et calculs
@@ -243,6 +267,11 @@ namespace totoUtil
 			}
 			retour += "cpt:" + dicoTipAction.Count;
 			tipTxtbox.Text = retour + "\r\n" + reelTipCalcul;
+			
+			
+			tippedTextBox.Text=" xyz";
+			MessageBox.Show(richTextBox1.Rtf);
+			//richTextBox1.Text=" et rien";
 			
 		}
 		void InitButtonClick(object sender, EventArgs e)
@@ -279,25 +308,47 @@ namespace totoUtil
 			foreach(Process pr in processes) {
 				
 				if (pr.MainWindowTitle.StartsWith("Minecraft 1")) {
-					System.Diagnostics.Debug.Print (" pr : 	"+pr.ProcessName + " /" +pr.MainWindowTitle);
+					System.Diagnostics.Debug.Print (" process : 	"+pr.ProcessName + " / " +pr.MainWindowTitle);
 					mcProcess=pr;
 				}
 			}
 			if (mcProcess!=null) {
+				System.Diagnostics.Debug.Print ("activating");
 				SetForegroundWindow(mcProcess.MainWindowHandle);
+				
+				System.Threading.Thread.Sleep(500);
 				SendKeys.SendWait("{ESC}");
-				System.Threading.Thread.Sleep(2000);
-				SendKeys.SendWait("t ");
+				System.Diagnostics.Debug.Print ("ESC!");
+				//System.Threading.Thread.Sleep(2000);
+				SendKeys.SendWait("t (^V) ~");
+				System.Threading.Thread.Sleep(100);
+				
+				/*
+				System.Diagnostics.Debug.Print ("boos");
+				SendKeys.SendWait("/booster queue ");
 				System.Threading.Thread.Sleep(1000);
-				SendKeys.Send("/booster queue  ");
-				System.Threading.Thread.Sleep(1000);
+				System.Diagnostics.Debug.Print ("Enter");
+				SendKeys.SendWait("~ {ENTER}");
+				*/
+				//sendTemperate("/booster queue ~  ", 100);
+				
+				SendKeys.SendWait("x");
+				System.Threading.Thread.Sleep(100);
 				SendKeys.SendWait("{ENTER}");
+				System.Diagnostics.Debug.Print ("end");
 				//SendKeys.SendWait("");
 				
 			}
 			
 			
 			
+		}
+		private void sendTemperate(String str, int waiter) {
+			for(int i=0;i<str.Length;i++) {
+				System.Diagnostics.Debug.Print ("i:"+i+" str:'"+str.Substring(i, 1)+"'");
+				SendKeys.SendWait(str.Substring(i, 1));
+				System.Threading.Thread.Sleep(waiter);
+			}
 		}
 	}
 }
