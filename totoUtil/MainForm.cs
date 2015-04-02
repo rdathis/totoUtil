@@ -16,6 +16,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using totoUtil.Utils;
 
 namespace totoUtil
 {
@@ -27,7 +28,7 @@ namespace totoUtil
 		[DllImport("user32.dll")]
 		static extern bool SetForegroundWindow(IntPtr hWnd);
 
-		TimerExample timer = null;
+		//TimerExample timer = null;
 		public MainForm()
 		{
 			InitializeComponent();
@@ -42,17 +43,17 @@ namespace totoUtil
 		}
 		void init()
 		{
-			pathTxtBox.Text = "m:/cygwin64/bin/grep.exe";
+			pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
 			
-			pathTxtBox.Text = "grep.exe";
-			if (!System.IO.File.Exists(pathTxtBox.Text)) {
-				pathTxtBox.Text = "m:/cygwin64/bin/grep.exe";
+			pathTextBox.Text = "grep.exe";
+			if (!System.IO.File.Exists(pathTextBox.Text)) {
+				pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
 			}
 			
-			argTxtBox.Text = "-Fi --color=always coins %userprofile%/AppData/Roaming/.minecraft/logs/*log";
-			argTxtBox.Text = "-Fh -e \" Coins from \" -e \"tip \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
+			argTextBox.Text = "-Fi --color=always coins %userprofile%/AppData/Roaming/.minecraft/logs/*log";
+			argTextBox.Text = "-Fh -e \" Coins from \" -e \"tip \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			
-			argTxtBox.Text = "-Fh -w -e Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
+			argTextBox.Text = "-Fh -w -e Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 		}
 		void BtnClick(object sender, EventArgs e)
 		{
@@ -61,8 +62,8 @@ namespace totoUtil
 		void goCheck(object sender)
 		{
 			var info = new ProcessStartInfo();
-			info.FileName = pathTxtBox.Text;
-			info.Arguments = argTxtBox.Text;
+			info.FileName = pathTextBox.Text;
+			info.Arguments = argTextBox.Text;
 			//Process.Start(info);
 			
 			String us = Environment.ExpandEnvironmentVariables("%userprofile%");
@@ -95,28 +96,22 @@ namespace totoUtil
 			foreach (String ligne in lines) {
 				newString += ligne + "\r\n";
 			}
-			infoTxtBox.Text = newString;
+			infoTextBox.Text = newString;
 			
 			//appel du moteur de calcul pour les vrais traitements
 			doTip(s1);
 		}
 		
-		void colorit(RichTextBox rtb, String str, Color color) {
-			int lg=rtb.Text.Length;
-			rtb.AppendText(str);
-			rtb.Select(lg, str.Length);
-			rtb.SelectionColor =color;
-		}
 
 		void doTip(String s)
 		{
 			string[] lines = Regex.Split(s, "\n");
 			String retour = "";
 			String reelTipCalcul = "";
-			richTextBox1.Clear();
-			String emptyRtf=richTextBox1.Rtf;
-			richTextBox1.Location=tippedTextBox.Location;
-			richTextBox1.Size= tippedTextBox.Size;
+			tippedRichTextBox.Clear();
+			String emptyRtf=tippedRichTextBox.Rtf;
+			tippedRichTextBox.Location=tippedTextBox.Location;
+			tippedRichTextBox.Size= tippedTextBox.Size;
 			tippedTextBox.Visible=false;
 			tippedTextBox.Text = "";
 			const String NONE = "NONE";
@@ -203,7 +198,7 @@ namespace totoUtil
 			}
 			
 			//construction de la richTextBox
-			buildTypedRichTBox(richTextBox1, playerList);
+			MainUtils.buildTypedRichTBox(tippedRichTextBox, playerList);
 			
 		
 			//descente du dictionaire, et calculs
@@ -219,31 +214,12 @@ namespace totoUtil
 				}
 			}
 			retour += "cpt:" + dicoTipAction.Count;
-			tipTxtbox.Text = retour + "\r\n" + reelTipCalcul;
+			tipTextbox.Text = retour + "\r\n" + reelTipCalcul;
 			
 			
 		}
 		
-		private void buildTypedRichTBox(RichTextBox box, List<TypedPlayer> liste, int limite=10, bool showRecap=true) {
-			box.Clear();
-			Color colorDebut=Color.Gray;
-			
-			List <TypedPlayer> finalList ;
-			if ((limite>0) && (liste.Count>limite)) {
-				finalList= liste.GetRange(liste.Count -limite, limite);
-			} else {
-				finalList=liste;
-			}
-			for(int idx =0;idx<finalList.Count;idx++) {
-				TypedPlayer player = finalList[idx];
-				colorit(box, "["+player.getWhen() +" to ", colorDebut);
-				colorit(box, player.getPlayer(), Color.Red);
-				colorit(box, " - "+player.getGame()+"\r\n", Color.IndianRed);
-			}
-			if (showRecap) {
-				box.AppendText(" je viens de faire, il est " + DateTime.Today.ToShortDateString() + "-"+DateTime.Now.ToShortTimeString()+" limite = "+limite + " / "+liste.Count);
-			}
-		}
+
 		void InitButtonClick(object sender, EventArgs e)
 		{
 			init();
