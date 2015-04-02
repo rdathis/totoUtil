@@ -153,7 +153,7 @@ namespace totoUtil
 			this.launchMCButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
 			this.launchMCButton.Location = new System.Drawing.Point(779, 35);
 			this.launchMCButton.Name = "launchMCButton";
-			this.launchMCButton.Size = new System.Drawing.Size(44, 23);
+			this.launchMCButton.Size = new System.Drawing.Size(56, 23);
 			this.launchMCButton.TabIndex = 11;
 			this.launchMCButton.Text = "MC";
 			this.launchMCButton.UseVisualStyleBackColor = false;

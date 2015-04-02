@@ -30,14 +30,7 @@ namespace totoUtil
 		TimerExample timer = null;
 		public MainForm()
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
 			
 			
 			init();
@@ -60,13 +53,10 @@ namespace totoUtil
 			argTxtBox.Text = "-Fh -e \" Coins from \" -e \"tip \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			
 			argTxtBox.Text = "-Fh -w -e Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
-			
-			
 		}
 		void BtnClick(object sender, EventArgs e)
 		{
 			goCheck(sender);
-			tipTxtbox.AppendText(" je viens de faire, il est " + DateTime.Today.ToString());
 		}
 		void goCheck(object sender)
 		{
@@ -116,7 +106,6 @@ namespace totoUtil
 			rtb.AppendText(str);
 			rtb.Select(lg, str.Length);
 			rtb.SelectionColor =color;
-			
 		}
 
 		void doTip(String s)
@@ -160,7 +149,7 @@ namespace totoUtil
 	}
 				 */
 				
-				//[17:56:43] [Client thread/INFO]: [CHAT] You sent a tip of 100 coins to [MVP+] PietDeeke in Mega Walls
+				//example : [17:56:43] [Client thread/INFO]: [CHAT] You sent a tip of 100 coins to [MVP+] pluto in DSKRoom
 				Match match1 = Regex.Match(ligne, @" You sent a tip of ");
 				if (match1.Success) {
 					String when = ligne.Substring(1, 9);
@@ -169,35 +158,8 @@ namespace totoUtil
 					if ((toI > 0) && (gameI > 0)) {
 						String to = ligne.Substring(toI + 4, (gameI - toI) - 3).Trim();
 						String game = ligne.Substring(gameI + 3).Trim();
-						//tippedTextBox.Text = (tippedTextBox.Text + when + " " + to + " " + game + "\r\n");
-						
-						//tippedTextBox.Text = (when + " " + to + " " + game + "\r\n");
-						
-						
-						
-						//					richTextBox1.SelectionColor = Color.Red;
-						//richTextBox1.Find("u", RichTextBoxFinds.MatchCase);
-						//richTextBox1.Select(6, 30);
-						//richTextBox1.SelectionColor = Color.Pink;
 						
 						playerList.Add(new TypedPlayer(to, when, game));
-						if (false) {
-						richTextBox1.Clear();
-						colorit(richTextBox1, "["+when +" to ", Color.Blue);
-						//richTextBox1.BackColor =Color.Blue;
-						
-						
-						
-						//richTextBox1.AppendText("["+when +" to ");
-						//richTextBox1.BackColor=Color.Red;
-						colorit(richTextBox1, to, Color.Red);
-						//richTextBox1.AppendText(to);
-						//richTextBox1.BackColor=Color.OrangeRed;
-						colorit(richTextBox1, " "+game+"\r\n", Color.OrangeRed);
-						//richTextBox1.AppendText(game+"\r\n");
-						
-						rtfTippedList.Add(richTextBox1.Rtf);
-						}
 					}
 					
 
@@ -240,37 +202,10 @@ namespace totoUtil
 				}
 			}
 			
-			richTextBox1.Clear();
+			//construction de la richTextBox
+			buildTypedRichTBox(richTextBox1, playerList);
 			
-			List <TypedPlayer> finalList ;
-			if (playerList.Count>10) {
-				finalList= playerList.GetRange(playerList.Count -10, 10);
-			} else {
-				finalList=playerList;
-			}
-			for(int idx =0;idx<finalList.Count;idx++) {
-				TypedPlayer player = finalList[idx];
-				
-				colorit(richTextBox1, "["+player.getWhen() +" to ", Color.Blue);
-						//richTextBox1.BackColor =Color.Blue;
-						
-						
-						
-						//richTextBox1.AppendText("["+when +" to ");
-						//richTextBox1.BackColor=Color.Red;
-						colorit(richTextBox1, player.getPlayer(), Color.Red);
-						//richTextBox1.AppendText(to);
-						//richTextBox1.BackColor=Color.OrangeRed;
-						colorit(richTextBox1, " "+player.getGame()+"\r\n", Color.OrangeRed);
-				//String tip=finalList[idx];
-				//richTextBox1.Rtf+=tip.Substring(emptyRtf.Length);
-			}
-			//tippedTextBox.Text=tippedTextBox.Name;
-//			foreach(String s2 in rtfTippedList) {
-//				richTextBox1.Rtf=s2;
-//			}
-			
-			//tipTxtbox.Text = retour;
+		
 			//descente du dictionaire, et calculs
 			retour = "";
 			foreach (string clef in dicoTipAction.Keys) {
@@ -287,14 +222,32 @@ namespace totoUtil
 			tipTxtbox.Text = retour + "\r\n" + reelTipCalcul;
 			
 			
-			//tippedTextBox.Text=" xyz";
-			//MessageBox.Show(richTextBox1.Rtf);
-			//richTextBox1.Text=" et rien";
+		}
+		
+		private void buildTypedRichTBox(RichTextBox box, List<TypedPlayer> liste, int limite=10, bool showRecap=true) {
+			box.Clear();
+			Color colorDebut=Color.Gray;
 			
+			List <TypedPlayer> finalList ;
+			if ((limite>0) && (liste.Count>limite)) {
+				finalList= liste.GetRange(liste.Count -limite, limite);
+			} else {
+				finalList=liste;
+			}
+			for(int idx =0;idx<finalList.Count;idx++) {
+				TypedPlayer player = finalList[idx];
+				colorit(box, "["+player.getWhen() +" to ", colorDebut);
+				colorit(box, player.getPlayer(), Color.Red);
+				colorit(box, " - "+player.getGame()+"\r\n", Color.IndianRed);
+			}
+			if (showRecap) {
+				box.AppendText(" je viens de faire, il est " + DateTime.Today.ToShortDateString() + "-"+DateTime.Now.ToShortTimeString()+" limite = "+limite + " / "+liste.Count);
+			}
 		}
 		void InitButtonClick(object sender, EventArgs e)
 		{
 			init();
+			/*
 			richTextBox1.BackColor =Color.Blue;
 			richTextBox1.AppendText("blue");
 			richTextBox1.ForeColor =Color.Blue;
@@ -309,7 +262,8 @@ namespace totoUtil
 			//richTextBox1.Find("u", RichTextBoxFinds.MatchCase);
 			richTextBox1.Select(6, 30);
 			richTextBox1.SelectionColor = Color.Pink;
-			MessageBox.Show(richTextBox1.Rtf);
+			*/
+			//MessageBox.Show(richTextBox1.Rtf);
 
 			
 		}
@@ -347,7 +301,7 @@ namespace totoUtil
 				System.Threading.Thread.Sleep(1000);
 				System.Diagnostics.Debug.Print ("Enter");
 				SendKeys.SendWait("~ {ENTER}");
-				*/
+				 */
 				//sendTemperate("/booster queue ~  ", 100);
 				
 				SendKeys.SendWait("x");
