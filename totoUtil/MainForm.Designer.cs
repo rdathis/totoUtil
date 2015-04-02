@@ -47,16 +47,18 @@ namespace totoUtil
 			this.tippedTextBox = new System.Windows.Forms.TextBox();
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			this.button1 = new System.Windows.Forms.Button();
+			this.launchMCButton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// btn
 			// 
+			this.btn.BackColor = System.Drawing.Color.Green;
 			this.btn.Location = new System.Drawing.Point(697, 33);
 			this.btn.Name = "btn";
 			this.btn.Size = new System.Drawing.Size(75, 23);
 			this.btn.TabIndex = 0;
 			this.btn.Text = "&go!";
-			this.btn.UseVisualStyleBackColor = true;
+			this.btn.UseVisualStyleBackColor = false;
 			this.btn.Click += new System.EventHandler(this.BtnClick);
 			// 
 			// pathTxtBox
@@ -93,12 +95,13 @@ namespace totoUtil
 			// 
 			// initButton
 			// 
+			this.initButton.BackColor = System.Drawing.Color.Green;
 			this.initButton.Location = new System.Drawing.Point(697, 12);
 			this.initButton.Name = "initButton";
 			this.initButton.Size = new System.Drawing.Size(75, 23);
 			this.initButton.TabIndex = 5;
 			this.initButton.Text = "&init";
-			this.initButton.UseVisualStyleBackColor = true;
+			this.initButton.UseVisualStyleBackColor = false;
 			this.initButton.Click += new System.EventHandler(this.InitButtonClick);
 			// 
 			// label1
@@ -127,7 +130,7 @@ namespace totoUtil
 			// 
 			// richTextBox1
 			// 
-			this.richTextBox1.Location = new System.Drawing.Point(544, 99);
+			this.richTextBox1.Location = new System.Drawing.Point(554, 320);
 			this.richTextBox1.Name = "richTextBox1";
 			this.richTextBox1.Size = new System.Drawing.Size(243, 142);
 			this.richTextBox1.TabIndex = 9;
@@ -136,19 +139,32 @@ namespace totoUtil
 			// 
 			// button1
 			// 
+			this.button1.BackColor = System.Drawing.Color.Red;
 			this.button1.Location = new System.Drawing.Point(779, 11);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(44, 23);
+			this.button1.Size = new System.Drawing.Size(56, 23);
 			this.button1.TabIndex = 10;
-			this.button1.Text = "button1";
-			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Text = "sendKeys";
+			this.button1.UseVisualStyleBackColor = false;
 			this.button1.Click += new System.EventHandler(this.Button1Click);
+			// 
+			// launchMCButton
+			// 
+			this.launchMCButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+			this.launchMCButton.Location = new System.Drawing.Point(779, 35);
+			this.launchMCButton.Name = "launchMCButton";
+			this.launchMCButton.Size = new System.Drawing.Size(44, 23);
+			this.launchMCButton.TabIndex = 11;
+			this.launchMCButton.Text = "MC";
+			this.launchMCButton.UseVisualStyleBackColor = false;
+			this.launchMCButton.Click += new System.EventHandler(this.LaunchMCButtonClick);
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(835, 528);
+			this.Controls.Add(this.launchMCButton);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.richTextBox1);
 			this.Controls.Add(this.tippedTextBox);
@@ -166,6 +182,7 @@ namespace totoUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Button launchMCButton;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.RichTextBox richTextBox1;
 		private System.Windows.Forms.TextBox tippedTextBox;

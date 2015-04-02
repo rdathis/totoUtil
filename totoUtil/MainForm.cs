@@ -70,7 +70,7 @@ namespace totoUtil
 		}
 		void goCheck(object sender)
 		{
-			ProcessStartInfo info = new ProcessStartInfo();
+			var info = new ProcessStartInfo();
 			info.FileName = pathTxtBox.Text;
 			info.Arguments = argTxtBox.Text;
 			//Process.Start(info);
@@ -83,7 +83,7 @@ namespace totoUtil
 			info.RedirectStandardOutput = true;
 			info.UseShellExecute = false;
 			
-			Process p = new Process();
+			var p = new Process();
 			p.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
 			p.StartInfo = info;
 			
@@ -125,6 +125,7 @@ namespace totoUtil
 			String retour = "";
 			String reelTipCalcul = "";
 			richTextBox1.Clear();
+			String emptyRtf=richTextBox1.Rtf;
 			richTextBox1.Location=tippedTextBox.Location;
 			richTextBox1.Size= tippedTextBox.Size;
 			tippedTextBox.Visible=false;
@@ -132,8 +133,9 @@ namespace totoUtil
 			const String NONE = "NONE";
 			
 			List<String> rtfTippedList = new List<string>();
+			List<TypedPlayer> playerList = new List<TypedPlayer>();
 			
-			Dictionary<String, String> dicoTipAction = new Dictionary<String, String>();
+			var dicoTipAction = new Dictionary<String, String>();
 			BaseCollection coll = new BaseCollection();
 			
 			foreach (String ligne in lines) {
@@ -178,6 +180,8 @@ namespace totoUtil
 						//richTextBox1.Select(6, 30);
 						//richTextBox1.SelectionColor = Color.Pink;
 						
+						playerList.Add(new TypedPlayer(to, when, game));
+						if (false) {
 						richTextBox1.Clear();
 						colorit(richTextBox1, "["+when +" to ", Color.Blue);
 						//richTextBox1.BackColor =Color.Blue;
@@ -193,6 +197,7 @@ namespace totoUtil
 						//richTextBox1.AppendText(game+"\r\n");
 						
 						rtfTippedList.Add(richTextBox1.Rtf);
+						}
 					}
 					
 
@@ -237,17 +242,30 @@ namespace totoUtil
 			
 			richTextBox1.Clear();
 			
-			List <String> finalList ;
-			if (rtfTippedList.Count>10) {
-				finalList= rtfTippedList.GetRange(rtfTippedList.Count -10, 10);
+			List <TypedPlayer> finalList ;
+			if (playerList.Count>10) {
+				finalList= playerList.GetRange(playerList.Count -10, 10);
 			} else {
-				finalList=rtfTippedList;
+				finalList=playerList;
 			}
 			for(int idx =0;idx<finalList.Count;idx++) {
-				String tip=finalList[idx];
-					richTextBox1.Rtf+=tip;
+				TypedPlayer player = finalList[idx];
+				
+				colorit(richTextBox1, "["+player.getWhen() +" to ", Color.Blue);
+						//richTextBox1.BackColor =Color.Blue;
+						
+						
+						
+						//richTextBox1.AppendText("["+when +" to ");
+						//richTextBox1.BackColor=Color.Red;
+						colorit(richTextBox1, player.getPlayer(), Color.Red);
+						//richTextBox1.AppendText(to);
+						//richTextBox1.BackColor=Color.OrangeRed;
+						colorit(richTextBox1, " "+player.getGame()+"\r\n", Color.OrangeRed);
+				//String tip=finalList[idx];
+				//richTextBox1.Rtf+=tip.Substring(emptyRtf.Length);
 			}
-			tippedTextBox.Text=tippedTextBox.Name;
+			//tippedTextBox.Text=tippedTextBox.Name;
 //			foreach(String s2 in rtfTippedList) {
 //				richTextBox1.Rtf=s2;
 //			}
@@ -269,8 +287,8 @@ namespace totoUtil
 			tipTxtbox.Text = retour + "\r\n" + reelTipCalcul;
 			
 			
-			tippedTextBox.Text=" xyz";
-			MessageBox.Show(richTextBox1.Rtf);
+			//tippedTextBox.Text=" xyz";
+			//MessageBox.Show(richTextBox1.Rtf);
 			//richTextBox1.Text=" et rien";
 			
 		}
@@ -349,6 +367,34 @@ namespace totoUtil
 				SendKeys.SendWait(str.Substring(i, 1));
 				System.Threading.Thread.Sleep(waiter);
 			}
+		}
+		void LaunchMCButtonClick(object sender, EventArgs e)
+		{
+			String cmd=@"C:/Program Files (x86)/Minecraft/MinecraftLauncher.exe";
+			
+			var info = new ProcessStartInfo();
+			info.FileName = cmd;
+			info.Arguments = "";
+			//Process.Start(info);
+			
+			String us = Environment.ExpandEnvironmentVariables("%userprofile%");
+			us = us.Replace("\\", "/");
+			info.Arguments = info.Arguments.Replace("%userprofile%", us);
+			
+			info.RedirectStandardError = true;
+			info.RedirectStandardOutput = true;
+			info.UseShellExecute = false;
+			
+			var p = new Process();
+			p.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+			p.StartInfo = info;
+			
+
+			//Execution
+			p.Start();
+			
+			
+			
 		}
 	}
 }
