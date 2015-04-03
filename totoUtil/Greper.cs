@@ -13,6 +13,8 @@ using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections;
+using totoUtil.Objets;
+using totoUtil.Utils;
 namespace totoUtil
 {
 	/*
@@ -96,58 +98,50 @@ static void Main(string[] args)
 	
 	public class Greper {
 		/** */
-		private class GrepLignes {
-			private long ligneNumber=-1;
-			private String ligneContent;
-			private long positionMatched;
-			private int indexMatcher;
-			public void setLigneNumber(long val) {
-				this.ligneNumber=val;
-			}
-			public void setLigneContent(String val) {
-				this.ligneContent=val;
-			}
-			public void setPositionMatched(long val) {
-				this.positionMatched=val;
-			}
-			public void setIndexMatcher(int val) {
-				this.indexMatcher=val;
-			}
-		}
-		/** */
-		private class GrepResult {
-			private String fileName;
-			private List <GrepLignes> results = new List<GrepLignes>();
-			public GrepResult (String filename, List <GrepLignes> results) {
-				this.fileName=filename;
-				this.results=results;
-			}
-			private List <GrepLignes> getResults() {
-				return results;
-			}
-		}
 		
-		public List <String> grepFile(String file, List <Regex> regX) {
-			GrepResult results = grepFileAsResults(file, regX);
+		/** grep a single file (existing) */
+		public List <String> grepFile(String files, List <Regex> regX) {
+			List <String> fichiersList = MainUtils.getFiles(files, "");
+			
+			List <String> strResult=new List<String> ();
+			
+			foreach	(String fichier in fichiersList) {
+				//recherche
+				GrepResult results = grepFileAsResults(fichier, regX);
 				
-			List <String> strResult=new List<string> ();
+				
+				foreach(GrepLignes founded in results.getResults()) {
+					strResult.Add(simpleFormateResult(founded, results.getFilename(), true));
+				}
+
+				
+			}
 			return strResult;
 		}
+		
 		
 		private GrepResult grepFileAsResults(String file, List <Regex> regX) {
 			if ((regX ==null) || (regX.Count <1)) return null;
 			if (!File.Exists(file)) return null;
-			    
+			
 			GrepResult result = new GrepResult(file, null);
 			List <GrepLignes> results = new List<GrepLignes>();
-			StreamReader sr = new  StreamReader(file) ;
+			result.setResults(results);
+			
+			
+			//IMPORTANT:ouverture en lecture d'un fichier déja ouvert
+			Stream stream= File.Open(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+			
+			
+			StreamReader sr = new  StreamReader(stream) ;
+			
 			
 			String ligne=null;
 			long cptL = 0;
 			while (  (ligne=sr.ReadLine()) !=null) {
 				cptL++;
 				if (ligne.Length > 0) {
-					System.Diagnostics.Debug.Print("ligne  ("+cptL+")"+ligne);
+					//System.Diagnostics.Debug.Print("ligne  ("+cptL+")"+ligne);
 					for(int i =0;i<regX.Count;i++) {
 						if (regX[i].IsMatch(ligne)) {
 							GrepLignes ok = new GrepLignes();
@@ -156,7 +150,7 @@ static void Main(string[] args)
 							ok.setLigneNumber(cptL);
 							ok.setPositionMatched(-1); //TODO:calculate this
 							results.Add(ok);
-							            
+							
 							break;
 						}
 					}
@@ -165,6 +159,18 @@ static void Main(string[] args)
 			//String flux = sr.ReadToEnd();
 			sr.Close();
 			return result;
+		}
+
+		string simpleFormateResult(GrepLignes founded, String filename="", bool line=false)
+		{
+			String str =founded.getLigneContent();
+			if (line) {
+				str=founded.getLigneNumber()+":"+str;
+			}
+			if (filename.Length>0) {
+				str=filename+" "+str;
+			}
+			return str;
 		}
 	}
 }

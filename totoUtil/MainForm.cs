@@ -318,20 +318,28 @@ namespace totoUtil
 			var p = new Process();
 			p.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
 			p.StartInfo = info;
-			
 
 			//Execution
 			p.Start();
-			
-			
-			
+
 		}
 		void GrepButtonClick(object sender, EventArgs e)
 		{
 			Greper g = new Greper();
 			List<Regex> liste =new List<Regex>();
-			liste.Add (new Regex("(select)"));
-			g.grepFile("m:/toto.sql", liste);
+			liste.Add (new Regex("You send a tip of"));
+			liste.Add (new Regex("Coins"));
+			
+			String sourcePath="%userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
+			String userProfilePath = Environment.ExpandEnvironmentVariables("%userprofile%");
+			sourcePath=sourcePath.Replace("\\", "/");
+			userProfilePath = userProfilePath.Replace("\\", "/");
+			sourcePath=sourcePath.Replace("%userprofile%", userProfilePath);
+			//Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
+			List <String> strList = g.grepFile(sourcePath, liste);
+			foreach(String str in strList) {
+				System.Diagnostics.Debug.Print("<ligne> :"+str);
+			}
 		}
 	}
 }

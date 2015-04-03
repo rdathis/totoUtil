@@ -53,12 +53,24 @@ namespace totoUtil.Utils
 		
 		
 		public static String readFux(String fileName) {
-			//	public  void saveBusUploadRetour(String fileBUSOut, String fluxBUS)
 			StreamReader sr = new  StreamReader(fileName) ;
 			String flux = sr.ReadToEnd();
 			sr.Close();
 			return flux;
 		}
 		
+		public static List<String> getFiles(string searchPath, String searchFilter) {
+			String realPath = System.IO.Path.GetDirectoryName(searchPath);
+			String joker = System.IO.Path.GetFileName(searchPath);
+			DirectoryInfo info = new DirectoryInfo(realPath);
+
+			List<String> list = new List<String>();
+			if (info.Exists) {
+				foreach(var f in info.GetFiles(joker)){
+					list.Add(f.FullName);
+				}
+			}
+			return list;
+		}
 	}
 }
