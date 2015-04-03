@@ -1,0 +1,76 @@
+﻿$ grep --help
+Utilisation : grep [OPTION]... MOTIF [FICHIER]...
+Chercher un MOTIF dans chaque FICHIER ou à partir de l'entrée standard.
+MOTIF est, par défaut, une expression rationnelle simple.
+Exemple : grep -i 'Bonjour, le monde' menu.h main.c
+
+Sélection et interprétation de l'expression rationnelle :
+  -E, --extended-regexp     MOTIF est une expression rationnelle étendue
+  -F, --fixed-regexp        chaînes séparées par des changements de ligne
+  -G, --basic-regexp        MOTIF est une expression rationnelle de base
+  -P, --perl-regexp         MOTIF est une expression rationnelle en Perl
+  -e, --regexp=MOTIF        utiliser MOTIF comme expression rationnelle
+  -f, --file=FICHIER        charger le MOTIF depuis ce FICHIER
+  -i, --ignore-case         ignorer la distinction de la casse
+  -w, --word-regexp         forcer la correspondance du MOTIF en mots entiers
+  -x, --line-regexp         forcer la correspondance du MOTIF en lignes entières
+  -z, --null-data           finir les lignes de données par un octet nul
+
+Divers :
+  -s, --no-messages         supprimer les messages d'erreur
+  -v, --invert-match        sélectionner les lignes sans correspondance
+  -V, --version             afficher le nom et la version du logiciel
+      --help                afficher l'aide et quitter
+
+Contrôle de la sortie :
+  -m, --max-count=NOMBRE    arrêter après NOMBRE correspondances
+  -b, --byte-offset         afficher la position en octet avec la sortie
+  -n, --line-number         afficher le numéro de ligne avec la sortie
+      --line-buffered       vider le tampon après chaque ligne
+  -H, --with-filename       afficher le nom de fichier avec les correspondances
+  -h, --no-filename         supprimer le préfixe de nom de fichier en sortie
+      --label=ÉTIQUETTE     utiliser ÉTIQUETTE pour le préfixe d'entrée standard
+  -o, --only-matching       n'afficher que la partie de ligne correspondante
+  -q, --quiet, --silent     supprimer toute la sortie standard
+      --binary-files=TYPE   considérer que les fichiers binaires sont de type
+                            TYPE : « binary », « text » ou « without-match »
+  -a, --text                identique à --binary-files=text
+  -I                        identique à --binary-files=without-match
+  -d, --directories=ACTION  la façon de traiter les répertoires ;
+                            ACTION est « read », « recurse » ou « skip »
+  -D, --devices=ACTION      la façon de traiter les périphériques, les FIFOS
+                            et les sockets ; ACTION est « read » ou « skip »
+  -r, --recursive           identique à --directories=recurse
+  -R, --dereference-recursive  similaire, mais avec suivi des liens symboliques
+      --include=MOTIF_FIC   ne chercher que fichiers correspondants à MOTIF_FIC
+      --exclude=MOTIF_FIC   ignorer fichiers et rép. correspondants à MOTIF_FIC
+      --exclude-from=FIC    ignorer fichiers correspondants aux motifs de FIC
+      --exclude-dir=MOTIF   ignorer les répertoires correspondants au MOTIF
+  -L, --files-without-match n'afficher que les fichiers sans correspondance
+  -l, --files-with-matches  n'afficher que les fichiers avec correspondances
+  -c, --count               n'afficher que le nombre de lignes correspondantes
+  -T, --initial-tab         insérer des tabulations (si nécessaire)
+  -Z, --null                afficher l'octet nul après le nom de fichier
+
+Contrôle de contexte :
+  -B, --before-context=NBRE afficher NBRE lignes de contexte avant
+  -A, --after-context=NBRE  afficher NBRE lignes de contexte après
+  -C, --context=NBRE        afficher NBRE lignes de contexte en sortie
+  -NBRE                     identique à --context=NBRE
+      --color[=QUAND],
+      --colour[=QUAND]      mettre en évidence les correspondances ; QUAND est
+                            « always » (toujours) « never » (jamais) ou « auto »
+  -U, --binary              ne pas enlever les retours chariot en fin de ligne
+  -u, --unix-byte-offsets   afficher les positions sans tenir compte des retours
+                            chariot (MS-DOS ou Windows)
+
+« egrep » équivaut à « grep -E ». « fgrep » équivaut à « grep -F ».
+L'invocation directe de « egrep » ou « fgrep » doit être abandonnée.
+Si FICHIER vaut -, lire l'entrée standard. Sans FICHIER, lire . si une option
+-r est donnée, - sinon. Si moins de deux fichiers sont donnés, utiliser -h.
+Le code de sortie est 0 si une ligne est sélectionnée, 1 sinon ;
+en cas d'erreur et si l'option -q n'est pas présente, le code de sortie est 2.
+
+Signalez toute anomalie à : bug-grep@gnu.org
+Page d'accueil de GNU grep : <http://www.gnu.org/software/grep/>
+Aide globale sur les logiciels GNU : <http://www.gnu.org/help/gethelp>

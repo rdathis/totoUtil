@@ -326,5 +326,12 @@ namespace totoUtil
 			
 			
 		}
+		void GrepButtonClick(object sender, EventArgs e)
+		{
+			Greper g = new Greper();
+			List<Regex> liste =new List<Regex>();
+			liste.Add (new Regex("(select)"));
+			g.grepFile("m:/toto.sql", liste);
+		}
 	}
 }

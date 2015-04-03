@@ -48,48 +48,49 @@ namespace totoUtil
 			this.tippedRichTextBox = new System.Windows.Forms.RichTextBox();
 			this.sendKeysButton = new System.Windows.Forms.Button();
 			this.launchMCButton = new System.Windows.Forms.Button();
+			this.grepButton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
-			// btn
+			// goButton
 			// 
 			this.goButton.BackColor = System.Drawing.Color.Green;
 			this.goButton.Location = new System.Drawing.Point(697, 33);
-			this.goButton.Name = "btn";
+			this.goButton.Name = "goButton";
 			this.goButton.Size = new System.Drawing.Size(75, 23);
 			this.goButton.TabIndex = 0;
 			this.goButton.Text = "&go!";
 			this.goButton.UseVisualStyleBackColor = false;
 			this.goButton.Click += new System.EventHandler(this.BtnClick);
 			// 
-			// pathTxtBox
+			// pathTextBox
 			// 
 			this.pathTextBox.Location = new System.Drawing.Point(76, 12);
-			this.pathTextBox.Name = "pathTxtBox";
+			this.pathTextBox.Name = "pathTextBox";
 			this.pathTextBox.Size = new System.Drawing.Size(601, 20);
 			this.pathTextBox.TabIndex = 1;
 			// 
-			// tipTxtbox
+			// tipTextbox
 			// 
 			this.tipTextbox.Location = new System.Drawing.Point(0, 274);
 			this.tipTextbox.Multiline = true;
-			this.tipTextbox.Name = "tipTxtbox";
+			this.tipTextbox.Name = "tipTextbox";
 			this.tipTextbox.Size = new System.Drawing.Size(475, 254);
 			this.tipTextbox.TabIndex = 2;
 			// 
-			// argTxtBox
+			// argTextBox
 			// 
 			this.argTextBox.Location = new System.Drawing.Point(76, 35);
-			this.argTextBox.Name = "argTxtBox";
+			this.argTextBox.Name = "argTextBox";
 			this.argTextBox.Size = new System.Drawing.Size(601, 20);
 			this.argTextBox.TabIndex = 3;
 			// 
-			// infoTxtBox
+			// infoTextBox
 			// 
 			this.infoTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.infoTextBox.Location = new System.Drawing.Point(0, 82);
 			this.infoTextBox.Multiline = true;
-			this.infoTextBox.Name = "infoTxtBox";
+			this.infoTextBox.Name = "infoTextBox";
 			this.infoTextBox.Size = new System.Drawing.Size(835, 186);
 			this.infoTextBox.TabIndex = 4;
 			// 
@@ -104,18 +105,18 @@ namespace totoUtil
 			this.initButton.UseVisualStyleBackColor = false;
 			this.initButton.Click += new System.EventHandler(this.InitButtonClick);
 			// 
-			// label1
+			// cmdLabel
 			// 
 			this.cmdLabel.Location = new System.Drawing.Point(0, 12);
-			this.cmdLabel.Name = "label1";
+			this.cmdLabel.Name = "cmdLabel";
 			this.cmdLabel.Size = new System.Drawing.Size(70, 23);
 			this.cmdLabel.TabIndex = 6;
 			this.cmdLabel.Text = "grep:";
 			// 
-			// label2
+			// cmdArgsLabel
 			// 
 			this.cmdArgsLabel.Location = new System.Drawing.Point(0, 35);
-			this.cmdArgsLabel.Name = "label2";
+			this.cmdArgsLabel.Name = "cmdArgsLabel";
 			this.cmdArgsLabel.Size = new System.Drawing.Size(70, 23);
 			this.cmdArgsLabel.TabIndex = 7;
 			this.cmdArgsLabel.Text = "grep args";
@@ -128,20 +129,20 @@ namespace totoUtil
 			this.tippedTextBox.Size = new System.Drawing.Size(354, 254);
 			this.tippedTextBox.TabIndex = 8;
 			// 
-			// richTextBox1
+			// tippedRichTextBox
 			// 
 			this.tippedRichTextBox.Location = new System.Drawing.Point(554, 320);
-			this.tippedRichTextBox.Name = "richTextBox1";
+			this.tippedRichTextBox.Name = "tippedRichTextBox";
 			this.tippedRichTextBox.Size = new System.Drawing.Size(243, 142);
 			this.tippedRichTextBox.TabIndex = 9;
 			this.tippedRichTextBox.Text = "";
 			this.tippedRichTextBox.TextChanged += new System.EventHandler(this.RichTextBox1TextChanged);
 			// 
-			// button1
+			// sendKeysButton
 			// 
 			this.sendKeysButton.BackColor = System.Drawing.Color.Red;
 			this.sendKeysButton.Location = new System.Drawing.Point(779, 11);
-			this.sendKeysButton.Name = "button1";
+			this.sendKeysButton.Name = "sendKeysButton";
 			this.sendKeysButton.Size = new System.Drawing.Size(56, 23);
 			this.sendKeysButton.TabIndex = 10;
 			this.sendKeysButton.Text = "sendKeys";
@@ -159,11 +160,22 @@ namespace totoUtil
 			this.launchMCButton.UseVisualStyleBackColor = false;
 			this.launchMCButton.Click += new System.EventHandler(this.LaunchMCButtonClick);
 			// 
+			// grepButton
+			// 
+			this.grepButton.Location = new System.Drawing.Point(676, 57);
+			this.grepButton.Name = "grepButton";
+			this.grepButton.Size = new System.Drawing.Size(59, 19);
+			this.grepButton.TabIndex = 12;
+			this.grepButton.Text = "grep";
+			this.grepButton.UseVisualStyleBackColor = true;
+			this.grepButton.Click += new System.EventHandler(this.GrepButtonClick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(835, 528);
+			this.Controls.Add(this.grepButton);
 			this.Controls.Add(this.launchMCButton);
 			this.Controls.Add(this.sendKeysButton);
 			this.Controls.Add(this.tippedRichTextBox);
@@ -182,6 +194,7 @@ namespace totoUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Button grepButton;
 		private System.Windows.Forms.Button launchMCButton;
 		private System.Windows.Forms.Button sendKeysButton;
 		private System.Windows.Forms.RichTextBox tippedRichTextBox;

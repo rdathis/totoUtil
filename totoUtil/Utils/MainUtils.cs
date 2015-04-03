@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using  System.Drawing;
+using  System.IO;
 namespace totoUtil.Utils
 {
 	/// <summary>
@@ -47,6 +48,16 @@ namespace totoUtil.Utils
 			rtb.AppendText(str);
 			rtb.Select(lg, str.Length);
 			rtb.SelectionColor =color;
+		}
+		
+		
+		
+		public static String readFux(String fileName) {
+			//	public  void saveBusUploadRetour(String fileBUSOut, String fluxBUS)
+			StreamReader sr = new  StreamReader(fileName) ;
+			String flux = sr.ReadToEnd();
+			sr.Close();
+			return flux;
 		}
 		
 	}
