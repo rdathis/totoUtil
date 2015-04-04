@@ -56,6 +56,7 @@ namespace totoUtil
 				pathTxtBox.Text = "m:/cygwin64/bin/grep.exe";
 			}
 			
+			pathTxtBox.Text = "grep.exe";
 			argTxtBox.Text = "-Fi --color=always coins %userprofile%/AppData/Roaming/.minecraft/logs/*log";
 			argTxtBox.Text = "-Fh -e \" Coins from \" -e \"tip \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			
@@ -283,21 +284,40 @@ namespace totoUtil
 					mcProcess=pr;
 				}
 			}
-			if (mcProcess!=null) {
-				SetForegroundWindow(mcProcess.MainWindowHandle);
-				SendKeys.SendWait("{ESC}");
-				System.Threading.Thread.Sleep(2000);
-				SendKeys.SendWait("t ");
-				System.Threading.Thread.Sleep(1000);
-				SendKeys.Send("/booster queue  ");
-				System.Threading.Thread.Sleep(1000);
-				SendKeys.SendWait("{ENTER}");
-				//SendKeys.SendWait("");
+			if (mcProcess==null) return;
+			
+			SetForegroundWindow(mcProcess.MainWindowHandle);
+			SendKeys.SendWait("{ESC}");
+			System.Threading.Thread.Sleep(100);
+			SendKeys.SendWait("t ");
+			System.Threading.Thread.Sleep(100);
+			SendKeys.Send("/booster queue  ");
+			System.Threading.Thread.Sleep(100);
+			SendKeys.SendWait("{ENTER}");
+			//SendKeys.SendWait("");
+			
+			goCheck(sender);
+			System.Threading.Thread.Sleep(100);
+			
+			//string[] lines = Regex.Split(s, "\n");
+			String[] str =  Regex.Split(tipTxtbox.Text, "\n");
+			foreach(String truc in str) {
 				
+				if (truc.Trim().StartsWith("/")) {
+					System.Diagnostics.Debug.Print("TIIIP:"+truc.Trim());
+					SendKeys.SendWait("t");
+					System.Threading.Thread.Sleep(100);
+					SendKeys.SendWait(truc+" {ENTER}");
+					System.Threading.Thread.Sleep(100);
+				}
 			}
 			
-			
+			goCheck(sender);
+			System.Threading.Thread.Sleep(100);
 			
 		}
+	
+		
 	}
+
 }
