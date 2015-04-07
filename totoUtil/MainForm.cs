@@ -49,9 +49,19 @@ namespace totoUtil
 			if (!System.IO.File.Exists(pathTextBox.Text)) {
 				pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
 			}
+			pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
 			
+//<<<<<<< HEAD
+//			argTextBox.Text = "-Fi --color=always coins %userprofile%/AppData/Roaming/.minecraft/logs/*log";
+//			argTextBox.Text = "-Fh -e \" Coins from \" -e \"tip \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
+//=======
+			pathTextBox.Text = "grep.exe";
 			argTextBox.Text = "-Fi --color=always coins %userprofile%/AppData/Roaming/.minecraft/logs/*log";
 			argTextBox.Text = "-Fh -e \" Coins from \" -e \"tip \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
+			
+			argTextBox.Text = "-Fh -w -e Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
+			
+//>>>>>>> d32a18bb6aad370f5551c6c92daf26bf37ca2b6f
 			
 			argTextBox.Text = "-Fh -w -e Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 		}
@@ -61,6 +71,7 @@ namespace totoUtil
 		}
 		void goCheck(object sender)
 		{
+			pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
 			var info = new ProcessStartInfo();
 			info.FileName = pathTextBox.Text;
 			info.Arguments = argTextBox.Text;
@@ -260,37 +271,68 @@ namespace totoUtil
 					mcProcess=pr;
 				}
 			}
-			if (mcProcess!=null) {
-				System.Diagnostics.Debug.Print ("activating");
-				SetForegroundWindow(mcProcess.MainWindowHandle);
+//<<<<<<< HEAD
+//			if (mcProcess!=null) {
+//				System.Diagnostics.Debug.Print ("activating");
+//				SetForegroundWindow(mcProcess.MainWindowHandle);
+//				
+//				System.Threading.Thread.Sleep(500);
+//				SendKeys.SendWait("{ESC}");
+//				System.Diagnostics.Debug.Print ("ESC!");
+//				//System.Threading.Thread.Sleep(2000);
+//				SendKeys.SendWait("t (^V) ~");
+//				System.Threading.Thread.Sleep(100);
+//				
+//				/*
+//				System.Diagnostics.Debug.Print ("boos");
+//				SendKeys.SendWait("/booster queue ");
+//				System.Threading.Thread.Sleep(1000);
+//				System.Diagnostics.Debug.Print ("Enter");
+//				SendKeys.SendWait("~ {ENTER}");
+//				 */
+//				//sendTemperate("/booster queue ~  ", 100);
+//				
+//				SendKeys.SendWait("x");
+//				System.Threading.Thread.Sleep(100);
+//				SendKeys.SendWait("{ENTER}");
+//				System.Diagnostics.Debug.Print ("end");
+//				//SendKeys.SendWait("");
+//=======
+			if (mcProcess==null) return;
+			
+			SetForegroundWindow(mcProcess.MainWindowHandle);
+			SendKeys.SendWait("{ESC}");
+			System.Threading.Thread.Sleep(100);  
 				
-				System.Threading.Thread.Sleep(500);
-				SendKeys.SendWait("{ESC}");
-				System.Diagnostics.Debug.Print ("ESC!");
-				//System.Threading.Thread.Sleep(2000);
-				SendKeys.SendWait("t (^V) ~");
-				System.Threading.Thread.Sleep(100);
+			SendKeys.SendWait("t ");
+			System.Threading.Thread.Sleep(100);
+			SendKeys.Send("/booster queue  ");
+			System.Threading.Thread.Sleep(100);
+			SendKeys.SendWait("{ENTER}");
+			//SendKeys.SendWait("");
+			
+//'			goCheck(sender);
+			System.Threading.Thread.Sleep(100);
+			
+			//string[] lines = Regex.Split(s, "\n");
+			String[] str =  Regex.Split(tipTextbox.Text, "\n");
+			foreach(String truc in str) {
+//>>>>>>> d32a18bb6aad370f5551c6c92daf26bf37ca2b6f
 				
-				/*
-				System.Diagnostics.Debug.Print ("boos");
-				SendKeys.SendWait("/booster queue ");
-				System.Threading.Thread.Sleep(1000);
-				System.Diagnostics.Debug.Print ("Enter");
-				SendKeys.SendWait("~ {ENTER}");
-				 */
-				//sendTemperate("/booster queue ~  ", 100);
-				
-				SendKeys.SendWait("x");
-				System.Threading.Thread.Sleep(100);
-				SendKeys.SendWait("{ENTER}");
-				System.Diagnostics.Debug.Print ("end");
-				//SendKeys.SendWait("");
-				
+				if (truc.Trim().StartsWith("/")) {
+					System.Diagnostics.Debug.Print("TIIIP:"+truc.Trim());
+					SendKeys.SendWait("t");
+					System.Threading.Thread.Sleep(100);
+					SendKeys.SendWait(truc+" {ENTER}");
+					System.Threading.Thread.Sleep(100);
+				}
 			}
 			
-			
+//'			goCheck(sender);
+			System.Threading.Thread.Sleep(100);
 			
 		}
+//<<<<<<< HEAD
 		private void sendTemperate(String str, int waiter) {
 			for(int i=0;i<str.Length;i++) {
 				System.Diagnostics.Debug.Print ("i:"+i+" str:'"+str.Substring(i, 1)+"'");
@@ -342,4 +384,6 @@ namespace totoUtil
 			}
 		}
 	}
+
 }
+//http://webman.developpez.com/articles/dotnet/filesystemwatcher/vbnet/
