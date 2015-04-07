@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using totoUtil.Utils;
+using System.Linq;
 
 namespace totoUtil
 {
@@ -367,6 +368,7 @@ namespace totoUtil
 		}
 		void GrepButtonClick(object sender, EventArgs e)
 		{
+			System.IO.FileSystemWatcher dog = new System.IO.FileSystemWatcher();
 			Greper g = new Greper();
 			List<Regex> liste =new List<Regex>();
 			liste.Add (new Regex("You send a tip of"));
@@ -374,15 +376,45 @@ namespace totoUtil
 			
 			String sourcePath="%userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			String userProfilePath = Environment.ExpandEnvironmentVariables("%userprofile%");
+			const String NONE = "NONE";
 			sourcePath=sourcePath.Replace("\\", "/");
 			userProfilePath = userProfilePath.Replace("\\", "/");
 			sourcePath=sourcePath.Replace("%userprofile%", userProfilePath);
 			//Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			List <String> strList = g.grepFile(sourcePath, liste);
-			foreach(String str in strList) {
-				System.Diagnostics.Debug.Print("<ligne> :"+str);
+			List <String> resultList = new List<String>();
+			foreach(String ligne in strList) {
+				//System.Diagnostics.Debug.Print("<ligne> :"+str);
+				
+				Match match = Regex.Match(ligne, @"( Coins from |Coins Boosters queued)");
+				
+				if (match.Success) {
+
+					String who = NONE;
+					Match match2 = Regex.Match(ligne, @" Coins from");
+					
+					if (match2.Success) {
+						String[] whoho = Regex.Split(ligne, @" Coins from ");
+						who = whoho[1];
+						
+						//crado:si fini par virgule ou espace, on vire.
+						if (who.Contains(",")) {
+							who = who.Substring(0, who.IndexOf(","));
+							
+						}
+						if (who.Contains(" ")) {
+							who = who.Substring(0, who.IndexOf(" "));
+						}
+						resultList.Add(" /tip "+who);
+					} else {
+					}
 			}
 		}
+			tipTextbox.Text="";
+			foreach(String tip in resultList.Distinct().ToList()) {
+				tipTextbox.Text+=tip + "\r\n";
+			}
+	}
 	}
 
 }
