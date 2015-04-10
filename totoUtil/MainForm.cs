@@ -50,19 +50,19 @@ namespace totoUtil
 			if (!System.IO.File.Exists(pathTextBox.Text)) {
 				pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
 			}
-			pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
+			//pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
 			
-//<<<<<<< HEAD
+			//<<<<<<< HEAD
 //			argTextBox.Text = "-Fi --color=always coins %userprofile%/AppData/Roaming/.minecraft/logs/*log";
 //			argTextBox.Text = "-Fh -e \" Coins from \" -e \"tip \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
-//=======
+			//=======
 			pathTextBox.Text = "grep.exe";
 			argTextBox.Text = "-Fi --color=always coins %userprofile%/AppData/Roaming/.minecraft/logs/*log";
 			argTextBox.Text = "-Fh -e \" Coins from \" -e \"tip \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			
 			argTextBox.Text = "-Fh -w -e Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			
-//>>>>>>> d32a18bb6aad370f5551c6c92daf26bf37ca2b6f
+			//>>>>>>> d32a18bb6aad370f5551c6c92daf26bf37ca2b6f
 			
 			argTextBox.Text = "-Fh -w -e Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 		}
@@ -72,7 +72,7 @@ namespace totoUtil
 		}
 		void goCheck(object sender)
 		{
-			pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
+			//pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
 			var info = new ProcessStartInfo();
 			info.FileName = pathTextBox.Text;
 			info.Arguments = argTextBox.Text;
@@ -212,7 +212,7 @@ namespace totoUtil
 			//construction de la richTextBox
 			MainUtils.buildTypedRichTBox(tippedRichTextBox, playerList);
 			
-		
+			
 			//descente du dictionaire, et calculs
 			retour = "";
 			foreach (string clef in dicoTipAction.Keys) {
@@ -250,7 +250,7 @@ namespace totoUtil
 			//richTextBox1.Find("u", RichTextBoxFinds.MatchCase);
 			richTextBox1.Select(6, 30);
 			richTextBox1.SelectionColor = Color.Pink;
-			*/
+			 */
 			//MessageBox.Show(richTextBox1.Rtf);
 
 			
@@ -272,18 +272,18 @@ namespace totoUtil
 					mcProcess=pr;
 				}
 			}
-//<<<<<<< HEAD
+			//<<<<<<< HEAD
 //			if (mcProcess!=null) {
 //				System.Diagnostics.Debug.Print ("activating");
 //				SetForegroundWindow(mcProcess.MainWindowHandle);
-//				
+//
 //				System.Threading.Thread.Sleep(500);
 //				SendKeys.SendWait("{ESC}");
 //				System.Diagnostics.Debug.Print ("ESC!");
 //				//System.Threading.Thread.Sleep(2000);
 //				SendKeys.SendWait("t (^V) ~");
 //				System.Threading.Thread.Sleep(100);
-//				
+//
 //				/*
 //				System.Diagnostics.Debug.Print ("boos");
 //				SendKeys.SendWait("/booster queue ");
@@ -292,19 +292,19 @@ namespace totoUtil
 //				SendKeys.SendWait("~ {ENTER}");
 //				 */
 //				//sendTemperate("/booster queue ~  ", 100);
-//				
+//
 //				SendKeys.SendWait("x");
 //				System.Threading.Thread.Sleep(100);
 //				SendKeys.SendWait("{ENTER}");
 //				System.Diagnostics.Debug.Print ("end");
 //				//SendKeys.SendWait("");
-//=======
+			//=======
 			if (mcProcess==null) return;
 			
 			SetForegroundWindow(mcProcess.MainWindowHandle);
 			SendKeys.SendWait("{ESC}");
-			System.Threading.Thread.Sleep(100);  
-				
+			System.Threading.Thread.Sleep(100);
+			
 			SendKeys.SendWait("t ");
 			System.Threading.Thread.Sleep(100);
 			SendKeys.Send("/booster queue  ");
@@ -312,13 +312,13 @@ namespace totoUtil
 			SendKeys.SendWait("{ENTER}");
 			//SendKeys.SendWait("");
 			
-//'			goCheck(sender);
+			//'			goCheck(sender);
 			System.Threading.Thread.Sleep(100);
 			
 			//string[] lines = Regex.Split(s, "\n");
 			String[] str =  Regex.Split(tipTextbox.Text, "\n");
 			foreach(String truc in str) {
-//>>>>>>> d32a18bb6aad370f5551c6c92daf26bf37ca2b6f
+				//>>>>>>> d32a18bb6aad370f5551c6c92daf26bf37ca2b6f
 				
 				if (truc.Trim().StartsWith("/")) {
 					System.Diagnostics.Debug.Print("TIIIP:"+truc.Trim());
@@ -329,11 +329,11 @@ namespace totoUtil
 				}
 			}
 			
-//'			goCheck(sender);
+			//'			goCheck(sender);
 			System.Threading.Thread.Sleep(100);
 			
 		}
-//<<<<<<< HEAD
+		//<<<<<<< HEAD
 		private void sendTemperate(String str, int waiter) {
 			for(int i=0;i<str.Length;i++) {
 				System.Diagnostics.Debug.Print ("i:"+i+" str:'"+str.Substring(i, 1)+"'");
@@ -368,53 +368,92 @@ namespace totoUtil
 		}
 		void GrepButtonClick(object sender, EventArgs e)
 		{
+			grepAndTip();
+		}
+		
+		void grepAndTip() {
+			
 			System.IO.FileSystemWatcher dog = new System.IO.FileSystemWatcher();
 			Greper g = new Greper();
+			
 			List<Regex> liste =new List<Regex>();
 			liste.Add (new Regex("You send a tip of"));
 			liste.Add (new Regex("Coins"));
 			
+			//TODO:PARAM + textbox
 			String sourcePath="%userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			String userProfilePath = Environment.ExpandEnvironmentVariables("%userprofile%");
 			const String NONE = "NONE";
 			sourcePath=sourcePath.Replace("\\", "/");
 			userProfilePath = userProfilePath.Replace("\\", "/");
 			sourcePath=sourcePath.Replace("%userprofile%", userProfilePath);
-			//Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			List <String> strList = g.grepFile(sourcePath, liste);
-			List <String> resultList = new List<String>();
+			var resultDico = new Dictionary<String, String>();
 			foreach(String ligne in strList) {
 				//System.Diagnostics.Debug.Print("<ligne> :"+str);
 				
 				Match match = Regex.Match(ligne, @"( Coins from |Coins Boosters queued)");
 				
-				if (match.Success) {
-
-					String who = NONE;
-					Match match2 = Regex.Match(ligne, @" Coins from");
+				Match matchSuccess = Regex.Match(ligne, @"( Coins from )");
+				Match matchNothing = Regex.Match(ligne, @"(Coins Boosters queueud)");
+				
+				//LIGNE : 20:19:49] [Client thread/INFO]: [CHAT] Blitz Survival Games - Triple Coins from NickSaurus11, Igloo, ItsTimeGaming, Flummox_, Epicnoodles and 111 more
+				
+				String ligne2=ligne;
+				int debI= ligne.IndexOf(":[");
+				if(debI>0) {
+					debI+=1;
+					ligne2=ligne.Substring(debI);
+				}
+				String when = ligne2.Substring(1, 9);
+				System.Diagnostics.Debug.Print(" LIGNE : "+ligne2);
+				
+				int toI = ligne2.LastIndexOf(@" from ");
+				int gameI = ligne2.IndexOf(@"[CHAT] ");
+				String game="";
+				String to=NONE;
+				if ((toI > 0) && (gameI > 0)) {
 					
-					if (match2.Success) {
-						String[] whoho = Regex.Split(ligne, @" Coins from ");
-						who = whoho[1];
-						
-						//crado:si fini par virgule ou espace, on vire.
-						if (who.Contains(",")) {
-							who = who.Substring(0, who.IndexOf(","));
-							
-						}
-						if (who.Contains(" ")) {
-							who = who.Substring(0, who.IndexOf(" "));
-						}
-						resultList.Add(" /tip "+who);
-					} else {
+					game = ligne2.Substring(gameI + 6).Trim();
+					if (game.IndexOf("-") > 0) {
+						game=game.Substring(0, game.IndexOf("-")-1);
 					}
+					to = ligne2.Substring(toI + 5).Trim();
+					if (to.IndexOf(",") > 0) {
+						to=to.Substring(0, to.IndexOf(",")-1);
+					}
+//					System.Diagnostics.Debug.Print("DBG:"+when+"/"+to+" - "+game);
+				}
+				
+				
+				if (matchSuccess.Success) {
+					
+					
+				} else if (matchNothing.Success) {
+					to=NONE;
+				}
+				
+				String tipLine = " /tip "+to;
+				if (resultDico.ContainsKey(game)) {
+					resultDico[game] = tipLine;
+				} else {
+					resultDico.Add(game, tipLine);
+				}
+			}
+			tipTextbox.Text="";
+			const String NONETIP = "/tip " + NONE;
+			
+			//pre-uniq
+			List <String> resultList = new List<String>();
+			foreach(String s in resultDico.Values) {
+				resultList.Add(s);
+			}
+			foreach(String tip in resultList.Distinct().ToList()) {
+				if (!tip.Contains(NONETIP)) {
+					tipTextbox.Text+=tip + "\r\n";
+				}
 			}
 		}
-			tipTextbox.Text="";
-			foreach(String tip in resultList.Distinct().ToList()) {
-				tipTextbox.Text+=tip + "\r\n";
-			}
-	}
 	}
 
 }
