@@ -52,17 +52,17 @@ namespace totoUtil
 			}
 			pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
 			
-//<<<<<<< HEAD
+			//<<<<<<< HEAD
 //			argTextBox.Text = "-Fi --color=always coins %userprofile%/AppData/Roaming/.minecraft/logs/*log";
 //			argTextBox.Text = "-Fh -e \" Coins from \" -e \"tip \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
-//=======
+			//=======
 			pathTextBox.Text = "grep.exe";
 			argTextBox.Text = "-Fi --color=always coins %userprofile%/AppData/Roaming/.minecraft/logs/*log";
 			argTextBox.Text = "-Fh -e \" Coins from \" -e \"tip \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			
 			argTextBox.Text = "-Fh -w -e Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			
-//>>>>>>> d32a18bb6aad370f5551c6c92daf26bf37ca2b6f
+			//>>>>>>> d32a18bb6aad370f5551c6c92daf26bf37ca2b6f
 			
 			argTextBox.Text = "-Fh -w -e Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 		}
@@ -212,7 +212,7 @@ namespace totoUtil
 			//construction de la richTextBox
 			MainUtils.buildTypedRichTBox(tippedRichTextBox, playerList);
 			
-		
+			
 			//descente du dictionaire, et calculs
 			retour = "";
 			foreach (string clef in dicoTipAction.Keys) {
@@ -250,7 +250,7 @@ namespace totoUtil
 			//richTextBox1.Find("u", RichTextBoxFinds.MatchCase);
 			richTextBox1.Select(6, 30);
 			richTextBox1.SelectionColor = Color.Pink;
-			*/
+			 */
 			//MessageBox.Show(richTextBox1.Rtf);
 
 			
@@ -272,18 +272,18 @@ namespace totoUtil
 					mcProcess=pr;
 				}
 			}
-//<<<<<<< HEAD
+			//<<<<<<< HEAD
 //			if (mcProcess!=null) {
 //				System.Diagnostics.Debug.Print ("activating");
 //				SetForegroundWindow(mcProcess.MainWindowHandle);
-//				
+//
 //				System.Threading.Thread.Sleep(500);
 //				SendKeys.SendWait("{ESC}");
 //				System.Diagnostics.Debug.Print ("ESC!");
 //				//System.Threading.Thread.Sleep(2000);
 //				SendKeys.SendWait("t (^V) ~");
 //				System.Threading.Thread.Sleep(100);
-//				
+//
 //				/*
 //				System.Diagnostics.Debug.Print ("boos");
 //				SendKeys.SendWait("/booster queue ");
@@ -292,19 +292,19 @@ namespace totoUtil
 //				SendKeys.SendWait("~ {ENTER}");
 //				 */
 //				//sendTemperate("/booster queue ~  ", 100);
-//				
+//
 //				SendKeys.SendWait("x");
 //				System.Threading.Thread.Sleep(100);
 //				SendKeys.SendWait("{ENTER}");
 //				System.Diagnostics.Debug.Print ("end");
 //				//SendKeys.SendWait("");
-//=======
+			//=======
 			if (mcProcess==null) return;
 			
 			SetForegroundWindow(mcProcess.MainWindowHandle);
 			SendKeys.SendWait("{ESC}");
-			System.Threading.Thread.Sleep(100);  
-				
+			System.Threading.Thread.Sleep(100);
+			
 			SendKeys.SendWait("t ");
 			System.Threading.Thread.Sleep(100);
 			SendKeys.Send("/booster queue  ");
@@ -312,13 +312,13 @@ namespace totoUtil
 			SendKeys.SendWait("{ENTER}");
 			//SendKeys.SendWait("");
 			
-//'			goCheck(sender);
+			//'			goCheck(sender);
 			System.Threading.Thread.Sleep(100);
 			
 			//string[] lines = Regex.Split(s, "\n");
 			String[] str =  Regex.Split(tipTextbox.Text, "\n");
 			foreach(String truc in str) {
-//>>>>>>> d32a18bb6aad370f5551c6c92daf26bf37ca2b6f
+				//>>>>>>> d32a18bb6aad370f5551c6c92daf26bf37ca2b6f
 				
 				if (truc.Trim().StartsWith("/")) {
 					System.Diagnostics.Debug.Print("TIIIP:"+truc.Trim());
@@ -329,11 +329,11 @@ namespace totoUtil
 				}
 			}
 			
-//'			goCheck(sender);
+			//'			goCheck(sender);
 			System.Threading.Thread.Sleep(100);
 			
 		}
-//<<<<<<< HEAD
+		//<<<<<<< HEAD
 		private void sendTemperate(String str, int waiter) {
 			for(int i=0;i<str.Length;i++) {
 				System.Diagnostics.Debug.Print ("i:"+i+" str:'"+str.Substring(i, 1)+"'");
@@ -372,11 +372,12 @@ namespace totoUtil
 			Greper g = new Greper();
 			List<Regex> liste =new List<Regex>();
 			liste.Add (new Regex("You send a tip of"));
-			liste.Add (new Regex("Coins"));
+			//liste.Add (new Regex("Coins"));
+			liste.Add(new Regex("( Coins from |Coins Boosters queued)"));
 			
 			String sourcePath="%userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			String userProfilePath = Environment.ExpandEnvironmentVariables("%userprofile%");
-			const String NONE = "NONE";
+			
 			sourcePath=sourcePath.Replace("\\", "/");
 			userProfilePath = userProfilePath.Replace("\\", "/");
 			sourcePath=sourcePath.Replace("%userprofile%", userProfilePath);
@@ -385,36 +386,45 @@ namespace totoUtil
 			List <String> resultList = new List<String>();
 			foreach(String ligne in strList) {
 				//System.Diagnostics.Debug.Print("<ligne> :"+str);
-				
-				Match match = Regex.Match(ligne, @"( Coins from |Coins Boosters queued)");
-				
-				if (match.Success) {
+				checkTipLine(ligne, resultList);
 
-					String who = NONE;
-					Match match2 = Regex.Match(ligne, @" Coins from");
-					
-					if (match2.Success) {
-						String[] whoho = Regex.Split(ligne, @" Coins from ");
-						who = whoho[1];
-						
-						//crado:si fini par virgule ou espace, on vire.
-						if (who.Contains(",")) {
-							who = who.Substring(0, who.IndexOf(","));
-							
-						}
-						if (who.Contains(" ")) {
-							who = who.Substring(0, who.IndexOf(" "));
-						}
-						resultList.Add(" /tip "+who);
-					} else {
-					}
 			}
-		}
+			
+			//unique list
 			tipTextbox.Text="";
 			foreach(String tip in resultList.Distinct().ToList()) {
 				tipTextbox.Text+=tip + "\r\n";
 			}
-	}
+		}
+		void checkTipLine(String ligne, List<String> resultList) {
+			const String NONE = "NONE";
+			Match match = Regex.Match(ligne, @"( Coins from |Coins Boosters queued)");
+			
+			if (match.Success) {
+
+				String who = NONE;
+				Match match2 = Regex.Match(ligne, @" Coins from");
+				
+				if (match2.Success) {
+					String[] whoho = Regex.Split(ligne, @" Coins from ");
+					who = whoho[1];
+					
+					//crado:si fini par virgule ou espace, on vire.
+					if (who.Contains(",")) {
+						who = who.Substring(0, who.IndexOf(","));
+						
+					}
+					if (who.Contains(" ")) {
+						who = who.Substring(0, who.IndexOf(" "));
+					}
+					resultList.Add(" /tip "+who);
+				} else {
+				}
+				
+				//here 
+			}
+			
+		}
 	}
 
 }
