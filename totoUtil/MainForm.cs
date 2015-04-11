@@ -16,6 +16,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using totoUtil.Objets;
 using totoUtil.Utils;
 using System.Linq;
 
@@ -28,6 +29,7 @@ namespace totoUtil
 	{
 		[DllImport("user32.dll")]
 		static extern bool SetForegroundWindow(IntPtr hWnd);
+		HyUtil hyUtil = new HyUtil();
 
 		//TimerExample timer = null;
 		public MainForm()
@@ -72,7 +74,6 @@ namespace totoUtil
 		}
 		void goCheck(object sender)
 		{
-			//pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
 			var info = new ProcessStartInfo();
 			info.FileName = pathTextBox.Text;
 			info.Arguments = argTextBox.Text;
@@ -261,6 +262,8 @@ namespace totoUtil
 		}
 		void Button1Click(object sender, EventArgs e)
 		{
+			
+			
 			//appaCtivate
 			Process mcProcess=null;
 			Process[] processes = Process.GetProcessesByName("Minecraft 1.");
@@ -315,25 +318,25 @@ namespace totoUtil
 			//'			goCheck(sender);
 			System.Threading.Thread.Sleep(100);
 			
+			prepareGrepList();
+			System.Threading.Thread.Sleep(2000);
+			
+			//TODO:param
+			const int waitMs=200;
 			//string[] lines = Regex.Split(s, "\n");
 			String[] str =  Regex.Split(tipTextbox.Text, "\n");
 			foreach(String truc in str) {
-				//>>>>>>> d32a18bb6aad370f5551c6c92daf26bf37ca2b6f
-				
 				if (truc.Trim().StartsWith("/")) {
 					System.Diagnostics.Debug.Print("TIIIP:"+truc.Trim());
 					SendKeys.SendWait("t");
-					System.Threading.Thread.Sleep(100);
+					System.Threading.Thread.Sleep(waitMs);
 					SendKeys.SendWait(truc+" {ENTER}");
-					System.Threading.Thread.Sleep(100);
+					System.Threading.Thread.Sleep(waitMs);
 				}
 			}
-			
-			//'			goCheck(sender);
-			System.Threading.Thread.Sleep(100);
+			System.Threading.Thread.Sleep(waitMs);
 			
 		}
-		//<<<<<<< HEAD
 		private void sendTemperate(String str, int waiter) {
 			for(int i=0;i<str.Length;i++) {
 				System.Diagnostics.Debug.Print ("i:"+i+" str:'"+str.Substring(i, 1)+"'");
@@ -343,6 +346,7 @@ namespace totoUtil
 		}
 		void LaunchMCButtonClick(object sender, EventArgs e)
 		{
+			//TODO:param
 			String cmd=@"C:/Program Files (x86)/Minecraft/MinecraftLauncher.exe";
 			
 			var info = new ProcessStartInfo();
@@ -368,93 +372,15 @@ namespace totoUtil
 		}
 		void GrepButtonClick(object sender, EventArgs e)
 		{
-			grepAndTip();
+			prepareGrepList();
+		}
+		void prepareGrepList() {
+			//TODO:param
+			String sourcePath="%userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
+			tipTextbox.Text= hyUtil.grepAndTip(sourcePath);
 		}
 		
-		void grepAndTip() {
-			
-			System.IO.FileSystemWatcher dog = new System.IO.FileSystemWatcher();
-			Greper g = new Greper();
-			
-			List<Regex> liste =new List<Regex>();
-			liste.Add (new Regex("You send a tip of"));
-			liste.Add (new Regex("Coins"));
-			
-			//TODO:PARAM + textbox
-			String sourcePath="%userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
-			String userProfilePath = Environment.ExpandEnvironmentVariables("%userprofile%");
-			const String NONE = "NONE";
-			sourcePath=sourcePath.Replace("\\", "/");
-			userProfilePath = userProfilePath.Replace("\\", "/");
-			sourcePath=sourcePath.Replace("%userprofile%", userProfilePath);
-			List <String> strList = g.grepFile(sourcePath, liste);
-			var resultDico = new Dictionary<String, String>();
-			foreach(String ligne in strList) {
-				//System.Diagnostics.Debug.Print("<ligne> :"+str);
-				
-				Match match = Regex.Match(ligne, @"( Coins from |Coins Boosters queued)");
-				
-				Match matchSuccess = Regex.Match(ligne, @"( Coins from )");
-				Match matchNothing = Regex.Match(ligne, @"(Coins Boosters queueud)");
-				
-				//LIGNE : 20:19:49] [Client thread/INFO]: [CHAT] Blitz Survival Games - Triple Coins from NickSaurus11, Igloo, ItsTimeGaming, Flummox_, Epicnoodles and 111 more
-				
-				String ligne2=ligne;
-				int debI= ligne.IndexOf(":[");
-				if(debI>0) {
-					debI+=1;
-					ligne2=ligne.Substring(debI);
-				}
-				String when = ligne2.Substring(1, 9);
-				System.Diagnostics.Debug.Print(" LIGNE : "+ligne2);
-				
-				int toI = ligne2.LastIndexOf(@" from ");
-				int gameI = ligne2.IndexOf(@"[CHAT] ");
-				String game="";
-				String to=NONE;
-				if ((toI > 0) && (gameI > 0)) {
-					
-					game = ligne2.Substring(gameI + 6).Trim();
-					if (game.IndexOf("-") > 0) {
-						game=game.Substring(0, game.IndexOf("-")-1);
-					}
-					to = ligne2.Substring(toI + 5).Trim();
-					if (to.IndexOf(",") > 0) {
-						to=to.Substring(0, to.IndexOf(",")-1);
-					}
-//					System.Diagnostics.Debug.Print("DBG:"+when+"/"+to+" - "+game);
-				}
-				
-				
-				if (matchSuccess.Success) {
-					
-					
-				} else if (matchNothing.Success) {
-					to=NONE;
-				}
-				
-				String tipLine = " /tip "+to;
-				if (resultDico.ContainsKey(game)) {
-					resultDico[game] = tipLine;
-				} else {
-					resultDico.Add(game, tipLine);
-				}
-			}
-			tipTextbox.Text="";
-			const String NONETIP = "/tip " + NONE;
-			
-			//pre-uniq
-			List <String> resultList = new List<String>();
-			foreach(String s in resultDico.Values) {
-				resultList.Add(s);
-			}
-			foreach(String tip in resultList.Distinct().ToList()) {
-				if (!tip.Contains(NONETIP)) {
-					tipTextbox.Text+=tip + "\r\n";
-				}
-			}
-		}
-	}
 
+	}
 }
 //http://webman.developpez.com/articles/dotnet/filesystemwatcher/vbnet/
