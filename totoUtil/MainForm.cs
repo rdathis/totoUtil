@@ -381,35 +381,7 @@ namespace totoUtil
 			//TODO:param
 			String sourcePath="%userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			tipTextbox.Text= hyUtil.grepAndTip(sourcePath);
-/*
-			System.IO.FileSystemWatcher dog = new System.IO.FileSystemWatcher();
-			Greper g = new Greper();
-			List<Regex> liste =new List<Regex>();
-			liste.Add (new Regex("You send a tip of"));
-			//liste.Add (new Regex("Coins"));
-			liste.Add(new Regex("( Coins from |Coins Boosters queued)"));
-			
-			//String sourcePath="%userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
-			String userProfilePath = Environment.ExpandEnvironmentVariables("%userprofile%");
-			
-			sourcePath=sourcePath.Replace("\\", "/");
-			userProfilePath = userProfilePath.Replace("\\", "/");
-			sourcePath=sourcePath.Replace("%userprofile%", userProfilePath);
-			//Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
-			List <String> strList = g.grepFile(sourcePath, liste);
-			List <String> resultList = new List<String>();
-			foreach(String ligne in strList) {
-				//System.Diagnostics.Debug.Print("<ligne> :"+str);
-				checkTipLine(ligne, resultList);
 
-			}
-			
-			//unique list
-			tipTextbox.Text="";
-			foreach(String tip in resultList.Distinct().ToList()) {
-				tipTextbox.Text+=tip + "\r\n";
-			}
-			*/
 		}
 		void checkTipLine(String ligne, List<String> resultList) {
 			const String NONE = "NONE";
