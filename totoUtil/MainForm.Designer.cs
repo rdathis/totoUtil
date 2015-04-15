@@ -49,6 +49,7 @@ namespace totoUtil
 			this.sendKeysButton = new System.Windows.Forms.Button();
 			this.launchMCButton = new System.Windows.Forms.Button();
 			this.grepButton = new System.Windows.Forms.Button();
+			this.btnExplore = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// goButton
@@ -170,11 +171,22 @@ namespace totoUtil
 			this.grepButton.UseVisualStyleBackColor = true;
 			this.grepButton.Click += new System.EventHandler(this.GrepButtonClick);
 			// 
+			// btnExplore
+			// 
+			this.btnExplore.Location = new System.Drawing.Point(756, 57);
+			this.btnExplore.Name = "btnExplore";
+			this.btnExplore.Size = new System.Drawing.Size(61, 19);
+			this.btnExplore.TabIndex = 13;
+			this.btnExplore.Text = "...";
+			this.btnExplore.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			this.btnExplore.UseVisualStyleBackColor = true;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(835, 528);
+			this.Controls.Add(this.btnExplore);
 			this.Controls.Add(this.grepButton);
 			this.Controls.Add(this.launchMCButton);
 			this.Controls.Add(this.sendKeysButton);
@@ -207,5 +219,6 @@ namespace totoUtil
 		private System.Windows.Forms.Button goButton;
 		private System.Windows.Forms.TextBox pathTextBox;
 		private System.Windows.Forms.TextBox tipTextbox;
+		private System.Windows.Forms.Button btnExplore;
 	}
 }

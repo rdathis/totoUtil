@@ -52,7 +52,7 @@ namespace totoUtil
 			if (!System.IO.File.Exists(pathTextBox.Text)) {
 				pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
 			}
-			//pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
+			pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
 			
 			//<<<<<<< HEAD
 //			argTextBox.Text = "-Fi --color=always coins %userprofile%/AppData/Roaming/.minecraft/logs/*log";
@@ -74,6 +74,8 @@ namespace totoUtil
 		}
 		void goCheck(object sender)
 		{
+//			pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
+
 			var info = new ProcessStartInfo();
 			info.FileName = pathTextBox.Text;
 			info.Arguments = argTextBox.Text;
@@ -318,7 +320,7 @@ namespace totoUtil
 			//'			goCheck(sender);
 			System.Threading.Thread.Sleep(100);
 			
-			prepareGrepList();
+			//prepareGrepList();
 			System.Threading.Thread.Sleep(2000);
 			
 			//TODO:param
@@ -372,12 +374,72 @@ namespace totoUtil
 		}
 		void GrepButtonClick(object sender, EventArgs e)
 		{
+
 			prepareGrepList();
 		}
 		void prepareGrepList() {
 			//TODO:param
 			String sourcePath="%userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			tipTextbox.Text= hyUtil.grepAndTip(sourcePath);
+/*
+			System.IO.FileSystemWatcher dog = new System.IO.FileSystemWatcher();
+			Greper g = new Greper();
+			List<Regex> liste =new List<Regex>();
+			liste.Add (new Regex("You send a tip of"));
+			//liste.Add (new Regex("Coins"));
+			liste.Add(new Regex("( Coins from |Coins Boosters queued)"));
+			
+			//String sourcePath="%userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
+			String userProfilePath = Environment.ExpandEnvironmentVariables("%userprofile%");
+			
+			sourcePath=sourcePath.Replace("\\", "/");
+			userProfilePath = userProfilePath.Replace("\\", "/");
+			sourcePath=sourcePath.Replace("%userprofile%", userProfilePath);
+			//Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
+			List <String> strList = g.grepFile(sourcePath, liste);
+			List <String> resultList = new List<String>();
+			foreach(String ligne in strList) {
+				//System.Diagnostics.Debug.Print("<ligne> :"+str);
+				checkTipLine(ligne, resultList);
+
+			}
+			
+			//unique list
+			tipTextbox.Text="";
+			foreach(String tip in resultList.Distinct().ToList()) {
+				tipTextbox.Text+=tip + "\r\n";
+			}
+			*/
+		}
+		void checkTipLine(String ligne, List<String> resultList) {
+			const String NONE = "NONE";
+			Match match = Regex.Match(ligne, @"( Coins from |Coins Boosters queued)");
+			
+			if (match.Success) {
+
+				String who = NONE;
+				Match match2 = Regex.Match(ligne, @" Coins from");
+				
+				if (match2.Success) {
+					String[] whoho = Regex.Split(ligne, @" Coins from ");
+					who = whoho[1];
+					
+					//crado:si fini par virgule ou espace, on vire.
+					if (who.Contains(",")) {
+						who = who.Substring(0, who.IndexOf(","));
+						
+					}
+					if (who.Contains(" ")) {
+						who = who.Substring(0, who.IndexOf(" "));
+					}
+					resultList.Add(" /tip "+who);
+				} else {
+				}
+				
+				//here 
+			}
+			
+
 		}
 		
 

@@ -22,6 +22,8 @@ namespace totoUtil.Objets
 		}
 		const String NONE = "NONE";
 		private const String NONETIP = "/tip " + NONE;
+		
+		//TODO:change as a list<String>
 		public String grepAndTip(String sourcePath) {
 
 			String retour="";
@@ -74,22 +76,25 @@ namespace totoUtil.Objets
 					if (to.IndexOf(",") > 0) {
 						to=to.Substring(0, to.IndexOf(","));
 					}
-//					System.Diagnostics.Debug.Print("DBG:"+when+"/"+to+" - "+game);
 				}
 				
 				
-				if (matchSuccess.Success) {
-					
-					
-				} else if (matchNothing.Success) {
-					to=NONE;
-				}
 				
-				String tipLine = " /tip "+to;
-				if (resultDico.ContainsKey(game)) {
-					resultDico[game] = tipLine;
-				} else {
-					resultDico.Add(game, tipLine);
+				if (matchSuccess.Success || matchNothing.Success) {
+					System.Diagnostics.Debug.Print("DBG:"+when+"/"+to+" - "+game);
+					if (matchSuccess.Success) {
+						
+						
+					} else if (matchNothing.Success) {
+						to=NONE;
+					}
+					
+					String tipLine = " /tip "+to;
+					if (resultDico.ContainsKey(game)) {
+						resultDico[game] = tipLine;
+					} else {
+						resultDico.Add(game, tipLine);
+					}
 				}
 			}
 
@@ -111,8 +116,11 @@ namespace totoUtil.Objets
 		
 		
 		
-		public void updateTippedRtfBox(System.Windows.Forms.RichTextBox box) {
+		public void updateTippedRtfBox(System.Windows.Forms.RichTextBox box, List<String> liste) {
 			//TODO
+		}
+		public String updateCoins(List<String> list) {
+			return "";
 		}
 	}
 
