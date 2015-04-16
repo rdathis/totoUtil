@@ -54,17 +54,11 @@ namespace totoUtil
 			}
 			pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
 			
-			//<<<<<<< HEAD
-//			argTextBox.Text = "-Fi --color=always coins %userprofile%/AppData/Roaming/.minecraft/logs/*log";
-//			argTextBox.Text = "-Fh -e \" Coins from \" -e \"tip \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
-			//=======
 			pathTextBox.Text = "grep.exe";
 			argTextBox.Text = "-Fi --color=always coins %userprofile%/AppData/Roaming/.minecraft/logs/*log";
 			argTextBox.Text = "-Fh -e \" Coins from \" -e \"tip \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			
 			argTextBox.Text = "-Fh -w -e Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
-			
-			//>>>>>>> d32a18bb6aad370f5551c6c92daf26bf37ca2b6f
 			
 			argTextBox.Text = "-Fh -w -e Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 		}
@@ -277,33 +271,6 @@ namespace totoUtil
 					mcProcess=pr;
 				}
 			}
-			//<<<<<<< HEAD
-//			if (mcProcess!=null) {
-//				System.Diagnostics.Debug.Print ("activating");
-//				SetForegroundWindow(mcProcess.MainWindowHandle);
-//
-//				System.Threading.Thread.Sleep(500);
-//				SendKeys.SendWait("{ESC}");
-//				System.Diagnostics.Debug.Print ("ESC!");
-//				//System.Threading.Thread.Sleep(2000);
-//				SendKeys.SendWait("t (^V) ~");
-//				System.Threading.Thread.Sleep(100);
-//
-//				/*
-//				System.Diagnostics.Debug.Print ("boos");
-//				SendKeys.SendWait("/booster queue ");
-//				System.Threading.Thread.Sleep(1000);
-//				System.Diagnostics.Debug.Print ("Enter");
-//				SendKeys.SendWait("~ {ENTER}");
-//				 */
-//				//sendTemperate("/booster queue ~  ", 100);
-//
-//				SendKeys.SendWait("x");
-//				System.Threading.Thread.Sleep(100);
-//				SendKeys.SendWait("{ENTER}");
-//				System.Diagnostics.Debug.Print ("end");
-//				//SendKeys.SendWait("");
-			//=======
 			if (mcProcess==null) return;
 			
 			SetForegroundWindow(mcProcess.MainWindowHandle);
@@ -365,7 +332,7 @@ namespace totoUtil
 			info.UseShellExecute = false;
 			
 			var p = new Process();
-			p.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+			//p.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
 			p.StartInfo = info;
 
 			//Execution
@@ -374,47 +341,16 @@ namespace totoUtil
 		}
 		void GrepButtonClick(object sender, EventArgs e)
 		{
-
 			prepareGrepList();
 		}
 		void prepareGrepList() {
 			//TODO:param
-			String sourcePath="%userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
-			tipTextbox.Text= hyUtil.grepAndTip(sourcePath);
+			const String sourcePath = "%userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
+			String s =hyUtil.grepAndTip(sourcePath);
+			tipTextbox.Text= s;
 
 		}
-		void checkTipLine(String ligne, List<String> resultList) {
-			const String NONE = "NONE";
-			Match match = Regex.Match(ligne, @"( Coins from |Coins Boosters queued)");
-			
-			if (match.Success) {
-
-				String who = NONE;
-				Match match2 = Regex.Match(ligne, @" Coins from");
-				
-				if (match2.Success) {
-					String[] whoho = Regex.Split(ligne, @" Coins from ");
-					who = whoho[1];
-					
-					//crado:si fini par virgule ou espace, on vire.
-					if (who.Contains(",")) {
-						who = who.Substring(0, who.IndexOf(","));
-						
-					}
-					if (who.Contains(" ")) {
-						who = who.Substring(0, who.IndexOf(" "));
-					}
-					resultList.Add(" /tip "+who);
-				} else {
-				}
-				
-				//here 
-			}
-			
-
-		}
-		
-
+		//end of functions
 	}
 }
 //http://webman.developpez.com/articles/dotnet/filesystemwatcher/vbnet/

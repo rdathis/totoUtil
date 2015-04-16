@@ -100,18 +100,20 @@ static void Main(string[] args)
 		/** */
 		
 		/** grep a single file (existing) */
-		public List <String> grepFile(String files, List <Regex> regX) {
+		public List <String> grepFile(String files, List <Regex> regX, GrepOptions options) {
 			List <String> fichiersList = MainUtils.getFiles(files, "");
-			
+			if (options==null) {
+				options=new GrepOptions();
+			}
 			List <String> strResult=new List<String> ();
 			
 			foreach	(String fichier in fichiersList) {
 				//recherche
-				GrepResult results = grepFileAsResults(fichier, regX);
+				GrepResult results = grepFileAsResults(fichier, regX, options);
 				
 				
 				foreach(GrepLignes founded in results.getResults()) {
-					strResult.Add(simpleFormateResult(founded, results.getFilename(), true));
+					strResult.Add(simpleFormateResult(founded, options, results.getFilename()));
 				}
 
 				
@@ -120,9 +122,13 @@ static void Main(string[] args)
 		}
 		
 		
-		private GrepResult grepFileAsResults(String file, List <Regex> regX) {
+		private GrepResult grepFileAsResults(String file, List <Regex> regX, GrepOptions options) {
 			if ((regX ==null) || (regX.Count <1)) return null;
 			if (!File.Exists(file)) return null;
+			if (options==null) {
+				options=new GrepOptions();
+			}
+
 			
 			GrepResult result = new GrepResult(file, null);
 			List <GrepLignes> results = new List<GrepLignes>();
@@ -151,7 +157,7 @@ static void Main(string[] args)
 							ok.setPositionMatched(-1); //TODO:calculate this
 							results.Add(ok);
 							
-							break;
+							//break;
 						}
 					}
 				}
@@ -161,13 +167,14 @@ static void Main(string[] args)
 			return result;
 		}
 
-		string simpleFormateResult(GrepLignes founded, String filename="", bool line=false)
+		string simpleFormateResult(GrepLignes founded, GrepOptions options, String filename="")
 		{
+			if (options==null) options=new GrepOptions();
 			String str =founded.getLigneContent();
-			if (line) {
+			if (options.getPrintLineNumber()) {
 				str=founded.getLigneNumber()+":"+str;
 			}
-			if (filename.Length>0) {
+			if (options.getPrintFileName() ) {
 				str=filename+" "+str;
 			}
 			return str;

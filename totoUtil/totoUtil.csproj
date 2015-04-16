@@ -57,6 +57,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Objets\GrepLignes.cs" />
+    <Compile Include="Objets\GrepOptions.cs" />
     <Compile Include="Objets\GrepResult.cs" />
     <Compile Include="Objets\HyUtil.cs" />
     <Compile Include="Objets\TypedPlayer.cs" />
