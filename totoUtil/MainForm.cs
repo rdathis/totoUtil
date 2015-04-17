@@ -31,16 +31,18 @@ namespace totoUtil
 		static extern bool SetForegroundWindow(IntPtr hWnd);
 		HyUtil hyUtil = new HyUtil();
 
-		//TimerExample timer = null;
+		
+		static System.Threading.Timer timm=null;
+		//TimerExample timer = new TimerExample();
 		public MainForm()
 		{
 			InitializeComponent();
 			
 			
 			init();
-			System.Threading.TimerCallback callback = goCheck;
+
 			
-			//System.Threading.Timer timm = new System.Threading.Timer(callback, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+			//System.Threading.Timer timm = new System.Threading.Timer(callback, null, TimeSpan.Zero, TimeSpan.FromSeconds(4));
 			
 			
 		}
@@ -69,7 +71,8 @@ namespace totoUtil
 		void goCheck(object sender)
 		{
 //			pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
-
+			System.Diagnostics.Debug.Print ( "checking :"+DateTime.Now.ToString("HH:mm:ss"));;
+			return;
 			var info = new ProcessStartInfo();
 			info.FileName = pathTextBox.Text;
 			info.Arguments = argTextBox.Text;
@@ -154,7 +157,8 @@ namespace totoUtil
 				 */
 				
 				//example : [17:56:43] [Client thread/INFO]: [CHAT] You sent a tip of 100 coins to [MVP+] pluto in DSKRoom
-				Match match1 = Regex.Match(ligne, @" You sent a tip of ");
+				Match match1 =hyUtil.getTipSent().Match(ligne);
+					//Regex.Match(ligne, @" You sent a tip of ");
 				if (match1.Success) {
 					String when = ligne.Substring(1, 9);
 					int toI = ligne.LastIndexOf(@" to ");
@@ -256,9 +260,8 @@ namespace totoUtil
 		{
 			//throw new NotImplementedException();
 		}
-		void Button1Click(object sender, EventArgs e)
-		{
-			
+		void Button1Click(object sender, EventArgs e) {
+	
 			
 			//appaCtivate
 			Process mcProcess=null;
@@ -346,9 +349,37 @@ namespace totoUtil
 		void prepareGrepList() {
 			//TODO:param
 			const String sourcePath = "%userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
-			String s =hyUtil.grepAndTip(sourcePath);
-			tipTextbox.Text= s;
+			
+			
+			//search stuff
+			List<String> liste =hyUtil.grepMatchesAndTip(sourcePath);
+			
+			
+			//update tipTB
+			tipTextbox.Text= hyUtil.parseTips(liste);
+			
+			tippedRichTextBox.Clear();
+			String emptyRtf=tippedRichTextBox.Rtf;
+			tippedRichTextBox.Location=tippedTextBox.Location;
+			tippedRichTextBox.Size= tippedTextBox.Size;
+			tippedTextBox.Visible=false;
+			tippedTextBox.Text = "";
+			
+			//update tippedRtf
+			hyUtil.updateTippedRtfBox(tippedRichTextBox, liste);
+			
+			//update list
+			hyUtil.updateSearchTextBox(infoTextBox, liste);
 
+		}
+		void Button2Click(object sender, EventArgs e)
+		{
+			System.Threading.TimerCallback callback = goCheck;
+			if (timm==null) {
+				timm = new System.Threading.Timer(callback, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+			} else {
+				timm=null;
+			}
 		}
 		//end of functions
 	}

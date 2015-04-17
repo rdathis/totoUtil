@@ -8,8 +8,10 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Linq;
+using totoUtil.Utils;
 namespace totoUtil.Objets
 {
 	/// <summary>
@@ -23,20 +25,26 @@ namespace totoUtil.Objets
 		const String NONE = "NONE";
 		private const String NONETIP = "/tip " + NONE;
 		
-		//TODO:change as a list<String>
-		public String grepAndTip(String sourcePath) {
+		protected static Regex tipWithPlayer = new Regex(@"( Coins from )");
+		protected static Regex tipWithoutPlayer = new Regex(@" Coins Boosters queued");
+		protected static Regex tipSent = new Regex(@"You sent a tip of");
 
-			String retour="";
-			
+		public Regex getTipWithPlayer() {
+			return tipWithPlayer;
+		}
+		public Regex getTipSent() {
+			return tipSent;
+		}
+		//TODO:change as a list<String>
+		public List <String> grepMatchesAndTip(String sourcePath) {
 			//todo:use FSW
 			System.IO.FileSystemWatcher dog = new System.IO.FileSystemWatcher();
 			Greper g = new Greper();
 			
 			List<Regex> liste =new List<Regex>();
-			
-			liste.Add (new Regex("You send a tip of"));
-			liste.Add (new Regex("Coins"));
-			liste.Add(new Regex("(Coins Boosters queued)"));
+			liste.Add(tipWithPlayer);
+			liste.Add(tipWithoutPlayer);
+			liste.Add(tipSent);
 			
 			//TODO:PARAM + textbox
 			
@@ -49,13 +57,17 @@ namespace totoUtil.Objets
 			options.setPrintFileName(false);
 			options.setPrintLineNumber(false);
 			List <String> strList = g.grepFile(sourcePath, liste, options);
+			return strList;
+		}
+		public String parseTips(List <String> strList) {
+			String retour="";
 			var resultDico = new Dictionary<String, String>();
 			
-		
+			
 			foreach(String ligne in strList) {
 				
-				Match matchSuccess = Regex.Match(ligne, @"( Coins from )");
-				Match matchNothing =  Regex.Match(ligne, @"( Coins Boosters queued)"); // Coins Boosters queueud");
+				Match matchSuccess = tipWithPlayer.Match(ligne);
+				Match matchNothing =  tipWithoutPlayer.Match(ligne); // Coins Boosters queueud");
 				
 				//LIGNE : 20:19:49] [Client thread/INFO]: [CHAT] Blitz Survival Games - Triple Coins from NickSaurus11, Igloo, ItsTimeGaming, Flummox_, Epicnoodles and 111 more
 				
@@ -66,7 +78,7 @@ namespace totoUtil.Objets
 					ligne2=ligne.Substring(debI);
 				}
 				String when = ligne2.Substring(1, 9);
-			
+				
 				int toI = ligne2.LastIndexOf(@" from ");
 				int gameI = ligne2.IndexOf(@"[CHAT] ");
 				String game="";
@@ -121,10 +133,45 @@ namespace totoUtil.Objets
 		
 		
 		public void updateTippedRtfBox(System.Windows.Forms.RichTextBox box, List<String> liste) {
-			//TODO
+
+			List<TypedPlayer> playerList = new List<TypedPlayer>();
+			
+			var dicoTipAction = new Dictionary<String, String>();
+			System.Windows.Forms.BaseCollection coll = new System.Windows.Forms.BaseCollection();
+			
+			foreach (String ligne in liste) {
+				
+				//example : [17:56:43] [Client thread/INFO]: [CHAT] You sent a tip of 100 coins to [MVP+] pluto in DSKRoom
+				Match match1 =getTipSent().Match(ligne);
+				if (match1.Success) {
+					String when = ligne.Substring(1, 9);
+					int toI = ligne.LastIndexOf(@" to ");
+					int gameI = ligne.LastIndexOf(@" in ");
+					if ((toI > 0) && (gameI > 0)) {
+						String to = ligne.Substring(toI + 4, (gameI - toI) - 3).Trim();
+						String game = ligne.Substring(gameI + 3).Trim();
+						playerList.Add(new TypedPlayer(to, when, game));
+					}
+				}
+			}
+			
+			//build rtf for box
+			MainUtils.buildTypedRichTBox(box, playerList);
+			
 		}
 		public String updateCoins(List<String> list) {
 			return "";
+		}
+		
+		public void updateSearchTextBox(System.Windows.Forms.TextBox box, List<String> liste) {
+			List<String> tmpListe = liste.GetRange(0, liste.Count);
+			tmpListe.Reverse();
+			box.Text="";
+			StringBuilder strBuilder=new StringBuilder();
+			foreach(String str in tmpListe) {
+				strBuilder.Append(str+"\r\n");
+			}
+			box.Text=strBuilder.ToString();
 		}
 	}
 }

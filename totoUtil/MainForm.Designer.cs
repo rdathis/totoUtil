@@ -50,6 +50,7 @@ namespace totoUtil
 			this.launchMCButton = new System.Windows.Forms.Button();
 			this.grepButton = new System.Windows.Forms.Button();
 			this.btnExplore = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// goButton
@@ -159,7 +160,6 @@ namespace totoUtil
 			this.launchMCButton.TabIndex = 11;
 			this.launchMCButton.Text = "MC";
 			this.launchMCButton.UseVisualStyleBackColor = false;
-			this.launchMCButton.Click += new System.EventHandler(this.LaunchMCButtonClick);
 			// 
 			// grepButton
 			// 
@@ -181,11 +181,22 @@ namespace totoUtil
 			this.btnExplore.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			this.btnExplore.UseVisualStyleBackColor = true;
 			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(131, 57);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(75, 23);
+			this.button2.TabIndex = 15;
+			this.button2.Text = "timerButton";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.Button2Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(835, 528);
+			this.Controls.Add(this.button2);
 			this.Controls.Add(this.btnExplore);
 			this.Controls.Add(this.grepButton);
 			this.Controls.Add(this.launchMCButton);
@@ -220,5 +231,6 @@ namespace totoUtil
 		private System.Windows.Forms.TextBox pathTextBox;
 		private System.Windows.Forms.TextBox tipTextbox;
 		private System.Windows.Forms.Button btnExplore;
+		private System.Windows.Forms.Button button2;
 	}
 }

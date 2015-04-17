@@ -16,7 +16,7 @@ namespace totoUtil
 	/// </summary>
 	public  class TimerExample // In App_Code folder
 	{
-		/*
+		
 		static Timer _timer;
 		// From System.Timers
 		static List<DateTime> _l;
@@ -43,6 +43,6 @@ namespace totoUtil
 		{
 			_l.Add(DateTime.Now); // Add date on each timer event
 		}
-		*/
+		
 	}
 }
