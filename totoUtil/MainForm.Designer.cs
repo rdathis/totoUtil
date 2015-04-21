@@ -160,6 +160,7 @@ namespace totoUtil
 			this.launchMCButton.TabIndex = 11;
 			this.launchMCButton.Text = "MC";
 			this.launchMCButton.UseVisualStyleBackColor = false;
+			this.launchMCButton.Click += new System.EventHandler(this.LaunchMCButtonClick);
 			// 
 			// grepButton
 			// 

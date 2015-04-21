@@ -60,6 +60,7 @@
     <Compile Include="Objets\GrepOptions.cs" />
     <Compile Include="Objets\GrepResult.cs" />
     <Compile Include="Objets\HyUtil.cs" />
+    <Compile Include="Objets\ParamReader.cs" />
     <Compile Include="Objets\TypedPlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

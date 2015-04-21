@@ -72,7 +72,8 @@ namespace totoUtil
 		{
 //			pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
 			System.Diagnostics.Debug.Print ( "checking :"+DateTime.Now.ToString("HH:mm:ss"));;
-			return;
+			Boolean exitNow = true;
+			if (exitNow)return;
 			var info = new ProcessStartInfo();
 			info.FileName = pathTextBox.Text;
 			info.Arguments = argTextBox.Text;
