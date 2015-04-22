@@ -21,17 +21,17 @@ namespace cmdUtils
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.TextBox textBox3;
+		private System.Windows.Forms.TextBox scriptsParam;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.TextBox textBox4;
+		private System.Windows.Forms.TextBox dataParam;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TextBox textBox2;
+		private System.Windows.Forms.TextBox mysqlParam;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.TextBox cygwinParam;
 		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.TextBox textBox7;
+		private System.Windows.Forms.TextBox mysqlUserParam;
 		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.TextBox textBox6;
+		private System.Windows.Forms.TextBox mysqlPasswordParam;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.TextBox textBox5;
 		private System.Windows.Forms.Button button1;
@@ -69,21 +69,22 @@ namespace cmdUtils
 		{
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.tabParam = new System.Windows.Forms.TabPage();
+			this.labelFichierConfig = new System.Windows.Forms.Label();
 			this.button1 = new System.Windows.Forms.Button();
 			this.label7 = new System.Windows.Forms.Label();
-			this.textBox7 = new System.Windows.Forms.TextBox();
+			this.mysqlUserParam = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
-			this.textBox6 = new System.Windows.Forms.TextBox();
+			this.mysqlPasswordParam = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.textBox5 = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.textBox3 = new System.Windows.Forms.TextBox();
+			this.scriptsParam = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
-			this.textBox4 = new System.Windows.Forms.TextBox();
+			this.dataParam = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
-			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.mysqlParam = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.cygwinParam = new System.Windows.Forms.TextBox();
 			this.tabImport = new System.Windows.Forms.TabPage();
 			this.button2 = new System.Windows.Forms.Button();
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -97,7 +98,6 @@ namespace cmdUtils
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.labelFichierConfig = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -119,19 +119,19 @@ namespace cmdUtils
 			this.tabParam.Controls.Add(this.labelFichierConfig);
 			this.tabParam.Controls.Add(this.button1);
 			this.tabParam.Controls.Add(this.label7);
-			this.tabParam.Controls.Add(this.textBox7);
+			this.tabParam.Controls.Add(this.mysqlUserParam);
 			this.tabParam.Controls.Add(this.label6);
-			this.tabParam.Controls.Add(this.textBox6);
+			this.tabParam.Controls.Add(this.mysqlPasswordParam);
 			this.tabParam.Controls.Add(this.label5);
 			this.tabParam.Controls.Add(this.textBox5);
 			this.tabParam.Controls.Add(this.label3);
-			this.tabParam.Controls.Add(this.textBox3);
+			this.tabParam.Controls.Add(this.scriptsParam);
 			this.tabParam.Controls.Add(this.label4);
-			this.tabParam.Controls.Add(this.textBox4);
+			this.tabParam.Controls.Add(this.dataParam);
 			this.tabParam.Controls.Add(this.label2);
-			this.tabParam.Controls.Add(this.textBox2);
+			this.tabParam.Controls.Add(this.mysqlParam);
 			this.tabParam.Controls.Add(this.label1);
-			this.tabParam.Controls.Add(this.textBox1);
+			this.tabParam.Controls.Add(this.cygwinParam);
 			this.tabParam.Location = new System.Drawing.Point(4, 22);
 			this.tabParam.Name = "tabParam";
 			this.tabParam.Padding = new System.Windows.Forms.Padding(3);
@@ -139,6 +139,15 @@ namespace cmdUtils
 			this.tabParam.TabIndex = 0;
 			this.tabParam.Text = "Params";
 			this.tabParam.UseVisualStyleBackColor = true;
+			this.tabParam.Click += new System.EventHandler(this.TabParamClick);
+			// 
+			// labelFichierConfig
+			// 
+			this.labelFichierConfig.Location = new System.Drawing.Point(54, 394);
+			this.labelFichierConfig.Name = "labelFichierConfig";
+			this.labelFichierConfig.Size = new System.Drawing.Size(678, 23);
+			this.labelFichierConfig.TabIndex = 15;
+			this.labelFichierConfig.Text = "?";
 			// 
 			// button1
 			// 
@@ -158,12 +167,12 @@ namespace cmdUtils
 			this.label7.TabIndex = 13;
 			this.label7.Text = "user@my";
 			// 
-			// textBox7
+			// mysqlUserParam
 			// 
-			this.textBox7.Location = new System.Drawing.Point(131, 137);
-			this.textBox7.Name = "textBox7";
-			this.textBox7.Size = new System.Drawing.Size(642, 20);
-			this.textBox7.TabIndex = 12;
+			this.mysqlUserParam.Location = new System.Drawing.Point(131, 137);
+			this.mysqlUserParam.Name = "mysqlUserParam";
+			this.mysqlUserParam.Size = new System.Drawing.Size(642, 20);
+			this.mysqlUserParam.TabIndex = 12;
 			// 
 			// label6
 			// 
@@ -173,12 +182,12 @@ namespace cmdUtils
 			this.label6.TabIndex = 11;
 			this.label6.Text = "pwd@my";
 			// 
-			// textBox6
+			// mysqlPasswordParam
 			// 
-			this.textBox6.Location = new System.Drawing.Point(131, 163);
-			this.textBox6.Name = "textBox6";
-			this.textBox6.Size = new System.Drawing.Size(642, 20);
-			this.textBox6.TabIndex = 10;
+			this.mysqlPasswordParam.Location = new System.Drawing.Point(131, 163);
+			this.mysqlPasswordParam.Name = "mysqlPasswordParam";
+			this.mysqlPasswordParam.Size = new System.Drawing.Size(642, 20);
+			this.mysqlPasswordParam.TabIndex = 10;
 			// 
 			// label5
 			// 
@@ -203,12 +212,12 @@ namespace cmdUtils
 			this.label3.TabIndex = 7;
 			this.label3.Text = "scriptsSQL";
 			// 
-			// textBox3
+			// scriptsParam
 			// 
-			this.textBox3.Location = new System.Drawing.Point(131, 111);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(642, 20);
-			this.textBox3.TabIndex = 6;
+			this.scriptsParam.Location = new System.Drawing.Point(131, 111);
+			this.scriptsParam.Name = "scriptsParam";
+			this.scriptsParam.Size = new System.Drawing.Size(642, 20);
+			this.scriptsParam.TabIndex = 6;
 			// 
 			// label4
 			// 
@@ -218,12 +227,12 @@ namespace cmdUtils
 			this.label4.TabIndex = 5;
 			this.label4.Text = "datas";
 			// 
-			// textBox4
+			// dataParam
 			// 
-			this.textBox4.Location = new System.Drawing.Point(131, 85);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(642, 20);
-			this.textBox4.TabIndex = 4;
+			this.dataParam.Location = new System.Drawing.Point(131, 85);
+			this.dataParam.Name = "dataParam";
+			this.dataParam.Size = new System.Drawing.Size(642, 20);
+			this.dataParam.TabIndex = 4;
 			// 
 			// label2
 			// 
@@ -233,12 +242,12 @@ namespace cmdUtils
 			this.label2.TabIndex = 3;
 			this.label2.Text = "mysql";
 			// 
-			// textBox2
+			// mysqlParam
 			// 
-			this.textBox2.Location = new System.Drawing.Point(131, 59);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(642, 20);
-			this.textBox2.TabIndex = 2;
+			this.mysqlParam.Location = new System.Drawing.Point(131, 59);
+			this.mysqlParam.Name = "mysqlParam";
+			this.mysqlParam.Size = new System.Drawing.Size(642, 20);
+			this.mysqlParam.TabIndex = 2;
 			// 
 			// label1
 			// 
@@ -248,12 +257,12 @@ namespace cmdUtils
 			this.label1.TabIndex = 1;
 			this.label1.Text = "cygwin";
 			// 
-			// textBox1
+			// cygwinParam
 			// 
-			this.textBox1.Location = new System.Drawing.Point(131, 33);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(642, 20);
-			this.textBox1.TabIndex = 0;
+			this.cygwinParam.Location = new System.Drawing.Point(131, 33);
+			this.cygwinParam.Name = "cygwinParam";
+			this.cygwinParam.Size = new System.Drawing.Size(642, 20);
+			this.cygwinParam.TabIndex = 0;
 			// 
 			// tabImport
 			// 
@@ -359,7 +368,7 @@ namespace cmdUtils
 			// menuToolStripMenuItem
 			// 
 			this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
-			this.menuToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+			this.menuToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
 			this.menuToolStripMenuItem.Text = "menu";
 			// 
 			// statusStrip1
@@ -369,14 +378,6 @@ namespace cmdUtils
 			this.statusStrip1.Size = new System.Drawing.Size(799, 22);
 			this.statusStrip1.TabIndex = 2;
 			this.statusStrip1.Text = "statusStrip1";
-			// 
-			// labelFichierConfig
-			// 
-			this.labelFichierConfig.Location = new System.Drawing.Point(54, 394);
-			this.labelFichierConfig.Name = "labelFichierConfig";
-			this.labelFichierConfig.Size = new System.Drawing.Size(678, 23);
-			this.labelFichierConfig.TabIndex = 15;
-			this.labelFichierConfig.Text = "?";
 			// 
 			// MainForm
 			// 

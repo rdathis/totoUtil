@@ -6,8 +6,9 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-using System;   
+using System;
 using System.Configuration;
+using System.IO;
 
 namespace cmdUtils
 {
@@ -15,21 +16,23 @@ namespace cmdUtils
 	/// Configuration section &lt;ConfigSection&gt;
 	/// </summary>
 	/// <remarks>
-	/// Assign properties to your child class that has the attribute 
+	/// Assign properties to your child class that has the attribute
 	/// <c>[ConfigurationProperty]</c> to store said properties in the xml.
 	/// </remarks>
 	public sealed class ConfigSectionSettings : ConfigurationSection
 	{
 		System.Configuration.Configuration _Config;
-	
+		
 		const String mysqlExePath_="mysqlExePath";
 		const String gunzipExePath_="gunzipExePath";
-		const string scriptsPath_ ="scriptsPath";
+		const String scriptsPath_ ="scriptsPath";
+		const String cygwinPath_="cygwinPath";
+		const String cygwinGzip_="cygwinGzip";
 
 		#region ConfigurationProperties
 		
 		/*
-		 *  Uncomment the following section and add a Configuration Collection 
+		 *  Uncomment the following section and add a Configuration Collection
 		 *  from the with the file named ConfigSection.cs
 		 */
 		// /// <summary>
@@ -42,7 +45,7 @@ namespace cmdUtils
 		// }
 
 		/// <summary>
-		/// Collection of <c>ConfigSectionElement(s)</c> 
+		/// Collection of <c>ConfigSectionElement(s)</c>
 		/// A custom XML section for an applications configuration file.
 		/// </summary>
 		[ConfigurationProperty("exampleAttribute", DefaultValue="exampleValue")]
@@ -50,20 +53,26 @@ namespace cmdUtils
 			get { return (string) this["exampleAttribute"]; }
 			set { this["exampleAttribute"] = value; }
 		}
-		[ConfigurationProperty(mysqlExePath_, DefaultValue="m:/wamp/bin/...")]
+		[ConfigurationProperty(mysqlExePath_, DefaultValue="m:/wamp/bin/mysql/mysql5.6.17/bin/mysql.exe")]
 		public string mysqlExePath {
 			get { return (string) this[mysqlExePath_]; }
 			set { this[mysqlExePath_] = value; }
 		}
-		[ConfigurationProperty(gunzipExePath_, DefaultValue="m:/cygwin64/bin/...")]
-		public string gunzipExePath {
-			get { return (string) this[gunzipExePath_]; }
-			set { this[gunzipExePath_] = value; }
+		[ConfigurationProperty(cygwinPath_, DefaultValue="zm:/cygwin64/bin/")]
+		public string cygwinPath {
+			get { return (string) this[cygwinPath_]; }
+			set { this[cygwinPath_] = value; }
+		}
+
+		[ConfigurationProperty(cygwinGzip_, DefaultValue="gzip.exe")]
+		public string cygwinGzip {
+			get { return (string) this[cygwinGzip_]; }
+			set { this[cygwinGzip_] = value; }
 		}
 		[ConfigurationProperty(scriptsPath_, DefaultValue="m:/data/...")]
 		public string scriptsPath {
-			get { return (string) this[gunzipExePath_]; }
-			set { this[gunzipExePath_] = value; }
+			get { return (string) this[scriptsPath_]; }
+			set { this[scriptsPath_] = value; }
 		}
 		
 		#endregion
@@ -109,7 +118,7 @@ namespace cmdUtils
 			 * name the section &lt;ConfigSection&gt; in the config file.
 			 * If you would prefer to be able to specify the name of the section,
 			 * then remove this method and mark the constructor public.
-			 */ 
+			 */
 			System.Configuration.Configuration Config = ConfigurationManager.OpenExeConfiguration
 				(ConfigLevel);
 			ConfigSectionSettings oConfigSectionSettings;

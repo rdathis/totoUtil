@@ -19,6 +19,7 @@ namespace cmdUtils
 	/// </summary>
 	public partial class MainForm : Form
 	{
+		ConfigSectionSettings cfg=	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
 		public MainForm()
 		{
 			//
@@ -29,18 +30,30 @@ namespace cmdUtils
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
+			populate();
 		}
 		void Button1Click(object sender, EventArgs e)
 		{
-		ConfigSectionSettings cfg=	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
-		cfg.ExampleAttribute="youpi";
-		cfg.Save();
-		Configuration cfgConf=cfg.getConfiguration();
-		statusStrip1.Text="Saved in : "+cfgConf.FilePath;
-		labelFichierConfig.Text="Saved in : "+cfgConf.FilePath;
-			//ConfigurationManager.
-			//settings.
-	//Properties.Settings.Default.Save();
+			
+			updateConfig();
+			//cfg.ExampleAttribute="youpi";
+			cfg.Save();
+			Configuration cfgConf=cfg.getConfiguration();
+			statusStrip1.Text="Saved in : "+cfgConf.FilePath;
+			labelFichierConfig.Text="Saved in : "+cfgConf.FilePath;
+			populate();
+		}
+		void TabParamClick(object sender, EventArgs e)
+		{
+			//throw new NotImplementedException();
+			populate();
+		}
+		void populate() {
+			cygwinParam.Text = cfg.cygwinPath;
+			
+		}
+		void updateConfig() {
+			cfg.cygwinPath= cygwinParam.Text;
 		}
 	}
 }
