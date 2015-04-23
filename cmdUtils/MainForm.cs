@@ -22,19 +22,19 @@ namespace cmdUtils
 		ConfigSectionSettings cfg=	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
 		public MainForm()
 		{
-			//
+//
 			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
+//
 			InitializeComponent();
-			
-			//
+
+//
 			// TODO: Add constructor code after the InitializeComponent() call.
-			//
+//
 			populate();
 		}
 		void Button1Click(object sender, EventArgs e)
 		{
-			
+
 			updateConfig();
 			//cfg.ExampleAttribute="youpi";
 			cfg.Save();
@@ -50,10 +50,23 @@ namespace cmdUtils
 		}
 		void populate() {
 			cygwinParam.Text = cfg.cygwinPath;
-			
+			mysqlParam.Text = cfg.mysqlExePath;
+			dataParam.Text=cfg.dumpsPath;
+			mysqlUserParam.Text = cfg.mysqlUser;
+			mysqlPasswordParam.Text=cfg.mysqlPassword;
+			scriptCreateDbParam.Text=cfg.scriptCreate;
+			scriptCreateFiledDBParam.Text=cfg.scriptFileDb;
 		}
 		void updateConfig() {
 			cfg.cygwinPath= cygwinParam.Text;
+			cfg.mysqlExePath=mysqlParam.Text;
+			
+			cfg.dumpsPath=dataParam.Text;
+			cfg.mysqlUser=mysqlUserParam.Text;
+			cfg.mysqlPassword=mysqlPasswordParam.Text;
+			
+			cfg.scriptCreate=scriptCreateDbParam.Text;
+			cfg.scriptFileDb=scriptCreateFiledDBParam.Text;
 		}
 	}
 }

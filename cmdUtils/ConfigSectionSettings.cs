@@ -9,6 +9,7 @@
 using System;
 using System.Configuration;
 using System.IO;
+using System.Net.Mime;
 
 namespace cmdUtils
 {
@@ -25,10 +26,20 @@ namespace cmdUtils
 		
 		const String mysqlExePath_="mysqlExePath";
 		const String gunzipExePath_="gunzipExePath";
-		const String scriptsPath_ ="scriptsPath";
+		
 		const String cygwinPath_="cygwinPath";
 		const String cygwinGzip_="cygwinGzip";
+		
+		const String mysqlUser_="mysqlUser";
+		const String mysqlPassword_="mysqlPassword";
+		
+		const String dumpsPath_="dumpPath";
 
+		/** scripts sections */
+		const String scriptsPath_ ="scriptsPath";
+		const String scriptCreate_="scriptCreate";
+		const String scriptFileDb_="scriptCreateFileDb";
+		
 		#region ConfigurationProperties
 		
 		/*
@@ -48,11 +59,13 @@ namespace cmdUtils
 		/// Collection of <c>ConfigSectionElement(s)</c>
 		/// A custom XML section for an applications configuration file.
 		/// </summary>
+		/*
 		[ConfigurationProperty("exampleAttribute", DefaultValue="exampleValue")]
 		public string ExampleAttribute {
 			get { return (string) this["exampleAttribute"]; }
 			set { this["exampleAttribute"] = value; }
 		}
+		 */
 		[ConfigurationProperty(mysqlExePath_, DefaultValue="m:/wamp/bin/mysql/mysql5.6.17/bin/mysql.exe")]
 		public string mysqlExePath {
 			get { return (string) this[mysqlExePath_]; }
@@ -73,6 +86,36 @@ namespace cmdUtils
 		public string scriptsPath {
 			get { return (string) this[scriptsPath_]; }
 			set { this[scriptsPath_] = value; }
+		}
+
+		[ConfigurationProperty(mysqlUser_, DefaultValue="user")]
+		public string mysqlUser {
+			get { return (string) this[mysqlUser_]; }
+			set { this[mysqlUser_] = value; }
+		}
+		
+		[ConfigurationProperty(mysqlPassword_, DefaultValue="pwd")]
+		public string mysqlPassword {
+			get { return (string) this[mysqlPassword_]; }
+			set { this[mysqlPassword_] = value; }
+		}
+
+		[ConfigurationProperty(dumpsPath_, DefaultValue="dump196")]
+		public string dumpsPath {
+			get { return (string) this[dumpsPath_]; }
+			set { this[dumpsPath_] = value; }
+		}
+
+
+		[ConfigurationProperty(scriptCreate_, DefaultValue="createdatabase.sql")]
+		public string scriptCreate {
+			get { return (string) this[scriptCreate_]; }
+			set { this[scriptCreate_] = value; }
+		}
+		[ConfigurationProperty(scriptFileDb_, DefaultValue="createFileDb.sql")]
+		public string scriptFileDb {
+			get { return (string) this[scriptFileDb_]; }
+			set { this[scriptFileDb_] = value; }
 		}
 		
 		#endregion
@@ -119,15 +162,34 @@ namespace cmdUtils
 			 * If you would prefer to be able to specify the name of the section,
 			 * then remove this method and mark the constructor public.
 			 */
-			System.Configuration.Configuration Config = ConfigurationManager.OpenExeConfiguration
-				(ConfigLevel);
+			const String configMainKey="ConfigSectionSettings";
+			const String file="totoConfig.cfg";
+			String exePath = System.IO.Path.Combine(Environment.CurrentDirectory, file);
+			
+			//params xml node
 			ConfigSectionSettings oConfigSectionSettings;
 			
-			oConfigSectionSettings =
-				(ConfigSectionSettings)Config.GetSection("ConfigSectionSettings");
+
+			//create precise config file
+			if (!File.Exists(exePath)) {
+				
+				//lambda config
+				Configuration tmpConfig = ConfigurationManager.OpenExeConfiguration
+					(ConfigurationUserLevel.None);
+				oConfigSectionSettings = new ConfigSectionSettings();
+				tmpConfig.Sections.Add(configMainKey, oConfigSectionSettings);
+				tmpConfig.SaveAs(exePath);
+			}
+			
+			//loading config
+			Configuration Config = ConfigurationManager.OpenExeConfiguration(exePath);
+			
+
+			//buildings objects
+			oConfigSectionSettings =(ConfigSectionSettings)Config.GetSection(configMainKey);
 			if (oConfigSectionSettings == null) {
 				oConfigSectionSettings = new ConfigSectionSettings();
-				Config.Sections.Add("ConfigSectionSettings", oConfigSectionSettings);
+				Config.Sections.Add(configMainKey, oConfigSectionSettings);
 			}
 			oConfigSectionSettings._Config = Config;
 			
