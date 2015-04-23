@@ -57,8 +57,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Objets\ParamReader.cs" />
-    <Compile Include="Objets\ParamWriter.cs" />
+    <Compile Include="Objets\ProcessUtil.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
