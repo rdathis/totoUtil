@@ -71,7 +71,7 @@ namespace cmdUtils
 			get { return (string) this[mysqlExePath_]; }
 			set { this[mysqlExePath_] = value; }
 		}
-		[ConfigurationProperty(cygwinPath_, DefaultValue="zm:/cygwin64/bin/")]
+		[ConfigurationProperty(cygwinPath_, DefaultValue="m:/cygwin64/bin/")]
 		public string cygwinPath {
 			get { return (string) this[cygwinPath_]; }
 			set { this[cygwinPath_] = value; }

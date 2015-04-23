@@ -32,10 +32,11 @@ namespace cmdUtils
 //
 			populate();
 		}
-		void Button1Click(object sender, EventArgs e)
+		void SaveButtonClick(object sender, EventArgs e)
 		{
 
 			updateConfig();
+			
 			//cfg.ExampleAttribute="youpi";
 			cfg.Save();
 			Configuration cfgConf=cfg.getConfiguration();

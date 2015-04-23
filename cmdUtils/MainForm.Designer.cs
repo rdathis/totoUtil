@@ -34,7 +34,7 @@ namespace cmdUtils
 		private System.Windows.Forms.TextBox mysqlPasswordParam;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.TextBox scriptCreateFiledDBParam;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button saveButton;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.ListBox listBox1;
 		private System.Windows.Forms.TextBox textBox8;
@@ -71,8 +71,10 @@ namespace cmdUtils
 		{
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.tabParam = new System.Windows.Forms.TabPage();
+			this.defConfigButton = new System.Windows.Forms.Button();
+			this.reloadButton = new System.Windows.Forms.Button();
 			this.labelFichierConfig = new System.Windows.Forms.Label();
-			this.button1 = new System.Windows.Forms.Button();
+			this.saveButton = new System.Windows.Forms.Button();
 			this.label7 = new System.Windows.Forms.Label();
 			this.mysqlUserParam = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
@@ -100,8 +102,6 @@ namespace cmdUtils
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.reloadButton = new System.Windows.Forms.Button();
-			this.defConfigButton = new System.Windows.Forms.Button();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -123,7 +123,7 @@ namespace cmdUtils
 			this.tabParam.Controls.Add(this.defConfigButton);
 			this.tabParam.Controls.Add(this.reloadButton);
 			this.tabParam.Controls.Add(this.labelFichierConfig);
-			this.tabParam.Controls.Add(this.button1);
+			this.tabParam.Controls.Add(this.saveButton);
 			this.tabParam.Controls.Add(this.label7);
 			this.tabParam.Controls.Add(this.mysqlUserParam);
 			this.tabParam.Controls.Add(this.label6);
@@ -147,6 +147,24 @@ namespace cmdUtils
 			this.tabParam.UseVisualStyleBackColor = true;
 			this.tabParam.Click += new System.EventHandler(this.TabParamClick);
 			// 
+			// defConfigButton
+			// 
+			this.defConfigButton.Location = new System.Drawing.Point(520, 356);
+			this.defConfigButton.Name = "defConfigButton";
+			this.defConfigButton.Size = new System.Drawing.Size(75, 23);
+			this.defConfigButton.TabIndex = 18;
+			this.defConfigButton.Text = "&defConfig";
+			this.defConfigButton.UseVisualStyleBackColor = true;
+			// 
+			// reloadButton
+			// 
+			this.reloadButton.Location = new System.Drawing.Point(424, 356);
+			this.reloadButton.Name = "reloadButton";
+			this.reloadButton.Size = new System.Drawing.Size(75, 23);
+			this.reloadButton.TabIndex = 16;
+			this.reloadButton.Text = "&reload";
+			this.reloadButton.UseVisualStyleBackColor = true;
+			// 
 			// labelFichierConfig
 			// 
 			this.labelFichierConfig.Location = new System.Drawing.Point(54, 394);
@@ -157,13 +175,13 @@ namespace cmdUtils
 			// 
 			// button1
 			// 
-			this.button1.Location = new System.Drawing.Point(328, 356);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 14;
-			this.button1.Text = "save";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.Button1Click);
+			this.saveButton.Location = new System.Drawing.Point(328, 356);
+			this.saveButton.Name = "saveButton";
+			this.saveButton.Size = new System.Drawing.Size(75, 23);
+			this.saveButton.TabIndex = 14;
+			this.saveButton.Text = "&save";
+			this.saveButton.UseVisualStyleBackColor = true;
+			this.saveButton.Click += new System.EventHandler(this.SaveButtonClick);
 			// 
 			// label7
 			// 
@@ -178,7 +196,7 @@ namespace cmdUtils
 			this.mysqlUserParam.Location = new System.Drawing.Point(131, 137);
 			this.mysqlUserParam.Name = "mysqlUserParam";
 			this.mysqlUserParam.Size = new System.Drawing.Size(642, 20);
-			this.mysqlUserParam.TabIndex = 12;
+			this.mysqlUserParam.TabIndex = 4;
 			// 
 			// label6
 			// 
@@ -193,7 +211,7 @@ namespace cmdUtils
 			this.mysqlPasswordParam.Location = new System.Drawing.Point(131, 163);
 			this.mysqlPasswordParam.Name = "mysqlPasswordParam";
 			this.mysqlPasswordParam.Size = new System.Drawing.Size(642, 20);
-			this.mysqlPasswordParam.TabIndex = 10;
+			this.mysqlPasswordParam.TabIndex = 5;
 			// 
 			// label5
 			// 
@@ -208,7 +226,7 @@ namespace cmdUtils
 			this.scriptCreateFiledDBParam.Location = new System.Drawing.Point(131, 189);
 			this.scriptCreateFiledDBParam.Name = "scriptCreateFiledDBParam";
 			this.scriptCreateFiledDBParam.Size = new System.Drawing.Size(642, 20);
-			this.scriptCreateFiledDBParam.TabIndex = 8;
+			this.scriptCreateFiledDBParam.TabIndex = 6;
 			// 
 			// label3
 			// 
@@ -223,7 +241,7 @@ namespace cmdUtils
 			this.scriptCreateDbParam.Location = new System.Drawing.Point(131, 111);
 			this.scriptCreateDbParam.Name = "scriptCreateDbParam";
 			this.scriptCreateDbParam.Size = new System.Drawing.Size(642, 20);
-			this.scriptCreateDbParam.TabIndex = 6;
+			this.scriptCreateDbParam.TabIndex = 3;
 			// 
 			// label4
 			// 
@@ -238,7 +256,7 @@ namespace cmdUtils
 			this.dataParam.Location = new System.Drawing.Point(131, 85);
 			this.dataParam.Name = "dataParam";
 			this.dataParam.Size = new System.Drawing.Size(642, 20);
-			this.dataParam.TabIndex = 4;
+			this.dataParam.TabIndex = 2;
 			// 
 			// label2
 			// 
@@ -253,7 +271,7 @@ namespace cmdUtils
 			this.mysqlParam.Location = new System.Drawing.Point(131, 59);
 			this.mysqlParam.Name = "mysqlParam";
 			this.mysqlParam.Size = new System.Drawing.Size(642, 20);
-			this.mysqlParam.TabIndex = 2;
+			this.mysqlParam.TabIndex = 1;
 			// 
 			// label1
 			// 
@@ -374,7 +392,7 @@ namespace cmdUtils
 			// menuToolStripMenuItem
 			// 
 			this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
-			this.menuToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+			this.menuToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
 			this.menuToolStripMenuItem.Text = "menu";
 			// 
 			// statusStrip1
@@ -384,24 +402,6 @@ namespace cmdUtils
 			this.statusStrip1.Size = new System.Drawing.Size(799, 22);
 			this.statusStrip1.TabIndex = 2;
 			this.statusStrip1.Text = "statusStrip1";
-			// 
-			// reloadButton
-			// 
-			this.reloadButton.Location = new System.Drawing.Point(424, 356);
-			this.reloadButton.Name = "reloadButton";
-			this.reloadButton.Size = new System.Drawing.Size(75, 23);
-			this.reloadButton.TabIndex = 16;
-			this.reloadButton.Text = "&reload";
-			this.reloadButton.UseVisualStyleBackColor = true;
-			// 
-			// defConfigButton
-			// 
-			this.defConfigButton.Location = new System.Drawing.Point(520, 356);
-			this.defConfigButton.Name = "defConfigButton";
-			this.defConfigButton.Size = new System.Drawing.Size(75, 23);
-			this.defConfigButton.TabIndex = 18;
-			this.defConfigButton.Text = "&defConfig";
-			this.defConfigButton.UseVisualStyleBackColor = true;
 			// 
 			// MainForm
 			// 
