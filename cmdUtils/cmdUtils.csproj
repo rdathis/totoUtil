@@ -58,6 +58,8 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Objets\ProcessUtil.cs" />
+    <Compile Include="Objets\CmdUtil.cs" />
+    <Compile Include="Objets\FilterReg.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

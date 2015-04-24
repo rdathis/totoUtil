@@ -37,7 +37,6 @@ namespace cmdUtils
 		private System.Windows.Forms.Button saveButton;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.ListBox listBox1;
-		private System.Windows.Forms.TextBox textBox8;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.TextBox textBox9;
 		private System.Windows.Forms.TextBox textBox10;
@@ -90,13 +89,14 @@ namespace cmdUtils
 			this.label1 = new System.Windows.Forms.Label();
 			this.cygwinParam = new System.Windows.Forms.TextBox();
 			this.tabImport = new System.Windows.Forms.TabPage();
+			this.mysqlDatabaseCombo = new System.Windows.Forms.ComboBox();
+			this.getMysqlDatabaseButton = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			this.textBox10 = new System.Windows.Forms.TextBox();
 			this.label10 = new System.Windows.Forms.Label();
 			this.textBox9 = new System.Windows.Forms.TextBox();
 			this.label9 = new System.Windows.Forms.Label();
-			this.textBox8 = new System.Windows.Forms.TextBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -173,7 +173,7 @@ namespace cmdUtils
 			this.labelFichierConfig.TabIndex = 15;
 			this.labelFichierConfig.Text = "?";
 			// 
-			// button1
+			// saveButton
 			// 
 			this.saveButton.Location = new System.Drawing.Point(328, 356);
 			this.saveButton.Name = "saveButton";
@@ -290,13 +290,14 @@ namespace cmdUtils
 			// 
 			// tabImport
 			// 
+			this.tabImport.Controls.Add(this.mysqlDatabaseCombo);
+			this.tabImport.Controls.Add(this.getMysqlDatabaseButton);
 			this.tabImport.Controls.Add(this.button2);
 			this.tabImport.Controls.Add(this.richTextBox1);
 			this.tabImport.Controls.Add(this.textBox10);
 			this.tabImport.Controls.Add(this.label10);
 			this.tabImport.Controls.Add(this.textBox9);
 			this.tabImport.Controls.Add(this.label9);
-			this.tabImport.Controls.Add(this.textBox8);
 			this.tabImport.Controls.Add(this.label8);
 			this.tabImport.Controls.Add(this.listBox1);
 			this.tabImport.Location = new System.Drawing.Point(4, 22);
@@ -306,6 +307,24 @@ namespace cmdUtils
 			this.tabImport.TabIndex = 1;
 			this.tabImport.Text = "tabImport";
 			this.tabImport.UseVisualStyleBackColor = true;
+			// 
+			// mysqlDatabaseCombo
+			// 
+			this.mysqlDatabaseCombo.FormattingEnabled = true;
+			this.mysqlDatabaseCombo.Location = new System.Drawing.Point(113, 4);
+			this.mysqlDatabaseCombo.Name = "mysqlDatabaseCombo";
+			this.mysqlDatabaseCombo.Size = new System.Drawing.Size(355, 21);
+			this.mysqlDatabaseCombo.TabIndex = 10;
+			// 
+			// getMysqlDatabaseButton
+			// 
+			this.getMysqlDatabaseButton.Location = new System.Drawing.Point(568, 6);
+			this.getMysqlDatabaseButton.Name = "getMysqlDatabaseButton";
+			this.getMysqlDatabaseButton.Size = new System.Drawing.Size(75, 23);
+			this.getMysqlDatabaseButton.TabIndex = 9;
+			this.getMysqlDatabaseButton.Text = "&get db";
+			this.getMysqlDatabaseButton.UseVisualStyleBackColor = true;
+			this.getMysqlDatabaseButton.Click += new System.EventHandler(this.GetMysqlDatabaseButtonClick);
 			// 
 			// button2
 			// 
@@ -355,13 +374,6 @@ namespace cmdUtils
 			this.label9.Size = new System.Drawing.Size(100, 23);
 			this.label9.TabIndex = 3;
 			this.label9.Text = "script avant";
-			// 
-			// textBox8
-			// 
-			this.textBox8.Location = new System.Drawing.Point(114, 9);
-			this.textBox8.Name = "textBox8";
-			this.textBox8.Size = new System.Drawing.Size(355, 20);
-			this.textBox8.TabIndex = 2;
 			// 
 			// label8
 			// 
@@ -425,5 +437,7 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.ComboBox mysqlDatabaseCombo;
+		private System.Windows.Forms.Button getMysqlDatabaseButton;
 	}
 }

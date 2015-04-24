@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
+using cmdUtils.Objets;
 
 namespace cmdUtils
 {
@@ -19,17 +20,12 @@ namespace cmdUtils
 	/// </summary>
 	public partial class MainForm : Form
 	{
+		CmdUtil cmdUtils = new CmdUtil();
 		ConfigSectionSettings cfg=	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
 		public MainForm()
 		{
-//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-//
 			InitializeComponent();
 
-//
-			// TODO: Add constructor code after the InitializeComponent() call.
-//
 			populate();
 		}
 		void SaveButtonClick(object sender, EventArgs e)
@@ -68,6 +64,12 @@ namespace cmdUtils
 			
 			cfg.scriptCreate=scriptCreateDbParam.Text;
 			cfg.scriptFileDb=scriptCreateFiledDBParam.Text;
+		}
+		void GetMysqlDatabaseButtonClick(object sender, EventArgs e)
+		{
+			List <String> liste=cmdUtils.getDatabases(cfg);
+			cmdUtils.listToCombo(liste, mysqlDatabaseCombo, true);
+			//util.getDatabases(mysqlDatabaseCombo);
 		}
 	}
 }
