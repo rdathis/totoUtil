@@ -159,7 +159,7 @@ namespace totoUtil
 				
 				//example : [17:56:43] [Client thread/INFO]: [CHAT] You sent a tip of 100 coins to [MVP+] pluto in DSKRoom
 				Match match1 =hyUtil.getTipSent().Match(ligne);
-					//Regex.Match(ligne, @" You sent a tip of ");
+				//Regex.Match(ligne, @" You sent a tip of ");
 				if (match1.Success) {
 					String when = ligne.Substring(1, 9);
 					int toI = ligne.LastIndexOf(@" to ");
@@ -262,7 +262,7 @@ namespace totoUtil
 			//throw new NotImplementedException();
 		}
 		void Button1Click(object sender, EventArgs e) {
-	
+			
 			
 			//appaCtivate
 			Process mcProcess=null;
@@ -288,10 +288,11 @@ namespace totoUtil
 			SendKeys.SendWait("{ENTER}");
 			//SendKeys.SendWait("");
 			
+			
 			//'			goCheck(sender);
 			System.Threading.Thread.Sleep(100);
 			
-			//prepareGrepList();
+			prepareGrepList();
 			System.Threading.Thread.Sleep(2000);
 			
 			//TODO:param
