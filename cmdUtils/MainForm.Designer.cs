@@ -36,7 +36,7 @@ namespace cmdUtils
 		private System.Windows.Forms.TextBox scriptCreateFiledDBParam;
 		private System.Windows.Forms.Button saveButton;
 		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.ListBox listBox1;
+		private System.Windows.Forms.ListBox dumpsListBox;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.TextBox textBox9;
 		private System.Windows.Forms.TextBox textBox10;
@@ -98,10 +98,12 @@ namespace cmdUtils
 			this.textBox9 = new System.Windows.Forms.TextBox();
 			this.label9 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
-			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.dumpsListBox = new System.Windows.Forms.ListBox();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.filterGzBtn = new System.Windows.Forms.Button();
+			this.filterGzTextBox = new System.Windows.Forms.TextBox();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -290,6 +292,8 @@ namespace cmdUtils
 			// 
 			// tabImport
 			// 
+			this.tabImport.Controls.Add(this.filterGzTextBox);
+			this.tabImport.Controls.Add(this.filterGzBtn);
 			this.tabImport.Controls.Add(this.mysqlDatabaseCombo);
 			this.tabImport.Controls.Add(this.getMysqlDatabaseButton);
 			this.tabImport.Controls.Add(this.button2);
@@ -299,7 +303,7 @@ namespace cmdUtils
 			this.tabImport.Controls.Add(this.textBox9);
 			this.tabImport.Controls.Add(this.label9);
 			this.tabImport.Controls.Add(this.label8);
-			this.tabImport.Controls.Add(this.listBox1);
+			this.tabImport.Controls.Add(this.dumpsListBox);
 			this.tabImport.Location = new System.Drawing.Point(4, 22);
 			this.tabImport.Name = "tabImport";
 			this.tabImport.Padding = new System.Windows.Forms.Padding(3);
@@ -385,11 +389,11 @@ namespace cmdUtils
 			// 
 			// listBox1
 			// 
-			this.listBox1.FormattingEnabled = true;
-			this.listBox1.Location = new System.Drawing.Point(6, 70);
-			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(765, 95);
-			this.listBox1.TabIndex = 0;
+			this.dumpsListBox.FormattingEnabled = true;
+			this.dumpsListBox.Location = new System.Drawing.Point(6, 70);
+			this.dumpsListBox.Name = "listBox1";
+			this.dumpsListBox.Size = new System.Drawing.Size(765, 95);
+			this.dumpsListBox.TabIndex = 0;
 			// 
 			// menuStrip1
 			// 
@@ -415,6 +419,23 @@ namespace cmdUtils
 			this.statusStrip1.TabIndex = 2;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
+			// filterGzBtn
+			// 
+			this.filterGzBtn.Location = new System.Drawing.Point(696, 34);
+			this.filterGzBtn.Name = "filterGzBtn";
+			this.filterGzBtn.Size = new System.Drawing.Size(75, 23);
+			this.filterGzBtn.TabIndex = 11;
+			this.filterGzBtn.Text = "filtre";
+			this.filterGzBtn.UseVisualStyleBackColor = true;
+			this.filterGzBtn.Click += new System.EventHandler(this.FilterGzBtnClick);
+			// 
+			// filterGzTextBox
+			// 
+			this.filterGzTextBox.Location = new System.Drawing.Point(494, 37);
+			this.filterGzTextBox.Name = "filterGzTextBox";
+			this.filterGzTextBox.Size = new System.Drawing.Size(196, 20);
+			this.filterGzTextBox.TabIndex = 12;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -437,6 +458,8 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.TextBox filterGzTextBox;
+		private System.Windows.Forms.Button filterGzBtn;
 		private System.Windows.Forms.ComboBox mysqlDatabaseCombo;
 		private System.Windows.Forms.Button getMysqlDatabaseButton;
 	}

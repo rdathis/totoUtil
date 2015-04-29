@@ -47,6 +47,14 @@ namespace cmdUtils.Objets
 			
 		}
 
+		public void listFilesToListbox(string dumpsPath, String findPattern, ListBox box)
+		{
+			DirectoryInfo 		di = new DirectoryInfo(dumpsPath);
+			box.Items.Clear();
+			foreach(FileInfo f in di.GetFiles(findPattern)) {
+				box.Items.Add(f.FullName);
+			}
+		}
 		public List <String> getDatabases(ConfigSectionSettings cfg) {
 			String cmd=cfg.mysqlExePath;
 			String args=" -u "+cfg.mysqlUser +" -p"+cfg.mysqlPassword +" -Be ";

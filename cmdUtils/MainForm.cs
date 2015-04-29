@@ -53,6 +53,13 @@ namespace cmdUtils
 			mysqlPasswordParam.Text=cfg.mysqlPassword;
 			scriptCreateDbParam.Text=cfg.scriptCreate;
 			scriptCreateFiledDBParam.Text=cfg.scriptFileDb;
+			
+			
+			if (filterGzTextBox.Text.Length==0) {
+				
+				DateTime now= DateTime.Now;
+				filterGzTextBox.Text="meo*"+now.ToString("yyyyMMdd")+"*.sql.gz";
+			}
 		}
 		void updateConfig() {
 			cfg.cygwinPath= cygwinParam.Text;
@@ -70,6 +77,10 @@ namespace cmdUtils
 			List <String> liste=cmdUtils.getDatabases(cfg);
 			cmdUtils.listToCombo(liste, mysqlDatabaseCombo, true);
 			//util.getDatabases(mysqlDatabaseCombo);
+		}
+		void FilterGzBtnClick(object sender, EventArgs e)
+		{
+			cmdUtils.listFilesToListbox(cfg.dumpsPath, filterGzTextBox.Text, dumpsListBox);
 		}
 	}
 }
