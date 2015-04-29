@@ -89,6 +89,9 @@ namespace cmdUtils
 			this.label1 = new System.Windows.Forms.Label();
 			this.cygwinParam = new System.Windows.Forms.TextBox();
 			this.tabImport = new System.Windows.Forms.TabPage();
+			this.dropButton = new System.Windows.Forms.Button();
+			this.filterGzTextBox = new System.Windows.Forms.TextBox();
+			this.filterGzBtn = new System.Windows.Forms.Button();
 			this.mysqlDatabaseCombo = new System.Windows.Forms.ComboBox();
 			this.getMysqlDatabaseButton = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
@@ -102,8 +105,6 @@ namespace cmdUtils
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.filterGzBtn = new System.Windows.Forms.Button();
-			this.filterGzTextBox = new System.Windows.Forms.TextBox();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -292,6 +293,7 @@ namespace cmdUtils
 			// 
 			// tabImport
 			// 
+			this.tabImport.Controls.Add(this.dropButton);
 			this.tabImport.Controls.Add(this.filterGzTextBox);
 			this.tabImport.Controls.Add(this.filterGzBtn);
 			this.tabImport.Controls.Add(this.mysqlDatabaseCombo);
@@ -312,6 +314,33 @@ namespace cmdUtils
 			this.tabImport.Text = "tabImport";
 			this.tabImport.UseVisualStyleBackColor = true;
 			// 
+			// dropButton
+			// 
+			this.dropButton.Location = new System.Drawing.Point(475, 29);
+			this.dropButton.Name = "dropButton";
+			this.dropButton.Size = new System.Drawing.Size(38, 23);
+			this.dropButton.TabIndex = 13;
+			this.dropButton.Text = "dropButton";
+			this.dropButton.UseVisualStyleBackColor = true;
+			this.dropButton.Click += new System.EventHandler(this.dropButtonClick);
+			// 
+			// filterGzTextBox
+			// 
+			this.filterGzTextBox.Location = new System.Drawing.Point(519, 37);
+			this.filterGzTextBox.Name = "filterGzTextBox";
+			this.filterGzTextBox.Size = new System.Drawing.Size(196, 20);
+			this.filterGzTextBox.TabIndex = 12;
+			// 
+			// filterGzBtn
+			// 
+			this.filterGzBtn.Location = new System.Drawing.Point(721, 34);
+			this.filterGzBtn.Name = "filterGzBtn";
+			this.filterGzBtn.Size = new System.Drawing.Size(50, 23);
+			this.filterGzBtn.TabIndex = 11;
+			this.filterGzBtn.Text = "filtre";
+			this.filterGzBtn.UseVisualStyleBackColor = true;
+			this.filterGzBtn.Click += new System.EventHandler(this.FilterGzBtnClick);
+			// 
 			// mysqlDatabaseCombo
 			// 
 			this.mysqlDatabaseCombo.FormattingEnabled = true;
@@ -322,7 +351,7 @@ namespace cmdUtils
 			// 
 			// getMysqlDatabaseButton
 			// 
-			this.getMysqlDatabaseButton.Location = new System.Drawing.Point(568, 6);
+			this.getMysqlDatabaseButton.Location = new System.Drawing.Point(474, 2);
 			this.getMysqlDatabaseButton.Name = "getMysqlDatabaseButton";
 			this.getMysqlDatabaseButton.Size = new System.Drawing.Size(75, 23);
 			this.getMysqlDatabaseButton.TabIndex = 9;
@@ -365,7 +394,7 @@ namespace cmdUtils
 			// 
 			// textBox9
 			// 
-			this.textBox9.Location = new System.Drawing.Point(114, 44);
+			this.textBox9.Location = new System.Drawing.Point(113, 31);
 			this.textBox9.Name = "textBox9";
 			this.textBox9.Size = new System.Drawing.Size(355, 20);
 			this.textBox9.TabIndex = 4;
@@ -373,7 +402,7 @@ namespace cmdUtils
 			// 
 			// label9
 			// 
-			this.label9.Location = new System.Drawing.Point(7, 34);
+			this.label9.Location = new System.Drawing.Point(7, 30);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(100, 23);
 			this.label9.TabIndex = 3;
@@ -387,11 +416,11 @@ namespace cmdUtils
 			this.label8.TabIndex = 1;
 			this.label8.Text = "database";
 			// 
-			// listBox1
+			// dumpsListBox
 			// 
 			this.dumpsListBox.FormattingEnabled = true;
 			this.dumpsListBox.Location = new System.Drawing.Point(6, 70);
-			this.dumpsListBox.Name = "listBox1";
+			this.dumpsListBox.Name = "dumpsListBox";
 			this.dumpsListBox.Size = new System.Drawing.Size(765, 95);
 			this.dumpsListBox.TabIndex = 0;
 			// 
@@ -419,23 +448,6 @@ namespace cmdUtils
 			this.statusStrip1.TabIndex = 2;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
-			// filterGzBtn
-			// 
-			this.filterGzBtn.Location = new System.Drawing.Point(696, 34);
-			this.filterGzBtn.Name = "filterGzBtn";
-			this.filterGzBtn.Size = new System.Drawing.Size(75, 23);
-			this.filterGzBtn.TabIndex = 11;
-			this.filterGzBtn.Text = "filtre";
-			this.filterGzBtn.UseVisualStyleBackColor = true;
-			this.filterGzBtn.Click += new System.EventHandler(this.FilterGzBtnClick);
-			// 
-			// filterGzTextBox
-			// 
-			this.filterGzTextBox.Location = new System.Drawing.Point(494, 37);
-			this.filterGzTextBox.Name = "filterGzTextBox";
-			this.filterGzTextBox.Size = new System.Drawing.Size(196, 20);
-			this.filterGzTextBox.TabIndex = 12;
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -458,6 +470,7 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Button dropButton;
 		private System.Windows.Forms.TextBox filterGzTextBox;
 		private System.Windows.Forms.Button filterGzBtn;
 		private System.Windows.Forms.ComboBox mysqlDatabaseCombo;

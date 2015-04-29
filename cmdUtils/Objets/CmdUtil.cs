@@ -21,6 +21,8 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public class CmdUtil
 	{
+
+		
 		const string  mysqlShowDatabase_="show databases;";
 		private List<Regex> listeRegDatabase () {
 			List<Regex> listReg=new List<Regex>();
@@ -30,6 +32,19 @@ namespace cmdUtils.Objets
 		}
 		public CmdUtil()
 		{
+		}
+		public void dropRecreateDatabase(ConfigSectionSettings cfg, string databaseName)
+		{
+			if ((databaseName==null) || (databaseName.Length<1)) {
+				throw new Exception("bad params");
+			}
+			
+			String cmd=cfg.mysqlExePath;
+			String args=" -u "+cfg.mysqlUser +" -p"+cfg.mysqlPassword +" -Be ";
+			args+=" \" DROP "+databaseName+" if EXISTs; CREATE "+databaseName+"; "+"\" ";
+			
+			List <String> list =executeCommand(cmd, args);
+			
 		}
 
 		public void listToCombo(List<string> liste, ComboBox combo, Boolean clearBefore)
@@ -70,11 +85,24 @@ namespace cmdUtils.Objets
 			
 			ProcessUtil pu = new ProcessUtil();
 			Process p = pu.startProcess(cmd, args, ProcessWindowStyle.Minimized);
-			
-			StreamReader sr= p.StandardOutput;
-			String [] s =  sr.ReadToEnd().Split('\n');
-			foreach(String ss in s) {
-				list.Add(ss);
+			try {
+			if (p.ExitCode!=0) {
+				StreamReader srErr=p.StandardError;
+				String [] sErr =  srErr.ReadToEnd().Split('\n');
+				foreach(String ss in sErr) {
+					list.Add(ss);
+				}
+				return list;
+				
+			}
+			} catch (Exception e) {
+				
+			}
+			StreamReader srOut= p.StandardOutput;
+			String [] sOut =  srOut.ReadToEnd().Split('\n');
+			foreach(String ss in sOut) {
+				
+				list.Add(ss.Replace("\r", ""));
 			}
 
 			list=filterListe(list, listeRegDatabase(), FiltersReg.MatchOne);

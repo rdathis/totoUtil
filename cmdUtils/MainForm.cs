@@ -80,7 +80,16 @@ namespace cmdUtils
 		}
 		void FilterGzBtnClick(object sender, EventArgs e)
 		{
+			Button btn=(Button)sender;
+			btn.Tag=btn.Text;
+			btn.Text="(...)";
+			btn.Enabled=false;
+			
 			cmdUtils.listFilesToListbox(cfg.dumpsPath, filterGzTextBox.Text, dumpsListBox);
+		}
+		void dropButtonClick(object sender, EventArgs e)
+		{
+			cmdUtils.dropRecreateDatabase(cfg, mysqlDatabaseCombo.Text);
 		}
 	}
 }
