@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 using cmdUtils.Objets;
-
+using MySql.Data;
 namespace cmdUtils
 {
 	/// <summary>
@@ -89,7 +90,49 @@ namespace cmdUtils
 		}
 		void dropButtonClick(object sender, EventArgs e)
 		{
-			cmdUtils.dropRecreateDatabase(cfg, mysqlDatabaseCombo.Text);
+			cmdUtils.dropRecreateDatabase(cfg, getDatabaseName());
+		}
+		void DumpsListBoxSelectedIndexChanged(object sender, EventArgs e)
+		{
+			//throw new NotImplementedException();
+		}
+		void DumpsListBoxDoubleClick(object sender, EventArgs e)
+		{
+			String dump = getDumpName();
+			//TODO:move this code
+			richTextBox1.Text=cmdUtils.buildImportDatabase(cfg, dump, getDatabaseName());
+			//richTextBox1.Text="gunzip <" +" "+v+" | "+cfg.mysqlExePath+"mysql.exe"+" -u "+cfg.mysqlUser+" -p"+cfg.mysqlPassword+ " "+mysqlDatabaseCombo.Text;
+		}
+		private string getDatabaseName() {
+			return mysqlDatabaseCombo.Text;
+		}
+		private String getDumpName() {
+			return dumpsListBox.SelectedItem.ToString().Replace("\\", "/");
+		}
+		
+		//http://morpheus.developpez.com/mysqldotnet/
+		//http://dev.mysql.com/get/Downloads/Connector-Net/mysql-connector-net-6.9.6-noinstall.zip
+		void test1() {
+			String cstr="Database=testmeo119;Data Source=localhost;User Id=cristallin;Password=blah";
+			MySql.Data.MySqlClient.MySqlConnection cnx = new MySql.Data.MySqlClient.MySqlConnection();
+			cnx.ConnectionString=cstr;
+			cnx.Open();
+			string sql ="select * from client where nom like 'D%' and mag_id=1;";
+			MySqlDataAdapter adapter = new MySqlDataAdapter();
+			adapter.SelectCommand=new MySqlCommand(sql, cnx);
+			adapter.Fill(dataSet1);
+			dataGrid1.SetDataBinding(dataSet1, null);
+			dataGrid1.DataSource = dataSet1.Tables[0];
+                dataGrid1.Refresh();
+
+			//dataGridView1.setDataBindin=dataGrid1.DataBindings;
+		
+				cnx.Close();
+		}
+		void Label11Click(object sender, EventArgs e)
+		{
+			test1();
 		}
 	}
+	
 }

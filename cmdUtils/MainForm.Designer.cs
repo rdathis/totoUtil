@@ -70,6 +70,7 @@ namespace cmdUtils
 		{
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.tabParam = new System.Windows.Forms.TabPage();
+			this.label11 = new System.Windows.Forms.Label();
 			this.defConfigButton = new System.Windows.Forms.Button();
 			this.reloadButton = new System.Windows.Forms.Button();
 			this.labelFichierConfig = new System.Windows.Forms.Label();
@@ -105,10 +106,16 @@ namespace cmdUtils
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.dataSet1 = new System.Data.DataSet();
+			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.dataGrid1 = new System.Windows.Forms.DataGrid();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabs
@@ -123,6 +130,9 @@ namespace cmdUtils
 			// 
 			// tabParam
 			// 
+			this.tabParam.Controls.Add(this.dataGrid1);
+			this.tabParam.Controls.Add(this.dataGridView1);
+			this.tabParam.Controls.Add(this.label11);
 			this.tabParam.Controls.Add(this.defConfigButton);
 			this.tabParam.Controls.Add(this.reloadButton);
 			this.tabParam.Controls.Add(this.labelFichierConfig);
@@ -149,6 +159,15 @@ namespace cmdUtils
 			this.tabParam.Text = "Params";
 			this.tabParam.UseVisualStyleBackColor = true;
 			this.tabParam.Click += new System.EventHandler(this.TabParamClick);
+			// 
+			// label11
+			// 
+			this.label11.Location = new System.Drawing.Point(54, 283);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(100, 23);
+			this.label11.TabIndex = 19;
+			this.label11.Text = "label11";
+			this.label11.Click += new System.EventHandler(this.Label11Click);
 			// 
 			// defConfigButton
 			// 
@@ -423,6 +442,8 @@ namespace cmdUtils
 			this.dumpsListBox.Name = "dumpsListBox";
 			this.dumpsListBox.Size = new System.Drawing.Size(765, 95);
 			this.dumpsListBox.TabIndex = 0;
+			this.dumpsListBox.SelectedIndexChanged += new System.EventHandler(this.DumpsListBoxSelectedIndexChanged);
+			this.dumpsListBox.DoubleClick += new System.EventHandler(this.DumpsListBoxDoubleClick);
 			// 
 			// menuStrip1
 			// 
@@ -448,6 +469,27 @@ namespace cmdUtils
 			this.statusStrip1.TabIndex = 2;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
+			// dataSet1
+			// 
+			this.dataSet1.DataSetName = "NewDataSet";
+			// 
+			// dataGridView1
+			// 
+			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataGridView1.Location = new System.Drawing.Point(225, 261);
+			this.dataGridView1.Name = "dataGridView1";
+			this.dataGridView1.Size = new System.Drawing.Size(240, 150);
+			this.dataGridView1.TabIndex = 20;
+			// 
+			// dataGrid1
+			// 
+			this.dataGrid1.DataMember = "";
+			this.dataGrid1.HeaderForeColor = System.Drawing.SystemColors.ControlText;
+			this.dataGrid1.Location = new System.Drawing.Point(486, 252);
+			this.dataGrid1.Name = "dataGrid1";
+			this.dataGrid1.Size = new System.Drawing.Size(130, 80);
+			this.dataGrid1.TabIndex = 21;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -466,10 +508,17 @@ namespace cmdUtils
 			this.tabImport.PerformLayout();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.DataGrid dataGrid1;
+		private System.Windows.Forms.DataGridView dataGridView1;
+		private System.Windows.Forms.Label label11;
+		private System.Data.DataSet dataSet1;
 		private System.Windows.Forms.Button dropButton;
 		private System.Windows.Forms.TextBox filterGzTextBox;
 		private System.Windows.Forms.Button filterGzBtn;

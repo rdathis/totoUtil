@@ -11,6 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -47,6 +48,24 @@ namespace cmdUtils.Objets
 			
 		}
 
+		public String buildImportDatabase(ConfigSectionSettings cfg, String dumpName, String databaseName, Boolean unzip=true) {
+			StringBuilder builder = new StringBuilder();
+			
+			String v=dumpName.Replace("\\", "/");
+			builder.Append("gunzip < ");
+			builder.Append(v);
+			builder.Append(" | ");
+			
+			builder.Append(cfg.mysqlExePath);
+			builder.Append(" -u ");
+			builder.Append(cfg.mysqlUser);
+			builder.Append(" -p");
+			builder.Append(cfg.mysqlPassword);
+			builder.Append(" ");
+			builder.Append(databaseName);
+			
+			return builder.ToString();
+		}
 		public void listToCombo(List<string> liste, ComboBox combo, Boolean clearBefore)
 		{
 			
@@ -86,17 +105,17 @@ namespace cmdUtils.Objets
 			ProcessUtil pu = new ProcessUtil();
 			Process p = pu.startProcess(cmd, args, ProcessWindowStyle.Minimized);
 			try {
-			if (p.ExitCode!=0) {
-				StreamReader srErr=p.StandardError;
-				String [] sErr =  srErr.ReadToEnd().Split('\n');
-				foreach(String ss in sErr) {
-					list.Add(ss);
+				if (p.ExitCode!=0) {
+					StreamReader srErr=p.StandardError;
+					String [] sErr =  srErr.ReadToEnd().Split('\n');
+					foreach(String ss in sErr) {
+						list.Add(ss);
+					}
+					return list;
+					
 				}
-				return list;
-				
-			}
 			} catch (Exception e) {
-				
+				System.Diagnostics.Debug.Print("Exception : "+e);
 			}
 			StreamReader srOut= p.StandardOutput;
 			String [] sOut =  srOut.ReadToEnd().Split('\n');
