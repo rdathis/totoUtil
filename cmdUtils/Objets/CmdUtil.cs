@@ -23,8 +23,9 @@ namespace cmdUtils.Objets
 	public class CmdUtil
 	{
 
-		
-		const string  mysqlShowDatabase_="show databases;";
+
+		MyUtil myUtil = new MyUtil();		
+		//const string  mysqlShowDatabase_="show databases;";
 		private List<Regex> listeRegDatabase () {
 			List<Regex> listReg=new List<Regex>();
 			listReg.Add(new Regex(@"meo"));
@@ -34,17 +35,22 @@ namespace cmdUtils.Objets
 		public CmdUtil()
 		{
 		}
+		
+		
 		public void dropRecreateDatabase(ConfigSectionSettings cfg, string databaseName)
 		{
 			if ((databaseName==null) || (databaseName.Length<1)) {
 				throw new Exception("bad params");
 			}
 			
-			String cmd=cfg.mysqlExePath;
-			String args=" -u "+cfg.mysqlUser +" -p"+cfg.mysqlPassword +" -Be ";
-			args+=" \" DROP "+databaseName+" if EXISTs; CREATE "+databaseName+"; "+"\" ";
+			//String cmd=cfg.mysqlExePath;
+			//String args=" -u "+cfg.mysqlUser +" -p"+cfg.mysqlPassword +" -Be ";
 			
-			List <String> list =executeCommand(cmd, args);
+			
+			String connString = myUtil.buildconnString("", "localhost", cfg.mysqlUser, cfg.mysqlPassword);
+			List <String> list = myUtil.getListResult(connString, myUtil.getDropSQL(databaseName));
+			
+			//List <String> list =executeCommand(cmd, args);
 			
 		}
 
@@ -90,11 +96,10 @@ namespace cmdUtils.Objets
 			}
 		}
 		public List <String> getDatabases(ConfigSectionSettings cfg) {
-			String cmd=cfg.mysqlExePath;
-			String args=" -u "+cfg.mysqlUser +" -p"+cfg.mysqlPassword +" -Be ";
-			args+=" \""+mysqlShowDatabase_+"\" ";
+			String connString = myUtil.buildconnString("", "localhost", cfg.mysqlUser, cfg.mysqlPassword);
+			List <String> list = myUtil.getListResult(connString, myUtil.getDatabaseList());
 			
-			List <String> list =executeCommand(cmd, args);
+			list=filterListe(list, listeRegDatabase(), FiltersReg.MatchOne);
 			return list;
 			
 		}
@@ -124,7 +129,6 @@ namespace cmdUtils.Objets
 				list.Add(ss.Replace("\r", ""));
 			}
 
-			list=filterListe(list, listeRegDatabase(), FiltersReg.MatchOne);
 			return list;
 		}
 		public List<String> filterListe(List<String> listStr, List<Regex> listReg, FiltersReg filter) {

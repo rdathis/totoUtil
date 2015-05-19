@@ -112,26 +112,15 @@ namespace cmdUtils
 		
 		//http://morpheus.developpez.com/mysqldotnet/
 		//http://dev.mysql.com/get/Downloads/Connector-Net/mysql-connector-net-6.9.6-noinstall.zip
-		void test1() {
-			String cstr="Database=testmeo119;Data Source=localhost;User Id=cristallin;Password=blah";
-			MySql.Data.MySqlClient.MySqlConnection cnx = new MySql.Data.MySqlClient.MySqlConnection();
-			cnx.ConnectionString=cstr;
-			cnx.Open();
-			string sql ="select * from client where nom like 'D%' and mag_id=1;";
-			MySqlDataAdapter adapter = new MySqlDataAdapter();
-			adapter.SelectCommand=new MySqlCommand(sql, cnx);
-			adapter.Fill(dataSet1);
-			dataGrid1.SetDataBinding(dataSet1, null);
-			dataGrid1.DataSource = dataSet1.Tables[0];
-                dataGrid1.Refresh();
-
-			//dataGridView1.setDataBindin=dataGrid1.DataBindings;
-		
-				cnx.Close();
-		}
 		void Label11Click(object sender, EventArgs e)
 		{
-			test1();
+			//test1();
+		}
+		void PdfLabelClick(object sender, EventArgs e)
+		{
+			//PDFDocument doc =new ;
+			//PDFViewer view;
+			
 		}
 	}
 	

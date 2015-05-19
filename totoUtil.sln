@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-# SharpDevelop 5.1
+# SharpDevelop 5.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "totoUtil", "totoUtil\totoUtil.csproj", "{91190D9B-CD31-4E95-8E5E-AE905D5AD625}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cmdUtils", "cmdUtils\cmdUtils.csproj", "{82161C4E-7D1B-4168-B4FB-5916BC45348B}"

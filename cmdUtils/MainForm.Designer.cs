@@ -70,7 +70,7 @@ namespace cmdUtils
 		{
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.tabParam = new System.Windows.Forms.TabPage();
-			this.label11 = new System.Windows.Forms.Label();
+			this.pdfLabel = new System.Windows.Forms.Label();
 			this.defConfigButton = new System.Windows.Forms.Button();
 			this.reloadButton = new System.Windows.Forms.Button();
 			this.labelFichierConfig = new System.Windows.Forms.Label();
@@ -103,25 +103,32 @@ namespace cmdUtils
 			this.label9 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
 			this.dumpsListBox = new System.Windows.Forms.ListBox();
+			this.tabSQL = new System.Windows.Forms.TabPage();
+			this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+			this.dataGrid1 = new System.Windows.Forms.DataGrid();
+			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.label11 = new System.Windows.Forms.Label();
+			this.tabPdf = new System.Windows.Forms.TabPage();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.dataSet1 = new System.Data.DataSet();
-			this.dataGridView1 = new System.Windows.Forms.DataGridView();
-			this.dataGrid1 = new System.Windows.Forms.DataGrid();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
+			this.tabSQL.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabs
 			// 
 			this.tabs.Controls.Add(this.tabParam);
 			this.tabs.Controls.Add(this.tabImport);
+			this.tabs.Controls.Add(this.tabSQL);
+			this.tabs.Controls.Add(this.tabPdf);
 			this.tabs.Location = new System.Drawing.Point(12, 27);
 			this.tabs.Name = "tabs";
 			this.tabs.SelectedIndex = 0;
@@ -130,9 +137,7 @@ namespace cmdUtils
 			// 
 			// tabParam
 			// 
-			this.tabParam.Controls.Add(this.dataGrid1);
-			this.tabParam.Controls.Add(this.dataGridView1);
-			this.tabParam.Controls.Add(this.label11);
+			this.tabParam.Controls.Add(this.pdfLabel);
 			this.tabParam.Controls.Add(this.defConfigButton);
 			this.tabParam.Controls.Add(this.reloadButton);
 			this.tabParam.Controls.Add(this.labelFichierConfig);
@@ -160,14 +165,14 @@ namespace cmdUtils
 			this.tabParam.UseVisualStyleBackColor = true;
 			this.tabParam.Click += new System.EventHandler(this.TabParamClick);
 			// 
-			// label11
+			// pdfLabel
 			// 
-			this.label11.Location = new System.Drawing.Point(54, 283);
-			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(100, 23);
-			this.label11.TabIndex = 19;
-			this.label11.Text = "label11";
-			this.label11.Click += new System.EventHandler(this.Label11Click);
+			this.pdfLabel.Location = new System.Drawing.Point(63, 224);
+			this.pdfLabel.Name = "pdfLabel";
+			this.pdfLabel.Size = new System.Drawing.Size(100, 23);
+			this.pdfLabel.TabIndex = 22;
+			this.pdfLabel.Text = "pdf";
+			this.pdfLabel.Click += new System.EventHandler(this.PdfLabelClick);
 			// 
 			// defConfigButton
 			// 
@@ -445,6 +450,62 @@ namespace cmdUtils
 			this.dumpsListBox.SelectedIndexChanged += new System.EventHandler(this.DumpsListBoxSelectedIndexChanged);
 			this.dumpsListBox.DoubleClick += new System.EventHandler(this.DumpsListBoxDoubleClick);
 			// 
+			// tabSQL
+			// 
+			this.tabSQL.Controls.Add(this.richTextBox2);
+			this.tabSQL.Controls.Add(this.dataGrid1);
+			this.tabSQL.Controls.Add(this.dataGridView1);
+			this.tabSQL.Controls.Add(this.label11);
+			this.tabSQL.Location = new System.Drawing.Point(4, 22);
+			this.tabSQL.Name = "tabSQL";
+			this.tabSQL.Size = new System.Drawing.Size(779, 449);
+			this.tabSQL.TabIndex = 2;
+			this.tabSQL.Text = "tabSQL";
+			this.tabSQL.UseVisualStyleBackColor = true;
+			// 
+			// richTextBox2
+			// 
+			this.richTextBox2.Location = new System.Drawing.Point(3, 3);
+			this.richTextBox2.Name = "richTextBox2";
+			this.richTextBox2.Size = new System.Drawing.Size(768, 127);
+			this.richTextBox2.TabIndex = 25;
+			this.richTextBox2.Text = "";
+			// 
+			// dataGrid1
+			// 
+			this.dataGrid1.DataMember = "";
+			this.dataGrid1.HeaderForeColor = System.Drawing.SystemColors.ControlText;
+			this.dataGrid1.Location = new System.Drawing.Point(386, 237);
+			this.dataGrid1.Name = "dataGrid1";
+			this.dataGrid1.Size = new System.Drawing.Size(385, 209);
+			this.dataGrid1.TabIndex = 24;
+			// 
+			// dataGridView1
+			// 
+			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataGridView1.Location = new System.Drawing.Point(22, 237);
+			this.dataGridView1.Name = "dataGridView1";
+			this.dataGridView1.Size = new System.Drawing.Size(358, 209);
+			this.dataGridView1.TabIndex = 23;
+			// 
+			// label11
+			// 
+			this.label11.Location = new System.Drawing.Point(108, 176);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(100, 23);
+			this.label11.TabIndex = 22;
+			this.label11.Text = "label11";
+			this.label11.Click += new System.EventHandler(this.Label11Click);
+			// 
+			// tabPdf
+			// 
+			this.tabPdf.Location = new System.Drawing.Point(4, 22);
+			this.tabPdf.Name = "tabPdf";
+			this.tabPdf.Size = new System.Drawing.Size(779, 449);
+			this.tabPdf.TabIndex = 3;
+			this.tabPdf.Text = "tabPdf";
+			this.tabPdf.UseVisualStyleBackColor = true;
+			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -473,23 +534,6 @@ namespace cmdUtils
 			// 
 			this.dataSet1.DataSetName = "NewDataSet";
 			// 
-			// dataGridView1
-			// 
-			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView1.Location = new System.Drawing.Point(225, 261);
-			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.Size = new System.Drawing.Size(240, 150);
-			this.dataGridView1.TabIndex = 20;
-			// 
-			// dataGrid1
-			// 
-			this.dataGrid1.DataMember = "";
-			this.dataGrid1.HeaderForeColor = System.Drawing.SystemColors.ControlText;
-			this.dataGrid1.Location = new System.Drawing.Point(486, 252);
-			this.dataGrid1.Name = "dataGrid1";
-			this.dataGrid1.Size = new System.Drawing.Size(130, 80);
-			this.dataGrid1.TabIndex = 21;
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -506,15 +550,20 @@ namespace cmdUtils
 			this.tabParam.PerformLayout();
 			this.tabImport.ResumeLayout(false);
 			this.tabImport.PerformLayout();
+			this.tabSQL.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.RichTextBox richTextBox2;
+		private System.Windows.Forms.TabPage tabPdf;
+		private System.Windows.Forms.TabPage tabSQL;
+		private System.Windows.Forms.Label pdfLabel;
 		private System.Windows.Forms.DataGrid dataGrid1;
 		private System.Windows.Forms.DataGridView dataGridView1;
 		private System.Windows.Forms.Label label11;

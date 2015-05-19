@@ -35,19 +35,19 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="MySql.Data">
-      <HintPath>C:\Users\Renaud\Downloads\mysql-connector-net-6.9.6-noinstall\v4.0\MySql.Data.dll</HintPath>
+      <HintPath>libs\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity">
-      <HintPath>C:\Users\Renaud\Downloads\mysql-connector-net-6.9.6-noinstall\v4.0\MySql.Data.Entity.dll</HintPath>
+      <HintPath>libs\MySql.Data.Entity.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6">
-      <HintPath>C:\Users\Renaud\Downloads\mysql-connector-net-6.9.6-noinstall\v4.0\MySql.Data.Entity.EF6.dll</HintPath>
+      <HintPath>libs\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Fabric.Plugin">
-      <HintPath>C:\Users\Renaud\Downloads\mysql-connector-net-6.9.6-noinstall\v4.0\MySql.Fabric.Plugin.dll</HintPath>
+      <HintPath>libs\MySql.Fabric.Plugin.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Web">
-      <HintPath>C:\Users\Renaud\Downloads\mysql-connector-net-6.9.6-noinstall\v4.0\MySql.Web.dll</HintPath>
+      <HintPath>libs\MySql.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -72,6 +72,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Objets\MyUtil.cs" />
     <Compile Include="Objets\ProcessUtil.cs" />
     <Compile Include="Objets\CmdUtil.cs" />
     <Compile Include="Objets\FilterReg.cs" />
@@ -80,6 +81,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="libs\MySql.Data.dll" />
+    <None Include="libs\MySql.Data.Entity.dll" />
+    <None Include="libs\MySql.Data.Entity.EF6.dll" />
+    <None Include="libs\MySql.Fabric.Plugin.dll" />
+    <None Include="libs\MySql.Web.dll" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
@@ -87,6 +93,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="libs" />
     <Folder Include="Objets" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
