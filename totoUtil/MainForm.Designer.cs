@@ -60,7 +60,7 @@ namespace totoUtil
 			this.goButton.Name = "goButton";
 			this.goButton.Size = new System.Drawing.Size(75, 23);
 			this.goButton.TabIndex = 0;
-			this.goButton.Text = "&go!";
+			this.goButton.Text = "go!";
 			this.goButton.UseVisualStyleBackColor = false;
 			this.goButton.Click += new System.EventHandler(this.BtnClick);
 			// 
@@ -147,7 +147,7 @@ namespace totoUtil
 			this.sendKeysButton.Name = "sendKeysButton";
 			this.sendKeysButton.Size = new System.Drawing.Size(56, 23);
 			this.sendKeysButton.TabIndex = 10;
-			this.sendKeysButton.Text = "sendKeys";
+			this.sendKeysButton.Text = "&sendKeys";
 			this.sendKeysButton.UseVisualStyleBackColor = false;
 			this.sendKeysButton.Click += new System.EventHandler(this.Button1Click);
 			// 
@@ -168,7 +168,7 @@ namespace totoUtil
 			this.grepButton.Name = "grepButton";
 			this.grepButton.Size = new System.Drawing.Size(59, 19);
 			this.grepButton.TabIndex = 12;
-			this.grepButton.Text = "grep";
+			this.grepButton.Text = "&grep";
 			this.grepButton.UseVisualStyleBackColor = true;
 			this.grepButton.Click += new System.EventHandler(this.GrepButtonClick);
 			// 

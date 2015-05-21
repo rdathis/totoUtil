@@ -75,6 +75,7 @@ namespace cmdUtils
 		}
 		void GetMysqlDatabaseButtonClick(object sender, EventArgs e)
 		{
+			
 			List <String> liste=cmdUtils.getDatabases(cfg);
 			cmdUtils.listToCombo(liste, mysqlDatabaseCombo, true);
 			//util.getDatabases(mysqlDatabaseCombo);
@@ -90,7 +91,10 @@ namespace cmdUtils
 		}
 		void dropButtonClick(object sender, EventArgs e)
 		{
-			cmdUtils.dropRecreateDatabase(cfg, getDatabaseName());
+			if (cmdUtils.dropRecreateDatabase(cfg, getDatabaseName())) {
+				GetMysqlDatabaseButtonClick(null, null);
+			}
+			
 		}
 		void DumpsListBoxSelectedIndexChanged(object sender, EventArgs e)
 		{

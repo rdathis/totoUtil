@@ -46,17 +46,30 @@ namespace cmdUtils.Objets
 			
 			MySqlDataReader data = command.ExecuteReader();
 			while(data.Read()) {
+				//TODO:problem
 				result.Add( (String) data.GetValue(0));
 				System.Diagnostics.Debug.Print("data:("+data.GetFieldType(0)+")" + data.GetValue(0) +" "+ data.FieldCount);
 			}
 			cnx.Close();
 			return result;
 		}
+		public int getExecuteQueryResult(string connString, string sql) {
+			
+			MySqlConnection cnx = getConnection(connString);
+			cnx.Open();
+			MySqlCommand command = new MySqlCommand(sql, cnx);
+			
+			System.Diagnostics.Debug.Print ("sql : "+sql);
+			int retour = command.ExecuteNonQuery();
+			cnx.Close();
+			System.Diagnostics.Debug.Print(" nb affected : "+retour);
+			return retour;
+		}
 		
 		
 		public string getDropSQL(string databaseName)
 		{
-			return ("  DROP "+databaseName+" if EXISTs; CREATE "+databaseName+"; "+" ");
+			return ("  DROP DATABASE IF EXISTS "+databaseName+" ;CREATE DATABASE IF NOT EXISTS "+databaseName+"; "+" ");
 		}
 		
 		public String getDatabaseList() {

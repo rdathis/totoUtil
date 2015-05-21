@@ -37,7 +37,7 @@ namespace cmdUtils.Objets
 		}
 		
 		
-		public void dropRecreateDatabase(ConfigSectionSettings cfg, string databaseName)
+		public bool dropRecreateDatabase(ConfigSectionSettings cfg, string databaseName)
 		{
 			if ((databaseName==null) || (databaseName.Length<1)) {
 				throw new Exception("bad params");
@@ -48,10 +48,9 @@ namespace cmdUtils.Objets
 			
 			
 			String connString = myUtil.buildconnString("", "localhost", cfg.mysqlUser, cfg.mysqlPassword);
-			List <String> list = myUtil.getListResult(connString, myUtil.getDropSQL(databaseName));
+			int i = myUtil.getExecuteQueryResult(connString, myUtil.getDropSQL(databaseName));
 			
-			//List <String> list =executeCommand(cmd, args);
-			
+			return (i>0);
 		}
 
 		public String buildImportDatabase(ConfigSectionSettings cfg, String dumpName, String databaseName, Boolean unzip=true) {

@@ -68,6 +68,7 @@ namespace cmdUtils
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.tabParam = new System.Windows.Forms.TabPage();
 			this.pdfLabel = new System.Windows.Forms.Label();
@@ -113,6 +114,7 @@ namespace cmdUtils
 			this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.dataSet1 = new System.Data.DataSet();
+			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -125,6 +127,9 @@ namespace cmdUtils
 			// 
 			// tabs
 			// 
+			this.tabs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tabs.Controls.Add(this.tabParam);
 			this.tabs.Controls.Add(this.tabImport);
 			this.tabs.Controls.Add(this.tabSQL);
@@ -132,7 +137,7 @@ namespace cmdUtils
 			this.tabs.Location = new System.Drawing.Point(12, 27);
 			this.tabs.Name = "tabs";
 			this.tabs.SelectedIndex = 0;
-			this.tabs.Size = new System.Drawing.Size(787, 475);
+			this.tabs.Size = new System.Drawing.Size(822, 515);
 			this.tabs.TabIndex = 0;
 			// 
 			// tabParam
@@ -159,7 +164,7 @@ namespace cmdUtils
 			this.tabParam.Location = new System.Drawing.Point(4, 22);
 			this.tabParam.Name = "tabParam";
 			this.tabParam.Padding = new System.Windows.Forms.Padding(3);
-			this.tabParam.Size = new System.Drawing.Size(779, 449);
+			this.tabParam.Size = new System.Drawing.Size(814, 489);
 			this.tabParam.TabIndex = 0;
 			this.tabParam.Text = "Params";
 			this.tabParam.UseVisualStyleBackColor = true;
@@ -176,7 +181,8 @@ namespace cmdUtils
 			// 
 			// defConfigButton
 			// 
-			this.defConfigButton.Location = new System.Drawing.Point(520, 356);
+			this.defConfigButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.defConfigButton.Location = new System.Drawing.Point(516, 460);
 			this.defConfigButton.Name = "defConfigButton";
 			this.defConfigButton.Size = new System.Drawing.Size(75, 23);
 			this.defConfigButton.TabIndex = 18;
@@ -185,7 +191,8 @@ namespace cmdUtils
 			// 
 			// reloadButton
 			// 
-			this.reloadButton.Location = new System.Drawing.Point(424, 356);
+			this.reloadButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.reloadButton.Location = new System.Drawing.Point(420, 460);
 			this.reloadButton.Name = "reloadButton";
 			this.reloadButton.Size = new System.Drawing.Size(75, 23);
 			this.reloadButton.TabIndex = 16;
@@ -202,7 +209,8 @@ namespace cmdUtils
 			// 
 			// saveButton
 			// 
-			this.saveButton.Location = new System.Drawing.Point(328, 356);
+			this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.saveButton.Location = new System.Drawing.Point(324, 460);
 			this.saveButton.Name = "saveButton";
 			this.saveButton.Size = new System.Drawing.Size(75, 23);
 			this.saveButton.TabIndex = 14;
@@ -512,7 +520,7 @@ namespace cmdUtils
 			this.menuToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(799, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(834, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -524,9 +532,9 @@ namespace cmdUtils
 			// 
 			// statusStrip1
 			// 
-			this.statusStrip1.Location = new System.Drawing.Point(0, 517);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 545);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(799, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(834, 22);
 			this.statusStrip1.TabIndex = 2;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -534,11 +542,16 @@ namespace cmdUtils
 			// 
 			this.dataSet1.DataSetName = "NewDataSet";
 			// 
+			// notifyIcon1
+			// 
+			this.notifyIcon1.Text = "notifyIcon1";
+			this.notifyIcon1.Visible = true;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(799, 539);
+			this.ClientSize = new System.Drawing.Size(834, 567);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.tabs);
 			this.Controls.Add(this.menuStrip1);
@@ -560,6 +573,7 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.NotifyIcon notifyIcon1;
 		private System.Windows.Forms.RichTextBox richTextBox2;
 		private System.Windows.Forms.TabPage tabPdf;
 		private System.Windows.Forms.TabPage tabSQL;
