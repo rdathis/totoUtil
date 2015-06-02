@@ -290,10 +290,10 @@ namespace totoUtil
 			
 			
 			//'			goCheck(sender);
-			System.Threading.Thread.Sleep(100);
+			System.Threading.Thread.Sleep(500);
 			
 			prepareGrepList();
-			System.Threading.Thread.Sleep(2000);
+			System.Threading.Thread.Sleep(500);
 			
 			//TODO:param
 			const int waitMs=200;
@@ -335,7 +335,7 @@ namespace totoUtil
 			info.RedirectStandardError = true;
 			info.RedirectStandardOutput = true;
 			info.UseShellExecute = false;
-			
+			tippedRichTextBox.Text="starting "+cmd+"...";
 			var p = new Process();
 			//p.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
 			p.StartInfo = info;
