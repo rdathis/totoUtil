@@ -1,4 +1,5 @@
-﻿/*
+﻿
+/*
  * Created by SharpDevelop.
  * User: athis_000
  * Date: 20/04/2015
@@ -59,7 +60,7 @@ namespace cmdUtils
 			if (filterGzTextBox.Text.Length==0) {
 				
 				DateTime now= DateTime.Now;
-				filterGzTextBox.Text="meo*"+now.ToString("yyyyMMdd")+"*.sql.gz";
+				filterGzTextBox.Text="meo*anq*"+now.ToString("yyyyMMdd")+"*.sql.gz";
 			}
 		}
 		void updateConfig() {
@@ -80,6 +81,26 @@ namespace cmdUtils
 			cmdUtils.listToCombo(liste, mysqlDatabaseCombo, true);
 			//util.getDatabases(mysqlDatabaseCombo);
 		}
+		void GoMysqlImportButtonClick(object sender, EventArgs ev)
+		{
+			System.Diagnostics.Debug.Print("in import SQL");
+			mysqlImportBouton.Enabled=false;
+			try {
+				cmdUtils.sourceSQL(cfg, getDatabaseName(), getDumpName());
+			} catch (Exception ex) {
+				MessageBox.Show("Erreur import : "+ex.Message);
+			}
+			mysqlImportBouton.Enabled=true;
+			//getExecuteQueryResult
+			
+			//List <String> liste=cmdUtils.getDatabases(cfg);
+			//cmdUtils.listToCombo(liste, mysqlDatabaseCombo, true);
+			//util.getDatabases(mysqlDatabaseCombo);
+		}
+		void tabImportClick(object sender, EventArgs e) {
+			System.Diagnostics.Debug.Print("clickd");
+			GetMysqlDatabaseButtonClick(sender, e);
+		}
 		void FilterGzBtnClick(object sender, EventArgs e)
 		{
 			Button btn=(Button)sender;
@@ -88,6 +109,8 @@ namespace cmdUtils
 			btn.Enabled=false;
 			
 			cmdUtils.listFilesToListbox(cfg.dumpsPath, filterGzTextBox.Text, dumpsListBox);
+			btn.Text=(String)btn.Tag;
+			btn.Enabled=true;
 		}
 		void dropButtonClick(object sender, EventArgs e)
 		{
@@ -126,6 +149,46 @@ namespace cmdUtils
 			//PDFViewer view;
 			
 		}
+		void MeoCreateFileDbClick(object sender, EventArgs e)
+		{
+			System.Diagnostics.Debug.Print("in import SQL");
+			mysqlImportBouton.Enabled=false;
+			cmdUtils.sourceSQL(cfg, getDatabaseName(), "X:/meo-datas/create_meo_filedb.sql");
+			mysqlImportBouton.Enabled=true;
+
+		}
+		
+		//TODO:cygwinbouton:M:\cygwin64\bin\mintty.exe -i /Cygwin-Terminal.ico -
+		/*
+---------------------------
+mintty
+---------------------------
+Usage: mintty [OPTION]... [ PROGRAM [ARG]... | - ]
+
+Start a new terminal session running the specified program or the user's shell.
+If a dash is given instead of a program, invoke the shell as a login shell.
+
+Options:
+  -c, --config FILE     Load specified config file
+  -e, --exec            Treat remaining arguments as the command to execute
+  -h, --hold never|start|error|always  Keep window open after command finishes
+  -i, --icon FILE[,IX]  Load window icon from file, optionally with index
+  -l, --log FILE|-      Log output to file or stdout
+  -o, --option OPT=VAL  Override config file option with given value
+  -p, --position X,Y    Open window at specified coordinates
+  -s, --size COLS,ROWS  Set screen size in characters
+  -t, --title TITLE     Set window title (default: the invoked command)
+  -u, --utmp            Create a utmp entry
+  -w, --window normal|min|max|full|hide  Set initial window state
+      --class CLASS     Set window class name (default: mintty)
+  -H, --help            Display help and exit
+  -V, --version         Print version information and exit
+
+---------------------------
+OK
+---------------------------
+		 */
+		
 	}
 	
 }

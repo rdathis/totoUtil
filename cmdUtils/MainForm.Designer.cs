@@ -42,7 +42,7 @@ namespace cmdUtils
 		private System.Windows.Forms.TextBox textBox10;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.RichTextBox richTextBox1;
-		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button mysqlImportBouton;
 		private System.Windows.Forms.Label labelFichierConfig;
 		private System.Windows.Forms.Button reloadButton;
 		private System.Windows.Forms.Button defConfigButton;
@@ -91,12 +91,13 @@ namespace cmdUtils
 			this.label1 = new System.Windows.Forms.Label();
 			this.cygwinParam = new System.Windows.Forms.TextBox();
 			this.tabImport = new System.Windows.Forms.TabPage();
+			this.meoCreateFiledb = new System.Windows.Forms.Button();
 			this.dropButton = new System.Windows.Forms.Button();
 			this.filterGzTextBox = new System.Windows.Forms.TextBox();
 			this.filterGzBtn = new System.Windows.Forms.Button();
 			this.mysqlDatabaseCombo = new System.Windows.Forms.ComboBox();
 			this.getMysqlDatabaseButton = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
+			this.mysqlImportBouton = new System.Windows.Forms.Button();
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			this.textBox10 = new System.Windows.Forms.TextBox();
 			this.label10 = new System.Windows.Forms.Label();
@@ -139,6 +140,7 @@ namespace cmdUtils
 			this.tabs.SelectedIndex = 0;
 			this.tabs.Size = new System.Drawing.Size(822, 515);
 			this.tabs.TabIndex = 0;
+			this.tabs.Click += new System.EventHandler(this.tabImportClick);
 			// 
 			// tabParam
 			// 
@@ -292,6 +294,7 @@ namespace cmdUtils
 			this.dataParam.Name = "dataParam";
 			this.dataParam.Size = new System.Drawing.Size(642, 20);
 			this.dataParam.TabIndex = 2;
+			//this.dataParam.TextChanged += new System.EventHandler(this.DataParamTextChan);
 			// 
 			// label2
 			// 
@@ -325,12 +328,13 @@ namespace cmdUtils
 			// 
 			// tabImport
 			// 
+			this.tabImport.Controls.Add(this.meoCreateFiledb);
 			this.tabImport.Controls.Add(this.dropButton);
 			this.tabImport.Controls.Add(this.filterGzTextBox);
 			this.tabImport.Controls.Add(this.filterGzBtn);
 			this.tabImport.Controls.Add(this.mysqlDatabaseCombo);
 			this.tabImport.Controls.Add(this.getMysqlDatabaseButton);
-			this.tabImport.Controls.Add(this.button2);
+			this.tabImport.Controls.Add(this.mysqlImportBouton);
 			this.tabImport.Controls.Add(this.richTextBox1);
 			this.tabImport.Controls.Add(this.textBox10);
 			this.tabImport.Controls.Add(this.label10);
@@ -341,10 +345,20 @@ namespace cmdUtils
 			this.tabImport.Location = new System.Drawing.Point(4, 22);
 			this.tabImport.Name = "tabImport";
 			this.tabImport.Padding = new System.Windows.Forms.Padding(3);
-			this.tabImport.Size = new System.Drawing.Size(779, 449);
+			this.tabImport.Size = new System.Drawing.Size(814, 489);
 			this.tabImport.TabIndex = 1;
 			this.tabImport.Text = "tabImport";
 			this.tabImport.UseVisualStyleBackColor = true;
+			// 
+			// meoCreateFiledb
+			// 
+			this.meoCreateFiledb.Location = new System.Drawing.Point(218, 223);
+			this.meoCreateFiledb.Name = "meoCreateFiledb";
+			this.meoCreateFiledb.Size = new System.Drawing.Size(75, 23);
+			this.meoCreateFiledb.TabIndex = 14;
+			this.meoCreateFiledb.Text = "create &filedb";
+			this.meoCreateFiledb.UseVisualStyleBackColor = true;
+			this.meoCreateFiledb.Click += new System.EventHandler(this.MeoCreateFileDbClick);
 			// 
 			// dropButton
 			// 
@@ -391,20 +405,24 @@ namespace cmdUtils
 			this.getMysqlDatabaseButton.UseVisualStyleBackColor = true;
 			this.getMysqlDatabaseButton.Click += new System.EventHandler(this.GetMysqlDatabaseButtonClick);
 			// 
-			// button2
+			// mysqlImportBouton
 			// 
-			this.button2.Location = new System.Drawing.Point(31, 223);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(152, 23);
-			this.button2.TabIndex = 8;
-			this.button2.Text = "&lancer";
-			this.button2.UseVisualStyleBackColor = true;
+			this.mysqlImportBouton.Location = new System.Drawing.Point(31, 223);
+			this.mysqlImportBouton.Name = "mysqlImportBouton";
+			this.mysqlImportBouton.Size = new System.Drawing.Size(152, 23);
+			this.mysqlImportBouton.TabIndex = 8;
+			this.mysqlImportBouton.Text = "&lancer";
+			this.mysqlImportBouton.UseVisualStyleBackColor = true;
+			this.mysqlImportBouton.Click += new System.EventHandler(this.GoMysqlImportButtonClick);
 			// 
 			// richTextBox1
 			// 
+			this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.richTextBox1.Location = new System.Drawing.Point(6, 252);
 			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.Size = new System.Drawing.Size(770, 181);
+			this.richTextBox1.Size = new System.Drawing.Size(805, 237);
 			this.richTextBox1.TabIndex = 7;
 			this.richTextBox1.Text = "";
 			// 
@@ -466,7 +484,7 @@ namespace cmdUtils
 			this.tabSQL.Controls.Add(this.label11);
 			this.tabSQL.Location = new System.Drawing.Point(4, 22);
 			this.tabSQL.Name = "tabSQL";
-			this.tabSQL.Size = new System.Drawing.Size(779, 449);
+			this.tabSQL.Size = new System.Drawing.Size(814, 489);
 			this.tabSQL.TabIndex = 2;
 			this.tabSQL.Text = "tabSQL";
 			this.tabSQL.UseVisualStyleBackColor = true;
@@ -509,7 +527,7 @@ namespace cmdUtils
 			// 
 			this.tabPdf.Location = new System.Drawing.Point(4, 22);
 			this.tabPdf.Name = "tabPdf";
-			this.tabPdf.Size = new System.Drawing.Size(779, 449);
+			this.tabPdf.Size = new System.Drawing.Size(814, 489);
 			this.tabPdf.TabIndex = 3;
 			this.tabPdf.Text = "tabPdf";
 			this.tabPdf.UseVisualStyleBackColor = true;
@@ -573,6 +591,8 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Button meoCreateFiledb;
+		//private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.NotifyIcon notifyIcon1;
 		private System.Windows.Forms.RichTextBox richTextBox2;
 		private System.Windows.Forms.TabPage tabPdf;

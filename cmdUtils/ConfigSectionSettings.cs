@@ -82,7 +82,7 @@ namespace cmdUtils
 			get { return (string) this[cygwinGzip_]; }
 			set { this[cygwinGzip_] = value; }
 		}
-		[ConfigurationProperty(scriptsPath_, DefaultValue="m:/data/...")]
+		[ConfigurationProperty(scriptsPath_, DefaultValue="X:/data/...")]
 		public string scriptsPath {
 			get { return (string) this[scriptsPath_]; }
 			set { this[scriptsPath_] = value; }

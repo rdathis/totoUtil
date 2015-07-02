@@ -7,7 +7,6 @@
  * Pour changer ce modèle utiliser Outils | Options | Codage | Editer les en-têtes standards.
  */
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -36,7 +35,19 @@ namespace cmdUtils.Objets
 		{
 		}
 		
-		
+		public bool sourceSQL(ConfigSectionSettings cfg, string databaseName, string sourceFileName) {
+			if ((databaseName==null) || (databaseName.Length<1)) {
+				throw new Exception("bad params");
+			}
+			
+			//String cmd=cfg.mysqlExePath;
+			//String args=" -u "+cfg.mysqlUser +" -p"+cfg.mysqlPassword +" -Be ";
+			
+			sourceFileName=sourceFileName.Replace("\\", "/");
+			String connString = myUtil.buildconnString("", "localhost", cfg.mysqlUser, cfg.mysqlPassword);
+			int i = myUtil.getExecuteQueryResult(connString, myUtil.getSourceSQL(databaseName, sourceFileName));			
+			return (i>0);
+		}
 		public bool dropRecreateDatabase(ConfigSectionSettings cfg, string databaseName)
 		{
 			if ((databaseName==null) || (databaseName.Length<1)) {

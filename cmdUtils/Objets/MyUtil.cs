@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms.VisualStyles;
 using MySql.Data.MySqlClient;
 
 namespace cmdUtils.Objets
@@ -54,18 +55,24 @@ namespace cmdUtils.Objets
 			return result;
 		}
 		public int getExecuteQueryResult(string connString, string sql) {
-			
+			int retour=-1;
+			try {
 			MySqlConnection cnx = getConnection(connString);
 			cnx.Open();
 			MySqlCommand command = new MySqlCommand(sql, cnx);
-			
+
 			System.Diagnostics.Debug.Print ("sql : "+sql);
-			int retour = command.ExecuteNonQuery();
+			retour = command.ExecuteNonQuery();
 			cnx.Close();
 			System.Diagnostics.Debug.Print(" nb affected : "+retour);
+			} catch (Exception ex) {
+				System.Windows.Forms.MessageBox.Show("Erreur sql ("+connString+")\nSQL:"+sql+"\n\n"+ex.Message+"\n\n"+ex.StackTrace);
+			}
 			return retour;
 		}
-		
+		public String getSourceSQL(String databaseName, string fileName) {
+			return "USE "+databaseName+" ; SOURCE "+fileName+" ;";
+		}
 		
 		public string getDropSQL(string databaseName)
 		{
@@ -74,6 +81,15 @@ namespace cmdUtils.Objets
 		
 		public String getDatabaseList() {
 			return ("SHOW DATABASES;");
+		}
+		
+		private void voidx() {
+//			System.Windows.Data.pdf
+//				https://msdn.microsoft.com/en-us/library/windows/apps/dn263107.aspx
+//			
+//			https://www.edrawsoft.com/embed-pdf-vbnet.php
+//			
+			
 		}
 	}
 }
