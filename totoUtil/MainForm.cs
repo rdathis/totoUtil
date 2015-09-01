@@ -346,7 +346,9 @@ namespace totoUtil
 		}
 		void GrepButtonClick(object sender, EventArgs e)
 		{
+			
 			prepareGrepList();
+			tipTextbox.Focus();
 		}
 		void prepareGrepList() {
 			//TODO:param

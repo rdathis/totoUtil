@@ -73,6 +73,8 @@ namespace totoUtil
 			// 
 			// tipTextbox
 			// 
+			this.tipTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left)));
 			this.tipTextbox.Location = new System.Drawing.Point(0, 274);
 			this.tipTextbox.Multiline = true;
 			this.tipTextbox.Name = "tipTextbox";
@@ -125,6 +127,9 @@ namespace totoUtil
 			// 
 			// tippedTextBox
 			// 
+			this.tippedTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tippedTextBox.Location = new System.Drawing.Point(481, 274);
 			this.tippedTextBox.Multiline = true;
 			this.tippedTextBox.Name = "tippedTextBox";
