@@ -318,9 +318,16 @@ namespace totoUtil
 				System.Threading.Thread.Sleep(waiter);
 			}
 		}
+
+		void afficherEtatMC(string str)
+		{
+			toolStripStatusLabelEtatMC.Text=str;
+		}
+
 		void LaunchMCButtonClick(object sender, EventArgs e)
 		{
 			//TODO:param
+			
 			String cmd=@"C:/Program Files (x86)/Minecraft/MinecraftLauncher.exe";
 			
 			var info = new ProcessStartInfo();
@@ -335,7 +342,8 @@ namespace totoUtil
 			info.RedirectStandardError = true;
 			info.RedirectStandardOutput = true;
 			info.UseShellExecute = false;
-			tippedRichTextBox.Text="starting "+cmd+"...";
+			//tippedRichTextBox.Text="starting "+cmd+"...";
+			afficherEtatMC("starting "+cmd+"...");
 			var p = new Process();
 			//p.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
 			p.StartInfo = info;
