@@ -69,8 +69,12 @@ namespace cmdUtils
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.tabParam = new System.Windows.Forms.TabPage();
+			this.label13 = new System.Windows.Forms.Label();
+			this.cygwinTermParam = new System.Windows.Forms.TextBox();
+			this.label12 = new System.Windows.Forms.Label();
 			this.pdfLabel = new System.Windows.Forms.Label();
 			this.defConfigButton = new System.Windows.Forms.Button();
 			this.reloadButton = new System.Windows.Forms.Button();
@@ -116,6 +120,10 @@ namespace cmdUtils
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.dataSet1 = new System.Data.DataSet();
 			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+			this.cygwinToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -124,6 +132,7 @@ namespace cmdUtils
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
+			this.toolStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabs
@@ -144,6 +153,9 @@ namespace cmdUtils
 			// 
 			// tabParam
 			// 
+			this.tabParam.Controls.Add(this.label13);
+			this.tabParam.Controls.Add(this.cygwinTermParam);
+			this.tabParam.Controls.Add(this.label12);
 			this.tabParam.Controls.Add(this.pdfLabel);
 			this.tabParam.Controls.Add(this.defConfigButton);
 			this.tabParam.Controls.Add(this.reloadButton);
@@ -172,9 +184,34 @@ namespace cmdUtils
 			this.tabParam.UseVisualStyleBackColor = true;
 			this.tabParam.Click += new System.EventHandler(this.TabParamClick);
 			// 
+			// label13
+			// 
+			this.label13.Location = new System.Drawing.Point(20, 59);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(100, 23);
+			this.label13.TabIndex = 25;
+			this.label13.Text = "terminalCygwin";
+			// 
+			// cygwinTermParam
+			// 
+			this.cygwinTermParam.Location = new System.Drawing.Point(131, 59);
+			this.cygwinTermParam.Name = "cygwinTermParam";
+			this.cygwinTermParam.Size = new System.Drawing.Size(642, 20);
+			this.cygwinTermParam.TabIndex = 24;
+			// 
+			// label12
+			// 
+			this.label12.BackColor = System.Drawing.Color.Red;
+			this.label12.ForeColor = System.Drawing.Color.Yellow;
+			this.label12.Location = new System.Drawing.Point(62, 331);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(433, 23);
+			this.label12.TabIndex = 23;
+			this.label12.Text = "cat `cygpath -W`/Media/ding.wav > /dev/dsp";
+			// 
 			// pdfLabel
 			// 
-			this.pdfLabel.Location = new System.Drawing.Point(63, 224);
+			this.pdfLabel.Location = new System.Drawing.Point(54, 263);
 			this.pdfLabel.Name = "pdfLabel";
 			this.pdfLabel.Size = new System.Drawing.Size(100, 23);
 			this.pdfLabel.TabIndex = 22;
@@ -222,7 +259,7 @@ namespace cmdUtils
 			// 
 			// label7
 			// 
-			this.label7.Location = new System.Drawing.Point(20, 137);
+			this.label7.Location = new System.Drawing.Point(20, 162);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(100, 23);
 			this.label7.TabIndex = 13;
@@ -230,14 +267,14 @@ namespace cmdUtils
 			// 
 			// mysqlUserParam
 			// 
-			this.mysqlUserParam.Location = new System.Drawing.Point(131, 137);
+			this.mysqlUserParam.Location = new System.Drawing.Point(131, 162);
 			this.mysqlUserParam.Name = "mysqlUserParam";
 			this.mysqlUserParam.Size = new System.Drawing.Size(642, 20);
 			this.mysqlUserParam.TabIndex = 4;
 			// 
 			// label6
 			// 
-			this.label6.Location = new System.Drawing.Point(20, 160);
+			this.label6.Location = new System.Drawing.Point(20, 185);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(100, 23);
 			this.label6.TabIndex = 11;
@@ -245,14 +282,14 @@ namespace cmdUtils
 			// 
 			// mysqlPasswordParam
 			// 
-			this.mysqlPasswordParam.Location = new System.Drawing.Point(131, 163);
+			this.mysqlPasswordParam.Location = new System.Drawing.Point(131, 188);
 			this.mysqlPasswordParam.Name = "mysqlPasswordParam";
 			this.mysqlPasswordParam.Size = new System.Drawing.Size(642, 20);
 			this.mysqlPasswordParam.TabIndex = 5;
 			// 
 			// label5
 			// 
-			this.label5.Location = new System.Drawing.Point(20, 186);
+			this.label5.Location = new System.Drawing.Point(20, 211);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(100, 23);
 			this.label5.TabIndex = 9;
@@ -260,14 +297,14 @@ namespace cmdUtils
 			// 
 			// scriptCreateFiledDBParam
 			// 
-			this.scriptCreateFiledDBParam.Location = new System.Drawing.Point(131, 189);
+			this.scriptCreateFiledDBParam.Location = new System.Drawing.Point(131, 214);
 			this.scriptCreateFiledDBParam.Name = "scriptCreateFiledDBParam";
 			this.scriptCreateFiledDBParam.Size = new System.Drawing.Size(642, 20);
 			this.scriptCreateFiledDBParam.TabIndex = 6;
 			// 
 			// label3
 			// 
-			this.label3.Location = new System.Drawing.Point(20, 111);
+			this.label3.Location = new System.Drawing.Point(20, 136);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(100, 23);
 			this.label3.TabIndex = 7;
@@ -275,14 +312,14 @@ namespace cmdUtils
 			// 
 			// scriptCreateDbParam
 			// 
-			this.scriptCreateDbParam.Location = new System.Drawing.Point(131, 111);
+			this.scriptCreateDbParam.Location = new System.Drawing.Point(131, 136);
 			this.scriptCreateDbParam.Name = "scriptCreateDbParam";
 			this.scriptCreateDbParam.Size = new System.Drawing.Size(642, 20);
 			this.scriptCreateDbParam.TabIndex = 3;
 			// 
 			// label4
 			// 
-			this.label4.Location = new System.Drawing.Point(20, 85);
+			this.label4.Location = new System.Drawing.Point(20, 110);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(100, 23);
 			this.label4.TabIndex = 5;
@@ -290,15 +327,14 @@ namespace cmdUtils
 			// 
 			// dataParam
 			// 
-			this.dataParam.Location = new System.Drawing.Point(131, 85);
+			this.dataParam.Location = new System.Drawing.Point(131, 110);
 			this.dataParam.Name = "dataParam";
 			this.dataParam.Size = new System.Drawing.Size(642, 20);
 			this.dataParam.TabIndex = 2;
-			//this.dataParam.TextChanged += new System.EventHandler(this.DataParamTextChan);
 			// 
 			// label2
 			// 
-			this.label2.Location = new System.Drawing.Point(20, 59);
+			this.label2.Location = new System.Drawing.Point(20, 84);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(100, 23);
 			this.label2.TabIndex = 3;
@@ -306,7 +342,7 @@ namespace cmdUtils
 			// 
 			// mysqlParam
 			// 
-			this.mysqlParam.Location = new System.Drawing.Point(131, 59);
+			this.mysqlParam.Location = new System.Drawing.Point(131, 84);
 			this.mysqlParam.Name = "mysqlParam";
 			this.mysqlParam.Size = new System.Drawing.Size(642, 20);
 			this.mysqlParam.TabIndex = 1;
@@ -536,7 +572,7 @@ namespace cmdUtils
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.menuToolStripMenuItem});
-			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip1.Location = new System.Drawing.Point(0, 25);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(834, 24);
 			this.menuStrip1.TabIndex = 1;
@@ -565,6 +601,39 @@ namespace cmdUtils
 			this.notifyIcon1.Text = "notifyIcon1";
 			this.notifyIcon1.Visible = true;
 			// 
+			// toolStrip1
+			// 
+			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.toolStripLabel1,
+			this.cygwinToolStripButton,
+			this.toolStripSeparator1});
+			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+			this.toolStrip1.Name = "toolStrip1";
+			this.toolStrip1.Size = new System.Drawing.Size(834, 25);
+			this.toolStrip1.TabIndex = 3;
+			this.toolStrip1.Text = "toolStrip1";
+			// 
+			// toolStripLabel1
+			// 
+			this.toolStripLabel1.Name = "toolStripLabel1";
+			this.toolStripLabel1.Size = new System.Drawing.Size(42, 22);
+			this.toolStripLabel1.Text = "cygWin";
+			// 
+			// cygwinToolStripButton
+			// 
+			this.cygwinToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.cygwinToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cygwinToolStripButton.Image")));
+			this.cygwinToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cygwinToolStripButton.Name = "cygwinToolStripButton";
+			this.cygwinToolStripButton.Size = new System.Drawing.Size(23, 22);
+			this.cygwinToolStripButton.Text = "cygwin";
+			this.cygwinToolStripButton.Click += new System.EventHandler(this.CygwinToolStripButtonClick);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -573,6 +642,7 @@ namespace cmdUtils
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.tabs);
 			this.Controls.Add(this.menuStrip1);
+			this.Controls.Add(this.toolStrip1);
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MainForm";
 			this.Text = "cmdUtils";
@@ -587,10 +657,19 @@ namespace cmdUtils
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
+			this.toolStrip1.ResumeLayout(false);
+			this.toolStrip1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.TextBox cygwinTermParam;
+		private System.Windows.Forms.ToolStrip toolStrip1;
+		private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+		private System.Windows.Forms.ToolStripButton cygwinToolStripButton;
+		private System.Windows.Forms.Label label12;
 		private System.Windows.Forms.Button meoCreateFiledb;
 		//private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.NotifyIcon notifyIcon1;

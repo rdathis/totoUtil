@@ -10,11 +10,14 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Drawing;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using cmdUtils.Objets;
 using MySql.Data;
+
 namespace cmdUtils
 {
 	/// <summary>
@@ -49,6 +52,7 @@ namespace cmdUtils
 		}
 		void populate() {
 			cygwinParam.Text = cfg.cygwinPath;
+			cygwinTermParam.Text=cfg.cygwinTerm;
 			mysqlParam.Text = cfg.mysqlExePath;
 			dataParam.Text=cfg.dumpsPath;
 			mysqlUserParam.Text = cfg.mysqlUser;
@@ -65,6 +69,8 @@ namespace cmdUtils
 		}
 		void updateConfig() {
 			cfg.cygwinPath= cygwinParam.Text;
+			cfg.cygwinTerm=cygwinTermParam.Text;
+			
 			cfg.mysqlExePath=mysqlParam.Text;
 			
 			cfg.dumpsPath=dataParam.Text;
@@ -156,6 +162,20 @@ namespace cmdUtils
 			cmdUtils.sourceSQL(cfg, getDatabaseName(), "X:/meo-datas/create_meo_filedb.sql");
 			mysqlImportBouton.Enabled=true;
 
+		}
+		void CygwinToolStripButtonClick(object sender, EventArgs e)
+		{
+			String cmd=cygwinParam.Text+"mintty.exe ";
+			//title marche pas
+			String args=cygwinTermParam.Text+"-size 240,48 -";
+			System.Diagnostics.Debug.Print("cmd: "+cmd);
+			System.Diagnostics.Debug.Print("arg: "+args);
+			ProcessUtil pu = new ProcessUtil();
+			ProcessWindowStyle windowStyle=ProcessWindowStyle.Normal;
+			
+			Process p = pu.startProcess(cmd, args, windowStyle);
+			
+			
 		}
 		
 		//TODO:cygwinbouton:M:\cygwin64\bin\mintty.exe -i /Cygwin-Terminal.ico -

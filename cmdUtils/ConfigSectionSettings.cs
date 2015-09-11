@@ -28,6 +28,7 @@ namespace cmdUtils
 		const String gunzipExePath_="gunzipExePath";
 		
 		const String cygwinPath_="cygwinPath";
+		const String cygwinTerm_="cygwinTerm";
 		const String cygwinGzip_="cygwinGzip";
 		
 		const String mysqlUser_="mysqlUser";
@@ -76,7 +77,11 @@ namespace cmdUtils
 			get { return (string) this[cygwinPath_]; }
 			set { this[cygwinPath_] = value; }
 		}
-
+		[ConfigurationProperty(cygwinTerm_, DefaultValue=" -i /Cygwin-Terminal.ico -")]
+		public string cygwinTerm {
+			get { return (string) this[cygwinTerm_]; }
+			set { this[cygwinTerm_] = value; }
+		}
 		[ConfigurationProperty(cygwinGzip_, DefaultValue="gzip.exe")]
 		public string cygwinGzip {
 			get { return (string) this[cygwinGzip_]; }
