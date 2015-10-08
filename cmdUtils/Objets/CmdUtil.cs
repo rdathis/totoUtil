@@ -48,7 +48,7 @@ namespace cmdUtils.Objets
 			int i = myUtil.getExecuteQueryResult(connString, myUtil.getSourceSQL(databaseName, sourceFileName));			
 			return (i>0);
 		}
-		public bool dropRecreateDatabase(ConfigSectionSettings cfg, string databaseName)
+		public bool dropRecreateDatabase(ConfigSectionSettings cfg, string databaseName, Boolean reCreate=true, Boolean createFileDb=false)
 		{
 			if ((databaseName==null) || (databaseName.Length<1)) {
 				throw new Exception("bad params");
@@ -59,7 +59,13 @@ namespace cmdUtils.Objets
 			
 			
 			String connString = myUtil.buildconnString("", "localhost", cfg.mysqlUser, cfg.mysqlPassword);
-			int i = myUtil.getExecuteQueryResult(connString, myUtil.getDropSQL(databaseName));
+			int i = myUtil.getExecuteQueryResult(connString, myUtil.getDropSQL(databaseName, reCreate));
+			if (createFileDb) {
+				//cmdUtils.sourceSQL(cfg, databaseName, "X:/meo-datas/create_meo_filedb.sql");
+				connString = myUtil.buildconnString(databaseName, "localhost", cfg.mysqlUser, cfg.mysqlPassword);
+				//TODO:add a parameter
+				myUtil.getExecuteQueryResult(connString, myUtil.readScript("X:/meo-datas/create_meo_filedb.sql"));
+			}
 			
 			return (i>0);
 		}

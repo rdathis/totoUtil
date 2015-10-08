@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms.VisualStyles;
 using MySql.Data.MySqlClient;
 
@@ -38,6 +39,25 @@ namespace cmdUtils.Objets
 			return getConnection(cString);
 		}
 
+		//lit rapidement un script sql
+		public string readScript(string file)
+		{
+			String script=null;
+			StreamReader reader =null;
+			try {
+				reader= new StreamReader(file);
+				if (reader!=null) {
+					script=reader.ReadToEnd();
+				}
+			} catch {
+				//TODO:mind this
+			} finally {
+				if (reader!=null) {
+					reader.Close();
+				}
+			}
+			return script;
+		}
 		public List<string> getListResult(string connString, string sql)
 		{
 			List<string> result = new List<string>();
@@ -57,14 +77,14 @@ namespace cmdUtils.Objets
 		public int getExecuteQueryResult(string connString, string sql) {
 			int retour=-1;
 			try {
-			MySqlConnection cnx = getConnection(connString);
-			cnx.Open();
-			MySqlCommand command = new MySqlCommand(sql, cnx);
+				MySqlConnection cnx = getConnection(connString);
+				cnx.Open();
+				MySqlCommand command = new MySqlCommand(sql, cnx);
 
-			System.Diagnostics.Debug.Print ("sql : "+sql);
-			retour = command.ExecuteNonQuery();
-			cnx.Close();
-			System.Diagnostics.Debug.Print(" nb affected : "+retour);
+				System.Diagnostics.Debug.Print ("sql : "+sql);
+				retour = command.ExecuteNonQuery();
+				cnx.Close();
+				System.Diagnostics.Debug.Print(" nb affected : "+retour);
 			} catch (Exception ex) {
 				System.Windows.Forms.MessageBox.Show("Erreur sql ("+connString+")\nSQL:"+sql+"\n\n"+ex.Message+"\n\n"+ex.StackTrace);
 			}
@@ -74,9 +94,13 @@ namespace cmdUtils.Objets
 			return "USE "+databaseName+" ; SOURCE "+fileName+" ;";
 		}
 		
-		public string getDropSQL(string databaseName)
+		public string getDropSQL(string databaseName, Boolean reCreate)
 		{
-			return ("  DROP DATABASE IF EXISTS "+databaseName+" ;CREATE DATABASE IF NOT EXISTS "+databaseName+"; "+" ");
+			String cmd="  DROP DATABASE IF EXISTS "+databaseName+" ; ";
+			if (reCreate) {
+				cmd+="  CREATE DATABASE IF NOT EXISTS "+databaseName+"; "+" ";
+			}
+			return (cmd);
 		}
 		
 		public String getDatabaseList() {
@@ -86,9 +110,9 @@ namespace cmdUtils.Objets
 		private void voidx() {
 //			System.Windows.Data.pdf
 //				https://msdn.microsoft.com/en-us/library/windows/apps/dn263107.aspx
-//			
+//
 //			https://www.edrawsoft.com/embed-pdf-vbnet.php
-//			
+//
 			
 		}
 	}

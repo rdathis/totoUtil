@@ -95,6 +95,8 @@ namespace cmdUtils
 			this.label1 = new System.Windows.Forms.Label();
 			this.cygwinParam = new System.Windows.Forms.TextBox();
 			this.tabImport = new System.Windows.Forms.TabPage();
+			this.recreateButton = new System.Windows.Forms.Button();
+			this.filedbCheckbox = new System.Windows.Forms.CheckBox();
 			this.meoCreateFiledb = new System.Windows.Forms.Button();
 			this.dropButton = new System.Windows.Forms.Button();
 			this.filterGzTextBox = new System.Windows.Forms.TextBox();
@@ -364,6 +366,8 @@ namespace cmdUtils
 			// 
 			// tabImport
 			// 
+			this.tabImport.Controls.Add(this.recreateButton);
+			this.tabImport.Controls.Add(this.filedbCheckbox);
 			this.tabImport.Controls.Add(this.meoCreateFiledb);
 			this.tabImport.Controls.Add(this.dropButton);
 			this.tabImport.Controls.Add(this.filterGzTextBox);
@@ -385,6 +389,27 @@ namespace cmdUtils
 			this.tabImport.TabIndex = 1;
 			this.tabImport.Text = "tabImport";
 			this.tabImport.UseVisualStyleBackColor = true;
+			// 
+			// recreateButton
+			// 
+			this.recreateButton.Location = new System.Drawing.Point(519, 30);
+			this.recreateButton.Name = "recreateButton";
+			this.recreateButton.Size = new System.Drawing.Size(56, 23);
+			this.recreateButton.TabIndex = 16;
+			this.recreateButton.Text = "reCreate";
+			this.recreateButton.UseVisualStyleBackColor = true;
+			this.recreateButton.Click += new System.EventHandler(this.RecreateButtonClick);
+			// 
+			// filedbCheckbox
+			// 
+			this.filedbCheckbox.Checked = true;
+			this.filedbCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.filedbCheckbox.Location = new System.Drawing.Point(590, 33);
+			this.filedbCheckbox.Name = "filedbCheckbox";
+			this.filedbCheckbox.Size = new System.Drawing.Size(118, 20);
+			this.filedbCheckbox.TabIndex = 15;
+			this.filedbCheckbox.Text = "fileDB";
+			this.filedbCheckbox.UseVisualStyleBackColor = true;
 			// 
 			// meoCreateFiledb
 			// 
@@ -408,14 +433,14 @@ namespace cmdUtils
 			// 
 			// filterGzTextBox
 			// 
-			this.filterGzTextBox.Location = new System.Drawing.Point(519, 37);
+			this.filterGzTextBox.Location = new System.Drawing.Point(555, 2);
 			this.filterGzTextBox.Name = "filterGzTextBox";
 			this.filterGzTextBox.Size = new System.Drawing.Size(196, 20);
 			this.filterGzTextBox.TabIndex = 12;
 			// 
 			// filterGzBtn
 			// 
-			this.filterGzBtn.Location = new System.Drawing.Point(721, 34);
+			this.filterGzBtn.Location = new System.Drawing.Point(757, 0);
 			this.filterGzBtn.Name = "filterGzBtn";
 			this.filterGzBtn.Size = new System.Drawing.Size(50, 23);
 			this.filterGzBtn.TabIndex = 11;
@@ -504,10 +529,12 @@ namespace cmdUtils
 			// 
 			// dumpsListBox
 			// 
+			this.dumpsListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dumpsListBox.FormattingEnabled = true;
 			this.dumpsListBox.Location = new System.Drawing.Point(6, 70);
 			this.dumpsListBox.Name = "dumpsListBox";
-			this.dumpsListBox.Size = new System.Drawing.Size(765, 95);
+			this.dumpsListBox.Size = new System.Drawing.Size(805, 95);
 			this.dumpsListBox.TabIndex = 0;
 			this.dumpsListBox.SelectedIndexChanged += new System.EventHandler(this.DumpsListBoxSelectedIndexChanged);
 			this.dumpsListBox.DoubleClick += new System.EventHandler(this.DumpsListBoxDoubleClick);
@@ -663,6 +690,8 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Button recreateButton;
+		private System.Windows.Forms.CheckBox filedbCheckbox;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.Label label13;
 		private System.Windows.Forms.TextBox cygwinTermParam;

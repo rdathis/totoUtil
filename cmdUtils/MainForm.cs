@@ -120,10 +120,9 @@ namespace cmdUtils
 		}
 		void dropButtonClick(object sender, EventArgs e)
 		{
-			if (cmdUtils.dropRecreateDatabase(cfg, getDatabaseName())) {
+			if (cmdUtils.dropRecreateDatabase(cfg, getDatabaseName(), false)) {
 				GetMysqlDatabaseButtonClick(null, null);
 			}
-			
 		}
 		void DumpsListBoxSelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -176,6 +175,12 @@ namespace cmdUtils
 			Process p = pu.startProcess(cmd, args, windowStyle);
 			
 			
+		}
+		void RecreateButtonClick(object sender, EventArgs e)
+		{
+			if (cmdUtils.dropRecreateDatabase(cfg, getDatabaseName(), true, filedbCheckbox.Checked)) {
+				GetMysqlDatabaseButtonClick(null, null);
+			}
 		}
 		
 		//TODO:cygwinbouton:M:\cygwin64\bin\mintty.exe -i /Cygwin-Terminal.ico -
