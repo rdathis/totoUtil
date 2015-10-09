@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
+using System.Net.Mime;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
@@ -25,13 +26,22 @@ namespace cmdUtils
 	/// </summary>
 	public partial class MainForm : Form
 	{
+		
+		//List<TextBox, String) configListeControles = new List<TextBox, String>();
 		CmdUtil cmdUtils = new CmdUtil();
 		ConfigSectionSettings cfg=	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
 		public MainForm()
 		{
 			InitializeComponent();
 
+			initConfig();
 			populate();
+		}
+
+		void initConfig()
+		{
+			//TODO:voir configListeControles, une collection ????
+			//et faire le tableau d'init. puis revoir grace a ca populate(), et updateConfig()
 		}
 		void SaveButtonClick(object sender, EventArgs e)
 		{
@@ -60,6 +70,10 @@ namespace cmdUtils
 			scriptCreateDbParam.Text=cfg.scriptCreate;
 			scriptCreateFiledDBParam.Text=cfg.scriptFileDb;
 			
+			moulSrcPath.Text=cfg.moulSrcPath;
+			moulDstPath.Text=cfg.moulDstPath;
+			moulScp1.Text=cfg.moulUploadS1;
+			moulScp2.Text=cfg.moulUploadS2;
 			
 			if (filterGzTextBox.Text.Length==0) {
 				
@@ -79,6 +93,12 @@ namespace cmdUtils
 			
 			cfg.scriptCreate=scriptCreateDbParam.Text;
 			cfg.scriptFileDb=scriptCreateFiledDBParam.Text;
+			
+			cfg.moulSrcPath=moulSrcPath.Text;
+			cfg.moulDstPath=moulDstPath.Text;
+			cfg.moulUploadS1=moulScp1.Text;
+			cfg.moulUploadS2=moulScp2.Text;
+			
 		}
 		void GetMysqlDatabaseButtonClick(object sender, EventArgs e)
 		{
@@ -133,6 +153,7 @@ namespace cmdUtils
 			String dump = getDumpName();
 			//TODO:move this code
 			richTextBox1.Text=cmdUtils.buildImportDatabase(cfg, dump, getDatabaseName());
+			richTextBox1.Text+=" ; "+cmdUtils.dingding();
 			//richTextBox1.Text="gunzip <" +" "+v+" | "+cfg.mysqlExePath+"mysql.exe"+" -u "+cfg.mysqlUser+" -p"+cfg.mysqlPassword+ " "+mysqlDatabaseCombo.Text;
 		}
 		private string getDatabaseName() {

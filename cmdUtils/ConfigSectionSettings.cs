@@ -40,6 +40,12 @@ namespace cmdUtils
 		const String scriptsPath_ ="scriptsPath";
 		const String scriptCreate_="scriptCreate";
 		const String scriptFileDb_="scriptCreateFileDb";
+		/** moulinettes**/
+		const String moulSrcPath_="moulSrcPath";
+		const String moulDstPath_="moulDstPath";
+		const String moulUploadS1_="moulUploadS1";
+		const String moulUploadS2_="moulUploadS2";
+		
 		
 		#region ConfigurationProperties
 		
@@ -121,6 +127,28 @@ namespace cmdUtils
 		public string scriptFileDb {
 			get { return (string) this[scriptFileDb_]; }
 			set { this[scriptFileDb_] = value; }
+		}
+
+		[ConfigurationProperty(moulSrcPath_, DefaultValue="//192.168.1.200/echange/moulinette_meo/")]
+		public string moulSrcPath {
+			get { return (string) this[moulSrcPath_]; }
+			set { this[moulSrcPath_] = value; }
+		}
+		[ConfigurationProperty(moulDstPath_, DefaultValue="W:/meo-moulinettes/")]
+		public string moulDstPath {
+			get { return (string) this[moulDstPath_]; }
+			set { this[moulDstPath_] = value; }
+		}
+
+		[ConfigurationProperty(moulUploadS1_, DefaultValue="pscp s1")]
+		public string moulUploadS1 {
+			get { return (string) this[moulUploadS1_]; }
+			set { this[moulUploadS1_] = value; }
+		}
+		[ConfigurationProperty(moulUploadS2_, DefaultValue="pscp s2")]
+		public string moulUploadS2 {
+			get { return (string) this[moulUploadS2_]; }
+			set { this[moulUploadS2_] = value; }
 		}
 		
 		#endregion

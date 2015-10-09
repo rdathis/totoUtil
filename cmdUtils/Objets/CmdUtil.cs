@@ -34,7 +34,11 @@ namespace cmdUtils.Objets
 		public CmdUtil()
 		{
 		}
-		
+
+		public string dingding()
+		{
+			return "(cat `cygpath -W`/Media/ding.wav > /dev/dsp) ";
+		}
 		public bool sourceSQL(ConfigSectionSettings cfg, string databaseName, string sourceFileName) {
 			if ((databaseName==null) || (databaseName.Length<1)) {
 				throw new Exception("bad params");
