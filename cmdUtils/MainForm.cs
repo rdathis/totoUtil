@@ -80,10 +80,10 @@ namespace cmdUtils
 			scriptCreateDbParam.Text=cfg.scriptCreate;
 			scriptCreateFiledDBParam.Text=cfg.scriptFileDb;
 			
-			moulSrcPath.Text=cfg.moulSrcPath;
-			moulDstPath.Text=cfg.moulDstPath;
-			moulScp1.Text=cfg.moulUploadS1;
-			moulScp2.Text=cfg.moulUploadS2;
+			moulSrcPathParam.Text=cfg.moulSrcPath;
+			moulDstPathParam.Text=cfg.moulDstPath;
+			moulScp1Param.Text=cfg.moulUploadS1;
+			moulScp2Param.Text=cfg.moulUploadS2;
 			
 			if (filterGzTextBox.Text.Length==0) {
 				
@@ -119,10 +119,10 @@ namespace cmdUtils
 			cfg.scriptCreate=scriptCreateDbParam.Text;
 			cfg.scriptFileDb=scriptCreateFiledDBParam.Text;
 			
-			cfg.moulSrcPath=moulSrcPath.Text;
-			cfg.moulDstPath=moulDstPath.Text;
-			cfg.moulUploadS1=moulScp1.Text;
-			cfg.moulUploadS2=moulScp2.Text;
+			cfg.moulSrcPath=moulSrcPathParam.Text;
+			cfg.moulDstPath=moulDstPathParam.Text;
+			cfg.moulUploadS1=moulScp1Param.Text;
+			cfg.moulUploadS2=moulScp2Param.Text;
 			
 		}
 		void GetMysqlDatabaseButtonClick(object sender, EventArgs e)
