@@ -32,6 +32,7 @@ namespace cmdUtils
 		List <AssoControleParam> configListeControles = new List<AssoControleParam>();
 			
 		CmdUtil cmdUtils = new CmdUtil();
+		MoulinetteAction moulinetteAction = new MoulinetteAction();
 		ConfigSectionSettings cfg=	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
 		public MainForm()
 		{
@@ -84,6 +85,7 @@ namespace cmdUtils
 			moulDstPathParam.Text=cfg.moulDstPath;
 			moulScp1Param.Text=cfg.moulUploadS1;
 			moulScp2Param.Text=cfg.moulUploadS2;
+			moulFichiersParam.Text=cfg.moulFichiers;
 			
 			if (filterGzTextBox.Text.Length==0) {
 				
@@ -96,6 +98,11 @@ namespace cmdUtils
 
 		void populateMoulinettes()
 		{
+			txtBoxMoulSrcPath.Text=cfg.moulSrcPath;
+			txtBoxMoulDestBase.Text=cfg.moulDstPath;
+			
+			txtBoxMoulSrcFilter.Text="*client*";
+			
 			//txtBoxMoulSrcPath.Text=cfg.moulSrcPath;
 			//txtMoulDestBase.Text=cfg.moulDstPath;
 				
@@ -227,6 +234,19 @@ namespace cmdUtils
 			if (cmdUtils.dropRecreateDatabase(cfg, getDatabaseName(), true, filedbCheckbox.Checked)) {
 				GetMysqlDatabaseButtonClick(null, null);
 			}
+		}
+		void BtnMoulFilterSrcClick(object sender, EventArgs e)
+		{
+			cmdUtils.openWindowsExplorer(txtBoxMoulSrcPath.Text);
+		}
+		void BtnSearchClick(object sender, EventArgs e)
+		{
+			moulinetteAction.bntListSrc((Button) sender, cmdUtils,txtBoxMoulSrcPath.Text, txtBoxMoulSrcFilter.Text, listboxMoulSrc);
+		}
+		void Button2Click(object sender, EventArgs e)
+		{
+			cmdUtils.openWindowsExplorer(txtBoxMoulDestBase.Text);
+			                             
 		}
 		
 		//TODO:cygwinbouton:M:\cygwin64\bin\mintty.exe -i /Cygwin-Terminal.ico -

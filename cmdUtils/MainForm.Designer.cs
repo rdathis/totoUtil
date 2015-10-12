@@ -73,13 +73,13 @@ namespace cmdUtils
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.tabParam = new System.Windows.Forms.TabPage();
 			this.lmoulDstPath = new System.Windows.Forms.Label();
-			this.moulDstPath = new System.Windows.Forms.TextBox();
+			this.moulDstPathParam = new System.Windows.Forms.TextBox();
 			this.label21 = new System.Windows.Forms.Label();
-			this.moulScp1 = new System.Windows.Forms.TextBox();
+			this.moulScp1Param = new System.Windows.Forms.TextBox();
 			this.label22 = new System.Windows.Forms.Label();
-			this.moulScp2 = new System.Windows.Forms.TextBox();
+			this.moulScp2Param = new System.Windows.Forms.TextBox();
 			this.lmoulSrcPath = new System.Windows.Forms.Label();
-			this.moulSrcPath = new System.Windows.Forms.TextBox();
+			this.moulSrcPathParam = new System.Windows.Forms.TextBox();
 			this.label13 = new System.Windows.Forms.Label();
 			this.cygwinTermParam = new System.Windows.Forms.TextBox();
 			this.label12 = new System.Windows.Forms.Label();
@@ -126,6 +126,14 @@ namespace cmdUtils
 			this.label11 = new System.Windows.Forms.Label();
 			this.tabPdf = new System.Windows.Forms.TabPage();
 			this.tabMoulinettes = new System.Windows.Forms.TabPage();
+			this.docs = new System.Windows.Forms.Label();
+			this.txtBoxMoulDocs = new System.Windows.Forms.TextBox();
+			this.data = new System.Windows.Forms.Label();
+			this.txtBoxMoulData = new System.Windows.Forms.TextBox();
+			this.button4 = new System.Windows.Forms.Button();
+			this.button3 = new System.Windows.Forms.Button();
+			this.btnMoulNavigDestBase = new System.Windows.Forms.Button();
+			this.btnMoulFilterSrc = new System.Windows.Forms.Button();
 			this.btnZip = new System.Windows.Forms.Button();
 			this.txtFinal = new System.Windows.Forms.TextBox();
 			this.label19 = new System.Windows.Forms.Label();
@@ -134,10 +142,10 @@ namespace cmdUtils
 			this.label18 = new System.Windows.Forms.Label();
 			this.txtMagId = new System.Windows.Forms.TextBox();
 			this.label17 = new System.Windows.Forms.Label();
-			this.txtDestBase = new System.Windows.Forms.TextBox();
+			this.txtBoxMoulDestBase = new System.Windows.Forms.TextBox();
 			this.label16 = new System.Windows.Forms.Label();
-			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.tbxBoxMoulSrcPath = new System.Windows.Forms.TextBox();
+			this.txtBoxMoulSrcFilter = new System.Windows.Forms.TextBox();
+			this.txtBoxMoulSrcPath = new System.Windows.Forms.TextBox();
 			this.label15 = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
 			this.btnSearch = new System.Windows.Forms.Button();
@@ -150,10 +158,8 @@ namespace cmdUtils
 			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.cygwinToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
-			this.button4 = new System.Windows.Forms.Button();
+			this.label20 = new System.Windows.Forms.Label();
+			this.moulFichiersParam = new System.Windows.Forms.TextBox();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -185,14 +191,16 @@ namespace cmdUtils
 			// 
 			// tabParam
 			// 
+			this.tabParam.Controls.Add(this.label20);
+			this.tabParam.Controls.Add(this.moulFichiersParam);
 			this.tabParam.Controls.Add(this.lmoulDstPath);
-			this.tabParam.Controls.Add(this.moulDstPath);
+			this.tabParam.Controls.Add(this.moulDstPathParam);
 			this.tabParam.Controls.Add(this.label21);
-			this.tabParam.Controls.Add(this.moulScp1);
+			this.tabParam.Controls.Add(this.moulScp1Param);
 			this.tabParam.Controls.Add(this.label22);
-			this.tabParam.Controls.Add(this.moulScp2);
+			this.tabParam.Controls.Add(this.moulScp2Param);
 			this.tabParam.Controls.Add(this.lmoulSrcPath);
-			this.tabParam.Controls.Add(this.moulSrcPath);
+			this.tabParam.Controls.Add(this.moulSrcPathParam);
 			this.tabParam.Controls.Add(this.label13);
 			this.tabParam.Controls.Add(this.cygwinTermParam);
 			this.tabParam.Controls.Add(this.label12);
@@ -232,42 +240,42 @@ namespace cmdUtils
 			this.lmoulDstPath.TabIndex = 33;
 			this.lmoulDstPath.Text = "moulDstPath";
 			// 
-			// moulDstPath
+			// moulDstPathParam
 			// 
-			this.moulDstPath.Location = new System.Drawing.Point(131, 266);
-			this.moulDstPath.Name = "moulDstPath";
-			this.moulDstPath.Size = new System.Drawing.Size(642, 20);
-			this.moulDstPath.TabIndex = 27;
+			this.moulDstPathParam.Location = new System.Drawing.Point(131, 266);
+			this.moulDstPathParam.Name = "moulDstPathParam";
+			this.moulDstPathParam.Size = new System.Drawing.Size(642, 20);
+			this.moulDstPathParam.TabIndex = 27;
 			// 
 			// label21
 			// 
-			this.label21.Location = new System.Drawing.Point(20, 289);
+			this.label21.Location = new System.Drawing.Point(20, 313);
 			this.label21.Name = "label21";
 			this.label21.Size = new System.Drawing.Size(100, 23);
 			this.label21.TabIndex = 32;
 			this.label21.Text = "cp @S1";
 			// 
-			// moulScp1
+			// moulScp1Param
 			// 
-			this.moulScp1.Location = new System.Drawing.Point(131, 292);
-			this.moulScp1.Name = "moulScp1";
-			this.moulScp1.Size = new System.Drawing.Size(642, 20);
-			this.moulScp1.TabIndex = 28;
+			this.moulScp1Param.Location = new System.Drawing.Point(131, 316);
+			this.moulScp1Param.Name = "moulScp1Param";
+			this.moulScp1Param.Size = new System.Drawing.Size(642, 20);
+			this.moulScp1Param.TabIndex = 28;
 			// 
 			// label22
 			// 
-			this.label22.Location = new System.Drawing.Point(20, 315);
+			this.label22.Location = new System.Drawing.Point(20, 339);
 			this.label22.Name = "label22";
 			this.label22.Size = new System.Drawing.Size(100, 23);
 			this.label22.TabIndex = 31;
 			this.label22.Text = "cp@S2";
 			// 
-			// moulScp2
+			// moulScp2Param
 			// 
-			this.moulScp2.Location = new System.Drawing.Point(131, 318);
-			this.moulScp2.Name = "moulScp2";
-			this.moulScp2.Size = new System.Drawing.Size(642, 20);
-			this.moulScp2.TabIndex = 29;
+			this.moulScp2Param.Location = new System.Drawing.Point(131, 342);
+			this.moulScp2Param.Name = "moulScp2Param";
+			this.moulScp2Param.Size = new System.Drawing.Size(642, 20);
+			this.moulScp2Param.TabIndex = 29;
 			// 
 			// lmoulSrcPath
 			// 
@@ -277,12 +285,12 @@ namespace cmdUtils
 			this.lmoulSrcPath.TabIndex = 30;
 			this.lmoulSrcPath.Text = "moulSrcPath";
 			// 
-			// moulSrcPath
+			// moulSrcPathParam
 			// 
-			this.moulSrcPath.Location = new System.Drawing.Point(131, 240);
-			this.moulSrcPath.Name = "moulSrcPath";
-			this.moulSrcPath.Size = new System.Drawing.Size(642, 20);
-			this.moulSrcPath.TabIndex = 26;
+			this.moulSrcPathParam.Location = new System.Drawing.Point(131, 240);
+			this.moulSrcPathParam.Name = "moulSrcPathParam";
+			this.moulSrcPathParam.Size = new System.Drawing.Size(642, 20);
+			this.moulSrcPathParam.TabIndex = 26;
 			// 
 			// label13
 			// 
@@ -695,10 +703,14 @@ namespace cmdUtils
 			// 
 			// tabMoulinettes
 			// 
+			this.tabMoulinettes.Controls.Add(this.docs);
+			this.tabMoulinettes.Controls.Add(this.txtBoxMoulDocs);
+			this.tabMoulinettes.Controls.Add(this.data);
+			this.tabMoulinettes.Controls.Add(this.txtBoxMoulData);
 			this.tabMoulinettes.Controls.Add(this.button4);
 			this.tabMoulinettes.Controls.Add(this.button3);
-			this.tabMoulinettes.Controls.Add(this.button2);
-			this.tabMoulinettes.Controls.Add(this.button1);
+			this.tabMoulinettes.Controls.Add(this.btnMoulNavigDestBase);
+			this.tabMoulinettes.Controls.Add(this.btnMoulFilterSrc);
 			this.tabMoulinettes.Controls.Add(this.btnZip);
 			this.tabMoulinettes.Controls.Add(this.txtFinal);
 			this.tabMoulinettes.Controls.Add(this.label19);
@@ -707,10 +719,10 @@ namespace cmdUtils
 			this.tabMoulinettes.Controls.Add(this.label18);
 			this.tabMoulinettes.Controls.Add(this.txtMagId);
 			this.tabMoulinettes.Controls.Add(this.label17);
-			this.tabMoulinettes.Controls.Add(this.txtDestBase);
+			this.tabMoulinettes.Controls.Add(this.txtBoxMoulDestBase);
 			this.tabMoulinettes.Controls.Add(this.label16);
-			this.tabMoulinettes.Controls.Add(this.textBox2);
-			this.tabMoulinettes.Controls.Add(this.tbxBoxMoulSrcPath);
+			this.tabMoulinettes.Controls.Add(this.txtBoxMoulSrcFilter);
+			this.tabMoulinettes.Controls.Add(this.txtBoxMoulSrcPath);
 			this.tabMoulinettes.Controls.Add(this.label15);
 			this.tabMoulinettes.Controls.Add(this.label14);
 			this.tabMoulinettes.Controls.Add(this.btnSearch);
@@ -722,9 +734,77 @@ namespace cmdUtils
 			this.tabMoulinettes.Text = "Moulinettes";
 			this.tabMoulinettes.UseVisualStyleBackColor = true;
 			// 
+			// docs
+			// 
+			this.docs.Location = new System.Drawing.Point(30, 245);
+			this.docs.Name = "docs";
+			this.docs.Size = new System.Drawing.Size(61, 20);
+			this.docs.TabIndex = 22;
+			this.docs.Text = "f docs";
+			// 
+			// txtBoxMoulDocs
+			// 
+			this.txtBoxMoulDocs.Location = new System.Drawing.Point(97, 245);
+			this.txtBoxMoulDocs.Name = "txtBoxMoulDocs";
+			this.txtBoxMoulDocs.Size = new System.Drawing.Size(470, 20);
+			this.txtBoxMoulDocs.TabIndex = 21;
+			// 
+			// data
+			// 
+			this.data.Location = new System.Drawing.Point(30, 219);
+			this.data.Name = "data";
+			this.data.Size = new System.Drawing.Size(61, 20);
+			this.data.TabIndex = 20;
+			this.data.Text = "f data";
+			// 
+			// txtBoxMoulData
+			// 
+			this.txtBoxMoulData.Location = new System.Drawing.Point(97, 219);
+			this.txtBoxMoulData.Name = "txtBoxMoulData";
+			this.txtBoxMoulData.Size = new System.Drawing.Size(470, 20);
+			this.txtBoxMoulData.TabIndex = 19;
+			// 
+			// button4
+			// 
+			this.button4.Location = new System.Drawing.Point(693, 407);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(75, 23);
+			this.button4.TabIndex = 18;
+			this.button4.Text = "s2";
+			this.button4.UseVisualStyleBackColor = true;
+			// 
+			// button3
+			// 
+			this.button3.Location = new System.Drawing.Point(693, 378);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(75, 23);
+			this.button3.TabIndex = 17;
+			this.button3.Text = "s1";
+			this.button3.UseVisualStyleBackColor = true;
+			// 
+			// btnMoulNavigDestBase
+			// 
+			this.btnMoulNavigDestBase.Location = new System.Drawing.Point(430, 407);
+			this.btnMoulNavigDestBase.Name = "btnMoulNavigDestBase";
+			this.btnMoulNavigDestBase.Size = new System.Drawing.Size(51, 23);
+			this.btnMoulNavigDestBase.TabIndex = 16;
+			this.btnMoulNavigDestBase.Text = "explorer";
+			this.btnMoulNavigDestBase.UseVisualStyleBackColor = true;
+			this.btnMoulNavigDestBase.Click += new System.EventHandler(this.Button2Click);
+			// 
+			// btnMoulFilterSrc
+			// 
+			this.btnMoulFilterSrc.Location = new System.Drawing.Point(390, 28);
+			this.btnMoulFilterSrc.Name = "btnMoulFilterSrc";
+			this.btnMoulFilterSrc.Size = new System.Drawing.Size(51, 23);
+			this.btnMoulFilterSrc.TabIndex = 15;
+			this.btnMoulFilterSrc.Text = "explorer";
+			this.btnMoulFilterSrc.UseVisualStyleBackColor = true;
+			this.btnMoulFilterSrc.Click += new System.EventHandler(this.BtnMoulFilterSrcClick);
+			// 
 			// btnZip
 			// 
-			this.btnZip.Location = new System.Drawing.Point(615, 247);
+			this.btnZip.Location = new System.Drawing.Point(620, 460);
 			this.btnZip.Name = "btnZip";
 			this.btnZip.Size = new System.Drawing.Size(75, 23);
 			this.btnZip.TabIndex = 14;
@@ -733,14 +813,14 @@ namespace cmdUtils
 			// 
 			// txtFinal
 			// 
-			this.txtFinal.Location = new System.Drawing.Point(97, 231);
+			this.txtFinal.Location = new System.Drawing.Point(102, 444);
 			this.txtFinal.Name = "txtFinal";
 			this.txtFinal.Size = new System.Drawing.Size(310, 20);
 			this.txtFinal.TabIndex = 13;
 			// 
 			// label19
 			// 
-			this.label19.Location = new System.Drawing.Point(7, 231);
+			this.label19.Location = new System.Drawing.Point(12, 444);
 			this.label19.Name = "label19";
 			this.label19.Size = new System.Drawing.Size(84, 23);
 			this.label19.TabIndex = 12;
@@ -749,21 +829,21 @@ namespace cmdUtils
 			// listboxMoulSrc
 			// 
 			this.listboxMoulSrc.FormattingEnabled = true;
-			this.listboxMoulSrc.Location = new System.Drawing.Point(447, 25);
+			this.listboxMoulSrc.Location = new System.Drawing.Point(7, 79);
 			this.listboxMoulSrc.Name = "listboxMoulSrc";
-			this.listboxMoulSrc.Size = new System.Drawing.Size(244, 56);
+			this.listboxMoulSrc.Size = new System.Drawing.Size(807, 134);
 			this.listboxMoulSrc.TabIndex = 11;
 			// 
 			// txtMagClient
 			// 
-			this.txtMagClient.Location = new System.Drawing.Point(376, 150);
+			this.txtMagClient.Location = new System.Drawing.Point(381, 363);
 			this.txtMagClient.Name = "txtMagClient";
 			this.txtMagClient.Size = new System.Drawing.Size(100, 20);
 			this.txtMagClient.TabIndex = 10;
 			// 
 			// label18
 			// 
-			this.label18.Location = new System.Drawing.Point(240, 148);
+			this.label18.Location = new System.Drawing.Point(245, 361);
 			this.label18.Name = "label18";
 			this.label18.Size = new System.Drawing.Size(100, 23);
 			this.label18.TabIndex = 9;
@@ -771,55 +851,55 @@ namespace cmdUtils
 			// 
 			// txtMagId
 			// 
-			this.txtMagId.Location = new System.Drawing.Point(97, 148);
+			this.txtMagId.Location = new System.Drawing.Point(102, 361);
 			this.txtMagId.Name = "txtMagId";
 			this.txtMagId.Size = new System.Drawing.Size(100, 20);
 			this.txtMagId.TabIndex = 8;
 			// 
 			// label17
 			// 
-			this.label17.Location = new System.Drawing.Point(7, 148);
+			this.label17.Location = new System.Drawing.Point(12, 361);
 			this.label17.Name = "label17";
 			this.label17.Size = new System.Drawing.Size(100, 23);
 			this.label17.TabIndex = 7;
 			this.label17.Text = "magId";
 			// 
-			// txtDestBase
+			// txtBoxMoulDestBase
 			// 
-			this.txtDestBase.Location = new System.Drawing.Point(97, 194);
-			this.txtDestBase.Name = "txtDestBase";
-			this.txtDestBase.Size = new System.Drawing.Size(310, 20);
-			this.txtDestBase.TabIndex = 6;
+			this.txtBoxMoulDestBase.Location = new System.Drawing.Point(102, 407);
+			this.txtBoxMoulDestBase.Name = "txtBoxMoulDestBase";
+			this.txtBoxMoulDestBase.Size = new System.Drawing.Size(310, 20);
+			this.txtBoxMoulDestBase.TabIndex = 6;
 			// 
 			// label16
 			// 
-			this.label16.Location = new System.Drawing.Point(7, 194);
+			this.label16.Location = new System.Drawing.Point(12, 407);
 			this.label16.Name = "label16";
 			this.label16.Size = new System.Drawing.Size(84, 23);
 			this.label16.TabIndex = 5;
 			this.label16.Text = "destBase";
 			// 
-			// textBox2
+			// txtBoxMoulSrcFilter
 			// 
-			this.textBox2.Location = new System.Drawing.Point(97, 52);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(310, 20);
-			this.textBox2.TabIndex = 4;
+			this.txtBoxMoulSrcFilter.Location = new System.Drawing.Point(97, 52);
+			this.txtBoxMoulSrcFilter.Name = "txtBoxMoulSrcFilter";
+			this.txtBoxMoulSrcFilter.Size = new System.Drawing.Size(220, 20);
+			this.txtBoxMoulSrcFilter.TabIndex = 4;
 			// 
-			// tbxBoxMoulSrcPath
+			// txtBoxMoulSrcPath
 			// 
-			this.tbxBoxMoulSrcPath.Location = new System.Drawing.Point(97, 28);
-			this.tbxBoxMoulSrcPath.Name = "tbxBoxMoulSrcPath";
-			this.tbxBoxMoulSrcPath.Size = new System.Drawing.Size(287, 20);
-			this.tbxBoxMoulSrcPath.TabIndex = 3;
+			this.txtBoxMoulSrcPath.Location = new System.Drawing.Point(97, 28);
+			this.txtBoxMoulSrcPath.Name = "txtBoxMoulSrcPath";
+			this.txtBoxMoulSrcPath.Size = new System.Drawing.Size(287, 20);
+			this.txtBoxMoulSrcPath.TabIndex = 3;
 			// 
 			// label15
 			// 
 			this.label15.Location = new System.Drawing.Point(7, 53);
 			this.label15.Name = "label15";
-			this.label15.Size = new System.Drawing.Size(100, 23);
+			this.label15.Size = new System.Drawing.Size(84, 19);
 			this.label15.TabIndex = 2;
-			this.label15.Text = "label15";
+			this.label15.Text = "filtre";
 			// 
 			// label14
 			// 
@@ -831,12 +911,13 @@ namespace cmdUtils
 			// 
 			// btnSearch
 			// 
-			this.btnSearch.Location = new System.Drawing.Point(702, 26);
+			this.btnSearch.Location = new System.Drawing.Point(492, 53);
 			this.btnSearch.Name = "btnSearch";
 			this.btnSearch.Size = new System.Drawing.Size(75, 23);
 			this.btnSearch.TabIndex = 0;
 			this.btnSearch.Text = "filtre";
 			this.btnSearch.UseVisualStyleBackColor = true;
+			this.btnSearch.Click += new System.EventHandler(this.BtnSearchClick);
 			// 
 			// menuStrip1
 			// 
@@ -904,41 +985,20 @@ namespace cmdUtils
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
-			// button1
+			// label20
 			// 
-			this.button1.Location = new System.Drawing.Point(390, 21);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(51, 23);
-			this.button1.TabIndex = 15;
-			this.button1.Text = "button1";
-			this.button1.UseVisualStyleBackColor = true;
+			this.label20.Location = new System.Drawing.Point(20, 290);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(100, 23);
+			this.label20.TabIndex = 35;
+			this.label20.Text = "moulFichiers";
 			// 
-			// button2
+			// moulFichiersParam
 			// 
-			this.button2.Location = new System.Drawing.Point(425, 194);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(51, 23);
-			this.button2.TabIndex = 16;
-			this.button2.Text = "button2";
-			this.button2.UseVisualStyleBackColor = true;
-			// 
-			// button3
-			// 
-			this.button3.Location = new System.Drawing.Point(365, 317);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(75, 23);
-			this.button3.TabIndex = 17;
-			this.button3.Text = "s1";
-			this.button3.UseVisualStyleBackColor = true;
-			// 
-			// button4
-			// 
-			this.button4.Location = new System.Drawing.Point(365, 346);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(75, 23);
-			this.button4.TabIndex = 18;
-			this.button4.Text = "s2";
-			this.button4.UseVisualStyleBackColor = true;
+			this.moulFichiersParam.Location = new System.Drawing.Point(131, 290);
+			this.moulFichiersParam.Name = "moulFichiersParam";
+			this.moulFichiersParam.Size = new System.Drawing.Size(642, 20);
+			this.moulFichiersParam.TabIndex = 34;
 			// 
 			// MainForm
 			// 
@@ -971,18 +1031,24 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Label label20;
+		private System.Windows.Forms.TextBox moulFichiersParam;
+		private System.Windows.Forms.Label docs;
+		private System.Windows.Forms.TextBox txtBoxMoulDocs;
+		private System.Windows.Forms.Label data;
+		private System.Windows.Forms.TextBox txtBoxMoulData;
 		private System.Windows.Forms.Button button4;
 		private System.Windows.Forms.Button button3;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button btnMoulNavigDestBase;
+		private System.Windows.Forms.Button btnMoulFilterSrc;
 		private System.Windows.Forms.Label lmoulDstPath;
-		private System.Windows.Forms.TextBox moulDstPath;
+		private System.Windows.Forms.TextBox moulDstPathParam;
 		private System.Windows.Forms.Label label21;
-		private System.Windows.Forms.TextBox moulScp1;
+		private System.Windows.Forms.TextBox moulScp1Param;
 		private System.Windows.Forms.Label label22;
-		private System.Windows.Forms.TextBox moulScp2;
+		private System.Windows.Forms.TextBox moulScp2Param;
 		private System.Windows.Forms.Label lmoulSrcPath;
-		private System.Windows.Forms.TextBox moulSrcPath;
+		private System.Windows.Forms.TextBox moulSrcPathParam;
 		private System.Windows.Forms.Button btnZip;
 		private System.Windows.Forms.TextBox txtFinal;
 		private System.Windows.Forms.Label label19;
@@ -991,10 +1057,10 @@ namespace cmdUtils
 		private System.Windows.Forms.Label label18;
 		private System.Windows.Forms.TextBox txtMagId;
 		private System.Windows.Forms.Label label17;
-		private System.Windows.Forms.TextBox txtDestBase;
+		private System.Windows.Forms.TextBox txtBoxMoulDestBase;
 		private System.Windows.Forms.Label label16;
-		private System.Windows.Forms.TextBox textBox2;
-		private System.Windows.Forms.TextBox tbxBoxMoulSrcPath;
+		private System.Windows.Forms.TextBox txtBoxMoulSrcFilter;
+		private System.Windows.Forms.TextBox txtBoxMoulSrcPath;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.Button btnSearch;

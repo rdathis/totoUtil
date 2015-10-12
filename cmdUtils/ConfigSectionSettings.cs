@@ -45,6 +45,7 @@ namespace cmdUtils
 		const String moulDstPath_="moulDstPath";
 		const String moulUploadS1_="moulUploadS1";
 		const String moulUploadS2_="moulUploadS2";
+		const String moulFichiers_="moulFichiers";
 		
 		#region ConfigurationProperties
 		
@@ -148,6 +149,11 @@ namespace cmdUtils
 		public string moulUploadS2 {
 			get { return (string) this[moulUploadS2_]; }
 			set { this[moulUploadS2_] = value; }
+		}
+		[ConfigurationProperty(moulFichiers_, DefaultValue="ytoptic*.d ")]
+		public string moulFichiers {
+			get { return (string) this[moulFichiers_]; }
+			set { this[moulFichiers_] = value; }
 		}
 		
 		#endregion
@@ -260,6 +266,8 @@ namespace cmdUtils
 				moulUploadS1=value;
 			} else if (key.Equals(moulUploadS2_)) {
 				moulUploadS2=value;
+			} else if (key.Equals(moulFichiers_)) {
+				moulFichiers=value;
 			}
 		}
 		

@@ -107,12 +107,22 @@ namespace cmdUtils.Objets
 			
 		}
 
-		public void listFilesToListbox(string dumpsPath, String findPattern, ListBox box)
+		public void listFilesToListbox(string dumpsPath, String findPattern, ListBox box, Boolean listFileOnly=true, Boolean listDirOnly=true)
 		{
+			if ((findPattern.Equals("")) || (findPattern==null)) {
+				findPattern="*";
+			}
 			DirectoryInfo 		di = new DirectoryInfo(dumpsPath);
 			box.Items.Clear();
+			if (listDirOnly) {
+				foreach(DirectoryInfo f in di.GetDirectories(findPattern)) {
+					box.Items.Add(f.FullName);
+				}
+			}
+			if (listFileOnly) {
 			foreach(FileInfo f in di.GetFiles(findPattern)) {
 				box.Items.Add(f.FullName);
+			}
 			}
 		}
 		public List <String> getDatabases(ConfigSectionSettings cfg) {
@@ -150,6 +160,11 @@ namespace cmdUtils.Objets
 			}
 
 			return list;
+		}
+		
+		public void openWindowsExplorer(String path) {
+			path=path.Replace("/", "\\");
+			executeCommand("explorer", path);
 		}
 		public List<String> filterListe(List<String> listStr, List<Regex> listReg, FiltersReg filter) {
 			
