@@ -66,6 +66,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssoControleParam.cs" />
     <Compile Include="ConfElement.cs" />
     <Compile Include="ConfigSectionSettings.cs" />
     <Compile Include="MainForm.cs" />

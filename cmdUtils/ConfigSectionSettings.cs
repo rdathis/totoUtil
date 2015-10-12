@@ -46,7 +46,6 @@ namespace cmdUtils
 		const String moulUploadS1_="moulUploadS1";
 		const String moulUploadS2_="moulUploadS2";
 		
-		
 		#region ConfigurationProperties
 		
 		/*
@@ -229,6 +228,43 @@ namespace cmdUtils
 			return oConfigSectionSettings;
 		}
 		
+		//TODO:try to make it better
+		public void setSpecialValue(String key, String value) {
+			if (key.Equals(mysqlExePath_)) {
+				mysqlExePath=value;
+			} else if (key.Equals(cygwinGzip_)) {
+				cygwinGzip=value;
+			} else if (key.Equals(cygwinPath_)) {
+				cygwinPath=value;
+			} else if (key.Equals(cygwinTerm_)) {
+				cygwinTerm=value;
+			} else if (key.Equals(mysqlUser_)) {
+				mysqlUser=value;
+			} else if (key.Equals(mysqlPassword_)) {
+				mysqlPassword=value;
+			} else if (key.Equals(mysqlExePath_)) {
+				mysqlExePath=value;
+			} else if (key.Equals(dumpsPath_)) {
+				dumpsPath=value;
+			} else if (key.Equals(scriptsPath_)) {
+				scriptsPath=value;
+			} else if (key.Equals(scriptCreate_)) {
+				scriptCreate=value;
+			} else if (key.Equals(scriptFileDb_)) {
+				scriptFileDb=value;
+			} else if (key.Equals(moulDstPath_)) {
+				moulDstPath=value;
+			} else if (key.Equals(moulSrcPath_)) {
+				moulSrcPath=value;
+			} else if (key.Equals(moulUploadS1_)) {
+				moulUploadS1=value;
+			} else if (key.Equals(moulUploadS2_)) {
+				moulUploadS2=value;
+			}
+		}
+		
+		
+
 		#endregion
 	}
 }

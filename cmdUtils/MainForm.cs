@@ -9,6 +9,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
@@ -27,7 +28,9 @@ namespace cmdUtils
 	public partial class MainForm : Form
 	{
 		
-		//List<TextBox, String) configListeControles = new List<TextBox, String>();
+		
+		List <AssoControleParam> configListeControles = new List<AssoControleParam>();
+			
 		CmdUtil cmdUtils = new CmdUtil();
 		ConfigSectionSettings cfg=	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
 		public MainForm()
@@ -40,6 +43,7 @@ namespace cmdUtils
 
 		void initConfig()
 		{
+			//configListeControles.Add(new AssoControleParam(cygwinParam,cfg.cygwinPath, cfg.cy));
 			//TODO:voir configListeControles, une collection ????
 			//et faire le tableau d'init. puis revoir grace a ca populate(), et updateConfig()
 		}
@@ -62,6 +66,12 @@ namespace cmdUtils
 		}
 		void populate() {
 			cygwinParam.Text = cfg.cygwinPath;
+			
+//			foreach(AssoControleParam param in configListeControles) {
+//				param.getTextBox().Text = param.getValue();
+//			}
+//			cfg.getConfiguration().GetSection(param.getSection());
+			
 			cygwinTermParam.Text=cfg.cygwinTerm;
 			mysqlParam.Text = cfg.mysqlExePath;
 			dataParam.Text=cfg.dumpsPath;
@@ -80,8 +90,23 @@ namespace cmdUtils
 				DateTime now= DateTime.Now;
 				filterGzTextBox.Text="meo*anq*"+now.ToString("yyyyMMdd")+"*.sql.gz";
 			}
+			populateMoulinettes();
+			
 		}
+
+		void populateMoulinettes()
+		{
+			//txtBoxMoulSrcPath.Text=cfg.moulSrcPath;
+			//txtMoulDestBase.Text=cfg.moulDstPath;
+				
+		}
+
 		void updateConfig() {
+//			foreach(AssoControleParam param in configListeControles) {
+//				param.setValue(param.getTextBox().Text);
+//			}
+			
+			
 			cfg.cygwinPath= cygwinParam.Text;
 			cfg.cygwinTerm=cygwinTermParam.Text;
 			

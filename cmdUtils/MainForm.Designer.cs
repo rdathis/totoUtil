@@ -137,7 +137,7 @@ namespace cmdUtils
 			this.txtDestBase = new System.Windows.Forms.TextBox();
 			this.label16 = new System.Windows.Forms.Label();
 			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.tbxBoxMoulSrcPath = new System.Windows.Forms.TextBox();
 			this.label15 = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
 			this.btnSearch = new System.Windows.Forms.Button();
@@ -150,6 +150,8 @@ namespace cmdUtils
 			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.cygwinToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.button1 = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -691,6 +693,8 @@ namespace cmdUtils
 			// 
 			// tabMoulinettes
 			// 
+			this.tabMoulinettes.Controls.Add(this.button2);
+			this.tabMoulinettes.Controls.Add(this.button1);
 			this.tabMoulinettes.Controls.Add(this.btnZip);
 			this.tabMoulinettes.Controls.Add(this.txtFinal);
 			this.tabMoulinettes.Controls.Add(this.label19);
@@ -702,7 +706,7 @@ namespace cmdUtils
 			this.tabMoulinettes.Controls.Add(this.txtDestBase);
 			this.tabMoulinettes.Controls.Add(this.label16);
 			this.tabMoulinettes.Controls.Add(this.textBox2);
-			this.tabMoulinettes.Controls.Add(this.textBox1);
+			this.tabMoulinettes.Controls.Add(this.tbxBoxMoulSrcPath);
 			this.tabMoulinettes.Controls.Add(this.label15);
 			this.tabMoulinettes.Controls.Add(this.label14);
 			this.tabMoulinettes.Controls.Add(this.btnSearch);
@@ -798,12 +802,12 @@ namespace cmdUtils
 			this.textBox2.Size = new System.Drawing.Size(310, 20);
 			this.textBox2.TabIndex = 4;
 			// 
-			// textBox1
+			// tbxBoxMoulSrcPath
 			// 
-			this.textBox1.Location = new System.Drawing.Point(97, 28);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(310, 20);
-			this.textBox1.TabIndex = 3;
+			this.tbxBoxMoulSrcPath.Location = new System.Drawing.Point(97, 28);
+			this.tbxBoxMoulSrcPath.Name = "tbxBoxMoulSrcPath";
+			this.tbxBoxMoulSrcPath.Size = new System.Drawing.Size(287, 20);
+			this.tbxBoxMoulSrcPath.TabIndex = 3;
 			// 
 			// label15
 			// 
@@ -896,6 +900,24 @@ namespace cmdUtils
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(390, 21);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(51, 23);
+			this.button1.TabIndex = 15;
+			this.button1.Text = "button1";
+			this.button1.UseVisualStyleBackColor = true;
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(425, 194);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(51, 23);
+			this.button2.TabIndex = 16;
+			this.button2.Text = "button2";
+			this.button2.UseVisualStyleBackColor = true;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -927,6 +949,8 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Label lmoulDstPath;
 		private System.Windows.Forms.TextBox moulDstPath;
 		private System.Windows.Forms.Label label21;
@@ -946,7 +970,7 @@ namespace cmdUtils
 		private System.Windows.Forms.TextBox txtDestBase;
 		private System.Windows.Forms.Label label16;
 		private System.Windows.Forms.TextBox textBox2;
-		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.TextBox tbxBoxMoulSrcPath;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.Button btnSearch;
