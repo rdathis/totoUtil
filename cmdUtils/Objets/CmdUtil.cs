@@ -7,7 +7,6 @@
  * Pour changer ce modèle utiliser Outils | Options | Codage | Editer les en-têtes standards.
  */
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -35,9 +34,25 @@ namespace cmdUtils.Objets
 		public CmdUtil()
 		{
 		}
-		
-		
-		public bool dropRecreateDatabase(ConfigSectionSettings cfg, string databaseName)
+
+		public string dingding()
+		{
+			return "(cat `cygpath -W`/Media/ding.wav > /dev/dsp) ";
+		}
+		public bool sourceSQL(ConfigSectionSettings cfg, string databaseName, string sourceFileName) {
+			if ((databaseName==null) || (databaseName.Length<1)) {
+				throw new Exception("bad params");
+			}
+			
+			//String cmd=cfg.mysqlExePath;
+			//String args=" -u "+cfg.mysqlUser +" -p"+cfg.mysqlPassword +" -Be ";
+			
+			sourceFileName=sourceFileName.Replace("\\", "/");
+			String connString = myUtil.buildconnString("", "localhost", cfg.mysqlUser, cfg.mysqlPassword);
+			int i = myUtil.getExecuteQueryResult(connString, myUtil.getSourceSQL(databaseName, sourceFileName));			
+			return (i>0);
+		}
+		public bool dropRecreateDatabase(ConfigSectionSettings cfg, string databaseName, Boolean reCreate=true, Boolean createFileDb=false)
 		{
 			if ((databaseName==null) || (databaseName.Length<1)) {
 				throw new Exception("bad params");
@@ -48,7 +63,13 @@ namespace cmdUtils.Objets
 			
 			
 			String connString = myUtil.buildconnString("", "localhost", cfg.mysqlUser, cfg.mysqlPassword);
-			int i = myUtil.getExecuteQueryResult(connString, myUtil.getDropSQL(databaseName));
+			int i = myUtil.getExecuteQueryResult(connString, myUtil.getDropSQL(databaseName, reCreate));
+			if (createFileDb) {
+				//cmdUtils.sourceSQL(cfg, databaseName, "X:/meo-datas/create_meo_filedb.sql");
+				connString = myUtil.buildconnString(databaseName, "localhost", cfg.mysqlUser, cfg.mysqlPassword);
+				//TODO:add a parameter
+				myUtil.getExecuteQueryResult(connString, myUtil.readScript("X:/meo-datas/create_meo_filedb.sql"));
+			}
 			
 			return (i>0);
 		}
@@ -86,12 +107,22 @@ namespace cmdUtils.Objets
 			
 		}
 
-		public void listFilesToListbox(string dumpsPath, String findPattern, ListBox box)
+		public void listFilesToListbox(string dumpsPath, String findPattern, ListBox box, Boolean listFileOnly=true, Boolean listDirOnly=true)
 		{
+			if ((findPattern.Equals("")) || (findPattern==null)) {
+				findPattern="*";
+			}
 			DirectoryInfo 		di = new DirectoryInfo(dumpsPath);
 			box.Items.Clear();
+			if (listDirOnly) {
+				foreach(DirectoryInfo f in di.GetDirectories(findPattern)) {
+					box.Items.Add(f.FullName);
+				}
+			}
+			if (listFileOnly) {
 			foreach(FileInfo f in di.GetFiles(findPattern)) {
 				box.Items.Add(f.FullName);
+			}
 			}
 		}
 		public List <String> getDatabases(ConfigSectionSettings cfg) {
@@ -129,6 +160,11 @@ namespace cmdUtils.Objets
 			}
 
 			return list;
+		}
+		
+		public void openWindowsExplorer(String path) {
+			path=path.Replace("/", "\\");
+			executeCommand("explorer", path);
 		}
 		public List<String> filterListe(List<String> listStr, List<Regex> listReg, FiltersReg filter) {
 			

@@ -28,6 +28,7 @@ namespace cmdUtils
 		const String gunzipExePath_="gunzipExePath";
 		
 		const String cygwinPath_="cygwinPath";
+		const String cygwinTerm_="cygwinTerm";
 		const String cygwinGzip_="cygwinGzip";
 		
 		const String mysqlUser_="mysqlUser";
@@ -39,6 +40,12 @@ namespace cmdUtils
 		const String scriptsPath_ ="scriptsPath";
 		const String scriptCreate_="scriptCreate";
 		const String scriptFileDb_="scriptCreateFileDb";
+		/** moulinettes**/
+		const String moulSrcPath_="moulSrcPath";
+		const String moulDstPath_="moulDstPath";
+		const String moulUploadS1_="moulUploadS1";
+		const String moulUploadS2_="moulUploadS2";
+		const String moulFichiers_="moulFichiers";
 		
 		#region ConfigurationProperties
 		
@@ -76,13 +83,17 @@ namespace cmdUtils
 			get { return (string) this[cygwinPath_]; }
 			set { this[cygwinPath_] = value; }
 		}
-
+		[ConfigurationProperty(cygwinTerm_, DefaultValue=" -i /Cygwin-Terminal.ico -")]
+		public string cygwinTerm {
+			get { return (string) this[cygwinTerm_]; }
+			set { this[cygwinTerm_] = value; }
+		}
 		[ConfigurationProperty(cygwinGzip_, DefaultValue="gzip.exe")]
 		public string cygwinGzip {
 			get { return (string) this[cygwinGzip_]; }
 			set { this[cygwinGzip_] = value; }
 		}
-		[ConfigurationProperty(scriptsPath_, DefaultValue="m:/data/...")]
+		[ConfigurationProperty(scriptsPath_, DefaultValue="X:/data/...")]
 		public string scriptsPath {
 			get { return (string) this[scriptsPath_]; }
 			set { this[scriptsPath_] = value; }
@@ -116,6 +127,33 @@ namespace cmdUtils
 		public string scriptFileDb {
 			get { return (string) this[scriptFileDb_]; }
 			set { this[scriptFileDb_] = value; }
+		}
+
+		[ConfigurationProperty(moulSrcPath_, DefaultValue="//192.168.1.200/echange/moulinette_meo/")]
+		public string moulSrcPath {
+			get { return (string) this[moulSrcPath_]; }
+			set { this[moulSrcPath_] = value; }
+		}
+		[ConfigurationProperty(moulDstPath_, DefaultValue="W:/meo-moulinettes/")]
+		public string moulDstPath {
+			get { return (string) this[moulDstPath_]; }
+			set { this[moulDstPath_] = value; }
+		}
+
+		[ConfigurationProperty(moulUploadS1_, DefaultValue="pscp s1")]
+		public string moulUploadS1 {
+			get { return (string) this[moulUploadS1_]; }
+			set { this[moulUploadS1_] = value; }
+		}
+		[ConfigurationProperty(moulUploadS2_, DefaultValue="pscp s2")]
+		public string moulUploadS2 {
+			get { return (string) this[moulUploadS2_]; }
+			set { this[moulUploadS2_] = value; }
+		}
+		[ConfigurationProperty(moulFichiers_, DefaultValue="ytoptic*.d ")]
+		public string moulFichiers {
+			get { return (string) this[moulFichiers_]; }
+			set { this[moulFichiers_] = value; }
 		}
 		
 		#endregion
@@ -196,6 +234,45 @@ namespace cmdUtils
 			return oConfigSectionSettings;
 		}
 		
+		//TODO:try to make it better
+		public void setSpecialValue(String key, String value) {
+			if (key.Equals(mysqlExePath_)) {
+				mysqlExePath=value;
+			} else if (key.Equals(cygwinGzip_)) {
+				cygwinGzip=value;
+			} else if (key.Equals(cygwinPath_)) {
+				cygwinPath=value;
+			} else if (key.Equals(cygwinTerm_)) {
+				cygwinTerm=value;
+			} else if (key.Equals(mysqlUser_)) {
+				mysqlUser=value;
+			} else if (key.Equals(mysqlPassword_)) {
+				mysqlPassword=value;
+			} else if (key.Equals(mysqlExePath_)) {
+				mysqlExePath=value;
+			} else if (key.Equals(dumpsPath_)) {
+				dumpsPath=value;
+			} else if (key.Equals(scriptsPath_)) {
+				scriptsPath=value;
+			} else if (key.Equals(scriptCreate_)) {
+				scriptCreate=value;
+			} else if (key.Equals(scriptFileDb_)) {
+				scriptFileDb=value;
+			} else if (key.Equals(moulDstPath_)) {
+				moulDstPath=value;
+			} else if (key.Equals(moulSrcPath_)) {
+				moulSrcPath=value;
+			} else if (key.Equals(moulUploadS1_)) {
+				moulUploadS1=value;
+			} else if (key.Equals(moulUploadS2_)) {
+				moulUploadS2=value;
+			} else if (key.Equals(moulFichiers_)) {
+				moulFichiers=value;
+			}
+		}
+		
+		
+
 		#endregion
 	}
 }

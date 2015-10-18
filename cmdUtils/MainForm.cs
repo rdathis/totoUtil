@@ -1,4 +1,5 @@
-﻿/*
+﻿
+/*
  * Created by SharpDevelop.
  * User: athis_000
  * Date: 20/04/2015
@@ -8,12 +9,17 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
+using System.Diagnostics;
 using System.Drawing;
+using System.Net.Mime;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using cmdUtils.Objets;
 using MySql.Data;
+
 namespace cmdUtils
 {
 	/// <summary>
@@ -21,13 +27,26 @@ namespace cmdUtils
 	/// </summary>
 	public partial class MainForm : Form
 	{
+		
+		
+		List <AssoControleParam> configListeControles = new List<AssoControleParam>();
+			
 		CmdUtil cmdUtils = new CmdUtil();
+		MoulinetteAction moulinetteAction = new MoulinetteAction();
 		ConfigSectionSettings cfg=	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
 		public MainForm()
 		{
 			InitializeComponent();
 
+			initConfig();
 			populate();
+		}
+
+		void initConfig()
+		{
+			//configListeControles.Add(new AssoControleParam(cygwinParam,cfg.cygwinPath, cfg.cy));
+			//TODO:voir configListeControles, une collection ????
+			//et faire le tableau d'init. puis revoir grace a ca populate(), et updateConfig()
 		}
 		void SaveButtonClick(object sender, EventArgs e)
 		{
@@ -48,6 +67,13 @@ namespace cmdUtils
 		}
 		void populate() {
 			cygwinParam.Text = cfg.cygwinPath;
+			
+//			foreach(AssoControleParam param in configListeControles) {
+//				param.getTextBox().Text = param.getValue();
+//			}
+//			cfg.getConfiguration().GetSection(param.getSection());
+			
+			cygwinTermParam.Text=cfg.cygwinTerm;
 			mysqlParam.Text = cfg.mysqlExePath;
 			dataParam.Text=cfg.dumpsPath;
 			mysqlUserParam.Text = cfg.mysqlUser;
@@ -55,15 +81,42 @@ namespace cmdUtils
 			scriptCreateDbParam.Text=cfg.scriptCreate;
 			scriptCreateFiledDBParam.Text=cfg.scriptFileDb;
 			
+			moulSrcPathParam.Text=cfg.moulSrcPath;
+			moulDstPathParam.Text=cfg.moulDstPath;
+			moulScp1Param.Text=cfg.moulUploadS1;
+			moulScp2Param.Text=cfg.moulUploadS2;
+			moulFichiersParam.Text=cfg.moulFichiers;
 			
 			if (filterGzTextBox.Text.Length==0) {
 				
 				DateTime now= DateTime.Now;
-				filterGzTextBox.Text="meo*"+now.ToString("yyyyMMdd")+"*.sql.gz";
+				filterGzTextBox.Text="meo*anq*"+now.ToString("yyyyMMdd")+"*.sql.gz";
 			}
+			populateMoulinettes();
+			
 		}
+
+		void populateMoulinettes()
+		{
+			txtBoxMoulSrcPath.Text=cfg.moulSrcPath;
+			txtBoxMoulDestBase.Text=cfg.moulDstPath;
+			
+			txtBoxMoulSrcFilter.Text="*client*";
+			
+			//txtBoxMoulSrcPath.Text=cfg.moulSrcPath;
+			//txtMoulDestBase.Text=cfg.moulDstPath;
+				
+		}
+
 		void updateConfig() {
+//			foreach(AssoControleParam param in configListeControles) {
+//				param.setValue(param.getTextBox().Text);
+//			}
+			
+			
 			cfg.cygwinPath= cygwinParam.Text;
+			cfg.cygwinTerm=cygwinTermParam.Text;
+			
 			cfg.mysqlExePath=mysqlParam.Text;
 			
 			cfg.dumpsPath=dataParam.Text;
@@ -72,6 +125,12 @@ namespace cmdUtils
 			
 			cfg.scriptCreate=scriptCreateDbParam.Text;
 			cfg.scriptFileDb=scriptCreateFiledDBParam.Text;
+			
+			cfg.moulSrcPath=moulSrcPathParam.Text;
+			cfg.moulDstPath=moulDstPathParam.Text;
+			cfg.moulUploadS1=moulScp1Param.Text;
+			cfg.moulUploadS2=moulScp2Param.Text;
+			
 		}
 		void GetMysqlDatabaseButtonClick(object sender, EventArgs e)
 		{
@@ -79,6 +138,26 @@ namespace cmdUtils
 			List <String> liste=cmdUtils.getDatabases(cfg);
 			cmdUtils.listToCombo(liste, mysqlDatabaseCombo, true);
 			//util.getDatabases(mysqlDatabaseCombo);
+		}
+		void GoMysqlImportButtonClick(object sender, EventArgs ev)
+		{
+			System.Diagnostics.Debug.Print("in import SQL");
+			mysqlImportBouton.Enabled=false;
+			try {
+				cmdUtils.sourceSQL(cfg, getDatabaseName(), getDumpName());
+			} catch (Exception ex) {
+				MessageBox.Show("Erreur import : "+ex.Message);
+			}
+			mysqlImportBouton.Enabled=true;
+			//getExecuteQueryResult
+			
+			//List <String> liste=cmdUtils.getDatabases(cfg);
+			//cmdUtils.listToCombo(liste, mysqlDatabaseCombo, true);
+			//util.getDatabases(mysqlDatabaseCombo);
+		}
+		void tabImportClick(object sender, EventArgs e) {
+			System.Diagnostics.Debug.Print("clickd");
+			GetMysqlDatabaseButtonClick(sender, e);
 		}
 		void FilterGzBtnClick(object sender, EventArgs e)
 		{
@@ -88,13 +167,14 @@ namespace cmdUtils
 			btn.Enabled=false;
 			
 			cmdUtils.listFilesToListbox(cfg.dumpsPath, filterGzTextBox.Text, dumpsListBox);
+			btn.Text=(String)btn.Tag;
+			btn.Enabled=true;
 		}
 		void dropButtonClick(object sender, EventArgs e)
 		{
-			if (cmdUtils.dropRecreateDatabase(cfg, getDatabaseName())) {
+			if (cmdUtils.dropRecreateDatabase(cfg, getDatabaseName(), false)) {
 				GetMysqlDatabaseButtonClick(null, null);
 			}
-			
 		}
 		void DumpsListBoxSelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -105,6 +185,7 @@ namespace cmdUtils
 			String dump = getDumpName();
 			//TODO:move this code
 			richTextBox1.Text=cmdUtils.buildImportDatabase(cfg, dump, getDatabaseName());
+			richTextBox1.Text+=" ; "+cmdUtils.dingding();
 			//richTextBox1.Text="gunzip <" +" "+v+" | "+cfg.mysqlExePath+"mysql.exe"+" -u "+cfg.mysqlUser+" -p"+cfg.mysqlPassword+ " "+mysqlDatabaseCombo.Text;
 		}
 		private string getDatabaseName() {
@@ -126,6 +207,79 @@ namespace cmdUtils
 			//PDFViewer view;
 			
 		}
+		void MeoCreateFileDbClick(object sender, EventArgs e)
+		{
+			System.Diagnostics.Debug.Print("in import SQL");
+			mysqlImportBouton.Enabled=false;
+			cmdUtils.sourceSQL(cfg, getDatabaseName(), "X:/meo-datas/create_meo_filedb.sql");
+			mysqlImportBouton.Enabled=true;
+
+		}
+		void CygwinToolStripButtonClick(object sender, EventArgs e)
+		{
+			String cmd=cygwinParam.Text+"mintty.exe ";
+			//title marche pas
+			String args=cygwinTermParam.Text+"-size 240,48 -";
+			System.Diagnostics.Debug.Print("cmd: "+cmd);
+			System.Diagnostics.Debug.Print("arg: "+args);
+			ProcessUtil pu = new ProcessUtil();
+			ProcessWindowStyle windowStyle=ProcessWindowStyle.Normal;
+			
+			Process p = pu.startProcess(cmd, args, windowStyle);
+			
+			
+		}
+		void RecreateButtonClick(object sender, EventArgs e)
+		{
+			if (cmdUtils.dropRecreateDatabase(cfg, getDatabaseName(), true, filedbCheckbox.Checked)) {
+				GetMysqlDatabaseButtonClick(null, null);
+			}
+		}
+		void BtnMoulFilterSrcClick(object sender, EventArgs e)
+		{
+			cmdUtils.openWindowsExplorer(txtBoxMoulSrcPath.Text);
+		}
+		void BtnSearchClick(object sender, EventArgs e)
+		{
+			moulinetteAction.bntListSrc((Button) sender, cmdUtils,txtBoxMoulSrcPath.Text, txtBoxMoulSrcFilter.Text, listboxMoulSrc);
+		}
+		void Button2Click(object sender, EventArgs e)
+		{
+			cmdUtils.openWindowsExplorer(txtBoxMoulDestBase.Text);
+			                             
+		}
+		
+		//TODO:cygwinbouton:M:\cygwin64\bin\mintty.exe -i /Cygwin-Terminal.ico -
+		/*
+---------------------------
+mintty
+---------------------------
+Usage: mintty [OPTION]... [ PROGRAM [ARG]... | - ]
+
+Start a new terminal session running the specified program or the user's shell.
+If a dash is given instead of a program, invoke the shell as a login shell.
+
+Options:
+  -c, --config FILE     Load specified config file
+  -e, --exec            Treat remaining arguments as the command to execute
+  -h, --hold never|start|error|always  Keep window open after command finishes
+  -i, --icon FILE[,IX]  Load window icon from file, optionally with index
+  -l, --log FILE|-      Log output to file or stdout
+  -o, --option OPT=VAL  Override config file option with given value
+  -p, --position X,Y    Open window at specified coordinates
+  -s, --size COLS,ROWS  Set screen size in characters
+  -t, --title TITLE     Set window title (default: the invoked command)
+  -u, --utmp            Create a utmp entry
+  -w, --window normal|min|max|full|hide  Set initial window state
+      --class CLASS     Set window class name (default: mintty)
+  -H, --help            Display help and exit
+  -V, --version         Print version information and exit
+
+---------------------------
+OK
+---------------------------
+		 */
+		
 	}
 	
 }

@@ -51,6 +51,9 @@ namespace totoUtil
 			this.grepButton = new System.Windows.Forms.Button();
 			this.btnExplore = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
+			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.toolStripStatusLabelEtatMC = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// goButton
@@ -73,6 +76,8 @@ namespace totoUtil
 			// 
 			// tipTextbox
 			// 
+			this.tipTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left)));
 			this.tipTextbox.Location = new System.Drawing.Point(0, 274);
 			this.tipTextbox.Multiline = true;
 			this.tipTextbox.Name = "tipTextbox";
@@ -125,6 +130,9 @@ namespace totoUtil
 			// 
 			// tippedTextBox
 			// 
+			this.tippedTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tippedTextBox.Location = new System.Drawing.Point(481, 274);
 			this.tippedTextBox.Multiline = true;
 			this.tippedTextBox.Name = "tippedTextBox";
@@ -192,11 +200,27 @@ namespace totoUtil
 			this.button2.UseVisualStyleBackColor = true;
 			this.button2.Click += new System.EventHandler(this.Button2Click);
 			// 
+			// statusStrip1
+			// 
+			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.toolStripStatusLabelEtatMC});
+			this.statusStrip1.Location = new System.Drawing.Point(0, 506);
+			this.statusStrip1.Name = "statusStrip1";
+			this.statusStrip1.Size = new System.Drawing.Size(835, 22);
+			this.statusStrip1.TabIndex = 16;
+			this.statusStrip1.Text = "statusStrip1";
+			// 
+			// toolStripStatusLabelEtatMC
+			// 
+			this.toolStripStatusLabelEtatMC.Name = "toolStripStatusLabelEtatMC";
+			this.toolStripStatusLabelEtatMC.Size = new System.Drawing.Size(0, 17);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(835, 528);
+			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.btnExplore);
 			this.Controls.Add(this.grepButton);
@@ -214,10 +238,14 @@ namespace totoUtil
 			this.Controls.Add(this.goButton);
 			this.Name = "MainForm";
 			this.Text = "totoUtil";
+			this.statusStrip1.ResumeLayout(false);
+			this.statusStrip1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.StatusStrip statusStrip1;
+		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelEtatMC;
 		private System.Windows.Forms.Button grepButton;
 		private System.Windows.Forms.Button launchMCButton;
 		private System.Windows.Forms.Button sendKeysButton;
