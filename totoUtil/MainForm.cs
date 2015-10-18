@@ -296,7 +296,7 @@ namespace totoUtil
 			System.Threading.Thread.Sleep(500);
 			
 			//TODO:param
-			const int waitMs=200;
+			const int waitMs=2010;//must be > 2000
 			//string[] lines = Regex.Split(s, "\n");
 			String[] str =  Regex.Split(tipTextbox.Text, "\n");
 			foreach(String truc in str) {
