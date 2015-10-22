@@ -47,6 +47,8 @@ namespace cmdUtils
 		const String moulUploadS2_="moulUploadS2";
 		const String moulFichiers_="moulFichiers";
 		
+		
+		
 		#region ConfigurationProperties
 		
 		/*
@@ -205,8 +207,8 @@ namespace cmdUtils
 			String exePath = System.IO.Path.Combine(Environment.CurrentDirectory, file);
 			
 			//params xml node
-			ConfigSectionSettings oConfigSectionSettings;
 			
+			ConfigSectionSettings oConfigSectionSettings;
 
 			//create precise config file
 			if (!File.Exists(exePath)) {
@@ -236,6 +238,7 @@ namespace cmdUtils
 		
 		//TODO:try to make it better
 		public void setSpecialValue(String key, String value) {
+			
 			if (key.Equals(mysqlExePath_)) {
 				mysqlExePath=value;
 			} else if (key.Equals(cygwinGzip_)) {

@@ -72,6 +72,8 @@ namespace cmdUtils
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.tabParam = new System.Windows.Forms.TabPage();
+			this.label20 = new System.Windows.Forms.Label();
+			this.moulFichiersParam = new System.Windows.Forms.TextBox();
 			this.lmoulDstPath = new System.Windows.Forms.Label();
 			this.moulDstPathParam = new System.Windows.Forms.TextBox();
 			this.label21 = new System.Windows.Forms.Label();
@@ -158,8 +160,7 @@ namespace cmdUtils
 			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.cygwinToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.label20 = new System.Windows.Forms.Label();
-			this.moulFichiersParam = new System.Windows.Forms.TextBox();
+			this.bntMoulZipIt = new System.Windows.Forms.Button();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -231,6 +232,21 @@ namespace cmdUtils
 			this.tabParam.Text = "Params";
 			this.tabParam.UseVisualStyleBackColor = true;
 			this.tabParam.Click += new System.EventHandler(this.TabParamClick);
+			// 
+			// label20
+			// 
+			this.label20.Location = new System.Drawing.Point(20, 290);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(100, 23);
+			this.label20.TabIndex = 35;
+			this.label20.Text = "moulFichiers";
+			// 
+			// moulFichiersParam
+			// 
+			this.moulFichiersParam.Location = new System.Drawing.Point(131, 290);
+			this.moulFichiersParam.Name = "moulFichiersParam";
+			this.moulFichiersParam.Size = new System.Drawing.Size(642, 20);
+			this.moulFichiersParam.TabIndex = 34;
 			// 
 			// lmoulDstPath
 			// 
@@ -703,6 +719,7 @@ namespace cmdUtils
 			// 
 			// tabMoulinettes
 			// 
+			this.tabMoulinettes.Controls.Add(this.bntMoulZipIt);
 			this.tabMoulinettes.Controls.Add(this.docs);
 			this.tabMoulinettes.Controls.Add(this.txtBoxMoulDocs);
 			this.tabMoulinettes.Controls.Add(this.data);
@@ -911,7 +928,7 @@ namespace cmdUtils
 			// 
 			// btnSearch
 			// 
-			this.btnSearch.Location = new System.Drawing.Point(492, 53);
+			this.btnSearch.Location = new System.Drawing.Point(390, 53);
 			this.btnSearch.Name = "btnSearch";
 			this.btnSearch.Size = new System.Drawing.Size(75, 23);
 			this.btnSearch.TabIndex = 0;
@@ -985,20 +1002,15 @@ namespace cmdUtils
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
-			// label20
+			// bntMoulZipIt
 			// 
-			this.label20.Location = new System.Drawing.Point(20, 290);
-			this.label20.Name = "label20";
-			this.label20.Size = new System.Drawing.Size(100, 23);
-			this.label20.TabIndex = 35;
-			this.label20.Text = "moulFichiers";
-			// 
-			// moulFichiersParam
-			// 
-			this.moulFichiersParam.Location = new System.Drawing.Point(131, 290);
-			this.moulFichiersParam.Name = "moulFichiersParam";
-			this.moulFichiersParam.Size = new System.Drawing.Size(642, 20);
-			this.moulFichiersParam.TabIndex = 34;
+			this.bntMoulZipIt.Location = new System.Drawing.Point(527, 21);
+			this.bntMoulZipIt.Name = "bntMoulZipIt";
+			this.bntMoulZipIt.Size = new System.Drawing.Size(88, 27);
+			this.bntMoulZipIt.TabIndex = 23;
+			this.bntMoulZipIt.Text = "zip visprg";
+			this.bntMoulZipIt.UseVisualStyleBackColor = true;
+			this.bntMoulZipIt.Click += new System.EventHandler(this.BntMoulZipItClick);
 			// 
 			// MainForm
 			// 
@@ -1031,6 +1043,7 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Button bntMoulZipIt;
 		private System.Windows.Forms.Label label20;
 		private System.Windows.Forms.TextBox moulFichiersParam;
 		private System.Windows.Forms.Label docs;

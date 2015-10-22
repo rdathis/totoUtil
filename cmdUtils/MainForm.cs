@@ -47,6 +47,8 @@ namespace cmdUtils
 			//configListeControles.Add(new AssoControleParam(cygwinParam,cfg.cygwinPath, cfg.cy));
 			//TODO:voir configListeControles, une collection ????
 			//et faire le tableau d'init. puis revoir grace a ca populate(), et updateConfig()
+			
+			configListeControles.Add(new AssoControleParam(cfg, "cygwinPath", cygwinParam));
 		}
 		void SaveButtonClick(object sender, EventArgs e)
 		{
@@ -130,6 +132,10 @@ namespace cmdUtils
 			cfg.moulDstPath=moulDstPathParam.Text;
 			cfg.moulUploadS1=moulScp1Param.Text;
 			cfg.moulUploadS2=moulScp2Param.Text;
+			
+			cfg.moulFichiers=moulFichiersParam.Text;
+
+
 			
 		}
 		void GetMysqlDatabaseButtonClick(object sender, EventArgs e)
@@ -247,6 +253,13 @@ namespace cmdUtils
 		{
 			cmdUtils.openWindowsExplorer(txtBoxMoulDestBase.Text);
 			                             
+		}
+		void BntMoulZipItClick(object sender, EventArgs e)
+		{
+			txtFinal.Text="yoyo.zip";
+			ZipUtil zipUtil = new ZipUtil();
+			zipUtil.createArchive(txtFinal.Text, "c:/temp/viscri01/mag01/" ,cfg.moulFichiers.Split(' '), "data/mag01");
+						
 		}
 		
 		//TODO:cygwinbouton:M:\cygwin64\bin\mintty.exe -i /Cygwin-Terminal.ico -
