@@ -83,6 +83,7 @@
     <Compile Include="Objets\CmdUtil.cs" />
     <Compile Include="Objets\FilterReg.cs" />
     <Compile Include="Objets\ZipUtil.cs" />
+    <Compile Include="Objets\ZipUtilOptions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

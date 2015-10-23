@@ -22,20 +22,37 @@ namespace cmdUtils.Objets
 		public ZipUtil()
 		{
 		}
-		public void createArchive(string archiveName, string sourceBaseDir, string[] sourceSelection, string datamag, string archiveDir="c:/temp/")
+		private Boolean testDir(string directory, Boolean allowEmptyString=false) {
+			if (directory!=null) {
+				if (directory.Trim().Length>0) {
+					if (!File.Exists(directory)) {
+						throw new Exception("chemin archive inexistant : '"+directory+"'");
+					}
+					return true;
+				} else  {
+					return allowEmptyString;
+				}
+			} else {
+				return allowEmptyString;
+			}
+		}
+		public void createArchive(string archiveName, string sourceBaseDir, string[] sourceSelection, string datamag, string archiveDir)
 		{
-//			String [] args= new string[2];
-//			args[0]=sourceBaseDir;
-//			args[1]="c:/temp/prout.zip";
-//			T1(args);
+			if (!testDir(archiveDir, true)) {
+				throw new Exception("chemin archive inexistant : '"+archiveDir+"'");
+			}
+			if ((archiveName==null) || (archiveName.Trim().Length<1)) {
+				throw new Exception("nom  d'archive manquant ");
+			}
+				
+
 			
 			List<FileInfo> fichiers = new List<FileInfo>();
 			
-			//FileInfo[] fichiers=new FileInfo[]();
+
 			complete(fichiers, sourceBaseDir, sourceSelection);
-			//FileInfo f = new FileInfo("M:/tmp/stouket/param_etiquette.sql");
-			//fichiers.Add(f);
-			
+
+			//TODO:change destination path (avec un callback ?)
 			createSimpleArchive(archiveDir+archiveName, fichiers);
 			return;
 		}

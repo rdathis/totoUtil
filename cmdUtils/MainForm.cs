@@ -256,9 +256,9 @@ namespace cmdUtils
 		}
 		void BntMoulZipItClick(object sender, EventArgs e)
 		{
-			txtFinal.Text="yoyo.zip";
+			txtFinal.Text="testZip.zip";
 			ZipUtil zipUtil = new ZipUtil();
-			zipUtil.createArchive(txtFinal.Text, "c:/temp/viscri01/mag01/" ,cfg.moulFichiers.Split(' '), "data/mag01");
+			zipUtil.createArchive(txtFinal.Text, "c:/temp/viscri01/mag01/" ,cfg.moulFichiers.Split(' '), "data/mag01", "c:/temp/");
 						
 		}
 		
