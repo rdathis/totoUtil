@@ -25,12 +25,13 @@ namespace cmdUtils
 	/// <summary>
 	/// Description of MainForm.
 	/// </summary>
+	/// 
 	public partial class MainForm : Form
 	{
 		
 		
 		List <AssoControleParam> configListeControles = new List<AssoControleParam>();
-			
+		
 		CmdUtil cmdUtils = new CmdUtil();
 		MoulinetteAction moulinetteAction = new MoulinetteAction();
 		ConfigSectionSettings cfg=	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
@@ -107,7 +108,7 @@ namespace cmdUtils
 			
 			//txtBoxMoulSrcPath.Text=cfg.moulSrcPath;
 			//txtMoulDestBase.Text=cfg.moulDstPath;
-				
+			
 		}
 
 		void updateConfig() {
@@ -252,17 +253,63 @@ namespace cmdUtils
 		void Button2Click(object sender, EventArgs e)
 		{
 			cmdUtils.openWindowsExplorer(txtBoxMoulDestBase.Text);
-			                             
+			
 		}
 		void BntMoulZipItClick(object sender, EventArgs e)
 		{
 			txtFinal.Text="testZip.zip";
 			ZipUtil zipUtil = new ZipUtil();
+			//
+			ZipUtilOptions zop = new ZipUtilOptions();
+			zop.setArchiveDir("c:/temp/viscri01/mag01/");
+			zop.setArchiveName(txtFinal.Text);
+			//zop.setSourceBaseDir();
+//			- delegate : c'est pas ca qui fo
+//				- fileinfo de la sélection a remplir
+//				- suite de la methode a remplir
+			//ZipUtilOptions.renommeFichierZip renomme  = v =>Console.WriteLine(v);
+			//zop.setRenommeFonction(renomme);
+			//renomme.Invoke();
+			
+			//zop.g
+			zop.setSourceSelection(cfg.moulFichiers.Split(' '));
+			zipUtil.createArchive(zop);
+			
+			//
 			zipUtil.createArchive(txtFinal.Text, "c:/temp/viscri01/mag01/" ,cfg.moulFichiers.Split(' '), "data/mag01", "c:/temp/");
-						
+			
+		}
+		void TabImportClick(object sender, EventArgs e)
+		{
+			
+		}
+		void ImportMagIdKeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.KeyValue.Equals(13)) {
+				string magId=((TextBox) sender).Text;
+				
+				RichTextBox rtb = sqlRechRichTextBox;
+				rtb.Clear();
+				if (magId.Length>0) {
+					string sql="select * from administration.magasins where magasin_id="+magId;
+					MyUtil util = new MyUtil();
+					string cstr = util.doConnString(cfg);
+					var magasinList =  util.getListResultAsKV(cstr, sql);
+					
+					rtb.AppendText("#libe:"+util.getItem(magasinList[0], "magasin_libelle")+ " - url :"+util.getItem(magasinList[0], "url"));
+					rtb.AppendText("\n#cli_id:"+util.getItem(magasinList[0], "client_id"));
+					//Console.WriteLine("libe:"+util.getItem(magasinList[0], "magasin_libelle"));
+					//Console.WriteLine("cli_id:"+util.getItem(magasinList[0], "client_id"));
+					                                         
+					sql="SELECT utilisateur_id,magasin_id FROM administration.utilisateurs where utilisateur_active=true AND magasin_id="+magId+";";
+					var userList =  util.getListResultAsKV(cstr, sql);
+					
+					rtb.AppendText("\nmodeDevMagId="+util.getItem(userList[0], "magasin_id"));
+					rtb.AppendText("\nmodeDevUserId="+util.getItem(userList[0], "utilisateur_id"));
+				}
+			}
 		}
 		
-		//TODO:cygwinbouton:M:\cygwin64\bin\mintty.exe -i /Cygwin-Terminal.ico -
 		/*
 ---------------------------
 mintty

@@ -122,12 +122,14 @@ namespace cmdUtils
 			this.label8 = new System.Windows.Forms.Label();
 			this.dumpsListBox = new System.Windows.Forms.ListBox();
 			this.tabSQL = new System.Windows.Forms.TabPage();
+			this.importMagId = new System.Windows.Forms.TextBox();
 			this.richTextBox2 = new System.Windows.Forms.RichTextBox();
 			this.dataGrid1 = new System.Windows.Forms.DataGrid();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
 			this.label11 = new System.Windows.Forms.Label();
 			this.tabPdf = new System.Windows.Forms.TabPage();
 			this.tabMoulinettes = new System.Windows.Forms.TabPage();
+			this.bntMoulZipIt = new System.Windows.Forms.Button();
 			this.docs = new System.Windows.Forms.Label();
 			this.txtBoxMoulDocs = new System.Windows.Forms.TextBox();
 			this.data = new System.Windows.Forms.Label();
@@ -160,7 +162,7 @@ namespace cmdUtils
 			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.cygwinToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.bntMoulZipIt = new System.Windows.Forms.Button();
+			this.sqlRechRichTextBox = new System.Windows.Forms.RichTextBox();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -511,6 +513,7 @@ namespace cmdUtils
 			this.tabImport.TabIndex = 1;
 			this.tabImport.Text = "tabImport";
 			this.tabImport.UseVisualStyleBackColor = true;
+			this.tabImport.Click += new System.EventHandler(this.TabImportClick);
 			// 
 			// recreateButton
 			// 
@@ -528,7 +531,7 @@ namespace cmdUtils
 			this.filedbCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.filedbCheckbox.Location = new System.Drawing.Point(590, 33);
 			this.filedbCheckbox.Name = "filedbCheckbox";
-			this.filedbCheckbox.Size = new System.Drawing.Size(118, 20);
+			this.filedbCheckbox.Size = new System.Drawing.Size(79, 20);
 			this.filedbCheckbox.TabIndex = 15;
 			this.filedbCheckbox.Text = "fileDB";
 			this.filedbCheckbox.UseVisualStyleBackColor = true;
@@ -663,6 +666,8 @@ namespace cmdUtils
 			// 
 			// tabSQL
 			// 
+			this.tabSQL.Controls.Add(this.sqlRechRichTextBox);
+			this.tabSQL.Controls.Add(this.importMagId);
 			this.tabSQL.Controls.Add(this.richTextBox2);
 			this.tabSQL.Controls.Add(this.dataGrid1);
 			this.tabSQL.Controls.Add(this.dataGridView1);
@@ -673,6 +678,14 @@ namespace cmdUtils
 			this.tabSQL.TabIndex = 2;
 			this.tabSQL.Text = "tabSQL";
 			this.tabSQL.UseVisualStyleBackColor = true;
+			// 
+			// importMagId
+			// 
+			this.importMagId.Location = new System.Drawing.Point(109, 158);
+			this.importMagId.Name = "importMagId";
+			this.importMagId.Size = new System.Drawing.Size(104, 20);
+			this.importMagId.TabIndex = 26;
+			this.importMagId.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ImportMagIdKeyUp);
 			// 
 			// richTextBox2
 			// 
@@ -701,11 +714,11 @@ namespace cmdUtils
 			// 
 			// label11
 			// 
-			this.label11.Location = new System.Drawing.Point(108, 176);
+			this.label11.Location = new System.Drawing.Point(3, 161);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(100, 23);
 			this.label11.TabIndex = 22;
-			this.label11.Text = "label11";
+			this.label11.Text = "rechMagId";
 			this.label11.Click += new System.EventHandler(this.Label11Click);
 			// 
 			// tabPdf
@@ -750,6 +763,16 @@ namespace cmdUtils
 			this.tabMoulinettes.TabIndex = 4;
 			this.tabMoulinettes.Text = "Moulinettes";
 			this.tabMoulinettes.UseVisualStyleBackColor = true;
+			// 
+			// bntMoulZipIt
+			// 
+			this.bntMoulZipIt.Location = new System.Drawing.Point(527, 21);
+			this.bntMoulZipIt.Name = "bntMoulZipIt";
+			this.bntMoulZipIt.Size = new System.Drawing.Size(88, 27);
+			this.bntMoulZipIt.TabIndex = 23;
+			this.bntMoulZipIt.Text = "zip visprg";
+			this.bntMoulZipIt.UseVisualStyleBackColor = true;
+			this.bntMoulZipIt.Click += new System.EventHandler(this.BntMoulZipItClick);
 			// 
 			// docs
 			// 
@@ -1002,15 +1025,13 @@ namespace cmdUtils
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
-			// bntMoulZipIt
+			// sqlRechRichTextBox
 			// 
-			this.bntMoulZipIt.Location = new System.Drawing.Point(527, 21);
-			this.bntMoulZipIt.Name = "bntMoulZipIt";
-			this.bntMoulZipIt.Size = new System.Drawing.Size(88, 27);
-			this.bntMoulZipIt.TabIndex = 23;
-			this.bntMoulZipIt.Text = "zip visprg";
-			this.bntMoulZipIt.UseVisualStyleBackColor = true;
-			this.bntMoulZipIt.Click += new System.EventHandler(this.BntMoulZipItClick);
+			this.sqlRechRichTextBox.Location = new System.Drawing.Point(219, 136);
+			this.sqlRechRichTextBox.Name = "sqlRechRichTextBox";
+			this.sqlRechRichTextBox.Size = new System.Drawing.Size(542, 95);
+			this.sqlRechRichTextBox.TabIndex = 27;
+			this.sqlRechRichTextBox.Text = "";
 			// 
 			// MainForm
 			// 
@@ -1030,6 +1051,7 @@ namespace cmdUtils
 			this.tabImport.ResumeLayout(false);
 			this.tabImport.PerformLayout();
 			this.tabSQL.ResumeLayout(false);
+			this.tabSQL.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.tabMoulinettes.ResumeLayout(false);
@@ -1043,6 +1065,8 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.RichTextBox sqlRechRichTextBox;
+		private System.Windows.Forms.TextBox importMagId;
 		private System.Windows.Forms.Button bntMoulZipIt;
 		private System.Windows.Forms.Label label20;
 		private System.Windows.Forms.TextBox moulFichiersParam;

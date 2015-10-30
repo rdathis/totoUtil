@@ -36,6 +36,16 @@ namespace cmdUtils.Objets
 				return allowEmptyString;
 			}
 		}
+		public void createArchive(ZipUtilOptions options) {
+			if (options==null) {
+				throw new Exception("options non renseignees");					
+			}
+			if (!options.controleArchiveDir()) {
+				throw new Exception("archive non renseignees");
+			}
+			//List<FileInfo> fichiers = options.getSourceSelection();
+			
+		}
 		public void createArchive(string archiveName, string sourceBaseDir, string[] sourceSelection, string datamag, string archiveDir)
 		{
 			if (!testDir(archiveDir, true)) {

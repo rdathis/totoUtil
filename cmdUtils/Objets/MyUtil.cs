@@ -34,6 +34,21 @@ namespace cmdUtils.Objets
 			cnx.ConnectionString = connectionString;
 			return cnx;
 		}
+
+		public object getItem(List<KeyValuePair<string, object>> list, string keyName)
+		{
+			foreach(KeyValuePair<string, object> paire in list) {
+				if (paire.Key.Equals(keyName)) {
+					return paire.Value;
+				}
+			}
+			return ".";
+		}
+		public string doConnString(ConfigSectionSettings cfg)
+		{
+			return buildconnString("", "127.0.0.1", cfg.mysqlUser, cfg.mysqlPassword);
+		}
+
 		public  MySqlConnection getConnection(String databaseName, String serverName, String user, String pwd) {
 			String cString = buildconnString(databaseName, serverName, user, pwd);
 			return getConnection(cString);
@@ -58,21 +73,47 @@ namespace cmdUtils.Objets
 			}
 			return script;
 		}
-		public List<string> getListResult(string connString, string sql)
-		{
-			List<string> result = new List<string>();
+		public List<object> getListResult(string connString, string sql) {
+			{
+				List<object> result=new List<object>();
+
+				MySqlConnection cnx = getConnection(connString);
+				cnx.Open();
+				MySqlCommand command = new MySqlCommand(sql, cnx);
+				
+				MySqlDataReader data = command.ExecuteReader();
+				while(data.Read()) {
+					//TODO:problem
+					
+					result.Add(data);
+
+					System.Diagnostics.Debug.Print("data:("+data.GetFieldType(0)+")" + data.GetValue(0) +" "+ data.FieldCount);
+				}
+				cnx.Close();
+				return result;
+			}
+		}
+		public List<List<KeyValuePair<String, Object>>> getListResultAsKV(string connString, string sql) {
+			List<List<KeyValuePair<String, Object>>> result = new List<List<KeyValuePair<string, object>>>();
 			MySqlConnection cnx = getConnection(connString);
 			cnx.Open();
 			MySqlCommand command = new MySqlCommand(sql, cnx);
 			
 			MySqlDataReader data = command.ExecuteReader();
 			while(data.Read()) {
-				//TODO:problem
-				result.Add( (String) data.GetValue(0));
-				System.Diagnostics.Debug.Print("data:("+data.GetFieldType(0)+")" + data.GetValue(0) +" "+ data.FieldCount);
+				result.Add(  traduit(data));
 			}
 			cnx.Close();
 			return result;
+		}
+		private List<KeyValuePair<String, Object>> traduit(MySqlDataReader data) {
+			List <KeyValuePair<String, Object>> l = new List<KeyValuePair<String, Object>>();
+			for(int i=0;i< data.FieldCount;i++) {
+				KeyValuePair<String, Object> z = new KeyValuePair<String, Object>(data.GetName(i), data.GetValue(i));
+				l.Add(z);
+			}
+			
+			return l;
 		}
 		public int getExecuteQueryResult(string connString, string sql) {
 			int retour=-1;

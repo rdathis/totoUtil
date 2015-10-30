@@ -15,15 +15,35 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public class ZipUtilOptions
 	{
+		public enum tauxCompression {nulle=0, petit=1, moyen=5, maxi=9};
+		
+		public delegate String renommeFichierZip(String fichierNom);
+			
+		
 		//target
 		private string archiveName;
 		private string archiveDir;
 		//source
 		private string sourceBaseDir;
 		private string[] sourceSelection;
+		
+		private renommeFichierZip fonction=null;
 		//private string datamag;
 		public ZipUtilOptions()
 		{
+		}
+		public void setRenommeFonction(renommeFichierZip fonction) {
+			this.fonction=fonction;
+		}
+		public renommeFichierZip getRenommeFonction() {
+			return this.fonction;
+		}
+		public String invokeRenommeFonction(String arg) {
+			if (this.fonction!=null) {
+				return this.fonction.Invoke(arg);
+			} else {
+				return arg;
+			}
 		}
 		public void setArchiveName(string value) {
 			archiveName=value;
