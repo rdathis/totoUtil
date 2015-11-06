@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Net.Mime;
@@ -31,6 +32,7 @@ namespace totoUtil
 		static extern bool SetForegroundWindow(IntPtr hWnd);
 		HyUtil hyUtil = new HyUtil();
 
+		TotoConfigSettings cfg=	TotoConfigSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
 		
 		static System.Threading.Timer timm=null;
 		//TimerExample timer = new TimerExample();
@@ -48,6 +50,7 @@ namespace totoUtil
 		}
 		void init()
 		{
+			userTextBox.Text=cfg.user;
 			pathTextBox.Text = "m:/cygwin64/bin/grep.exe";
 			
 			pathTextBox.Text = "grep.exe";
@@ -392,6 +395,12 @@ namespace totoUtil
 			} else {
 				timm=null;
 			}
+		}
+		void UserTextBoxLeave(object sender, EventArgs e)
+		{
+			TextBox textbox = (TextBox) sender;
+			cfg.user=textbox.Text;
+			cfg.Save();
 		}
 		//end of functions
 	}

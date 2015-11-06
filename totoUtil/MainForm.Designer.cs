@@ -53,6 +53,8 @@ namespace totoUtil
 			this.button2 = new System.Windows.Forms.Button();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelEtatMC = new System.Windows.Forms.ToolStripStatusLabel();
+			this.userLabel = new System.Windows.Forms.Label();
+			this.userTextBox = new System.Windows.Forms.TextBox();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -192,7 +194,7 @@ namespace totoUtil
 			// 
 			// button2
 			// 
-			this.button2.Location = new System.Drawing.Point(131, 57);
+			this.button2.Location = new System.Drawing.Point(333, 57);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(75, 23);
 			this.button2.TabIndex = 15;
@@ -215,11 +217,29 @@ namespace totoUtil
 			this.toolStripStatusLabelEtatMC.Name = "toolStripStatusLabelEtatMC";
 			this.toolStripStatusLabelEtatMC.Size = new System.Drawing.Size(0, 17);
 			// 
+			// userLabel
+			// 
+			this.userLabel.Location = new System.Drawing.Point(0, 59);
+			this.userLabel.Name = "userLabel";
+			this.userLabel.Size = new System.Drawing.Size(76, 20);
+			this.userLabel.TabIndex = 17;
+			this.userLabel.Text = "MC User";
+			// 
+			// userTextBox
+			// 
+			this.userTextBox.Location = new System.Drawing.Point(76, 59);
+			this.userTextBox.Name = "userTextBox";
+			this.userTextBox.Size = new System.Drawing.Size(234, 20);
+			this.userTextBox.TabIndex = 18;
+			this.userTextBox.Leave += new System.EventHandler(this.UserTextBoxLeave);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(835, 528);
+			this.Controls.Add(this.userTextBox);
+			this.Controls.Add(this.userLabel);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.btnExplore);
@@ -244,6 +264,8 @@ namespace totoUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Label userLabel;
+		private System.Windows.Forms.TextBox userTextBox;
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelEtatMC;
 		private System.Windows.Forms.Button grepButton;

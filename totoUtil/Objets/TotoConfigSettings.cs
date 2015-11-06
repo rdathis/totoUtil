@@ -26,6 +26,7 @@ namespace totoUtil.Objets
 		const String mcProfilePath_="mcProfilePath";
 		const String cygwinPath_="cygwinPath_";
 		const String regexDefault_="regexDefault";
+		const String user_="user";
 
 		#region ConfigurationProperties
 		
@@ -52,6 +53,12 @@ namespace totoUtil.Objets
 			set { this[mcExePath_] = value; }
 		}
 
+		[ConfigurationProperty(user_, DefaultValue="user")]
+		public string user {
+			get { return (string) this[user_]; }
+			set { this[user_] = value; }
+		}
+		
 		#endregion
 
 		/// <summary>
