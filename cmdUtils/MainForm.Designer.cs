@@ -122,6 +122,7 @@ namespace cmdUtils
 			this.label8 = new System.Windows.Forms.Label();
 			this.dumpsListBox = new System.Windows.Forms.ListBox();
 			this.tabSQL = new System.Windows.Forms.TabPage();
+			this.sqlRechRichTextBox = new System.Windows.Forms.RichTextBox();
 			this.importMagId = new System.Windows.Forms.TextBox();
 			this.richTextBox2 = new System.Windows.Forms.RichTextBox();
 			this.dataGrid1 = new System.Windows.Forms.DataGrid();
@@ -162,7 +163,6 @@ namespace cmdUtils
 			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.cygwinToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.sqlRechRichTextBox = new System.Windows.Forms.RichTextBox();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -679,6 +679,14 @@ namespace cmdUtils
 			this.tabSQL.Text = "tabSQL";
 			this.tabSQL.UseVisualStyleBackColor = true;
 			// 
+			// sqlRechRichTextBox
+			// 
+			this.sqlRechRichTextBox.Location = new System.Drawing.Point(219, 136);
+			this.sqlRechRichTextBox.Name = "sqlRechRichTextBox";
+			this.sqlRechRichTextBox.Size = new System.Drawing.Size(552, 95);
+			this.sqlRechRichTextBox.TabIndex = 27;
+			this.sqlRechRichTextBox.Text = "";
+			// 
 			// importMagId
 			// 
 			this.importMagId.Location = new System.Drawing.Point(109, 158);
@@ -1024,14 +1032,6 @@ namespace cmdUtils
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// sqlRechRichTextBox
-			// 
-			this.sqlRechRichTextBox.Location = new System.Drawing.Point(219, 136);
-			this.sqlRechRichTextBox.Name = "sqlRechRichTextBox";
-			this.sqlRechRichTextBox.Size = new System.Drawing.Size(542, 95);
-			this.sqlRechRichTextBox.TabIndex = 27;
-			this.sqlRechRichTextBox.Text = "";
 			// 
 			// MainForm
 			// 

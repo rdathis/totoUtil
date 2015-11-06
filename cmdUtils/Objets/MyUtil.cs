@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms.VisualStyles;
+using System.Xml.Linq;
 using MySql.Data.MySqlClient;
 
 namespace cmdUtils.Objets
@@ -73,7 +74,24 @@ namespace cmdUtils.Objets
 			}
 			return script;
 		}
-		public List<object> getListResult(string connString, string sql) {
+
+		public List<String> getListResultSimple(string connString, string str, int fieldIndex=0)
+		{
+			
+			List<Object> liste = getListResult(connString, str, fieldIndex);
+			List <String> retour = new List<string>();
+			foreach(Object data in liste) {
+				retour.Add((String) data);
+			}
+			return retour;
+		}
+
+		//fast, but not extensible
+		private object convertit(MySqlDataReader reader, int fieldIndex)
+		{
+			return(reader.GetValue(fieldIndex));
+		}
+		public List<object> getListResult(string connString, string sql, int fieldIndex=0) {
 			{
 				List<object> result=new List<object>();
 
@@ -83,9 +101,8 @@ namespace cmdUtils.Objets
 				
 				MySqlDataReader data = command.ExecuteReader();
 				while(data.Read()) {
-					//TODO:problem
-					
-					result.Add(data);
+				
+					result.Add(convertit(data, fieldIndex));
 
 					System.Diagnostics.Debug.Print("data:("+data.GetFieldType(0)+")" + data.GetValue(0) +" "+ data.FieldCount);
 				}

@@ -127,12 +127,12 @@ namespace cmdUtils.Objets
 		}
 		public List <String> getDatabases(ConfigSectionSettings cfg) {
 			String connString = myUtil.buildconnString("", "localhost", cfg.mysqlUser, cfg.mysqlPassword);
-			List <object> listo = myUtil.getListResult(connString, myUtil.getDatabaseList());
+			List <String> list = myUtil.getListResultSimple(connString, myUtil.getDatabaseList());
 			
-			List <String> list = new List<String>() ;
-			foreach(object obj in listo) {
-				list.Add((String) obj.ToString());
-			}
+//			List <String> list = new List<String>() ;
+//			foreach(object obj in listo) {
+//				list.Add((String) obj.ToString());
+//			}
 			list=filterListe(list, listeRegDatabase(), FiltersReg.MatchOne);
 			return list;
 			
