@@ -92,6 +92,21 @@ namespace cmdUtils.Objets
 			
 			return builder.ToString();
 		}
+		public String buildMysqlScript(ConfigSectionSettings cfg, String databaseName, String scriptName) {
+			StringBuilder builder = new StringBuilder();
+			 
+			builder.Append(cfg.mysqlExePath);
+			builder.Append(" -u ");
+			builder.Append(cfg.mysqlUser);
+			builder.Append(" -p");
+			builder.Append(cfg.mysqlPassword);
+			builder.Append(" ");
+			builder.Append(databaseName);
+			builder.Append(" < ");
+			builder.Append(scriptName);
+
+			return builder.ToString();
+		}
 		public void listToCombo(List<string> liste, ComboBox combo, Boolean clearBefore)
 		{
 			

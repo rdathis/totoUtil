@@ -193,13 +193,18 @@ namespace cmdUtils
 			//TODO:move this code
 			richTextBox1.Text=cmdUtils.buildImportDatabase(cfg, dump, getDatabaseName());
 			richTextBox1.Text+=" ; "+cmdUtils.dingding();
+			richTextBox1.Text+= " ; "+cmdUtils.buildMysqlScript(cfg, getDatabaseName(), cfg.scriptFileDb);
 			//richTextBox1.Text="gunzip <" +" "+v+" | "+cfg.mysqlExePath+"mysql.exe"+" -u "+cfg.mysqlUser+" -p"+cfg.mysqlPassword+ " "+mysqlDatabaseCombo.Text;
 		}
 		private string getDatabaseName() {
 			return mysqlDatabaseCombo.Text;
 		}
 		private String getDumpName() {
-			return dumpsListBox.SelectedItem.ToString().Replace("\\", "/");
+			String retour="";
+			if (dumpsListBox.SelectedIndex>=0) {
+				retour=dumpsListBox.SelectedItem.ToString().Replace("\\", "/");
+			}
+			return retour;
 		}
 		
 		//http://morpheus.developpez.com/mysqldotnet/
@@ -308,6 +313,10 @@ namespace cmdUtils
 					rtb.AppendText("\nmodeDevUserId="+util.getItem(userList[0], "utilisateur_id"));
 				}
 			}
+		}
+		void RichTextBox1TextChanged(object sender, EventArgs e)
+		{
+			//throw new NotImplementedException();
 		}
 		
 		/*
