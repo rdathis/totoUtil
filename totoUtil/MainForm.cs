@@ -266,8 +266,9 @@ namespace totoUtil
 		}
 		void Button1Click(object sender, EventArgs e) {
 			
-			
+			tipTextbox.Clear();
 			//appaCtivate
+			
 			Process mcProcess=null;
 			Process[] processes = Process.GetProcessesByName("Minecraft 1.");
 			processes=Process.GetProcesses();
