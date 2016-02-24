@@ -154,6 +154,9 @@ namespace cmdUtils
 			this.label15 = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
 			this.btnSearch = new System.Windows.Forms.Button();
+			this.tabMeo = new System.Windows.Forms.TabPage();
+			this.tabMeoTxtExceptionLisible = new System.Windows.Forms.TextBox();
+			this.tabMeoTxtExceptionBrute = new System.Windows.Forms.TextBox();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -170,6 +173,7 @@ namespace cmdUtils
 			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.tabMoulinettes.SuspendLayout();
+			this.tabMeo.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
 			this.toolStrip1.SuspendLayout();
@@ -185,6 +189,7 @@ namespace cmdUtils
 			this.tabs.Controls.Add(this.tabSQL);
 			this.tabs.Controls.Add(this.tabPdf);
 			this.tabs.Controls.Add(this.tabMoulinettes);
+			this.tabs.Controls.Add(this.tabMeo);
 			this.tabs.Location = new System.Drawing.Point(12, 27);
 			this.tabs.Name = "tabs";
 			this.tabs.SelectedIndex = 0;
@@ -968,6 +973,36 @@ namespace cmdUtils
 			this.btnSearch.UseVisualStyleBackColor = true;
 			this.btnSearch.Click += new System.EventHandler(this.BtnSearchClick);
 			// 
+			// tabMeo
+			// 
+			this.tabMeo.Controls.Add(this.tabMeoTxtExceptionLisible);
+			this.tabMeo.Controls.Add(this.tabMeoTxtExceptionBrute);
+			this.tabMeo.Location = new System.Drawing.Point(4, 22);
+			this.tabMeo.Name = "tabMeo";
+			this.tabMeo.Padding = new System.Windows.Forms.Padding(3);
+			this.tabMeo.Size = new System.Drawing.Size(814, 489);
+			this.tabMeo.TabIndex = 5;
+			this.tabMeo.Text = "tabMeo";
+			this.tabMeo.UseVisualStyleBackColor = true;
+			// 
+			// tabMeoTxtExceptionLisible
+			// 
+			this.tabMeoTxtExceptionLisible.Location = new System.Drawing.Point(49, 227);
+			this.tabMeoTxtExceptionLisible.Multiline = true;
+			this.tabMeoTxtExceptionLisible.Name = "tabMeoTxtExceptionLisible";
+			this.tabMeoTxtExceptionLisible.Size = new System.Drawing.Size(757, 49);
+			this.tabMeoTxtExceptionLisible.TabIndex = 1;
+			// 
+			// tabMeoTxtExceptionBrute
+			// 
+			this.tabMeoTxtExceptionBrute.Location = new System.Drawing.Point(49, 6);
+			this.tabMeoTxtExceptionBrute.Multiline = true;
+			this.tabMeoTxtExceptionBrute.Name = "tabMeoTxtExceptionBrute";
+			this.tabMeoTxtExceptionBrute.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.tabMeoTxtExceptionBrute.Size = new System.Drawing.Size(757, 215);
+			this.tabMeoTxtExceptionBrute.TabIndex = 0;
+			this.tabMeoTxtExceptionBrute.TextChanged += new System.EventHandler(this.TabMeoTxtExceptionBruteTextChanged);
+			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1003,6 +1038,7 @@ namespace cmdUtils
 			// 
 			// toolStrip1
 			// 
+			this.toolStrip1.AllowDrop = true;
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.toolStripLabel1,
 			this.cygwinToolStripButton,
@@ -1057,6 +1093,8 @@ namespace cmdUtils
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.tabMoulinettes.ResumeLayout(false);
 			this.tabMoulinettes.PerformLayout();
+			this.tabMeo.ResumeLayout(false);
+			this.tabMeo.PerformLayout();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
@@ -1066,6 +1104,9 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.TabPage tabMeo;
+		private System.Windows.Forms.TextBox tabMeoTxtExceptionLisible;
+		private System.Windows.Forms.TextBox tabMeoTxtExceptionBrute;
 		private System.Windows.Forms.RichTextBox sqlRechRichTextBox;
 		private System.Windows.Forms.TextBox importMagId;
 		private System.Windows.Forms.Button bntMoulZipIt;

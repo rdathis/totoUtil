@@ -23,7 +23,7 @@ namespace cmdUtils.Objets
 	{
 
 
-		MyUtil myUtil = new MyUtil();		
+		MyUtil myUtil = new MyUtil();
 		//const string  mysqlShowDatabase_="show databases;";
 		private List<Regex> listeRegDatabase () {
 			List<Regex> listReg=new List<Regex>();
@@ -49,7 +49,7 @@ namespace cmdUtils.Objets
 			
 			sourceFileName=sourceFileName.Replace("\\", "/");
 			String connString = myUtil.buildconnString("", "localhost", cfg.mysqlUser, cfg.mysqlPassword);
-			int i = myUtil.getExecuteQueryResult(connString, myUtil.getSourceSQL(databaseName, sourceFileName));			
+			int i = myUtil.getExecuteQueryResult(connString, myUtil.getSourceSQL(databaseName, sourceFileName));
 			return (i>0);
 		}
 		public bool dropRecreateDatabase(ConfigSectionSettings cfg, string databaseName, Boolean reCreate=true, Boolean createFileDb=false)
@@ -94,7 +94,7 @@ namespace cmdUtils.Objets
 		}
 		public String buildMysqlScript(ConfigSectionSettings cfg, String databaseName, String scriptName) {
 			StringBuilder builder = new StringBuilder();
-			 
+			
 			builder.Append(cfg.mysqlExePath);
 			builder.Append(" -u ");
 			builder.Append(cfg.mysqlUser);
@@ -135,9 +135,9 @@ namespace cmdUtils.Objets
 				}
 			}
 			if (listFileOnly) {
-			foreach(FileInfo f in di.GetFiles(findPattern)) {
-				box.Items.Add(f.FullName);
-			}
+				foreach(FileInfo f in di.GetFiles(findPattern)) {
+					box.Items.Add(f.FullName);
+				}
 			}
 		}
 		public List <String> getDatabases(ConfigSectionSettings cfg) {
@@ -215,6 +215,47 @@ namespace cmdUtils.Objets
 				
 			}
 			return back;
+		}
+
+		public string translateException(string text)
+		{/*
+		com.google.gwt.core.client.JavaScriptException: (TypeError)
+ line: 19730
+column: 54
+sourceURL: https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html: null is not an object (evaluating 'a.d'): at
+Unknown.f5h(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@76)
+Unknown.I5h(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@29)
+Unknown.K5h(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@621262)
+Unknown.hm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@28)
+Unknown.Eae(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@34)
+Unknown.Gae(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@309143)
+Unknown.hm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@28)
+Unknown.pm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@12990)
+			 */
+			StringBuilder builder = new StringBuilder();
+			String source="";
+			builder.Append("grep -w ");
+			foreach (String ligne  in text.Split('\n')) {
+				if (ligne.StartsWith("Unknown", StringComparison.Ordinal)) {
+					String mot=ligne.Substring(8);
+					mot= mot.Substring(0, mot.IndexOf("(", StringComparison.Ordinal));
+					builder.Append(" -e ^"+mot+"");
+				} else if (ligne.StartsWith("sourceURL:", StringComparison.Ordinal)) {
+					// sourceURL: https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html: null is not an object (evaluating 'a.d'): at
+					// -> '692C88F43AF9B7D20FD4598EF78AF777.symbolMap'
+					
+					String mot = ligne;
+					mot = mot.Substring(mot.IndexOf(":", StringComparison.Ordinal)+1); //vire le premier ':'
+					mot = mot.Substring(mot.LastIndexOf("/", StringComparison.Ordinal)+1); //garde la fin de l'url (fichier)
+					mot = mot.Substring(0, mot.IndexOf(":", StringComparison.Ordinal)); //vire le comment.
+					mot = mot.Substring(0, mot.IndexOf(".", StringComparison.Ordinal));
+					mot+=".symbolMap";
+					source=mot;
+				}
+			}
+			
+			builder.Append(" "+source);
+			return builder.ToString();
 		}
 	}
 }

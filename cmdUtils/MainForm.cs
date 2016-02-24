@@ -194,7 +194,6 @@ namespace cmdUtils
 			richTextBox1.Text=cmdUtils.buildImportDatabase(cfg, dump, getDatabaseName());
 			richTextBox1.Text+=" ; "+cmdUtils.dingding();
 			richTextBox1.Text+= " ; "+cmdUtils.buildMysqlScript(cfg, getDatabaseName(), cfg.scriptFileDb);
-			//richTextBox1.Text="gunzip <" +" "+v+" | "+cfg.mysqlExePath+"mysql.exe"+" -u "+cfg.mysqlUser+" -p"+cfg.mysqlPassword+ " "+mysqlDatabaseCombo.Text;
 		}
 		private string getDatabaseName() {
 			return mysqlDatabaseCombo.Text;
@@ -316,8 +315,13 @@ namespace cmdUtils
 		}
 		void RichTextBox1TextChanged(object sender, EventArgs e)
 		{
-			//throw new NotImplementedException();
+			
 		}
+		void TabMeoTxtExceptionBruteTextChanged(object sender, EventArgs e)
+		{
+			tabMeoTxtExceptionLisible.Text = cmdUtils.translateException(tabMeoTxtExceptionBrute.Text);
+		}
+
 		
 		/*
 ---------------------------
