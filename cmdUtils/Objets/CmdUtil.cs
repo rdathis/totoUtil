@@ -234,12 +234,16 @@ Unknown.pm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9
 			 */
 			StringBuilder builder = new StringBuilder();
 			String source="";
+			StringBuilder script = new StringBuilder();
+			
+			String motLst="";
 			builder.Append("grep -w ");
 			foreach (String ligne  in text.Split('\n')) {
 				if (ligne.StartsWith("Unknown", StringComparison.Ordinal)) {
 					String mot=ligne.Substring(8);
 					mot= mot.Substring(0, mot.IndexOf("(", StringComparison.Ordinal));
 					builder.Append(" -e ^"+mot+"");
+					motLst+=(mot+" ");
 				} else if (ligne.StartsWith("sourceURL:", StringComparison.Ordinal)) {
 					// sourceURL: https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html: null is not an object (evaluating 'a.d'): at
 					// -> '692C88F43AF9B7D20FD4598EF78AF777.symbolMap'
@@ -253,9 +257,14 @@ Unknown.pm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9
 					source=mot;
 				}
 			}
+			script.Append("set lst='"+motLst+"' ;");
+			
+			script.Append("set fsource="+source+";");
+			script.Append("for mot in $lst ; do ; echo -n '*'$mot ' ' ; grep -w -e ^$mot $fsource ; done;");
 			
 			builder.Append(" "+source);
-			return builder.ToString();
+			
+			return builder.ToString()+"\n"+script.ToString();
 		}
 	}
 }
