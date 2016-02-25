@@ -166,6 +166,8 @@ namespace cmdUtils
 			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.cygwinToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.TabMeoLabel1 = new System.Windows.Forms.Label();
+			this.TabMeoLabel2 = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -975,6 +977,8 @@ namespace cmdUtils
 			// 
 			// tabMeo
 			// 
+			this.tabMeo.Controls.Add(this.TabMeoLabel2);
+			this.tabMeo.Controls.Add(this.TabMeoLabel1);
 			this.tabMeo.Controls.Add(this.tabMeoTxtExceptionLisible);
 			this.tabMeo.Controls.Add(this.tabMeoTxtExceptionBrute);
 			this.tabMeo.Location = new System.Drawing.Point(4, 22);
@@ -987,19 +991,19 @@ namespace cmdUtils
 			// 
 			// tabMeoTxtExceptionLisible
 			// 
-			this.tabMeoTxtExceptionLisible.Location = new System.Drawing.Point(49, 227);
+			this.tabMeoTxtExceptionLisible.Location = new System.Drawing.Point(3, 260);
 			this.tabMeoTxtExceptionLisible.Multiline = true;
 			this.tabMeoTxtExceptionLisible.Name = "tabMeoTxtExceptionLisible";
-			this.tabMeoTxtExceptionLisible.Size = new System.Drawing.Size(757, 49);
+			this.tabMeoTxtExceptionLisible.Size = new System.Drawing.Size(800, 49);
 			this.tabMeoTxtExceptionLisible.TabIndex = 1;
 			// 
 			// tabMeoTxtExceptionBrute
 			// 
-			this.tabMeoTxtExceptionBrute.Location = new System.Drawing.Point(49, 6);
+			this.tabMeoTxtExceptionBrute.Location = new System.Drawing.Point(3, 18);
 			this.tabMeoTxtExceptionBrute.Multiline = true;
 			this.tabMeoTxtExceptionBrute.Name = "tabMeoTxtExceptionBrute";
 			this.tabMeoTxtExceptionBrute.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.tabMeoTxtExceptionBrute.Size = new System.Drawing.Size(757, 215);
+			this.tabMeoTxtExceptionBrute.Size = new System.Drawing.Size(800, 215);
 			this.tabMeoTxtExceptionBrute.TabIndex = 0;
 			this.tabMeoTxtExceptionBrute.TextChanged += new System.EventHandler(this.TabMeoTxtExceptionBruteTextChanged);
 			// 
@@ -1070,6 +1074,22 @@ namespace cmdUtils
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
+			// TabMeoLabel1
+			// 
+			this.TabMeoLabel1.Location = new System.Drawing.Point(6, 3);
+			this.TabMeoLabel1.Name = "TabMeoLabel1";
+			this.TabMeoLabel1.Size = new System.Drawing.Size(788, 14);
+			this.TabMeoLabel1.TabIndex = 2;
+			this.TabMeoLabel1.Text = "Exception GWT.JavaScriptException - Copier exception ci dessous";
+			// 
+			// TabMeoLabel2
+			// 
+			this.TabMeoLabel2.Location = new System.Drawing.Point(13, 237);
+			this.TabMeoLabel2.Name = "TabMeoLabel2";
+			this.TabMeoLabel2.Size = new System.Drawing.Size(788, 14);
+			this.TabMeoLabel2.TabIndex = 3;
+			this.TabMeoLabel2.Text = "Grep dans Src";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1104,6 +1124,8 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Label TabMeoLabel2;
+		private System.Windows.Forms.Label TabMeoLabel1;
 		private System.Windows.Forms.TabPage tabMeo;
 		private System.Windows.Forms.TextBox tabMeoTxtExceptionLisible;
 		private System.Windows.Forms.TextBox tabMeoTxtExceptionBrute;
