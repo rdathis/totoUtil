@@ -25,7 +25,7 @@ namespace cmdUtils.Objets
 		private Boolean testDir(string directory, Boolean allowEmptyString=false) {
 			if (directory!=null) {
 				if (directory.Trim().Length>0) {
-					if (!File.Exists(directory)) {
+					if (!Directory.Exists(directory)) {
 						throw new Exception("chemin archive inexistant : '"+directory+"'");
 					}
 					return true;
@@ -40,10 +40,20 @@ namespace cmdUtils.Objets
 			if (options==null) {
 				throw new Exception("options non renseignees");					
 			}
-			if (!options.controleArchiveDir()) {
-				throw new Exception("archive non renseignees");
+			if (!testDir(options.getArchiveDir())) {
+				if ((options.getArchiveDir()==null)|| (options.getArchiveDir().Length<1)) {
+					throw new Exception("archive non renseignee ");
+				} else {
+					throw new Exception("chemin inexistant : '"+options.getArchiveDir()+"'");
+				}
+				
 			}
-			//List<FileInfo> fichiers = options.getSourceSelection();
+			
+			List<FileInfo> fichiers = new List<FileInfo>();
+			complete(fichiers, options.getSourceBaseDir(), options.getSourceSelection());
+			
+			createSimpleArchive( options.getArchiveDir()+options.getArchiveName(), fichiers);
+			return;
 			
 		}
 		public void createArchive(string archiveName, string sourceBaseDir, string[] sourceSelection, string datamag, string archiveDir)
@@ -54,15 +64,10 @@ namespace cmdUtils.Objets
 			if ((archiveName==null) || (archiveName.Trim().Length<1)) {
 				throw new Exception("nom  d'archive manquant ");
 			}
-				
-
-			
+		
 			List<FileInfo> fichiers = new List<FileInfo>();
 			
-
 			complete(fichiers, sourceBaseDir, sourceSelection);
-
-			//TODO:change destination path (avec un callback ?)
 			createSimpleArchive(archiveDir+archiveName, fichiers);
 			return;
 		}

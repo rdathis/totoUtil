@@ -218,9 +218,11 @@ namespace cmdUtils.Objets
 		}
 
 		public string translateException(string text)
-		{/*
-		com.google.gwt.core.client.JavaScriptException: (TypeError)
- line: 19730
+		{
+			/**
+		
+com.google.gwt.core.client.JavaScriptException: (TypeError)
+line: 19730
 column: 54
 sourceURL: https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html: null is not an object (evaluating 'a.d'): at
 Unknown.f5h(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@76)
@@ -231,40 +233,125 @@ Unknown.Eae(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF
 Unknown.Gae(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@309143)
 Unknown.hm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@28)
 Unknown.pm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@12990)
+
+---
+cas 2 :
+com.google.gwt.core.client.JavaScriptException: (TypeError) : Cannot read property 'd' of null: at
+Unknown.Rxg(<anonymous>@960)
+Unknown.PJk(<anonymous>@311)
+Unknown.RJk(<anonymous>@1088650)
+Unknown.dJg(<anonymous>@36)
+Unknown.gJg(<anonymous>@379529)
+Unknown.oQ(<anonymous>@258451)
+Unknown.<anonymous>(<anonymous>@155)
+Unknown._w(https://www.myeasyoptic.com/mag-opticaldiscount/myeasyoptic/78957C736ADB5FD05DCBA3DDACFEFF8F.cache.html@29)
+
 			 */
 			//StringBuilder builder = new StringBuilder();
 			String source="";
 			StringBuilder script = new StringBuilder();
 			
+			String server="";
+			String instance="";
+			String path="";
 			String motLst="";
 			//builder.Append("grep -w ");
+
 			foreach (String ligne  in text.Split('\n')) {
+				
 				if (ligne.StartsWith("Unknown", StringComparison.Ordinal)) {
 					String mot=ligne.Substring(8);
 					mot= mot.Substring(0, mot.IndexOf("(", StringComparison.Ordinal));
 					//builder.Append(" -e ^"+mot+"");
 					motLst+=(mot+" ");
 				} else if (ligne.StartsWith("sourceURL:", StringComparison.Ordinal)) {
+					// CAS 1
 					// sourceURL: https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html: null is not an object (evaluating 'a.d'): at
 					// -> '692C88F43AF9B7D20FD4598EF78AF777.symbolMap'
 					
 					String mot = ligne;
+					
+					String[] lst = ligne.Split('/');
+					server=lst[2];
+					instance=lst[3];
+					path=lst[4];
+					
 					mot = mot.Substring(mot.IndexOf(":", StringComparison.Ordinal)+1); //vire le premier ':'
 					mot = mot.Substring(mot.LastIndexOf("/", StringComparison.Ordinal)+1); //garde la fin de l'url (fichier)
+					//ici : calculer le path
 					mot = mot.Substring(0, mot.IndexOf(":", StringComparison.Ordinal)); //vire le comment.
 					mot = mot.Substring(0, mot.IndexOf(".", StringComparison.Ordinal));
 					mot+=".symbolMap";
 					source=mot;
+				} ;
+				if (ligne.Contains(".cache.html")) {
+					// CAS 2
+					// Unknown._w(https://www.myeasyoptic.com/mag-opticaldiscount/myeasyoptic/78957C736ADB5FD05DCBA3DDACFEFF8F.cache.html@29)
+					String mot = ligne;
+					String[] lst = ligne.Split('/');
+					server=lst[2];
+					instance=lst[3];
+					path=lst[4];
+					
+					mot = mot.Substring(mot.IndexOf("(", StringComparison.Ordinal)+1); //vire le premier ':'
+					mot = mot.Substring(mot.LastIndexOf("/", StringComparison.Ordinal)+1); //garde la fin de l'url (fichier)
+					//ici : calculer le path
+					// mot = mot.Substring(0, mot.IndexOf(":", StringComparison.Ordinal)); //vire le comment.
+					mot = mot.Substring(0, mot.IndexOf(".", StringComparison.Ordinal));
+					mot+=".symbolMap";
+					source=mot;
+					
 				}
 			}
-			script.Append("export lst='"+motLst+"' ;");
+			script.AppendLine("# Serveur : "+server +"");
+			script.AppendLine("# Instance : "+instance+"");
+			script.AppendLine("# App  : "+path+"");
 			
-			script.Append("export fsource="+source+";");
+			script.AppendLine("# cd tomcat-instanceX/webapps/meo_instanceX/WEB-INF/deploy/"+path+"/symbolMaps/");
+			script.AppendLine("export lst='"+motLst+"' ;");
+			
+			script.AppendLine("export fsource="+source+";");
 			script.Append("for mot in $lst ; do  (echo -n '*'$mot ' ' ; grep -w -e ^$mot $fsource) ; done;");
 			
 			//builder.Append(" "+source);
 			
 			return script.ToString();
+		}
+
+		public string getExemple(int i)
+		{
+			StringBuilder sb = new StringBuilder();
+			if (i==1) {
+				
+				sb.AppendLine("com.google.gwt.core.client.JavaScriptException: (TypeError)");
+				sb.AppendLine("line: 19730");
+				sb.AppendLine("column: 54");
+				sb.AppendLine("sourceURL: https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html: null is not an object (evaluating 'a.d'): at");
+				sb.AppendLine("Unknown.f5h(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@76)");
+				sb.AppendLine("Unknown.I5h(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@29)");
+				sb.AppendLine("Unknown.K5h(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@621262)");
+				sb.AppendLine("Unknown.hm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@28)");
+				sb.AppendLine("Unknown.Eae(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@34)");
+				sb.AppendLine("Unknown.Gae(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@309143)");
+				sb.AppendLine("Unknown.hm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@28)");
+				sb.AppendLine("Unknown.pm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@12990)");
+				
+				return sb.ToString();
+			}
+			if (i==2) {
+				sb.AppendLine("com.google.gwt.core.client.JavaScriptException: (TypeError) : Cannot read property 'd' of null: at");
+				sb.AppendLine("Unknown.Rxg(<anonymous>@960)");
+				sb.AppendLine("Unknown.PJk(<anonymous>@311)");
+				sb.AppendLine("Unknown.RJk(<anonymous>@1088650)");
+				sb.AppendLine("Unknown.dJg(<anonymous>@36)");
+				sb.AppendLine("Unknown.gJg(<anonymous>@379529)");
+				sb.AppendLine("Unknown.oQ(<anonymous>@258451)");
+				sb.AppendLine("Unknown.<anonymous>(<anonymous>@155)");
+				sb.AppendLine("Unknown._w(https://www.myeasyoptic.com/mag-opticaldiscount/myeasyoptic/78957C736ADB5FD05DCBA3DDACFEFF8F.cache.html@29)				");
+				return sb.ToString();
+
+			}
+			return "";
 		}
 	}
 }

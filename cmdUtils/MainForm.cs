@@ -16,9 +16,11 @@ using System.Drawing;
 using System.Net.Mime;
 using System.Security.Cryptography;
 using System.Windows.Forms;
+using System.Xml;
 using MySql.Data.MySqlClient;
 using cmdUtils.Objets;
 using MySql.Data;
+
 
 namespace cmdUtils
 {
@@ -139,11 +141,22 @@ namespace cmdUtils
 
 			
 		}
+
+		void reportError(Exception e)
+		{
+			statusStrip1.Text = "Erreur : "+e.Message;
+			statusStrip1.BackColor = Color.Yellow;
+		}
+
 		void GetMysqlDatabaseButtonClick(object sender, EventArgs e)
 		{
 			
-			List <String> liste=cmdUtils.getDatabases(cfg);
-			cmdUtils.listToCombo(liste, mysqlDatabaseCombo, true);
+			try  {
+				List <String> liste=cmdUtils.getDatabases(cfg);
+				cmdUtils.listToCombo(liste, mysqlDatabaseCombo, true);
+			} catch (Exception ex) {
+				reportError(ex);
+			}
 			//util.getDatabases(mysqlDatabaseCombo);
 		}
 		void GoMysqlImportButtonClick(object sender, EventArgs ev)
@@ -261,12 +274,15 @@ namespace cmdUtils
 		}
 		void BntMoulZipItClick(object sender, EventArgs e)
 		{
+			
 			txtFinal.Text="testZip.zip";
 			ZipUtil zipUtil = new ZipUtil();
 			//
 			ZipUtilOptions zop = new ZipUtilOptions();
-			zop.setArchiveDir("c:/temp/viscri01/mag01/");
+			zop.setArchiveDir(cfg.moulDstPath);
 			zop.setArchiveName(txtFinal.Text);
+			String source=listboxMoulSrc.Text;
+			zop.setSourceBaseDir(source);
 			//zop.setSourceBaseDir();
 //			- delegate : c'est pas ca qui fo
 //				- fileinfo de la sélection a remplir
@@ -277,10 +293,18 @@ namespace cmdUtils
 			
 			//zop.g
 			zop.setSourceSelection(cfg.moulFichiers.Split(' '));
-			zipUtil.createArchive(zop);
+			try {
+				zipUtil.createArchive(zop);
+			} catch(Exception ex) {
+				MessageBox.Show("Erreur : "+ex.Message);
+			}
 			
 			//
-			zipUtil.createArchive(txtFinal.Text, "c:/temp/viscri01/mag01/" ,cfg.moulFichiers.Split(' '), "data/mag01", "c:/temp/");
+//			try {
+//				zipUtil.createArchive(txtFinal.Text, cfg.moulDstPath ,cfg.moulFichiers.Split(' '), "data/mag01", "c:/temp/");
+//			} catch(Exception ex) {
+//				MessageBox.Show("Erreur : "+ex.Message);
+//			}
 			
 		}
 		void TabImportClick(object sender, EventArgs e)
@@ -297,19 +321,23 @@ namespace cmdUtils
 				if (magId.Length>0) {
 					string sql="select * from administration.magasins where magasin_id="+magId;
 					MyUtil util = new MyUtil();
-					string cstr = util.doConnString(cfg);
-					var magasinList =  util.getListResultAsKV(cstr, sql);
-					
-					rtb.AppendText("#libe:"+util.getItem(magasinList[0], "magasin_libelle")+ " - url :"+util.getItem(magasinList[0], "url"));
-					rtb.AppendText("\n#cli_id:"+util.getItem(magasinList[0], "client_id"));
-					//Console.WriteLine("libe:"+util.getItem(magasinList[0], "magasin_libelle"));
-					//Console.WriteLine("cli_id:"+util.getItem(magasinList[0], "client_id"));
-					                                         
-					sql="SELECT utilisateur_id,magasin_id FROM administration.utilisateurs where utilisateur_active=true AND magasin_id="+magId+";";
-					var userList =  util.getListResultAsKV(cstr, sql);
-					
-					rtb.AppendText("\nmodeDevMagId="+util.getItem(userList[0], "magasin_id"));
-					rtb.AppendText("\nmodeDevUserId="+util.getItem(userList[0], "utilisateur_id"));
+					try {
+						string cstr = util.doConnString(cfg);
+						var magasinList =  util.getListResultAsKV(cstr, sql);
+						
+						rtb.AppendText("#libe:"+util.getItem(magasinList[0], "magasin_libelle")+ " - url :"+util.getItem(magasinList[0], "url"));
+						rtb.AppendText("\n#cli_id:"+util.getItem(magasinList[0], "client_id"));
+						//Console.WriteLine("libe:"+util.getItem(magasinList[0], "magasin_libelle"));
+						//Console.WriteLine("cli_id:"+util.getItem(magasinList[0], "client_id"));
+						
+						sql="SELECT utilisateur_id,magasin_id FROM administration.utilisateurs where utilisateur_active=true AND magasin_id="+magId+";";
+						var userList =  util.getListResultAsKV(cstr, sql);
+						
+						rtb.AppendText("\nmodeDevMagId="+util.getItem(userList[0], "magasin_id"));
+						rtb.AppendText("\nmodeDevUserId="+util.getItem(userList[0], "utilisateur_id"));
+					} catch(Exception ex) {
+						reportError(ex);
+					}
 				}
 			}
 		}
@@ -317,9 +345,52 @@ namespace cmdUtils
 		{
 			
 		}
+
+		Boolean checkFormat(TextBox box)
+		{
+			String texte = box.Text;
+			Boolean changed=false;
+			List<String> newList = new List<string>();
+			foreach (String ligne  in texte.Split('\n')) {
+				String newStr = ligne;
+				
+				newStr=newStr.Replace('\r', ' ');
+				newStr=newStr.Replace('\t', ' ');
+				newStr=newStr.Trim();
+				newList.Add(newStr);
+				if (!ligne.Equals(newStr)) {
+					changed=false;
+				}
+			}
+			if (changed) {
+				String newStr="";
+				foreach(String ligne in newList) {
+					newStr+=ligne+"\n";
+				}
+				box.Text=newStr;
+			}
+			return changed;
+		}
+
 		void TabMeoTxtExceptionBruteTextChanged(object sender, EventArgs e)
 		{
-			tabMeoTxtExceptionLisible.Text = cmdUtils.translateException(tabMeoTxtExceptionBrute.Text);
+			try {
+				if (!checkFormat(tabMeoTxtExceptionBrute)) {
+					tabMeoTxtExceptionLisible.Text = cmdUtils.translateException(tabMeoTxtExceptionBrute.Text);
+				}
+			} catch(Exception ex) {
+				Console.WriteLine("Erreur : "+ex.ToString());
+				// osenf
+			}
+		}
+		void TabMeoTest1Click(object sender, EventArgs e)
+		{
+			tabMeoTxtExceptionBrute.Text=cmdUtils.getExemple(1);
+
+		}
+		void TabMeoTest2Click(object sender, EventArgs e)
+		{
+			tabMeoTxtExceptionBrute.Text=cmdUtils.getExemple(2);
 		}
 
 		

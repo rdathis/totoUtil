@@ -7,6 +7,7 @@
  * Pour changer ce modèle utiliser Outils | Options | Codage | Editer les en-têtes standards.
  */
 using System;
+using System.IO;
 
 namespace cmdUtils.Objets
 {
@@ -75,8 +76,8 @@ namespace cmdUtils.Objets
 			return false;
 		}
 		public Boolean controleArchiveDir() {
+			return (File.Exists(archiveDir));
 			
-			return false;
 		}
 		public Boolean controleSourceBaseDir() {
 			return false;
