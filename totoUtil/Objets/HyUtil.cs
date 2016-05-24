@@ -27,7 +27,7 @@ namespace totoUtil.Objets
 		
 		protected static Regex tipWithPlayer = new Regex(@"( Coins from )");
 		protected static Regex tipWithoutPlayer = new Regex(@" Coins Boosters queued");
-		protected static Regex tipSent = new Regex(@"You sent a tip of");
+		protected static Regex tipSent = new Regex(@"You tipped");
 
 		public Regex getTipWithPlayer() {
 			return tipWithPlayer;
