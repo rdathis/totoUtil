@@ -31,6 +31,7 @@ namespace cmdUtils
 	public partial class MainForm : Form
 	{
 		
+		List <MeoInstance> instanceList = new List<MeoInstance>();
 		
 		List <AssoControleParam> configListeControles = new List<AssoControleParam>();
 		
@@ -45,6 +46,27 @@ namespace cmdUtils
 			populate();
 		}
 
+		void initInstance()
+		{
+			instanceList.Clear();
+			MeoServeur s1 = new MeoServeur("S-1");
+			MeoServeur s2 = new MeoServeur("S-2");
+			instanceList.Add(new MeoInstance(s1, "m3035", "i01", "meocli_meo3035"));
+			
+			instanceList.Add(new MeoInstance(s1, "od", "iOD", "meocli_od"));
+			
+			instanceList.Add(new MeoInstance(s2, "2", "i02", "meocli_i2"));
+			instanceList.Add(new MeoInstance(s2, "3", "i03", "meocli_i3"));
+		}
+
+		void initInstanceListBox(ListBox listBox)
+		{
+			foreach(MeoInstance i in instanceList) {
+				listBox.Items.Add(i);
+			}
+			
+		}
+
 		void initConfig()
 		{
 			//configListeControles.Add(new AssoControleParam(cygwinParam,cfg.cygwinPath, cfg.cy));
@@ -52,6 +74,14 @@ namespace cmdUtils
 			//et faire le tableau d'init. puis revoir grace a ca populate(), et updateConfig()
 			
 			configListeControles.Add(new AssoControleParam(cfg, "cygwinPath", cygwinParam));
+			initInstance();
+			initInstanceListBox(instancesListBox);
+			
+			//todo:write a config file, with server, instance name, meocliname ...
+			instancesListBox.Items.Add("meocli_opticaldiscount");
+			instancesListBox.Items.Add("meocli_instance2");
+			instancesListBox.Items.Add("meocli_instance3");
+			
 		}
 		void SaveButtonClick(object sender, EventArgs e)
 		{
@@ -391,6 +421,23 @@ namespace cmdUtils
 		void TabMeoTest2Click(object sender, EventArgs e)
 		{
 			tabMeoTxtExceptionBrute.Text=cmdUtils.getExemple(2);
+		}
+		void MoulCreaRepBtnClick(object sender, EventArgs e)
+		{
+			String instanceCode="iii";
+			 String path=txtBoxMoulDestBase.Text+"MID"+this.txtMagId.Text+"-"+txtMagClient.Text+"-"+this.moulDateTextBox.Text+"-"+instanceCode+"/";
+			MyUtil util = new MyUtil();
+			util.createFolderIfNotExists(path);
+			path+="data/";
+			util.createFolderIfNotExists(path);
+			
+			path+="mag01/";
+			util.createFolderIfNotExists(path);
+			
+			path+="Joint/";
+			util.createFolderIfNotExists(path);
+			
+			util=null;
 		}
 
 		

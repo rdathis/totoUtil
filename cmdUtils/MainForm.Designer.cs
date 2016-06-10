@@ -130,6 +130,9 @@ namespace cmdUtils
 			this.label11 = new System.Windows.Forms.Label();
 			this.tabPdf = new System.Windows.Forms.TabPage();
 			this.tabMoulinettes = new System.Windows.Forms.TabPage();
+			this.moulCreaRepBtn = new System.Windows.Forms.Button();
+			this.moulDateTextBox = new System.Windows.Forms.TextBox();
+			this.instancesListBox = new System.Windows.Forms.ListBox();
 			this.bntMoulZipIt = new System.Windows.Forms.Button();
 			this.docs = new System.Windows.Forms.Label();
 			this.txtBoxMoulDocs = new System.Windows.Forms.TextBox();
@@ -161,6 +164,7 @@ namespace cmdUtils
 			this.TabMeoLabel1 = new System.Windows.Forms.Label();
 			this.tabMeoTxtExceptionLisible = new System.Windows.Forms.TextBox();
 			this.tabMeoTxtExceptionBrute = new System.Windows.Forms.TextBox();
+			this.tabHorloge = new System.Windows.Forms.TabPage();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -194,6 +198,7 @@ namespace cmdUtils
 			this.tabs.Controls.Add(this.tabPdf);
 			this.tabs.Controls.Add(this.tabMoulinettes);
 			this.tabs.Controls.Add(this.tabMeo);
+			this.tabs.Controls.Add(this.tabHorloge);
 			this.tabs.Location = new System.Drawing.Point(12, 27);
 			this.tabs.Name = "tabs";
 			this.tabs.SelectedIndex = 0;
@@ -750,6 +755,9 @@ namespace cmdUtils
 			// 
 			// tabMoulinettes
 			// 
+			this.tabMoulinettes.Controls.Add(this.moulCreaRepBtn);
+			this.tabMoulinettes.Controls.Add(this.moulDateTextBox);
+			this.tabMoulinettes.Controls.Add(this.instancesListBox);
 			this.tabMoulinettes.Controls.Add(this.bntMoulZipIt);
 			this.tabMoulinettes.Controls.Add(this.docs);
 			this.tabMoulinettes.Controls.Add(this.txtBoxMoulDocs);
@@ -781,6 +789,31 @@ namespace cmdUtils
 			this.tabMoulinettes.TabIndex = 4;
 			this.tabMoulinettes.Text = "Moulinettes";
 			this.tabMoulinettes.UseVisualStyleBackColor = true;
+			// 
+			// moulCreaRepBtn
+			// 
+			this.moulCreaRepBtn.Location = new System.Drawing.Point(641, 354);
+			this.moulCreaRepBtn.Name = "moulCreaRepBtn";
+			this.moulCreaRepBtn.Size = new System.Drawing.Size(52, 25);
+			this.moulCreaRepBtn.TabIndex = 26;
+			this.moulCreaRepBtn.Text = "creaRep";
+			this.moulCreaRepBtn.UseVisualStyleBackColor = true;
+			this.moulCreaRepBtn.Click += new System.EventHandler(this.MoulCreaRepBtnClick);
+			// 
+			// moulDateTextBox
+			// 
+			this.moulDateTextBox.Location = new System.Drawing.Point(543, 360);
+			this.moulDateTextBox.Name = "moulDateTextBox";
+			this.moulDateTextBox.Size = new System.Drawing.Size(77, 20);
+			this.moulDateTextBox.TabIndex = 25;
+			// 
+			// instancesListBox
+			// 
+			this.instancesListBox.FormattingEnabled = true;
+			this.instancesListBox.Location = new System.Drawing.Point(390, 364);
+			this.instancesListBox.Name = "instancesListBox";
+			this.instancesListBox.Size = new System.Drawing.Size(128, 17);
+			this.instancesListBox.TabIndex = 24;
 			// 
 			// bntMoulZipIt
 			// 
@@ -824,7 +857,7 @@ namespace cmdUtils
 			// 
 			// button4
 			// 
-			this.button4.Location = new System.Drawing.Point(693, 407);
+			this.button4.Location = new System.Drawing.Point(694, 421);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(75, 23);
 			this.button4.TabIndex = 18;
@@ -833,7 +866,7 @@ namespace cmdUtils
 			// 
 			// button3
 			// 
-			this.button3.Location = new System.Drawing.Point(693, 378);
+			this.button3.Location = new System.Drawing.Point(694, 392);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(75, 23);
 			this.button3.TabIndex = 17;
@@ -894,16 +927,16 @@ namespace cmdUtils
 			// 
 			// txtMagClient
 			// 
-			this.txtMagClient.Location = new System.Drawing.Point(381, 363);
+			this.txtMagClient.Location = new System.Drawing.Point(275, 361);
 			this.txtMagClient.Name = "txtMagClient";
 			this.txtMagClient.Size = new System.Drawing.Size(100, 20);
 			this.txtMagClient.TabIndex = 10;
 			// 
 			// label18
 			// 
-			this.label18.Location = new System.Drawing.Point(245, 361);
+			this.label18.Location = new System.Drawing.Point(217, 361);
 			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(100, 23);
+			this.label18.Size = new System.Drawing.Size(42, 23);
 			this.label18.TabIndex = 9;
 			this.label18.Text = "client";
 			// 
@@ -1047,6 +1080,16 @@ namespace cmdUtils
 			this.tabMeoTxtExceptionBrute.TabIndex = 0;
 			this.tabMeoTxtExceptionBrute.TextChanged += new System.EventHandler(this.TabMeoTxtExceptionBruteTextChanged);
 			// 
+			// tabHorloge
+			// 
+			this.tabHorloge.Location = new System.Drawing.Point(4, 22);
+			this.tabHorloge.Name = "tabHorloge";
+			this.tabHorloge.Padding = new System.Windows.Forms.Padding(3);
+			this.tabHorloge.Size = new System.Drawing.Size(814, 489);
+			this.tabHorloge.TabIndex = 6;
+			this.tabHorloge.Text = "tabHorloge";
+			this.tabHorloge.UseVisualStyleBackColor = true;
+			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1148,6 +1191,10 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Button moulCreaRepBtn;
+		private System.Windows.Forms.TextBox moulDateTextBox;
+		private System.Windows.Forms.ListBox instancesListBox;
+		private System.Windows.Forms.TabPage tabHorloge;
 		private System.Windows.Forms.Label tabMeoTest2;
 		private System.Windows.Forms.Label tabMeoTest1;
 		private System.Windows.Forms.Label TabMeoLabel2;

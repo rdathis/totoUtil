@@ -71,13 +71,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssoControleParam.cs" />
+    <Compile Include="Objets\Horloge.cs" />
+    <Compile Include="Objets\MeoInstance.cs" />
+    <Compile Include="Objets\MeoServeur.cs" />
     <Compile Include="ConfElement.cs" />
     <Compile Include="ConfigSectionSettings.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MoulinetteAction.cs" />
+    <Compile Include="Objets\MoulinetteAction.cs" />
     <Compile Include="Objets\MyUtil.cs" />
     <Compile Include="Objets\ProcessUtil.cs" />
     <Compile Include="Objets\CmdUtil.cs" />

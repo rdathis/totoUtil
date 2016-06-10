@@ -173,5 +173,9 @@ namespace cmdUtils.Objets
 //
 			
 		}
+		public Boolean createFolderIfNotExists(String path) {
+			DirectoryInfo di = Directory.CreateDirectory(path);
+			return true;
+		}
 	}
 }
