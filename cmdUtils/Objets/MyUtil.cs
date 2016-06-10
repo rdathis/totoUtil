@@ -177,5 +177,8 @@ namespace cmdUtils.Objets
 			DirectoryInfo di = Directory.CreateDirectory(path);
 			return true;
 		}
+		public String getDate8(DateTime date) {
+			return String.Format("{0:yyyyMMdd}", date);
+		}
 	}
 }

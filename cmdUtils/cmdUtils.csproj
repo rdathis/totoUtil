@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssoControleParam.cs" />
+    <Compile Include="Objets\JFiles.cs" />
     <Compile Include="Objets\Horloge.cs" />
     <Compile Include="Objets\MeoInstance.cs" />
     <Compile Include="Objets\MeoServeur.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Objets\ProcessUtil.cs" />
     <Compile Include="Objets\CmdUtil.cs" />
     <Compile Include="Objets\FilterReg.cs" />
+    <Compile Include="Objets\YFiles.cs" />
     <Compile Include="Objets\ZipUtil.cs" />
     <Compile Include="Objets\ZipUtilOptions.cs" />
     <Compile Include="Program.cs" />

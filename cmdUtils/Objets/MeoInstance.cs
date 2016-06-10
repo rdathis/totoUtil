@@ -26,16 +26,16 @@ namespace cmdUtils
 		private String nom;
 		private String code;
 		private String meocli;
-		private MeoServeur getServeur() {
+		public MeoServeur getServeur() {
 			return serveur;
 		}
-		private String getNom() {
+		public String getNom() {
 			return nom;
 		}
-		private String getCode() {
+		public String getCode() {
 			return code;
 		}
-		private String getMeocli() {
+		public String getMeocli() {
 			return meocli;
 		}
 	}

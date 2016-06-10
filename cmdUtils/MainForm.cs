@@ -37,7 +37,7 @@ namespace cmdUtils
 		
 		CmdUtil cmdUtils = new CmdUtil();
 		MoulinetteAction moulinetteAction = new MoulinetteAction();
-		ConfigSectionSettings cfg=	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
+		ConfigSectionSettings cfg =	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
 		public MainForm()
 		{
 			InitializeComponent();
@@ -61,12 +61,21 @@ namespace cmdUtils
 
 		void initInstanceListBox(ListBox listBox)
 		{
-			foreach(MeoInstance i in instanceList) {
-				listBox.Items.Add(i);
+			foreach (MeoInstance i in instanceList) {
+				listBox.Items.Add(i.getCode());
 			}
-			
 		}
 
+		MeoInstance getInstance(String code)
+		{
+			foreach (MeoInstance i in instanceList) {
+				if (i.getCode().Equals(code)) {
+					return i;
+				}
+			}
+			return null;
+		}
+		
 		void initConfig()
 		{
 			//configListeControles.Add(new AssoControleParam(cygwinParam,cfg.cygwinPath, cfg.cy));
@@ -76,12 +85,11 @@ namespace cmdUtils
 			configListeControles.Add(new AssoControleParam(cfg, "cygwinPath", cygwinParam));
 			initInstance();
 			initInstanceListBox(instancesListBox);
-			
+		
+			MyUtil util = new MyUtil();
+			moulDateTextBox.Text = util.getDate8(DateTime.Now);
+			util = null;
 			//todo:write a config file, with server, instance name, meocliname ...
-			instancesListBox.Items.Add("meocli_opticaldiscount");
-			instancesListBox.Items.Add("meocli_instance2");
-			instancesListBox.Items.Add("meocli_instance3");
-			
 		}
 		void SaveButtonClick(object sender, EventArgs e)
 		{
@@ -90,9 +98,9 @@ namespace cmdUtils
 			
 			//cfg.ExampleAttribute="youpi";
 			cfg.Save();
-			Configuration cfgConf=cfg.getConfiguration();
-			statusStrip1.Text="Saved in : "+cfgConf.FilePath;
-			labelFichierConfig.Text="Saved in : "+cfgConf.FilePath;
+			Configuration cfgConf = cfg.getConfiguration();
+			statusStrip1.Text = "Saved in : " + cfgConf.FilePath;
+			labelFichierConfig.Text = "Saved in : " + cfgConf.FilePath;
 			populate();
 		}
 		void TabParamClick(object sender, EventArgs e)
@@ -100,7 +108,8 @@ namespace cmdUtils
 			//throw new NotImplementedException();
 			populate();
 		}
-		void populate() {
+		void populate()
+		{
 			cygwinParam.Text = cfg.cygwinPath;
 			
 //			foreach(AssoControleParam param in configListeControles) {
@@ -108,24 +117,24 @@ namespace cmdUtils
 //			}
 //			cfg.getConfiguration().GetSection(param.getSection());
 			
-			cygwinTermParam.Text=cfg.cygwinTerm;
+			cygwinTermParam.Text = cfg.cygwinTerm;
 			mysqlParam.Text = cfg.mysqlExePath;
-			dataParam.Text=cfg.dumpsPath;
+			dataParam.Text = cfg.dumpsPath;
 			mysqlUserParam.Text = cfg.mysqlUser;
-			mysqlPasswordParam.Text=cfg.mysqlPassword;
-			scriptCreateDbParam.Text=cfg.scriptCreate;
-			scriptCreateFiledDBParam.Text=cfg.scriptFileDb;
+			mysqlPasswordParam.Text = cfg.mysqlPassword;
+			scriptCreateDbParam.Text = cfg.scriptCreate;
+			scriptCreateFiledDBParam.Text = cfg.scriptFileDb;
 			
-			moulSrcPathParam.Text=cfg.moulSrcPath;
-			moulDstPathParam.Text=cfg.moulDstPath;
-			moulScp1Param.Text=cfg.moulUploadS1;
-			moulScp2Param.Text=cfg.moulUploadS2;
-			moulFichiersParam.Text=cfg.moulFichiers;
+			moulSrcPathParam.Text = cfg.moulSrcPath;
+			moulDstPathParam.Text = cfg.moulDstPath;
+			moulScp1Param.Text = cfg.moulUploadS1;
+			moulScp2Param.Text = cfg.moulUploadS2;
+			moulFichiersParam.Text = cfg.moulFichiers;
 			
-			if (filterGzTextBox.Text.Length==0) {
+			if (filterGzTextBox.Text.Length == 0) {
 				
-				DateTime now= DateTime.Now;
-				filterGzTextBox.Text="meo*anq*"+now.ToString("yyyyMMdd")+"*.sql.gz";
+				DateTime now = DateTime.Now;
+				filterGzTextBox.Text = "meo*anq*" + now.ToString("yyyyMMdd") + "*.sql.gz";
 			}
 			populateMoulinettes();
 			
@@ -133,40 +142,41 @@ namespace cmdUtils
 
 		void populateMoulinettes()
 		{
-			txtBoxMoulSrcPath.Text=cfg.moulSrcPath;
-			txtBoxMoulDestBase.Text=cfg.moulDstPath;
+			txtBoxMoulSrcPath.Text = cfg.moulSrcPath;
+			txtBoxMoulDestBase.Text = cfg.moulDstPath;
 			
-			txtBoxMoulSrcFilter.Text="*client*";
+			txtBoxMoulSrcFilter.Text = "*client*";
 			
 			//txtBoxMoulSrcPath.Text=cfg.moulSrcPath;
 			//txtMoulDestBase.Text=cfg.moulDstPath;
 			
 		}
 
-		void updateConfig() {
+		void updateConfig()
+		{
 //			foreach(AssoControleParam param in configListeControles) {
 //				param.setValue(param.getTextBox().Text);
 //			}
 			
 			
-			cfg.cygwinPath= cygwinParam.Text;
-			cfg.cygwinTerm=cygwinTermParam.Text;
+			cfg.cygwinPath = cygwinParam.Text;
+			cfg.cygwinTerm = cygwinTermParam.Text;
 			
-			cfg.mysqlExePath=mysqlParam.Text;
+			cfg.mysqlExePath = mysqlParam.Text;
 			
-			cfg.dumpsPath=dataParam.Text;
-			cfg.mysqlUser=mysqlUserParam.Text;
-			cfg.mysqlPassword=mysqlPasswordParam.Text;
+			cfg.dumpsPath = dataParam.Text;
+			cfg.mysqlUser = mysqlUserParam.Text;
+			cfg.mysqlPassword = mysqlPasswordParam.Text;
 			
-			cfg.scriptCreate=scriptCreateDbParam.Text;
-			cfg.scriptFileDb=scriptCreateFiledDBParam.Text;
+			cfg.scriptCreate = scriptCreateDbParam.Text;
+			cfg.scriptFileDb = scriptCreateFiledDBParam.Text;
 			
-			cfg.moulSrcPath=moulSrcPathParam.Text;
-			cfg.moulDstPath=moulDstPathParam.Text;
-			cfg.moulUploadS1=moulScp1Param.Text;
-			cfg.moulUploadS2=moulScp2Param.Text;
+			cfg.moulSrcPath = moulSrcPathParam.Text;
+			cfg.moulDstPath = moulDstPathParam.Text;
+			cfg.moulUploadS1 = moulScp1Param.Text;
+			cfg.moulUploadS2 = moulScp2Param.Text;
 			
-			cfg.moulFichiers=moulFichiersParam.Text;
+			cfg.moulFichiers = moulFichiersParam.Text;
 
 
 			
@@ -174,15 +184,15 @@ namespace cmdUtils
 
 		void reportError(Exception e)
 		{
-			statusStrip1.Text = "Erreur : "+e.Message;
+			statusStrip1.Text = "Erreur : " + e.Message;
 			statusStrip1.BackColor = Color.Yellow;
 		}
 
 		void GetMysqlDatabaseButtonClick(object sender, EventArgs e)
 		{
 			
-			try  {
-				List <String> liste=cmdUtils.getDatabases(cfg);
+			try {
+				List <String> liste = cmdUtils.getDatabases(cfg);
 				cmdUtils.listToCombo(liste, mysqlDatabaseCombo, true);
 			} catch (Exception ex) {
 				reportError(ex);
@@ -192,33 +202,34 @@ namespace cmdUtils
 		void GoMysqlImportButtonClick(object sender, EventArgs ev)
 		{
 			System.Diagnostics.Debug.Print("in import SQL");
-			mysqlImportBouton.Enabled=false;
+			mysqlImportBouton.Enabled = false;
 			try {
 				cmdUtils.sourceSQL(cfg, getDatabaseName(), getDumpName());
 			} catch (Exception ex) {
-				MessageBox.Show("Erreur import : "+ex.Message);
+				MessageBox.Show("Erreur import : " + ex.Message);
 			}
-			mysqlImportBouton.Enabled=true;
+			mysqlImportBouton.Enabled = true;
 			//getExecuteQueryResult
 			
 			//List <String> liste=cmdUtils.getDatabases(cfg);
 			//cmdUtils.listToCombo(liste, mysqlDatabaseCombo, true);
 			//util.getDatabases(mysqlDatabaseCombo);
 		}
-		void tabImportClick(object sender, EventArgs e) {
+		void tabImportClick(object sender, EventArgs e)
+		{
 			System.Diagnostics.Debug.Print("clickd");
 			GetMysqlDatabaseButtonClick(sender, e);
 		}
 		void FilterGzBtnClick(object sender, EventArgs e)
 		{
-			Button btn=(Button)sender;
-			btn.Tag=btn.Text;
-			btn.Text="(...)";
-			btn.Enabled=false;
+			Button btn = (Button)sender;
+			btn.Tag = btn.Text;
+			btn.Text = "(...)";
+			btn.Enabled = false;
 			
 			cmdUtils.listFilesToListbox(cfg.dumpsPath, filterGzTextBox.Text, dumpsListBox);
-			btn.Text=(String)btn.Tag;
-			btn.Enabled=true;
+			btn.Text = (String)btn.Tag;
+			btn.Enabled = true;
 		}
 		void dropButtonClick(object sender, EventArgs e)
 		{
@@ -234,17 +245,19 @@ namespace cmdUtils
 		{
 			String dump = getDumpName();
 			//TODO:move this code
-			richTextBox1.Text=cmdUtils.buildImportDatabase(cfg, dump, getDatabaseName());
-			richTextBox1.Text+=" ; "+cmdUtils.dingding();
-			richTextBox1.Text+= " ; "+cmdUtils.buildMysqlScript(cfg, getDatabaseName(), cfg.scriptFileDb);
+			richTextBox1.Text = cmdUtils.buildImportDatabase(cfg, dump, getDatabaseName());
+			richTextBox1.Text += " ; " + cmdUtils.dingding();
+			richTextBox1.Text += " ; " + cmdUtils.buildMysqlScript(cfg, getDatabaseName(), cfg.scriptFileDb);
 		}
-		private string getDatabaseName() {
+		private string getDatabaseName()
+		{
 			return mysqlDatabaseCombo.Text;
 		}
-		private String getDumpName() {
-			String retour="";
-			if (dumpsListBox.SelectedIndex>=0) {
-				retour=dumpsListBox.SelectedItem.ToString().Replace("\\", "/");
+		private String getDumpName()
+		{
+			String retour = "";
+			if (dumpsListBox.SelectedIndex >= 0) {
+				retour = dumpsListBox.SelectedItem.ToString().Replace("\\", "/");
 			}
 			return retour;
 		}
@@ -264,20 +277,20 @@ namespace cmdUtils
 		void MeoCreateFileDbClick(object sender, EventArgs e)
 		{
 			System.Diagnostics.Debug.Print("in import SQL");
-			mysqlImportBouton.Enabled=false;
+			mysqlImportBouton.Enabled = false;
 			cmdUtils.sourceSQL(cfg, getDatabaseName(), "X:/meo-datas/create_meo_filedb.sql");
-			mysqlImportBouton.Enabled=true;
+			mysqlImportBouton.Enabled = true;
 
 		}
 		void CygwinToolStripButtonClick(object sender, EventArgs e)
 		{
-			String cmd=cygwinParam.Text+"mintty.exe ";
+			String cmd = cygwinParam.Text + "mintty.exe ";
 			//title marche pas
-			String args=cygwinTermParam.Text+"-size 240,48 -";
-			System.Diagnostics.Debug.Print("cmd: "+cmd);
-			System.Diagnostics.Debug.Print("arg: "+args);
+			String args = cygwinTermParam.Text + "-size 240,48 -";
+			System.Diagnostics.Debug.Print("cmd: " + cmd);
+			System.Diagnostics.Debug.Print("arg: " + args);
 			ProcessUtil pu = new ProcessUtil();
-			ProcessWindowStyle windowStyle=ProcessWindowStyle.Normal;
+			ProcessWindowStyle windowStyle = ProcessWindowStyle.Normal;
 			
 			Process p = pu.startProcess(cmd, args, windowStyle);
 			
@@ -295,7 +308,7 @@ namespace cmdUtils
 		}
 		void BtnSearchClick(object sender, EventArgs e)
 		{
-			moulinetteAction.bntListSrc((Button) sender, cmdUtils,txtBoxMoulSrcPath.Text, txtBoxMoulSrcFilter.Text, listboxMoulSrc);
+			moulinetteAction.bntListSrc((Button)sender, cmdUtils, txtBoxMoulSrcPath.Text, txtBoxMoulSrcFilter.Text, listboxMoulSrc);
 		}
 		void Button2Click(object sender, EventArgs e)
 		{
@@ -305,13 +318,13 @@ namespace cmdUtils
 		void BntMoulZipItClick(object sender, EventArgs e)
 		{
 			
-			txtFinal.Text="testZip.zip";
+			txtFinal.Text = "testZip.zip";
 			ZipUtil zipUtil = new ZipUtil();
 			//
 			ZipUtilOptions zop = new ZipUtilOptions();
 			zop.setArchiveDir(cfg.moulDstPath);
 			zop.setArchiveName(txtFinal.Text);
-			String source=listboxMoulSrc.Text;
+			String source = listboxMoulSrc.Text;
 			zop.setSourceBaseDir(source);
 			//zop.setSourceBaseDir();
 //			- delegate : c'est pas ca qui fo
@@ -325,8 +338,8 @@ namespace cmdUtils
 			zop.setSourceSelection(cfg.moulFichiers.Split(' '));
 			try {
 				zipUtil.createArchive(zop);
-			} catch(Exception ex) {
-				MessageBox.Show("Erreur : "+ex.Message);
+			} catch (Exception ex) {
+				MessageBox.Show("Erreur : " + ex.Message);
 			}
 			
 			//
@@ -344,28 +357,28 @@ namespace cmdUtils
 		void ImportMagIdKeyUp(object sender, KeyEventArgs e)
 		{
 			if (e.KeyValue.Equals(13)) {
-				string magId=((TextBox) sender).Text;
+				string magId = ((TextBox)sender).Text;
 				
 				RichTextBox rtb = sqlRechRichTextBox;
 				rtb.Clear();
-				if (magId.Length>0) {
-					string sql="select * from administration.magasins where magasin_id="+magId;
+				if (magId.Length > 0) {
+					string sql = "select * from administration.magasins where magasin_id=" + magId;
 					MyUtil util = new MyUtil();
 					try {
 						string cstr = util.doConnString(cfg);
-						var magasinList =  util.getListResultAsKV(cstr, sql);
+						var magasinList = util.getListResultAsKV(cstr, sql);
 						
-						rtb.AppendText("#libe:"+util.getItem(magasinList[0], "magasin_libelle")+ " - url :"+util.getItem(magasinList[0], "url"));
-						rtb.AppendText("\n#cli_id:"+util.getItem(magasinList[0], "client_id"));
+						rtb.AppendText("#libe:" + util.getItem(magasinList[0], "magasin_libelle") + " - url :" + util.getItem(magasinList[0], "url"));
+						rtb.AppendText("\n#cli_id:" + util.getItem(magasinList[0], "client_id"));
 						//Console.WriteLine("libe:"+util.getItem(magasinList[0], "magasin_libelle"));
 						//Console.WriteLine("cli_id:"+util.getItem(magasinList[0], "client_id"));
 						
-						sql="SELECT utilisateur_id,magasin_id FROM administration.utilisateurs where utilisateur_active=true AND magasin_id="+magId+";";
-						var userList =  util.getListResultAsKV(cstr, sql);
+						sql = "SELECT utilisateur_id,magasin_id FROM administration.utilisateurs where utilisateur_active=true AND magasin_id=" + magId + ";";
+						var userList = util.getListResultAsKV(cstr, sql);
 						
-						rtb.AppendText("\nmodeDevMagId="+util.getItem(userList[0], "magasin_id"));
-						rtb.AppendText("\nmodeDevUserId="+util.getItem(userList[0], "utilisateur_id"));
-					} catch(Exception ex) {
+						rtb.AppendText("\nmodeDevMagId=" + util.getItem(userList[0], "magasin_id"));
+						rtb.AppendText("\nmodeDevUserId=" + util.getItem(userList[0], "utilisateur_id"));
+					} catch (Exception ex) {
 						reportError(ex);
 					}
 				}
@@ -379,25 +392,25 @@ namespace cmdUtils
 		Boolean checkFormat(TextBox box)
 		{
 			String texte = box.Text;
-			Boolean changed=false;
+			Boolean changed = false;
 			List<String> newList = new List<string>();
 			foreach (String ligne  in texte.Split('\n')) {
 				String newStr = ligne;
 				
-				newStr=newStr.Replace('\r', ' ');
-				newStr=newStr.Replace('\t', ' ');
-				newStr=newStr.Trim();
+				newStr = newStr.Replace('\r', ' ');
+				newStr = newStr.Replace('\t', ' ');
+				newStr = newStr.Trim();
 				newList.Add(newStr);
 				if (!ligne.Equals(newStr)) {
-					changed=false;
+					changed = false;
 				}
 			}
 			if (changed) {
-				String newStr="";
-				foreach(String ligne in newList) {
-					newStr+=ligne+"\n";
+				String newStr = "";
+				foreach (String ligne in newList) {
+					newStr += ligne + "\n";
 				}
-				box.Text=newStr;
+				box.Text = newStr;
 			}
 			return changed;
 		}
@@ -408,36 +421,100 @@ namespace cmdUtils
 				if (!checkFormat(tabMeoTxtExceptionBrute)) {
 					tabMeoTxtExceptionLisible.Text = cmdUtils.translateException(tabMeoTxtExceptionBrute.Text);
 				}
-			} catch(Exception ex) {
-				Console.WriteLine("Erreur : "+ex.ToString());
+			} catch (Exception ex) {
+				Console.WriteLine("Erreur : " + ex.ToString());
 				// osenf
 			}
 		}
 		void TabMeoTest1Click(object sender, EventArgs e)
 		{
-			tabMeoTxtExceptionBrute.Text=cmdUtils.getExemple(1);
+			tabMeoTxtExceptionBrute.Text = cmdUtils.getExemple(1);
 
 		}
 		void TabMeoTest2Click(object sender, EventArgs e)
 		{
-			tabMeoTxtExceptionBrute.Text=cmdUtils.getExemple(2);
+			tabMeoTxtExceptionBrute.Text = cmdUtils.getExemple(2);
 		}
 		void MoulCreaRepBtnClick(object sender, EventArgs e)
 		{
-			String instanceCode="iii";
-			 String path=txtBoxMoulDestBase.Text+"MID"+this.txtMagId.Text+"-"+txtMagClient.Text+"-"+this.moulDateTextBox.Text+"-"+instanceCode+"/";
-			MyUtil util = new MyUtil();
-			util.createFolderIfNotExists(path);
-			path+="data/";
-			util.createFolderIfNotExists(path);
+			String instanceCode = (string)this.instancesListBox.SelectedItem;
+			MeoInstance instance = getInstance(instanceCode);
+			RichTextBox rtb = moulRichTexBox;
+			rtb.Clear();
+			if (txtBoxMoulDestBase.Text.Length < 1) {
+				rtb.AppendText("manque base");
+				return;
+			}
+			if (txtMagId.Text.Length < 1) {
+				rtb.AppendText("manque MagId");
+				return;
+			}
+			if (txtMagClient.Text.Length < 1) {
+				rtb.AppendText("manque Client");
+				return;
+			}
+			if (moulDateTextBox.Text.Length < 1) {
+				rtb.AppendText("manque Date install");
+				return;
+			}
 			
-			path+="mag01/";
-			util.createFolderIfNotExists(path);
+			if (instance != null) {
+				// String instanceCode = if(instance!=null ? instance.getCode() : "?"); ;
+				String path = txtBoxMoulDestBase.Text + "MID" + this.txtMagId.Text + "-" + txtMagClient.Text + "-" + this.moulDateTextBox.Text + "-" + instanceCode + "/";
+				MyUtil util = new MyUtil();
+				util.createFolderIfNotExists(path);
+				tboxMoulRepFinal.Text=path;
+				rtb.AppendText("CREATE " + path + "\n");
+				path += "data/";
+				util.createFolderIfNotExists(path);
+				rtb.AppendText("CREATE " + path + "\n");
+				
+				path += "mag01/";
+				util.createFolderIfNotExists(path);
+				rtb.AppendText("CREATE " + path + "\n");
 			
-			path+="Joint/";
-			util.createFolderIfNotExists(path);
+				path += "Joint/";
+				util.createFolderIfNotExists(path);
+				rtb.AppendText("CREATE " + path + "\n");
 			
-			util=null;
+				util = null;
+			} else {
+				rtb.AppendText("manque instance.");
+			}
+			
+		}
+			
+		void MoulinetteMagIdKeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.KeyValue.Equals(13)) {
+				string magId = ((TextBox)sender).Text;
+				
+				RichTextBox rtb = moulRichTexBox;
+				rtb.Clear();
+				if (magId.Length > 0) {
+					string sql = "select * from administration.magasins where magasin_id=" + magId;
+					MyUtil util = new MyUtil();
+					try {
+						string cstr = util.doConnString(cfg);
+						var magasinList = util.getListResultAsKV(cstr, sql);
+						
+						rtb.AppendText("#libe:" + util.getItem(magasinList[0], "magasin_libelle") + " - url :" + util.getItem(magasinList[0], "url"));
+						rtb.AppendText("\n#cli_id:" + util.getItem(magasinList[0], "client_id"));
+						//Console.WriteLine("libe:"+util.getItem(magasinList[0], "magasin_libelle"));
+						//Console.WriteLine("cli_id:"+util.getItem(magasinList[0], "client_id"));
+						
+						txtMagClient.Text = (string)util.getItem(magasinList[0], "magasin_identifiant");
+						sql = "SELECT utilisateur_id,magasin_id FROM administration.utilisateurs where utilisateur_active=true AND magasin_id=" + magId + ";";
+						var userList = util.getListResultAsKV(cstr, sql);
+						
+						rtb.AppendText("\nmodeDevMagId=" + util.getItem(userList[0], "magasin_id"));
+						rtb.AppendText("\nmodeDevUserId=" + util.getItem(userList[0], "utilisateur_id"));
+						
+					} catch (Exception ex) {
+						reportError(ex);
+					}
+				}
+			}
 		}
 
 		
