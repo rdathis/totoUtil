@@ -835,6 +835,7 @@ namespace cmdUtils
 			this.btnCheckJ.TabIndex = 31;
 			this.btnCheckJ.Text = "checkJ";
 			this.btnCheckJ.UseVisualStyleBackColor = true;
+			this.btnCheckJ.Click += new System.EventHandler(this.BtnCheckJClick);
 			// 
 			// btnCheckY
 			// 
@@ -844,6 +845,7 @@ namespace cmdUtils
 			this.btnCheckY.TabIndex = 30;
 			this.btnCheckY.Text = "checkY";
 			this.btnCheckY.UseVisualStyleBackColor = true;
+			this.btnCheckY.Click += new System.EventHandler(this.BtnCheckYClick);
 			// 
 			// moulJFRtb
 			// 

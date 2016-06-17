@@ -1,4 +1,5 @@
 ﻿
+
 /*
  * Created by SharpDevelop.
  * User: athis_000
@@ -36,6 +37,7 @@ namespace cmdUtils
 		List <AssoControleParam> configListeControles = new List<AssoControleParam>();
 		
 		CmdUtil cmdUtils = new CmdUtil();
+		MouliUtil mouliUtil = new MouliUtil();
 		MoulinetteAction moulinetteAction = new MoulinetteAction();
 		ConfigSectionSettings cfg =	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
 		public MainForm()
@@ -85,7 +87,7 @@ namespace cmdUtils
 			configListeControles.Add(new AssoControleParam(cfg, "cygwinPath", cygwinParam));
 			initInstance();
 			initInstanceListBox(instancesListBox);
-		
+			
 			MyUtil util = new MyUtil();
 			moulDateTextBox.Text = util.getDate8(DateTime.Now);
 			util = null;
@@ -472,18 +474,18 @@ namespace cmdUtils
 				path += "mag01/";
 				util.createFolderIfNotExists(path);
 				rtb.AppendText("CREATE " + path + "\n");
-			
+				
 				path += "Joint/";
 				util.createFolderIfNotExists(path);
 				rtb.AppendText("CREATE " + path + "\n");
-			
+				
 				util = null;
 			} else {
 				rtb.AppendText("manque instance.");
 			}
 			
 		}
-			
+		
 		void MoulinetteMagIdKeyUp(object sender, KeyEventArgs e)
 		{
 			if (e.KeyValue.Equals(13)) {
@@ -492,23 +494,25 @@ namespace cmdUtils
 				RichTextBox rtb = moulRichTexBox;
 				rtb.Clear();
 				if (magId.Length > 0) {
-					string sql = "select * from administration.magasins where magasin_id=" + magId;
-					MyUtil util = new MyUtil();
 					try {
-						string cstr = util.doConnString(cfg);
-						var magasinList = util.getListResultAsKV(cstr, sql);
-						
-						rtb.AppendText("#libe:" + util.getItem(magasinList[0], "magasin_libelle") + " - url :" + util.getItem(magasinList[0], "url"));
-						rtb.AppendText("\n#cli_id:" + util.getItem(magasinList[0], "client_id"));
-						//Console.WriteLine("libe:"+util.getItem(magasinList[0], "magasin_libelle"));
-						//Console.WriteLine("cli_id:"+util.getItem(magasinList[0], "client_id"));
-						
-						txtMagClient.Text = (string)util.getItem(magasinList[0], "magasin_identifiant");
-						sql = "SELECT utilisateur_id,magasin_id FROM administration.utilisateurs where utilisateur_active=true AND magasin_id=" + magId + ";";
-						var userList = util.getListResultAsKV(cstr, sql);
-						
-						rtb.AppendText("\nmodeDevMagId=" + util.getItem(userList[0], "magasin_id"));
-						rtb.AppendText("\nmodeDevUserId=" + util.getItem(userList[0], "utilisateur_id"));
+						mouliUtil.updateMoulinetteMagasin(magId,cfg,  txtMagClient, rtb);
+//					string sql = "select * from administration.magasins where magasin_id=" + magId;
+//					MyUtil util = new MyUtil();
+//					try {
+//						string cstr = util.doConnString(cfg);
+//						var magasinList = util.getListResultAsKV(cstr, sql);
+//
+//						rtb.AppendText("#libe:" + util.getItem(magasinList[0], "magasin_libelle") + " - url :" + util.getItem(magasinList[0], "url"));
+//						rtb.AppendText("\n#cli_id:" + util.getItem(magasinList[0], "client_id"));
+//						//Console.WriteLine("libe:"+util.getItem(magasinList[0], "magasin_libelle"));
+//						//Console.WriteLine("cli_id:"+util.getItem(magasinList[0], "client_id"));
+//
+//						txtMagClient.Text = (string)util.getItem(magasinList[0], "magasin_identifiant");
+//						sql = "SELECT utilisateur_id,magasin_id FROM administration.utilisateurs where utilisateur_active=true AND magasin_id=" + magId + ";";
+//						var userList = util.getListResultAsKV(cstr, sql);
+//
+//						rtb.AppendText("\nmodeDevMagId=" + util.getItem(userList[0], "magasin_id"));
+//						rtb.AppendText("\nmodeDevUserId=" + util.getItem(userList[0], "utilisateur_id"));
 						
 					} catch (Exception ex) {
 						reportError(ex);
@@ -516,9 +520,36 @@ namespace cmdUtils
 				}
 			}
 		}
+		void BtnCheckYClick(object sender, EventArgs e)
+		{
+			if(tboxMoulRepFinal.Text.Length>0) {
+				try  {
+					moulYFRtb.Clear();
+					mouliUtil.checkIfYFilesExists(tboxMoulRepFinal.Text, moulYFRtb, "data/", "mag01/", ".D");
+				} catch(Exception ex) {
+					reportError(ex);
+				}
 
-		
-		/*
+				
+//				for(YFiles yfile : YFiles) {
+//				checkIfFileExists(moulYFRtb, "data", "mag01", yfile);
+//				}
+			}
+		}
+		void BtnCheckJClick(object sender, EventArgs e)
+		{
+			if(tboxMoulRepFinal.Text.Length>0) {
+				try  {
+					moulYFRtb.Clear();
+					mouliUtil.checkIfJFilesExists(tboxMoulRepFinal.Text, moulYFRtb, "data/", "mag01/Joint/", ".txt");
+				} catch(Exception ex) {
+					reportError(ex);
+				}
+
+			}
+		}
+			
+			/*
 ---------------------------
 mintty
 ---------------------------
@@ -546,8 +577,8 @@ Options:
 ---------------------------
 OK
 ---------------------------
-		 */
+			 */
+			
+		}
 		
 	}
-	
-}
