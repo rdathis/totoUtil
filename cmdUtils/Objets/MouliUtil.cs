@@ -25,6 +25,64 @@ namespace cmdUtils.Objets
 		}
 
 		
+		//txtBoxMoulDestBase.Text, txtMagId.Text, txtMagClient.Text, moulDateTextBox.Text
+		public String  creaEtVerifieRepMoulinette(MeoInstance instance, RichTextBox rtb, string destBase, string magId, string magClient, string date)
+		{
+			
+			String retour="";
+			if (destBase.Length < 1) {
+				rtb.AppendText("manque base");
+				return retour;
+			}
+			if (magId.Length < 1) {
+				rtb.AppendText("manque MagId");
+				return retour;
+			}
+			if (magClient.Length < 1) {
+				rtb.AppendText("manque Client");
+				return retour;
+			}
+			if (date.Length < 1) {
+				rtb.AppendText("manque Date install");
+				return retour;
+			}
+			
+			if (instance != null) {
+				// String instanceCode = if(instance!=null ? instance.getCode() : "?"); ;
+				String path = destBase + "MID" + magId + "-" + magClient+ "-" + date + "-" + instance.getCode() + "/";
+				
+				MyUtil util = new MyUtil();
+				util.createFolderIfNotExists(path);
+				
+				retour=path;
+				rtb.AppendText("CREATE " + path + "\n");
+				path += "data/";
+				util.createFolderIfNotExists(path);
+				rtb.AppendText("CREATE " + path + "\n");
+				
+				path += "mag01/";
+				util.createFolderIfNotExists(path);
+				rtb.AppendText("CREATE " + path + "\n");
+				
+				path += "Joint/";
+				util.createFolderIfNotExists(path);
+				rtb.AppendText("CREATE " + path + "\n");
+				
+				util = null;
+			} else {
+				rtb.AppendText("manque instance.");
+			}
+			return retour;
+		}
+
+		public void checkOrdoFixe(String path)
+		{
+			String ordotxt=(JFiles.ordo_top_fixe+".txt");
+			if (File.Exists(path+ordotxt)) {
+				File.Copy(path+ordotxt, path+"Joint/"+ordotxt);
+			}
+
+		}
 		public void checkIfYFilesExists(String path, RichTextBox rtb, string dataPath, string magPath, String extension)
 		{
 			foreach(YFiles yfile in Enum.GetValues(typeof(YFiles))) {

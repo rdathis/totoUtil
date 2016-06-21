@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssoControleParam.cs" />
+    <Compile Include="Objets\ConfigUtil.cs" />
     <Compile Include="Objets\JFiles.cs" />
     <Compile Include="Objets\Horloge.cs" />
     <Compile Include="Objets\MeoInstance.cs" />
@@ -96,6 +97,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="doc\mintty.txt" />
+    <None Include="doc\TODO.txt" />
     <None Include="libs\MySql.Data.dll" />
     <None Include="libs\MySql.Data.Entity.dll" />
     <None Include="libs\MySql.Data.Entity.EF6.dll" />
@@ -109,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="libs" />
+    <Folder Include="doc" />
     <Folder Include="Objets" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

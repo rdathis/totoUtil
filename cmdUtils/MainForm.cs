@@ -14,6 +14,7 @@ using System.Collections.Specialized;
 using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Net.Mime;
 using System.Security.Cryptography;
 using System.Windows.Forms;
@@ -68,15 +69,7 @@ namespace cmdUtils
 			}
 		}
 
-		MeoInstance getInstance(String code)
-		{
-			foreach (MeoInstance i in instanceList) {
-				if (i.getCode().Equals(code)) {
-					return i;
-				}
-			}
-			return null;
-		}
+
 		
 		void initConfig()
 		{
@@ -428,6 +421,29 @@ namespace cmdUtils
 				// osenf
 			}
 		}
+		
+		MeoInstance getInstance(String code)
+		{
+			foreach (MeoInstance instance in instanceList) {
+				if (instance.getCode().Equals(code)) {
+					return instance;
+				}
+			}
+			return null;
+		}
+		
+		
+		void MoulCreaRepBtnClick(object sender, EventArgs e)
+		{
+			String instanceCode = (string)this.instancesListBox.SelectedItem;
+			MeoInstance instance = getInstance(instanceCode);
+			RichTextBox rtb = moulRichTexBox;
+			rtb.Clear();
+			String path=mouliUtil.creaEtVerifieRepMoulinette(instance, rtb, txtBoxMoulDestBase.Text, txtMagId.Text, txtMagClient.Text, moulDateTextBox.Text);
+			tboxMoulRepFinal.Text = path;
+			mouliUtil.checkOrdoFixe(path);
+			
+		}
 		void TabMeoTest1Click(object sender, EventArgs e)
 		{
 			tabMeoTxtExceptionBrute.Text = cmdUtils.getExemple(1);
@@ -436,54 +452,6 @@ namespace cmdUtils
 		void TabMeoTest2Click(object sender, EventArgs e)
 		{
 			tabMeoTxtExceptionBrute.Text = cmdUtils.getExemple(2);
-		}
-		void MoulCreaRepBtnClick(object sender, EventArgs e)
-		{
-			String instanceCode = (string)this.instancesListBox.SelectedItem;
-			MeoInstance instance = getInstance(instanceCode);
-			RichTextBox rtb = moulRichTexBox;
-			rtb.Clear();
-			if (txtBoxMoulDestBase.Text.Length < 1) {
-				rtb.AppendText("manque base");
-				return;
-			}
-			if (txtMagId.Text.Length < 1) {
-				rtb.AppendText("manque MagId");
-				return;
-			}
-			if (txtMagClient.Text.Length < 1) {
-				rtb.AppendText("manque Client");
-				return;
-			}
-			if (moulDateTextBox.Text.Length < 1) {
-				rtb.AppendText("manque Date install");
-				return;
-			}
-			
-			if (instance != null) {
-				// String instanceCode = if(instance!=null ? instance.getCode() : "?"); ;
-				String path = txtBoxMoulDestBase.Text + "MID" + this.txtMagId.Text + "-" + txtMagClient.Text + "-" + this.moulDateTextBox.Text + "-" + instanceCode + "/";
-				MyUtil util = new MyUtil();
-				util.createFolderIfNotExists(path);
-				tboxMoulRepFinal.Text=path;
-				rtb.AppendText("CREATE " + path + "\n");
-				path += "data/";
-				util.createFolderIfNotExists(path);
-				rtb.AppendText("CREATE " + path + "\n");
-				
-				path += "mag01/";
-				util.createFolderIfNotExists(path);
-				rtb.AppendText("CREATE " + path + "\n");
-				
-				path += "Joint/";
-				util.createFolderIfNotExists(path);
-				rtb.AppendText("CREATE " + path + "\n");
-				
-				util = null;
-			} else {
-				rtb.AppendText("manque instance.");
-			}
-			
 		}
 		
 		void MoulinetteMagIdKeyUp(object sender, KeyEventArgs e)
@@ -548,37 +516,14 @@ namespace cmdUtils
 
 			}
 		}
-			
-			/*
----------------------------
-mintty
----------------------------
-Usage: mintty [OPTION]... [ PROGRAM [ARG]... | - ]
-
-Start a new terminal session running the specified program or the user's shell.
-If a dash is given instead of a program, invoke the shell as a login shell.
-
-Options:
-  -c, --config FILE     Load specified config file
-  -e, --exec            Treat remaining arguments as the command to execute
-  -h, --hold never|start|error|always  Keep window open after command finishes
-  -i, --icon FILE[,IX]  Load window icon from file, optionally with index
-  -l, --log FILE|-      Log output to file or stdout
-  -o, --option OPT=VAL  Override config file option with given value
-  -p, --position X,Y    Open window at specified coordinates
-  -s, --size COLS,ROWS  Set screen size in characters
-  -t, --title TITLE     Set window title (default: the invoked command)
-  -u, --utmp            Create a utmp entry
-  -w, --window normal|min|max|full|hide  Set initial window state
-      --class CLASS     Set window class name (default: mintty)
-  -H, --help            Display help and exit
-  -V, --version         Print version information and exit
-
----------------------------
-OK
----------------------------
-			 */
-			
+		void EditConfigClick(object sender, EventArgs e)
+		{
+			ProcessUtil util = new ProcessUtil();
+			ConfigUtil configUtil = new ConfigUtil();
+			String configFilePath=configUtil.getConfigFilePath();
+			util.startProcess("vi", configFilePath, ProcessWindowStyle.Normal);
 		}
 		
 	}
+	
+}

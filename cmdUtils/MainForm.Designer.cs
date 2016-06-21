@@ -79,6 +79,7 @@ namespace cmdUtils
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.tabParam = new System.Windows.Forms.TabPage();
+			this.editConfig = new System.Windows.Forms.Button();
 			this.label20 = new System.Windows.Forms.Label();
 			this.moulFichiersParam = new System.Windows.Forms.TextBox();
 			this.lmoulDstPath = new System.Windows.Forms.Label();
@@ -188,6 +189,8 @@ namespace cmdUtils
 			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.cygwinToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.label24 = new System.Windows.Forms.Label();
+			this.label25 = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -222,6 +225,7 @@ namespace cmdUtils
 			// 
 			// tabParam
 			// 
+			this.tabParam.Controls.Add(this.editConfig);
 			this.tabParam.Controls.Add(this.label20);
 			this.tabParam.Controls.Add(this.moulFichiersParam);
 			this.tabParam.Controls.Add(this.lmoulDstPath);
@@ -262,6 +266,16 @@ namespace cmdUtils
 			this.tabParam.Text = "Params";
 			this.tabParam.UseVisualStyleBackColor = true;
 			this.tabParam.Click += new System.EventHandler(this.TabParamClick);
+			// 
+			// editConfig
+			// 
+			this.editConfig.Location = new System.Drawing.Point(619, 460);
+			this.editConfig.Name = "editConfig";
+			this.editConfig.Size = new System.Drawing.Size(75, 23);
+			this.editConfig.TabIndex = 36;
+			this.editConfig.Text = "vi Conf";
+			this.editConfig.UseVisualStyleBackColor = true;
+			this.editConfig.Click += new System.EventHandler(this.EditConfigClick);
 			// 
 			// label20
 			// 
@@ -377,9 +391,9 @@ namespace cmdUtils
 			this.defConfigButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.defConfigButton.Location = new System.Drawing.Point(516, 460);
 			this.defConfigButton.Name = "defConfigButton";
-			this.defConfigButton.Size = new System.Drawing.Size(75, 23);
+			this.defConfigButton.Size = new System.Drawing.Size(97, 23);
 			this.defConfigButton.TabIndex = 18;
-			this.defConfigButton.Text = "&defConfig";
+			this.defConfigButton.Text = "&defaultConfig";
 			this.defConfigButton.UseVisualStyleBackColor = true;
 			// 
 			// reloadButton
@@ -769,6 +783,8 @@ namespace cmdUtils
 			// 
 			// tabMoulinettes
 			// 
+			this.tabMoulinettes.Controls.Add(this.label25);
+			this.tabMoulinettes.Controls.Add(this.label24);
 			this.tabMoulinettes.Controls.Add(this.tboxMoulRepFinal);
 			this.tabMoulinettes.Controls.Add(this.label23);
 			this.tabMoulinettes.Controls.Add(this.btnCheckJ);
@@ -813,7 +829,7 @@ namespace cmdUtils
 			// 
 			// tboxMoulRepFinal
 			// 
-			this.tboxMoulRepFinal.Location = new System.Drawing.Point(102, 433);
+			this.tboxMoulRepFinal.Location = new System.Drawing.Point(74, 432);
 			this.tboxMoulRepFinal.Name = "tboxMoulRepFinal";
 			this.tboxMoulRepFinal.ReadOnly = true;
 			this.tboxMoulRepFinal.Size = new System.Drawing.Size(310, 20);
@@ -829,7 +845,7 @@ namespace cmdUtils
 			// 
 			// btnCheckJ
 			// 
-			this.btnCheckJ.Location = new System.Drawing.Point(717, 357);
+			this.btnCheckJ.Location = new System.Drawing.Point(445, 399);
 			this.btnCheckJ.Name = "btnCheckJ";
 			this.btnCheckJ.Size = new System.Drawing.Size(59, 27);
 			this.btnCheckJ.TabIndex = 31;
@@ -839,7 +855,7 @@ namespace cmdUtils
 			// 
 			// btnCheckY
 			// 
-			this.btnCheckY.Location = new System.Drawing.Point(652, 357);
+			this.btnCheckY.Location = new System.Drawing.Point(445, 370);
 			this.btnCheckY.Name = "btnCheckY";
 			this.btnCheckY.Size = new System.Drawing.Size(59, 27);
 			this.btnCheckY.TabIndex = 30;
@@ -849,17 +865,17 @@ namespace cmdUtils
 			// 
 			// moulJFRtb
 			// 
-			this.moulJFRtb.Location = new System.Drawing.Point(621, 219);
+			this.moulJFRtb.Location = new System.Drawing.Point(652, 426);
 			this.moulJFRtb.Name = "moulJFRtb";
-			this.moulJFRtb.Size = new System.Drawing.Size(159, 125);
+			this.moulJFRtb.Size = new System.Drawing.Size(159, 64);
 			this.moulJFRtb.TabIndex = 29;
 			this.moulJFRtb.Text = "";
 			// 
 			// moulYFRtb
 			// 
-			this.moulYFRtb.Location = new System.Drawing.Point(456, 219);
+			this.moulYFRtb.Location = new System.Drawing.Point(652, 244);
 			this.moulYFRtb.Name = "moulYFRtb";
-			this.moulYFRtb.Size = new System.Drawing.Size(159, 125);
+			this.moulYFRtb.Size = new System.Drawing.Size(159, 153);
 			this.moulYFRtb.TabIndex = 28;
 			this.moulYFRtb.Text = "";
 			// 
@@ -873,9 +889,9 @@ namespace cmdUtils
 			// 
 			// moulCreaRepBtn
 			// 
-			this.moulCreaRepBtn.Location = new System.Drawing.Point(594, 358);
+			this.moulCreaRepBtn.Location = new System.Drawing.Point(445, 344);
 			this.moulCreaRepBtn.Name = "moulCreaRepBtn";
-			this.moulCreaRepBtn.Size = new System.Drawing.Size(52, 25);
+			this.moulCreaRepBtn.Size = new System.Drawing.Size(59, 25);
 			this.moulCreaRepBtn.TabIndex = 26;
 			this.moulCreaRepBtn.Text = "creaRep";
 			this.moulCreaRepBtn.UseVisualStyleBackColor = true;
@@ -883,7 +899,7 @@ namespace cmdUtils
 			// 
 			// moulDateTextBox
 			// 
-			this.moulDateTextBox.Location = new System.Drawing.Point(511, 363);
+			this.moulDateTextBox.Location = new System.Drawing.Point(163, 344);
 			this.moulDateTextBox.Name = "moulDateTextBox";
 			this.moulDateTextBox.Size = new System.Drawing.Size(77, 20);
 			this.moulDateTextBox.TabIndex = 25;
@@ -891,7 +907,7 @@ namespace cmdUtils
 			// instancesListBox
 			// 
 			this.instancesListBox.FormattingEnabled = true;
-			this.instancesListBox.Location = new System.Drawing.Point(303, 345);
+			this.instancesListBox.Location = new System.Drawing.Point(239, 344);
 			this.instancesListBox.Name = "instancesListBox";
 			this.instancesListBox.Size = new System.Drawing.Size(202, 56);
 			this.instancesListBox.TabIndex = 24;
@@ -938,7 +954,7 @@ namespace cmdUtils
 			// 
 			// button4
 			// 
-			this.button4.Location = new System.Drawing.Point(594, 434);
+			this.button4.Location = new System.Drawing.Point(585, 460);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(52, 23);
 			this.button4.TabIndex = 18;
@@ -947,7 +963,7 @@ namespace cmdUtils
 			// 
 			// button3
 			// 
-			this.button3.Location = new System.Drawing.Point(594, 405);
+			this.button3.Location = new System.Drawing.Point(527, 459);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(52, 23);
 			this.button3.TabIndex = 17;
@@ -956,7 +972,7 @@ namespace cmdUtils
 			// 
 			// btnMoulNavigDestBase
 			// 
-			this.btnMoulNavigDestBase.Location = new System.Drawing.Point(430, 407);
+			this.btnMoulNavigDestBase.Location = new System.Drawing.Point(390, 407);
 			this.btnMoulNavigDestBase.Name = "btnMoulNavigDestBase";
 			this.btnMoulNavigDestBase.Size = new System.Drawing.Size(51, 23);
 			this.btnMoulNavigDestBase.TabIndex = 16;
@@ -976,7 +992,7 @@ namespace cmdUtils
 			// 
 			// btnZip
 			// 
-			this.btnZip.Location = new System.Drawing.Point(620, 460);
+			this.btnZip.Location = new System.Drawing.Point(445, 460);
 			this.btnZip.Name = "btnZip";
 			this.btnZip.Size = new System.Drawing.Size(75, 23);
 			this.btnZip.TabIndex = 14;
@@ -985,7 +1001,7 @@ namespace cmdUtils
 			// 
 			// txtFinal
 			// 
-			this.txtFinal.Location = new System.Drawing.Point(102, 460);
+			this.txtFinal.Location = new System.Drawing.Point(74, 459);
 			this.txtFinal.Name = "txtFinal";
 			this.txtFinal.Size = new System.Drawing.Size(310, 20);
 			this.txtFinal.TabIndex = 13;
@@ -1008,22 +1024,22 @@ namespace cmdUtils
 			// 
 			// txtMagClient
 			// 
-			this.txtMagClient.Location = new System.Drawing.Point(197, 361);
+			this.txtMagClient.Location = new System.Drawing.Point(57, 370);
 			this.txtMagClient.Name = "txtMagClient";
 			this.txtMagClient.Size = new System.Drawing.Size(100, 20);
 			this.txtMagClient.TabIndex = 10;
 			// 
 			// label18
 			// 
-			this.label18.Location = new System.Drawing.Point(163, 361);
+			this.label18.Location = new System.Drawing.Point(12, 367);
 			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(42, 23);
+			this.label18.Size = new System.Drawing.Size(42, 14);
 			this.label18.TabIndex = 9;
 			this.label18.Text = "client";
 			// 
 			// txtMagId
 			// 
-			this.txtMagId.Location = new System.Drawing.Point(57, 361);
+			this.txtMagId.Location = new System.Drawing.Point(57, 344);
 			this.txtMagId.Name = "txtMagId";
 			this.txtMagId.Size = new System.Drawing.Size(100, 20);
 			this.txtMagId.TabIndex = 8;
@@ -1031,15 +1047,15 @@ namespace cmdUtils
 			// 
 			// label17
 			// 
-			this.label17.Location = new System.Drawing.Point(12, 361);
+			this.label17.Location = new System.Drawing.Point(12, 347);
 			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(39, 23);
+			this.label17.Size = new System.Drawing.Size(39, 20);
 			this.label17.TabIndex = 7;
 			this.label17.Text = "magId";
 			// 
 			// txtBoxMoulDestBase
 			// 
-			this.txtBoxMoulDestBase.Location = new System.Drawing.Point(102, 407);
+			this.txtBoxMoulDestBase.Location = new System.Drawing.Point(74, 406);
 			this.txtBoxMoulDestBase.Name = "txtBoxMoulDestBase";
 			this.txtBoxMoulDestBase.Size = new System.Drawing.Size(310, 20);
 			this.txtBoxMoulDestBase.TabIndex = 6;
@@ -1239,6 +1255,22 @@ namespace cmdUtils
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
+			// label24
+			// 
+			this.label24.Location = new System.Drawing.Point(652, 219);
+			this.label24.Name = "label24";
+			this.label24.Size = new System.Drawing.Size(159, 19);
+			this.label24.TabIndex = 34;
+			this.label24.Text = "mag01/Y*D";
+			// 
+			// label25
+			// 
+			this.label25.Location = new System.Drawing.Point(652, 397);
+			this.label25.Name = "label25";
+			this.label25.Size = new System.Drawing.Size(159, 23);
+			this.label25.TabIndex = 35;
+			this.label25.Text = "mag01/Joint/";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1273,6 +1305,9 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Label label25;
+		private System.Windows.Forms.Label label24;
+		private System.Windows.Forms.Button editConfig;
 		private System.Windows.Forms.RichTextBox richTextBox3;
 		private System.Windows.Forms.RichTextBox moulRichTexBox;
 		private System.Windows.Forms.Button moulCreaRepBtn;
