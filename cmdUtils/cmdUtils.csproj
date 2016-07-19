@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="AssoControleParam.cs" />
     <Compile Include="Objets\ConfigUtil.cs" />
+    <Compile Include="Objets\ConvertisseurUtil.cs" />
     <Compile Include="Objets\JFiles.cs" />
     <Compile Include="Objets\Horloge.cs" />
     <Compile Include="Objets\MeoInstance.cs" />

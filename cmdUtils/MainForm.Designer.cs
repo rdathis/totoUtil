@@ -138,6 +138,8 @@ namespace cmdUtils
 			this.label11 = new System.Windows.Forms.Label();
 			this.tabPdf = new System.Windows.Forms.TabPage();
 			this.tabMoulinettes = new System.Windows.Forms.TabPage();
+			this.label25 = new System.Windows.Forms.Label();
+			this.label24 = new System.Windows.Forms.Label();
 			this.tboxMoulRepFinal = new System.Windows.Forms.TextBox();
 			this.label23 = new System.Windows.Forms.Label();
 			this.btnCheckJ = new System.Windows.Forms.Button();
@@ -189,8 +191,6 @@ namespace cmdUtils
 			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.cygwinToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.label24 = new System.Windows.Forms.Label();
-			this.label25 = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -827,6 +827,22 @@ namespace cmdUtils
 			this.tabMoulinettes.Text = "Moulinettes";
 			this.tabMoulinettes.UseVisualStyleBackColor = true;
 			// 
+			// label25
+			// 
+			this.label25.Location = new System.Drawing.Point(652, 397);
+			this.label25.Name = "label25";
+			this.label25.Size = new System.Drawing.Size(159, 23);
+			this.label25.TabIndex = 35;
+			this.label25.Text = "mag01/Joint/";
+			// 
+			// label24
+			// 
+			this.label24.Location = new System.Drawing.Point(652, 219);
+			this.label24.Name = "label24";
+			this.label24.Size = new System.Drawing.Size(159, 19);
+			this.label24.TabIndex = 34;
+			this.label24.Text = "mag01/Y*D";
+			// 
 			// tboxMoulRepFinal
 			// 
 			this.tboxMoulRepFinal.Location = new System.Drawing.Point(74, 432);
@@ -1043,6 +1059,7 @@ namespace cmdUtils
 			this.txtMagId.Name = "txtMagId";
 			this.txtMagId.Size = new System.Drawing.Size(100, 20);
 			this.txtMagId.TabIndex = 8;
+			
 			this.txtMagId.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MoulinetteMagIdKeyUp);
 			// 
 			// label17
@@ -1254,22 +1271,6 @@ namespace cmdUtils
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// label24
-			// 
-			this.label24.Location = new System.Drawing.Point(652, 219);
-			this.label24.Name = "label24";
-			this.label24.Size = new System.Drawing.Size(159, 19);
-			this.label24.TabIndex = 34;
-			this.label24.Text = "mag01/Y*D";
-			// 
-			// label25
-			// 
-			this.label25.Location = new System.Drawing.Point(652, 397);
-			this.label25.Name = "label25";
-			this.label25.Size = new System.Drawing.Size(159, 23);
-			this.label25.TabIndex = 35;
-			this.label25.Text = "mag01/Joint/";
 			// 
 			// MainForm
 			// 

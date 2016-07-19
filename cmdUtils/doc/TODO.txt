@@ -1,4 +1,4 @@
-﻿		* copie auto du mag01/ordo_top_fix vers mag01/Joint/
+﻿		*(done) copie auto du mag01/ordo_top_fix vers mag01/Joint/
 		* Zip des fichiers pour upload
 		* pscp pour l'upload
 		+ meilleur affichage DES fichiers absents (Tri, ou marquage ?)

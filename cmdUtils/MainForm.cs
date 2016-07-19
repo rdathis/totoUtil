@@ -432,17 +432,21 @@ namespace cmdUtils
 			return null;
 		}
 		
-		
+		private void logInRtb(String message) {
+			RichTextBox rtb = moulRichTexBox;
+			rtb.AppendText(message);
+		}
 		void MoulCreaRepBtnClick(object sender, EventArgs e)
 		{
 			String instanceCode = (string)this.instancesListBox.SelectedItem;
 			MeoInstance instance = getInstance(instanceCode);
 			RichTextBox rtb = moulRichTexBox;
 			rtb.Clear();
-			String path=mouliUtil.creaEtVerifieRepMoulinette(instance, rtb, txtBoxMoulDestBase.Text, txtMagId.Text, txtMagClient.Text, moulDateTextBox.Text);
-			tboxMoulRepFinal.Text = path;
-			mouliUtil.checkOrdoFixe(path);
 			
+			Action<String> callback = logInRtb;
+			String path=mouliUtil.creaEtVerifieRepMoulinette(instance, callback, txtBoxMoulDestBase.Text, txtMagId.Text, txtMagClient.Text, moulDateTextBox.Text);
+			tboxMoulRepFinal.Text = path;
+			mouliUtil.checkOrdoFixe(path );
 		}
 		void TabMeoTest1Click(object sender, EventArgs e)
 		{

@@ -18,6 +18,10 @@ namespace cmdUtils.Objets
 	public class ZipUtil
 	{
 
+		public static int compressionMaximum=9;
+		public static int compressionStandard=5;
+		public static int compressionMinimum=0;
+		
 		//TODO:faire une class ZipUtilOption, plus facile a manipuler
 		public ZipUtil()
 		{
@@ -38,7 +42,7 @@ namespace cmdUtils.Objets
 		}
 		public void createArchive(ZipUtilOptions options) {
 			if (options==null) {
-				throw new Exception("options non renseignees");					
+				throw new Exception("options non renseignees");
 			}
 			if (!testDir(options.getArchiveDir())) {
 				if ((options.getArchiveDir()==null)|| (options.getArchiveDir().Length<1)) {
@@ -64,7 +68,7 @@ namespace cmdUtils.Objets
 			if ((archiveName==null) || (archiveName.Trim().Length<1)) {
 				throw new Exception("nom  d'archive manquant ");
 			}
-		
+			
 			List<FileInfo> fichiers = new List<FileInfo>();
 			
 			complete(fichiers, sourceBaseDir, sourceSelection);
@@ -72,11 +76,12 @@ namespace cmdUtils.Objets
 			return;
 		}
 
-		void complete(List<FileInfo> fichiers, string baseDir, string[] selection)
+		public void complete(List<FileInfo> fichiers, string baseDir, string[] selection)
 		{
 			try {
-				DirectoryInfo 		di = new DirectoryInfo(baseDir);
+				DirectoryInfo di = new DirectoryInfo(baseDir);
 				foreach(string pattern in selection) {
+					Console.WriteLine("Pattern  "+pattern);
 					foreach (FileInfo fi in di.GetFiles(pattern)) {
 						fichiers.Add(fi);
 					}
@@ -87,7 +92,71 @@ namespace cmdUtils.Objets
 			
 		}
 		
-		private void createSimpleArchive(string archiveName, List<FileInfo>fichiers)
+		public void createSimpleArchive(int compressionLevel,  string archiveName, List<String>fichiers)
+		{
+			if ( archiveName.Length < 2 ) {
+				Console.WriteLine("Usage: CreateZipFile Path ZipFile");
+				return;
+			}
+			if ((compressionLevel<compressionMinimum) || (compressionLevel > compressionMaximum) ) {
+				compressionLevel=compressionStandard;
+			}
+			Console.WriteLine(" Taux de compression : "+compressionLevel);
+			try
+			{
+				// Depending on the directory this could be very large and would require more attention
+				// in a commercial package.
+				//string[] filenames = Directory.GetFiles(args[0]);
+				
+				// 'using' statements guarantee the stream is closed properly which is a big source
+				// of problems otherwise.  Its exception safe as well which is great.
+				using (ZipOutputStream zip = new ZipOutputStream(File.Create(archiveName))) {
+					
+					// 0 - store only to 9 - means best compression
+					zip.SetLevel(compressionLevel);
+					
+					byte[] buffer = new byte[4096];
+					
+					foreach (String fichier in fichiers) {
+						FileInfo file = new FileInfo(fichier);
+						
+						// Using GetFileName makes the result compatible with XP
+						// as the resulting path is not absolute.
+						ZipEntry entry = new ZipEntry(fichier);
+						Console.WriteLine (" ZipUtil - ajout "+fichier	);
+						// Setup the entry data as required.
+						
+						// Crc and size are handled by the library for seakable streams
+						// so no need to do them here.
+
+						// Could also use the last write time or similar for the file.
+						entry.DateTime = DateTime.Now;
+						zip.PutNextEntry(entry);
+						
+						using ( FileStream fileStream = file.OpenRead() ) {
+							
+							// Using a fixed size buffer here makes no noticeable difference for output
+							// but keeps a lid on memory usage.
+							int sourceBytes;
+							do {
+								sourceBytes = fileStream.Read(buffer, 0, buffer.Length);
+								zip.Write(buffer, 0, sourceBytes);
+							} while ( sourceBytes > 0 );
+						}
+					}
+					
+					zip.Finish();
+					zip.Close();
+				}
+			}
+			catch(Exception ex)
+			{
+				Console.WriteLine("Exception during processing {0}", ex);
+			}
+			
+		}
+		
+		public void createSimpleArchive(string archiveName, List<FileInfo>fichiers)
 		{
 			// Perform some simple parameter checking.  More could be done
 			// like checking the target file name is ok, disk space, and lots
@@ -121,7 +190,7 @@ namespace cmdUtils.Objets
 						// Using GetFileName makes the result compatible with XP
 						// as the resulting path is not absolute.
 						ZipEntry entry = new ZipEntry(file.Name);
-						
+						Console.WriteLine (" ZipUtil - ajout "+file.Name);
 						// Setup the entry data as required.
 						
 						// Crc and size are handled by the library for seakable streams
