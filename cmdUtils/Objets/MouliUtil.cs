@@ -165,13 +165,14 @@ namespace cmdUtils.Objets
 		{
 			int foundedFiles=0;
 			String path="data/mag01/Joint/";
-			MyUtil myUtil = new MyUtil();
-			String[] lignes= myUtil.readScript(file).Split('\n');
-			//commencer ligne 2, cause titre.
-			for(int numLigne=1;numLigne<lignes.GetLength(0);numLigne++) {
-				String ligne=lignes[numLigne].Replace('\r', ' ').Trim();
-				String [] colonnes = ligne.Split(';');
-				if (colonnes.GetLength(0) > 5) {
+			if (Directory.Exists(path) && (File.Exists(file))) {
+				MyUtil myUtil = new MyUtil();
+				String[] lignes= myUtil.readScript(file).Split('\n');
+				//commencer ligne 2, cause titre.
+				for(int numLigne=1;numLigne<lignes.GetLength(0);numLigne++) {
+					String ligne=lignes[numLigne].Replace('\r', ' ').Trim();
+					String [] colonnes = ligne.Split(';');
+					if (colonnes.GetLength(0) > 5) {
 //			clientNumeroGroupement = tab[0];
 //			creationDate = tab[1]
 //			fichier1 = tab[2];
@@ -180,24 +181,25 @@ namespace cmdUtils.Objets
 //			fichier4 = tab[5];
 //			fichier5 = tab[6];
 
- 
-					for(int c=2;c<7;c++) {
-						String colonne = colonnes[c].Trim();
-						if (colonne.Length> 1) {
-							if (File.Exists(path+colonne))   {
-								if (!liste.Contains(path+colonne)) {
-									liste.Add(path+colonne);
-									foundedFiles++;
-								}
-							} else {
-								if (!notFoundList.Contains(path+colonne)) {
-									notFoundList.Add(path+colonne);
+						
+						for(int c=2;c<7;c++) {
+							String colonne = colonnes[c].Trim();
+							if (colonne.Length> 1) {
+								if (File.Exists(path+colonne))   {
+									if (!liste.Contains(path+colonne)) {
+										liste.Add(path+colonne);
+										foundedFiles++;
+									}
+								} else {
+									if (!notFoundList.Contains(path+colonne)) {
+										notFoundList.Add(path+colonne);
+									}
 								}
 							}
 						}
 					}
+					
 				}
-				
 			}
 			return foundedFiles;
 		}
@@ -208,7 +210,7 @@ namespace cmdUtils.Objets
 			//## le mieux : faire un programme rapide juste pour ca, avec une listebox des instances, le mag_id, lesoptions à cocher.
 			//## il genere le script directement.
 			//## bien penser aux RC linux
-			//## du coup, on doit pouvoir gérer le serveur avec l'instance 
+			//## du coup, on doit pouvoir gérer le serveur avec l'instance
 			
 		}
 	}

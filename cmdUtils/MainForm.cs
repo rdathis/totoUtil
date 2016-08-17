@@ -30,6 +30,7 @@ namespace cmdUtils
 	/// Description of MainForm.
 	/// </summary>
 	/// 
+	
 	public partial class MainForm : Form
 	{
 		
@@ -97,6 +98,22 @@ namespace cmdUtils
 			statusStrip1.Text = "Saved in : " + cfgConf.FilePath;
 			labelFichierConfig.Text = "Saved in : " + cfgConf.FilePath;
 			populate();
+		}
+		void TabCodeBtnClick(object sender, EventArgs e) {
+			String source=tabCodeSource.Text;
+			String avant = tabCodeAvant.Text;
+			String apres = tabCodeApres.Text;
+			
+			String result = tabCodeComplete(source, avant, apres);
+			tabCodeResult.Text=result;
+		}
+		private String tabCodeComplete(String source, String avant, String apres) {
+			String [] tablo= source.Split('\n');
+			String retour="";
+			for(int i =0 ; i<tablo.Length;i++) {
+				retour+=avant +tablo[i].Trim()+apres+"\r\n";
+			}
+			return retour;
 		}
 		void TabParamClick(object sender, EventArgs e)
 		{
@@ -527,7 +544,36 @@ namespace cmdUtils
 			String configFilePath=configUtil.getConfigFilePath();
 			util.startProcess("vi", configFilePath, ProcessWindowStyle.Normal);
 		}
+
+		void ToolStripButton1Click(object sender, EventArgs e)
+		{
+			//title marche pas
+			String cmdl = "c:\\Windows\\SysWOW64\\cmd.exe";
+			String args = "";
+			System.Diagnostics.Debug.Print("cmd: " + cmdl);
+			System.Diagnostics.Debug.Print("arg: " + args);
+			Process cmd = new Process();
+			cmd.StartInfo.FileName = "cmd.exe";
+			cmd.StartInfo.RedirectStandardInput = true;
+			cmd.StartInfo.RedirectStandardOutput = true;
+			cmd.StartInfo.CreateNoWindow = false;
+			cmd.StartInfo.UseShellExecute = false;
+			
+			cmd.Start();
+			
+
+			cmd.StandardInput.WriteLine("echo Oscar");
+			cmd.StandardInput.Flush();
+			cmd.StandardInput.Close();
+			cmd.WaitForExit();
+			Console.WriteLine(cmd.StandardOutput.ReadToEnd());
+
+			
+			
+			Console.WriteLine("p");
+		}
 		
 	}
+
 	
 }
