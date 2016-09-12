@@ -78,16 +78,20 @@ namespace cmdUtils.Objets
 
 		public void complete(List<FileInfo> fichiers, string baseDir, string[] selection)
 		{
+			String pattrn=null;
 			try {
 				DirectoryInfo di = new DirectoryInfo(baseDir);
 				foreach(string pattern in selection) {
-					Console.WriteLine("Pattern  "+pattern);
-					foreach (FileInfo fi in di.GetFiles(pattern)) {
-						fichiers.Add(fi);
+					if(pattern!=null) {
+						Console.WriteLine("Pattern  "+pattern);
+						pattrn=pattern;
+						foreach (FileInfo fi in di.GetFiles(pattern)) {
+							fichiers.Add(fi);
+						}
 					}
 				}
 			} catch (Exception ex) {
-				System.Windows.Forms.MessageBox.Show("Erreur acces "+baseDir+" : "+"\n"+ex.Message);
+				System.Windows.Forms.MessageBox.Show("Erreur acces : "+baseDir+" : "+"\npattern : "+pattrn+"\n"+ex.Message);
 			}
 			
 		}

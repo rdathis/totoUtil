@@ -35,7 +35,7 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <StartAction>Project</StartAction>
-    <StartArguments>MID1973-DUPOND-20160621-1973-i3</StartArguments>
+    <StartArguments>MID2026-guy-i3-20160905</StartArguments>
     <StartWorkingDirectory>W:/meo-moulinettes/</StartWorkingDirectory>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
   </PropertyGroup>
@@ -62,13 +62,19 @@
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="MouliForm.cs" />
+    <Compile Include="MouliForm.Designer.cs">
+      <DependentUpon>MouliForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MouliProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +85,11 @@
       <Project>{82161C4E-7D1B-4168-B4FB-5916BC45348B}</Project>
       <Name>cmdUtils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MouliForm.resx">
+      <DependentUpon>MouliForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

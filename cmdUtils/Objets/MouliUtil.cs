@@ -92,15 +92,18 @@ namespace cmdUtils.Objets
 			String s = path + getMag01() +ordotxt;
 			Boolean done=false;
 			if (File.Exists(path + getMag01() +ordotxt)) {
+				if(!File.Exists(path+getMag01()+getJoint())) {
+					MyUtil util = new MyUtil();
+					util.createFolderIfNotExists(path+getMag01()+getJoint());
+					Console.WriteLine("Creation de "+path+getMag01()+getJoint()+" ");
+				}
 				if (File.Exists(path + getMag01() +getJoint() + ordotxt)) {
 					File.Delete(path + getMag01() +getJoint() + ordotxt);
 				}
 				File.Copy(path+getMag01()+ordotxt, path+getMag01()+getJoint()+ordotxt);
-				
 				done=true;
 			}
 			return done;
-
 		}
 		public void checkIfYFilesExists(String path, RichTextBox rtb, string dataPath, string magPath, String extension)
 		{
@@ -161,6 +164,33 @@ namespace cmdUtils.Objets
 			rtb.AppendText("\nmodeDevUserId=" + util.getItem(userList[0], "utilisateur_id"));
 		}
 
+		List<String>  parseMoulinetteScript(String source, MouliUtilOptions options) {
+			String[] tmp=source.Split('\n');
+			List<String> retour = new List<string>();
+			
+			Console.WriteLine(" source : "+source);
+			Console.WriteLine ( "size :" +tmp.Length);
+			
+			for(int i =0;i<tmp.Length;i++) {
+				Console.WriteLine(" i :"+i);
+				String ligne = tmp[i];
+				ligne=ligne.Replace("<%magId%>", options.getMagId());
+				ligne=ligne.Replace("<%ARG%>", options.getLots());
+				ligne=ligne.Replace("<%instanceName%>", options.getInstanceName());
+				String joint="N";
+				if (options.getIsJoint()) {
+					joint="O";
+				}
+				ligne=ligne.Replace("<%joint%>", joint);
+				ligne=ligne.Replace("<%dateCrea%>", new DateTime().Date.ToString());
+				ligne=ligne.Replace("\n", "");
+				ligne=ligne.Replace("\r", "");
+				
+				retour.Add(ligne);
+			}
+			return retour;
+		}
+
 		public int analyseTopOrdoFixe(List<string> liste, string file, List<string> notFoundList)
 		{
 			int foundedFiles=0;
@@ -203,15 +233,31 @@ namespace cmdUtils.Objets
 			}
 			return foundedFiles;
 		}
-		public void genereMoulinetteScript(String path) {
-			//## Extraire le MID du nom du rep,
-			//## demander pour les options a lancer
-			//## demander le numero d'instance..
-			//## le mieux : faire un programme rapide juste pour ca, avec une listebox des instances, le mag_id, lesoptions à cocher.
-			//## il genere le script directement.
-			//## bien penser aux RC linux
-			//## du coup, on doit pouvoir gérer le serveur avec l'instance
-			
+		private List<String> genereScript(String scriptSource, String scriptCible, MouliUtilOptions options)
+		{
+			return(parseMoulinetteScript(scriptSource, options));
+		}
+		public void writeMoulinetteFile(String modeleFile, String path, string moulinetteFile, MouliUtilOptions options)
+		{
+			String modele = new StreamReader(modeleFile).ReadToEnd();
+			List<String> moul = genereScript(modele, moulinetteFile, options);
+			StreamWriter outputFile = new StreamWriter(moulinetteFile);
+			outputFile.NewLine="\n";
+			foreach(String line in moul) {
+				outputFile.WriteLine(line);
+			}
+			outputFile.Close();
+		}
+		public void writeJobFile(string scriptJobFile, string scriptMoulinetteFile)
+		{
+			StreamWriter outputFile = new StreamWriter(scriptJobFile);
+			outputFile.NewLine="\n";
+			//
+			outputFile.WriteLine("## job file automatique, pour planifier la maj");
+			//TODO: write choosen time & date from options
+			outputFile.WriteLine("echo /bin/sh "+scriptMoulinetteFile+ " | at 08:00 ");
+			//
+			outputFile.Close();
 		}
 	}
 }

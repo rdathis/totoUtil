@@ -7,26 +7,37 @@
  * Pour changer ce modèle utiliser Outils | Options | Codage | Editer les en-têtes standards.
  */
 using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
 
-namespace cmdUtils
+namespace cmdUtils.Objets
 {
 	/// <summary>
 	/// Description of Instances.
 	/// </summary>
 	public class MeoInstance
 	{
-		public MeoInstance(MeoServeur serveur, String nom, String code, String meocli)
+		public MeoInstance() {
+			
+		}
+		public MeoInstance(String serveurName, String nom, String code, String meocli)
 		{
-			this.serveur=serveur;
+			this.serveur=serveurName;
 			this.nom=nom;
 			this.code=code;
 			this.meocli=meocli;
 		}
-		private MeoServeur serveur;
-		private String nom;
-		private String code;
-		private String meocli;
-		public MeoServeur getServeur() {
+		[XmlAttribute]
+		public String serveur;
+		[XmlAttribute]
+		public String nom;
+		[XmlAttribute]
+		public String code;
+		[XmlAttribute]
+		public String meocli;
+		
+		
+		public String getServeur() {
 			return serveur;
 		}
 		public String getNom() {
@@ -37,6 +48,18 @@ namespace cmdUtils
 		}
 		public String getMeocli() {
 			return meocli;
+		}
+
+		public static MeoInstance findInstanceByServerName(List<MeoInstance> instances, string serverName)
+		{
+			if(instances!=null) {
+				foreach(MeoInstance instance in instances) {
+					if (serverName==instance.getServeur() ) {
+						return instance;
+					}
+				}
+			}
+			return null;
 		}
 	}
 }

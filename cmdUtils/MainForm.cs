@@ -53,14 +53,15 @@ namespace cmdUtils
 		void initInstance()
 		{
 			instanceList.Clear();
-			MeoServeur s1 = new MeoServeur("S-1");
-			MeoServeur s2 = new MeoServeur("S-2");
-			instanceList.Add(new MeoInstance(s1, "m3035", "i01", "meocli_meo3035"));
+			MeoServeur s1 = new MeoServeur("S-1",  "1.1.1.1");
+			MeoServeur s2 = new MeoServeur("S-2", "1.1.1.2");
 			
-			instanceList.Add(new MeoInstance(s1, "od", "iOD", "meocli_od"));
+			instanceList.Add(new MeoInstance(s1.getNom(), "m3035", "i01", "meocli_meo3035"));
 			
-			instanceList.Add(new MeoInstance(s2, "2", "i02", "meocli_i2"));
-			instanceList.Add(new MeoInstance(s2, "3", "i03", "meocli_i3"));
+			instanceList.Add(new MeoInstance(s1.getNom(), "od", "iOD", "meocli_od"));
+			
+			instanceList.Add(new MeoInstance(s2.getNom(), "2", "i02", "meocli_i2"));
+			instanceList.Add(new MeoInstance(s2.getNom(), "3", "i03", "meocli_i3"));
 		}
 
 		void initInstanceListBox(ListBox listBox)
