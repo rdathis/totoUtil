@@ -1,5 +1,17 @@
-﻿		*(done) copie auto du mag01/ordo_top_fix vers mag01/Joint/
-		* Zip des fichiers pour upload
-		* pscp pour l'upload
-		+ meilleur affichage DES fichiers absents (Tri, ou marquage ?)
-		(done) + isolation DES Params dans un xml propre 
+﻿BUG : dans le moulinette, erreur sur le if
+BUG : dans le moulinette, controler pour le source qui passe a '.'
+TODO: après upload, crééer le rép et unzip
+
+BUG : qd lance putty ou pscp, bloque la vue.
+TODO:faire des liens vers les reps. de moulinette locaux et partagés
+
+
++ meilleur affichage DES fichiers absents (Tri, ou marquage ?)
+* drag & drop de fichiers data, pour calcul et dispatch automatiqu.
+* finir detection des options : bug sur Joint + gerer doc01
+* choix de rep src
+* revoir : gerer datetime pour job 
+* (done) isolation DES Params dans un xml propre 
+* (done) copie auto du mag01/ordo_top_fix vers mag01/Joint/
+* (done) Zip des fichiers pour upload
+* (done) pscp pour l'upload

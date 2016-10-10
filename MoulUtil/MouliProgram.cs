@@ -24,7 +24,7 @@ namespace MoulUtil
 		private static int progression=0;
 		private static DateTime startDateTime;
 		static log4net.ILog ILOG = LogManager.GetLogger("mouliUtil");
-	
+		
 		public static void Main(string[] args)
 		{
 			//testXml();
@@ -63,7 +63,7 @@ namespace MoulUtil
 			printChrono(ts);
 			// printEnd();
 			majProgression(100);
-			*/
+			 */
 
 		}
 		private static List<MeoServeur> readServeurs() {
@@ -129,6 +129,7 @@ namespace MoulUtil
 		private static void majProgression(int value) {
 			progression=value;
 			if(form!=null) {
+				
 				form.updateProgression(progression);
 			}
 		}
@@ -164,6 +165,10 @@ namespace MoulUtil
 			while (archiveName.EndsWith("\\")) {
 				archiveName=archiveName.Substring(0, archiveName.Length -1);
 			}
+			
+			String originalDir = Directory.GetCurrentDirectory();
+			Directory.SetCurrentDirectory(sourceMoulinette);
+			
 			majProgression(5);
 			String tmpname=sourceMoulinette.Replace("/", "").Replace("\\", "");
 			String scriptMoulinetteFile= tmpname +".moulinette.sh";
@@ -177,7 +182,7 @@ namespace MoulUtil
 			//String [] selection0 = null;
 			
 			MouliStatRecap statsRecap = new MouliStatRecap() ;
-			Boolean toLowerCase = false;
+			Boolean toLowerCase = true;
 			
 			selectionJ = new string[1];
 			
@@ -192,12 +197,16 @@ namespace MoulUtil
 				- interroger la base admin prod pour les infos. (kiamo?)
 				- upload ?
 			 */
+			
+			
+			
+
 			String path = mouliUtil.getData()+mouliUtil.getMag01();
 			List <String> selectionYfiles = new List<string>();
 			if((options!=null) && (options.getMagId()==null)) {
 				options.setMagId(calculMagId(sourceMoulinette));
 			}
-/*			
+			/*
 			if(options==null) {
 				//TODO:change me
 				options = new MouliUtilOptions();
@@ -205,26 +214,29 @@ namespace MoulUtil
 				options.setLots("CS");
 				options.setInstanceName("instance0");
 			}
-			*/
-			mouliUtil.writeMoulinetteFile("./conf/modele.moulinette", sourceMoulinette, dataPath+scriptMoulinetteFile, options);
+			 */
 			
-			mouliUtil.writeJobFile(dataPath+scriptJobMoulinetteFile, scriptMoulinetteFile, options);
-			selectionYfiles.Add(scriptMoulinetteFile);
-			selectionYfiles.Add(scriptJobMoulinetteFile);
+			options.setOrd01(mouliUtil.checkIsOrd01( mouliUtil.getData() + mouliUtil.getOrd01()));
+			options.setDoc01(mouliUtil.checkIsDoc01(mouliUtil.getData() + mouliUtil.getDoc01()));
+			
+			mouliUtil.writeMoulinetteFile("../conf/modele.moulinette", "",scriptMoulinetteFile, options);
+			
+			mouliUtil.writeJobFile(scriptJobMoulinetteFile, scriptMoulinetteFile, options);
+
 			// Collecte des fichiers presents
 			foreach(YFiles yfile in Enum.GetValues(typeof(YFiles))) {
 				String file=yfile.ToString();
 				if (toLowerCase) {
 					file=file.ToLower();
 				}
-				if (mouliUtil.checkIfFileExists(sourceMoulinette, mouliUtil.getData(),mouliUtil.getMag01(), file, ".d")) {
+				if (mouliUtil.checkIfFileExists("", mouliUtil.getData(),mouliUtil.getMag01(), file, ".d")) {
 					file+=".d";
-					selectionYfiles.Add(file);
+					selectionYfiles.Add(mouliUtil.getData()+mouliUtil.getMag01()+file);
 					Console.WriteLine(" Add : "+file);
 				}
 				majProgression();
 			}
-			if (mouliUtil.checkOrdoFixe(sourceMoulinette + mouliUtil.getData())) {
+			if (mouliUtil.checkOrdoFixe(mouliUtil.getData())) {
 				String file=JFiles.ordo_top_fixe.ToString()+".txt";
 				if(toLowerCase) {
 					file=file.ToLower();
@@ -234,20 +246,18 @@ namespace MoulUtil
 				selectionJ[0] =file;
 				
 			}
-			const String dataMag="data/mag01/";
+			
+			String dataMag=(mouliUtil.getData()+mouliUtil.getMag01());
 			//ICI:bug:si mag01 n'existe pas.
 			/* si data absent
 			 * si data/mag01 absent (que ord01)
 			 * */
 			
 			Console.WriteLine("Complete archive .."+dataMag);
-			const String dataMagJoint=dataMag+"Joint/";
+			String dataMagJoint=dataMag+"Joint/";
 			selectionY = ConvertisseurUtil.convertitListArray(selectionYfiles);
 			
-			//recherche des adresses des fichiers a inclure
-			for(int z=0;z<selectionY.Length;z++) {
-				Console.WriteLine("z : "+z + " > '"+ selectionY[z]+"'");
-			}
+
 			
 			//TODO:analyser data/ord01/[123456789)*.pdf
 			// => statsRecap.ord01DocsTotal
@@ -257,17 +267,23 @@ namespace MoulUtil
 			//script moulinette
 			// zipUtil.complete(fichiers, sourceMoulinette, selection0);
 			// yfiles.d
-			zipUtil.complete(fichiers, sourceMoulinette+dataMag, selectionY);
+			// zipUtil.complete(fichiers, dataMag, selectionY);
 			majProgression();
 			// Joint/xyz.pdf
 			if (selectionJ.Length>0) {
-				zipUtil.complete(fichiers, sourceMoulinette+dataMagJoint, selectionJ);
+				zipUtil.complete(fichiers, dataMagJoint, selectionJ);
 			}
 			
 			
 			Console.WriteLine(" list<Fichiers> : "+fichiers.Count);
 			Console.WriteLine(" Creation archive : "+archiveName);
 			List<String> liste= new List<string>();
+
+			for(int z=0;z<selectionY.Length;z++) {
+				liste.Add(selectionY[z]);
+				// Console.WriteLine("z : "+z + " > '"+ selectionY[z]+"'");
+			}
+
 			
 			// Ajout de notre valeur ajoutee
 			liste.Add(scriptMoulinetteFile);
@@ -282,8 +298,6 @@ namespace MoulUtil
 				liste.Add(fpath + info.Name);
 				Console.WriteLine("Fichier : "+fpath +info.Name);
 			}
-			String originalDir = Directory.GetCurrentDirectory();
-			Directory.SetCurrentDirectory(sourceMoulinette);
 
 			// maj stats
 			statsRecap.foundFiles=mouliUtil.analyseTopOrdoFixe(liste, dataMag+JFiles.ordo_top_fixe+".txt", statsRecap.notFoundList);
@@ -295,15 +309,34 @@ namespace MoulUtil
 			mouliUtil=null;
 			zipUtil=null;
 			majProgression(50);
-			MouliJob job = new MouliJob(archiveName, originalDir, liste, statsRecap, startDateTime);
+			MouliJob job = new MouliJob(archiveName, originalDir, liste, statsRecap, startDateTime, options);
 			return job;
-				
+			
 		}
 
 		public static void doArchive(MouliJob job)
 		{
 			ZipUtil zipUtil = new ZipUtil();
-			zipUtil.createSimpleArchive(ZipUtil.compressionStandard, job.getArchiveName() , job.getListe());
+			
+			List<String> liste = job.getListe();
+			if (job.getOptions()!=null) {
+				List <String> doc01 = job.getOptions().getDoc01();
+				List <String> ord01 = job.getOptions().getOrd01();
+				//
+				if (doc01!=null) {
+					for( int i=0;i< doc01.Count ; i++) {
+						liste.Add(doc01[i]);
+					}
+				}
+				//
+				if (ord01!=null) {
+					for( int i=0;i< ord01.Count ; i++) {
+						liste.Add(ord01[i]);
+					}
+				}
+			}
+			
+			zipUtil.createSimpleArchive(ZipUtil.compressionStandard, job.getArchiveName() , liste);
 			majProgression(99);
 			// Fin
 			Directory.SetCurrentDirectory (job.getOriginalDir());

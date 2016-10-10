@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 namespace cmdUtils.Objets
 {
@@ -77,14 +78,26 @@ namespace cmdUtils.Objets
 			}
 			return retour;
 		}
+		private String formatPath(String path) {
+			if (!path.EndsWith("/")) {
+				path+="/";
+			}
+			return path;
+		}
 		public String getData() {
-			return "data/";
+			return formatPath("data/");
 		}
 		public String getMag01() {
-			return "mag01/";
+			return formatPath("mag01/");
+		}
+		public String getOrd01() {
+			return formatPath("ord01/");
+		}
+		public String getDoc01() {
+			return formatPath("doc01/");
 		}
 		public String getJoint() {
-			return "Joint/";
+			return formatPath("Joint/");
 		}
 		public Boolean checkOrdoFixe(String path)
 		{
@@ -284,6 +297,58 @@ namespace cmdUtils.Objets
 			//!pas les secondes, sinon 'Garbled time'
 			return String.Format("{0:HH:mm M/d/yyyy }", date);
 
+		}
+		public List<String> giveFiles(String path) {
+			Regex regex=null;
+			return giveFiles(path, regex, regex);
+		}
+		public List<String> giveFiles(String path, String selection, String exclusion) {
+			Regex selectionRegex = null;
+			Regex exclusionRegex = null;
+			if (selection!=null) {
+				selectionRegex = new Regex(selection);
+			}
+			if (exclusion!=null) {
+				exclusionRegex = new Regex(exclusion);
+			}
+			
+			return giveFiles (path, selectionRegex, exclusionRegex);
+		}
+		public List<String> giveFiles(String path, Regex selectionPattern) {
+			return giveFiles(path, selectionPattern, null);
+		}
+		public List<String> giveFiles(String path, Regex selectionPattern, Regex exclusionPattern) {
+			List <String > liste =null;
+			
+			if(Directory.Exists(path)) {
+				liste = new List<string>();
+				String[] files = Directory.GetFiles(path);
+				if (files.Length > 0) {
+					for(int i=0;i<files.Length;i++) {
+						//String file = files[i];
+						FileInfo file = new FileInfo(files[i]);
+							
+						String fileName=file.Name;
+						if ((exclusionPattern==null) || (!exclusionPattern.Match(fileName).Success)) {
+							if ((selectionPattern==null) || (selectionPattern.Match(fileName).Success)) {
+
+								liste.Add(files[i]);
+							}
+						}
+					}
+					
+				}
+			}
+			return liste;
+		}
+
+		public List<String> checkIsOrd01(string path)
+		{
+			return giveFiles(path, "[\\.][pP][dD][fF]$", "^[dD]");
+		}
+		public  List<String> checkIsDoc01(string path)
+		{
+			return giveFiles(path, "[\\.]", null);
 		}
 	}
 }

@@ -65,6 +65,7 @@ namespace MoulUtil
 					box.SetItemChecked(1, box.GetItemChecked(0));
 					box.SetItemChecked(2,(recap.jointDocsTotal > 0));
 					box.SetItemChecked(3,(recap.ord01DocsTotal> 0));
+					// box.SetItemChecked(4,(recap.doc01DocsTotal> 0));
 				}
 			}
 		}
@@ -91,8 +92,11 @@ namespace MoulUtil
 
 		public void updateProgression(int progression)
 		{
-			progressBar1.Value=progression;
-			progressBar1.Refresh();
+			//progressBar1.Value=progression;
+			// progressBar1.Refresh();
+			toolStripProgressBar1.Value=progression;
+			
+			
 		}
 		public void setPath(string sourceMoulinette)
 		{
@@ -162,11 +166,11 @@ namespace MoulUtil
 			
 			
 //			# ici
-			options.setIsDoc01(false);
+			// options.setIsDoc01(false);
 			options.setIsJoint(false);
 //			# fin ici
 			
-			options.setLots("CS");
+			options.setLots("CS"); //todo:calculer
 			options.setDateJob(dateTimePicker.Value);
 			return options;
 			

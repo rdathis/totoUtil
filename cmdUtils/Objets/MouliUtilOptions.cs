@@ -7,6 +7,7 @@
  * Pour changer ce modèle utiliser Outils | Options | Codage | Editer les en-têtes standards.
  */
 using System;
+using System.Collections.Generic;
 
 namespace cmdUtils.Objets
 {
@@ -19,7 +20,8 @@ namespace cmdUtils.Objets
 		private String instanceName;
 		private String instanceCommande;
 		private String lots;
-		private Boolean isDoc01;
+		private List<String> doc01;
+		private List<String> ord01;
 		private Boolean isJoint;
 		private DateTime dateJob;
 		public MouliUtilOptions()
@@ -38,9 +40,13 @@ namespace cmdUtils.Objets
 		{
 			return lots;
 		}
-		public Boolean getIsDoc01()
+		public List<String>  getDoc01()
 		{
-			return isDoc01;
+			return doc01;
+		}
+		public List<String> getOrd01()
+		{
+			return ord01;
 		}
 		public Boolean getIsJoint()
 		{
@@ -58,19 +64,25 @@ namespace cmdUtils.Objets
 		{
 			lots = value;
 		}
-		public void  setIsDoc01(Boolean value)
+		public void  setDoc01(List<String>  value)
 		{
-			isDoc01 = value;
+			doc01 = value;
+		}
+		public void  setOrd01(List<String> value)
+		{
+			ord01 = value;
 		}
 		public void setIsJoint(Boolean value)
 		{
 			isJoint = value;
 		}
-		public DateTime getDateJob() {
-				return dateJob;
+		public DateTime getDateJob()
+		{
+			return dateJob;
 		}
-		public void setDateJob (DateTime value) {
-				dateJob=value;
+		public void setDateJob(DateTime value)
+		{
+			dateJob = value;
 		}
 		public String getInstanceCommande()
 		{
@@ -78,7 +90,7 @@ namespace cmdUtils.Objets
 		}
 		public void setInstanceCommande(String value)
 		{
-			instanceCommande=value;;
+			instanceCommande = value;
 		}
 	}
 }

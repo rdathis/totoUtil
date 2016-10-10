@@ -87,7 +87,7 @@ namespace MoulUtil
 			// 
 			this.listView1.Location = new System.Drawing.Point(187, 118);
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(375, 161);
+			this.listView1.Size = new System.Drawing.Size(384, 161);
 			this.listView1.TabIndex = 3;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			// 
