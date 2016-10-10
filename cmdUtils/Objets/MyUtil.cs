@@ -110,7 +110,7 @@ namespace cmdUtils.Objets
 				return result;
 			}
 		}
-		public List<List<KeyValuePair<String, Object>>> getListResultAsKV(string connString, string sql) {
+		public List<List<KeyValuePair<String, Object>>> getListResultAsKeyValue(string connString, string sql) {
 			List<List<KeyValuePair<String, Object>>> result = new List<List<KeyValuePair<string, object>>>();
 			MySqlConnection cnx = getConnection(connString);
 			cnx.Open();

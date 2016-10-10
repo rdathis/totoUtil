@@ -20,7 +20,7 @@ namespace cmdUtils
 		public MoulinetteAction()
 		{
 		}
-		public void bntListSrc(System.Windows.Forms.Button btn, CmdUtil cmdUtil, String sourcePath, String filter, ListBox listbox) {
+		public void bntListSrc(System.Windows.Forms.Button btn, cmdUtils.Objets.CmdUtil cmdUtil, String sourcePath, String filter, ListBox listbox) {
 			//Button btn=(Button)sender;
 			btn.Tag=btn.Text;
 			btn.Text="(...)";

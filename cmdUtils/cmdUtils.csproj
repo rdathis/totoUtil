@@ -84,7 +84,9 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Objets\MouliConfig.cs" />
+    <Compile Include="Objets\MouliJob.cs" />
     <Compile Include="Objets\MoulinetteAction.cs" />
+    <Compile Include="Objets\MouliStatRecap.cs" />
     <Compile Include="Objets\MouliUtil.cs" />
     <Compile Include="Objets\MouliUtilOptions.cs" />
     <Compile Include="Objets\MyUtil.cs" />

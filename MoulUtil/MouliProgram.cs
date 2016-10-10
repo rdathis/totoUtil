@@ -22,15 +22,9 @@ namespace MoulUtil
 	{
 		private static MouliForm form =null;
 		private static int progression=0;
+		private static DateTime startDateTime;
 		static log4net.ILog ILOG = LogManager.GetLogger("mouliUtil");
-		private class StatsRecap {
-			public int foundFiles=0;
-			public List<String> notFoundList=new List<string>();
-			public int mag01FilesTotal=0;
-			public  int jointDocsTotal=0;
-		}
-		
-		
+	
 		public static void Main(string[] args)
 		{
 			//testXml();
@@ -45,7 +39,7 @@ namespace MoulUtil
 			if (args.Length< 1) {
 				printHelp();
 				printEnd();
-				return;
+				//return;
 			}
 			
 			//
@@ -62,19 +56,26 @@ namespace MoulUtil
 			form.prepare();
 			form.ShowDialog();
 			
-
+			/*
+			doArchive(zipUtil, job);
+			mouliUtil = null;
+			TimeSpan ts = DateTime.Now - startDateTime;
+			printChrono(ts);
+			// printEnd();
+			majProgression(100);
+			*/
 
 		}
 		private static List<MeoServeur> readServeurs() {
 			XmlSerializer serializer = new XmlSerializer(typeof(List<MeoServeur>));
-			FileStream fs = new FileStream(Mouliconfig.serversConfigFile, FileMode.Open);
+			FileStream fs = new FileStream(MouliConfig.serversConfigFile, FileMode.Open);
 			List <MeoServeur> liste = (List<MeoServeur>)serializer.Deserialize(fs);
 			fs.Close();
 			return liste;
 		}
 		private static List<MeoInstance> readInstances() {
 			XmlSerializer serializer = new XmlSerializer(typeof(List<MeoInstance>));
-			FileStream fs = new FileStream(Mouliconfig.instancesConfigFile, FileMode.Open);
+			FileStream fs = new FileStream(MouliConfig.instancesConfigFile, FileMode.Open);
 			List <MeoInstance> liste = (List<MeoInstance>)serializer.Deserialize(fs);
 			fs.Close();
 			return liste;
@@ -92,8 +93,8 @@ namespace MoulUtil
 				
 				List<MeoInstance>instancesList = new List<MeoInstance>();
 				List <MeoServeur> serversList = new List<MeoServeur>();
-				TextWriter serverWriter = new StreamWriter(Mouliconfig.serversConfigFile);
-				TextWriter instancesWriter = new StreamWriter(Mouliconfig.instancesConfigFile);
+				TextWriter serverWriter = new StreamWriter(MouliConfig.serversConfigFile);
+				TextWriter instancesWriter = new StreamWriter(MouliConfig.instancesConfigFile);
 				MeoServeur serveur1 = new MeoServeur("meo1", "server1");
 				MeoServeur serveur2 = new MeoServeur("meo2", "server2");
 				MeoServeur serveur5 = new MeoServeur("meo5", "server5");
@@ -116,7 +117,7 @@ namespace MoulUtil
 			//
 			if (lecture)  {
 				XmlSerializer serializer = new XmlSerializer(typeof(List<MeoServeur>));
-				FileStream fs = new FileStream(Mouliconfig.serversConfigFile, FileMode.Open);
+				FileStream fs = new FileStream(MouliConfig.serversConfigFile, FileMode.Open);
 				List <MeoServeur> liste = (List<MeoServeur>)serializer.Deserialize(fs);
 				fs.Close();
 			}
@@ -144,14 +145,14 @@ namespace MoulUtil
 			return retour;
 		}
 
-		public static void doTraitement(String sourceMoulinette, MouliUtilOptions options) {
+		public static MouliJob doTraitement(String sourceMoulinette, MouliUtilOptions options) {
 			majProgression(0);
 			sourceMoulinette = sourceMoulinette.Trim();
 			if (((!sourceMoulinette.EndsWith("\\")) && (!sourceMoulinette.EndsWith("/")))) {
 				sourceMoulinette+="/";
 			}
 			
-			DateTime startDateTime = DateTime.Now;
+			startDateTime = DateTime.Now;
 			MouliUtil mouliUtil = new MouliUtil();
 			ZipUtil  zipUtil = new ZipUtil();
 			String archiveName = Path.GetFullPath(sourceMoulinette);
@@ -175,7 +176,7 @@ namespace MoulUtil
 			String [] selectionJ=null;
 			//String [] selection0 = null;
 			
-			StatsRecap statsRecap = new StatsRecap() ;
+			MouliStatRecap statsRecap = new MouliStatRecap() ;
 			Boolean toLowerCase = false;
 			
 			selectionJ = new string[1];
@@ -193,7 +194,10 @@ namespace MoulUtil
 			 */
 			String path = mouliUtil.getData()+mouliUtil.getMag01();
 			List <String> selectionYfiles = new List<string>();
-			
+			if((options!=null) && (options.getMagId()==null)) {
+				options.setMagId(calculMagId(sourceMoulinette));
+			}
+/*			
 			if(options==null) {
 				//TODO:change me
 				options = new MouliUtilOptions();
@@ -201,9 +205,10 @@ namespace MoulUtil
 				options.setLots("CS");
 				options.setInstanceName("instance0");
 			}
+			*/
 			mouliUtil.writeMoulinetteFile("./conf/modele.moulinette", sourceMoulinette, dataPath+scriptMoulinetteFile, options);
 			
-			mouliUtil.writeJobFile(dataPath+scriptJobMoulinetteFile, scriptMoulinetteFile);
+			mouliUtil.writeJobFile(dataPath+scriptJobMoulinetteFile, scriptMoulinetteFile, options);
 			selectionYfiles.Add(scriptMoulinetteFile);
 			selectionYfiles.Add(scriptJobMoulinetteFile);
 			// Collecte des fichiers presents
@@ -230,6 +235,11 @@ namespace MoulUtil
 				
 			}
 			const String dataMag="data/mag01/";
+			//ICI:bug:si mag01 n'existe pas.
+			/* si data absent
+			 * si data/mag01 absent (que ord01)
+			 * */
+			
 			Console.WriteLine("Complete archive .."+dataMag);
 			const String dataMagJoint=dataMag+"Joint/";
 			selectionY = ConvertisseurUtil.convertitListArray(selectionYfiles);
@@ -238,6 +248,10 @@ namespace MoulUtil
 			for(int z=0;z<selectionY.Length;z++) {
 				Console.WriteLine("z : "+z + " > '"+ selectionY[z]+"'");
 			}
+			
+			//TODO:analyser data/ord01/[123456789)*.pdf
+			// => statsRecap.ord01DocsTotal
+			//TODO:distinguer ycli et ystock
 			
 			
 			//script moulinette
@@ -278,25 +292,24 @@ namespace MoulUtil
 			}
 			statsRecap.mag01FilesTotal = Directory.GetFiles(dataMag).Length;
 			
+			mouliUtil=null;
+			zipUtil=null;
 			majProgression(50);
-			//Creation archive
-			zipUtil.createSimpleArchive(ZipUtil.compressionStandard, archiveName, liste);
-			majProgression(99);
-			
-			// Fin
-			Directory.SetCurrentDirectory (originalDir);
-			Console.WriteLine("fin archive "+archiveName);
-			printRecap(statsRecap);
-			mouliUtil = null;
-			
-			
-			TimeSpan ts = DateTime.Now - startDateTime;
-			
-			printChrono(ts);
-			// printEnd();
-			majProgression(100);
+			MouliJob job = new MouliJob(archiveName, originalDir, liste, statsRecap, startDateTime);
+			return job;
+				
 		}
-		
+
+		public static void doArchive(MouliJob job)
+		{
+			ZipUtil zipUtil = new ZipUtil();
+			zipUtil.createSimpleArchive(ZipUtil.compressionStandard, job.getArchiveName() , job.getListe());
+			majProgression(99);
+			// Fin
+			Directory.SetCurrentDirectory (job.getOriginalDir());
+			Console.WriteLine("fin archive "+job.getArchiveName());
+			printRecap(job.getStatRecap());
+		}
 		//Exemple : W:\meo-moulinettes>M:\github\totoUtil\MoulUtil\bin\Debug\MoulUtil.exe MID1973-DUPOND-20160621-1973-i3
 		static void printEnd()
 		{
@@ -313,7 +326,7 @@ namespace MoulUtil
 			Console.WriteLine("Temps écoulé : "+string.Format("{0}", Math.Round(ts.TotalSeconds, 3).ToString())+" secondes" );
 			Console.WriteLine("Temps écoulé : "+string.Format("{0}", Math.Round(ts.TotalMinutes, 3).ToString())+" minutes" );
 		}
-		static void printRecap(StatsRecap statRecap)
+		static void printRecap( MouliStatRecap statRecap)
 		{
 			foreach(String s in statRecap.notFoundList) {
 				Console.WriteLine("Absent : "+s);

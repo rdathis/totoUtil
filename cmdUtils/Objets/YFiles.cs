@@ -34,6 +34,7 @@ namespace cmdUtils.Objets
 		YTFACTUR,
 		YCODLIB,
 		YREMISE,
-		YOPHTAL
+		YOPHTAL,
+		YDOCUMENT
 	}
 }

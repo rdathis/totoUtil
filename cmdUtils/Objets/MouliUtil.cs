@@ -149,7 +149,7 @@ namespace cmdUtils.Objets
 			MyUtil util = new MyUtil();
 
 			string cstr = util.doConnString(cfg);
-			var magasinList = util.getListResultAsKV(cstr, sql);
+			var magasinList = util.getListResultAsKeyValue(cstr, sql);
 			
 			rtb.AppendText("#libe:" + util.getItem(magasinList[0], "magasin_libelle") + " - url :" + util.getItem(magasinList[0], "url"));
 			rtb.AppendText("\n#cli_id:" + util.getItem(magasinList[0], "client_id"));
@@ -158,7 +158,7 @@ namespace cmdUtils.Objets
 			
 			texbox.Text = (string)util.getItem(magasinList[0], "magasin_libelle");
 			sql = "SELECT utilisateur_id,magasin_id FROM administration.utilisateurs where utilisateur_active=true AND magasin_id=" + magId + ";";
-			var userList = util.getListResultAsKV(cstr, sql);
+			var userList = util.getListResultAsKeyValue(cstr, sql);
 			
 			rtb.AppendText("\nmodeDevMagId=" + util.getItem(userList[0], "magasin_id"));
 			rtb.AppendText("\nmodeDevUserId=" + util.getItem(userList[0], "utilisateur_id"));
@@ -177,6 +177,7 @@ namespace cmdUtils.Objets
 				ligne=ligne.Replace("<%magId%>", options.getMagId());
 				ligne=ligne.Replace("<%ARG%>", options.getLots());
 				ligne=ligne.Replace("<%instanceName%>", options.getInstanceName());
+				ligne=ligne.Replace("<%instanceCommande%>", options.getInstanceCommande());
 				String joint="N";
 				if (options.getIsJoint()) {
 					joint="O";
@@ -193,7 +194,7 @@ namespace cmdUtils.Objets
 
 		public int analyseTopOrdoFixe(List<string> liste, string file, List<string> notFoundList)
 		{
-			int foundedFiles=0;
+			int foundFiles=0;
 			String path="data/mag01/Joint/";
 			if (Directory.Exists(path) && (File.Exists(file))) {
 				MyUtil myUtil = new MyUtil();
@@ -218,7 +219,7 @@ namespace cmdUtils.Objets
 								if (File.Exists(path+colonne))   {
 									if (!liste.Contains(path+colonne)) {
 										liste.Add(path+colonne);
-										foundedFiles++;
+										foundFiles++;
 									}
 								} else {
 									if (!notFoundList.Contains(path+colonne)) {
@@ -228,10 +229,9 @@ namespace cmdUtils.Objets
 							}
 						}
 					}
-					
 				}
 			}
-			return foundedFiles;
+			return foundFiles;
 		}
 		private List<String> genereScript(String scriptSource, String scriptCible, MouliUtilOptions options)
 		{
@@ -248,16 +248,42 @@ namespace cmdUtils.Objets
 			}
 			outputFile.Close();
 		}
-		public void writeJobFile(string scriptJobFile, string scriptMoulinetteFile)
+		public void writeJobFile(string scriptJobFile, string scriptMoulinetteFile, MouliUtilOptions options)
 		{
 			StreamWriter outputFile = new StreamWriter(scriptJobFile);
 			outputFile.NewLine="\n";
 			//
 			outputFile.WriteLine("## job file automatique, pour planifier la maj");
 			//TODO: write choosen time & date from options
-			outputFile.WriteLine("echo /bin/sh "+scriptMoulinetteFile+ " | at 08:00 ");
+			outputFile.WriteLine("MPATH=`dirname $0` ");
+			outputFile.WriteLine("cd $MPATH && MPATH=$PWD");
+			outputFile.WriteLine("echo (cd $MPATH && /bin/sh "+scriptMoulinetteFile+ ") | at "+formatDateJob(options.getDateJob())+ " " );
 			//
 			outputFile.Close();
+		}
+
+		public DateTime calculeNextPlannedJob()
+		{
+			DateTime tmpDate = DateTime.Now;
+			tmpDate=tmpDate.AddDays(1);
+
+			while(tmpDate.DayOfWeek==DayOfWeek.Saturday || tmpDate.DayOfWeek==DayOfWeek.Sunday) {
+				tmpDate=tmpDate.AddDays(1);
+			}
+			DateTime jobPlanned = new DateTime(tmpDate.Year, tmpDate.Month, tmpDate.Day, 08, 0, 0);
+			return jobPlanned;
+		}
+
+		string formatDateJob(DateTime date)
+		{
+			
+			//Et si je veux exécuter la commande le 15 novembre à 14 h 17 ?
+			// $ at 14:17 11/15/10
+			// La date est au format américain, les numéros du jour et du mois sont donc inversés : 11/15/10. 11 correspond au mois (novembre) et 15 au numéro du jour !
+			
+			//!pas les secondes, sinon 'Garbled time'
+			return String.Format("{0:HH:mm M/d/yyyy }", date);
+
 		}
 	}
 }

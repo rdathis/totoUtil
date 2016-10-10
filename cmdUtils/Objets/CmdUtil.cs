@@ -139,6 +139,38 @@ namespace cmdUtils.Objets
 				}
 			}
 		}
+		
+		public void launchWindowsCmd()
+		{
+			// For the example.
+			//const string ex1 = "C:\\";
+			// const string ex2 = "C:\\Dir";
+
+			// Use ProcessStartInfo class.
+			ProcessStartInfo startInfo = new ProcessStartInfo();
+			startInfo.CreateNoWindow = false;
+			startInfo.UseShellExecute = false;
+			startInfo.FileName = "cmd.exe";
+			
+			startInfo.WindowStyle = ProcessWindowStyle.Normal;
+			//startInfo.Arguments = "-f j -o \"" + ex1 + "\" -z 1.0 -s y " + ex2;
+			startInfo.Arguments = "";
+
+			try
+			{
+				// Start the process with the info we specified.
+				// Call WaitForExit and then the using-statement will close.
+				using (Process exeProcess = Process.Start(startInfo))
+				{
+					// exeProcess.WaitForExit();
+				}
+			}
+			catch
+			{
+				// Log error.
+			}
+		}
+		
 		public List <String> getDatabases(ConfigSectionSettings cfg) {
 			String connString = myUtil.buildconnString("", "localhost", cfg.mysqlUser, cfg.mysqlPassword);
 			List <String> list = myUtil.getListResultSimple(connString, myUtil.getDatabaseList());
@@ -152,13 +184,16 @@ namespace cmdUtils.Objets
 			
 		}
 		
-		public List <String> executeCommand(String cmd, String args) {
+		public List <String> executeCommande(String cmd, String args) {
 			List <String> list = new List<String>();
 			
 			ProcessUtil pu = new ProcessUtil();
+			Console.WriteLine(cmd +" "+args);
+			// MessageBox.Show(cmd +" "+args);
 			Process p = pu.startProcess(cmd, args, ProcessWindowStyle.Minimized);
+/*
 			try {
-				if (p.ExitCode!=0) {
+				//if (p.ExitCode!=0) {
 					StreamReader srErr=p.StandardError;
 					String [] sErr =  srErr.ReadToEnd().Split('\n');
 					foreach(String ss in sErr) {
@@ -166,10 +201,11 @@ namespace cmdUtils.Objets
 					}
 					return list;
 					
-				}
+				//}
 			} catch (Exception e) {
 				System.Diagnostics.Debug.Print("Exception : "+e);
 			}
+			*/
 			StreamReader srOut= p.StandardOutput;
 			String [] sOut =  srOut.ReadToEnd().Split('\n');
 			foreach(String ss in sOut) {
@@ -182,7 +218,7 @@ namespace cmdUtils.Objets
 		
 		public void openWindowsExplorer(String path) {
 			path=path.Replace("/", "\\");
-			executeCommand("explorer", path);
+			executeCommande("explorer", path);
 		}
 		public List<String> filterListe(List<String> listStr, List<Regex> listReg, FiltersReg filter) {
 			
@@ -351,6 +387,20 @@ Unknown._w(https://server/instance/application/78957C736ADB5FD05DCBA3DDACFEFF8F.
 				retour+=" "+server.getUtilisateur()+"@"+server.getAdresse();
 			}
 			return (" -pw "+server.getPassword() +" "+server.getUtilisateur()+"@"+server.getAdresse());
+		}
+
+		public string buildPscpArgs(MeoServeur server, MouliJob job)
+		{
+			String retour="";
+			if (!String.IsNullOrEmpty(server.getPassword())) {
+				retour+=" -pw "+server.getPassword();
+			}
+			retour+=" "+job.getArchiveName()+" ";
+			if (!String.IsNullOrEmpty(server.getUtilisateur())) {
+				retour+=" "+server.getUtilisateur()+"@"+server.getAdresse();
+			}
+			retour+=":/database/transpo/";
+			return (retour);
 		}
 	}
 }

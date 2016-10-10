@@ -379,7 +379,7 @@ namespace cmdUtils
 					MyUtil util = new MyUtil();
 					try {
 						string cstr = util.doConnString(cfg);
-						var magasinList = util.getListResultAsKV(cstr, sql);
+						var magasinList = util.getListResultAsKeyValue(cstr, sql);
 						
 						rtb.AppendText("#libe:" + util.getItem(magasinList[0], "magasin_libelle") + " - url :" + util.getItem(magasinList[0], "url"));
 						rtb.AppendText("\n#cli_id:" + util.getItem(magasinList[0], "client_id"));
@@ -387,7 +387,7 @@ namespace cmdUtils
 						//Console.WriteLine("cli_id:"+util.getItem(magasinList[0], "client_id"));
 						
 						sql = "SELECT utilisateur_id,magasin_id FROM administration.utilisateurs where utilisateur_active=true AND magasin_id=" + magId + ";";
-						var userList = util.getListResultAsKV(cstr, sql);
+						var userList = util.getListResultAsKeyValue(cstr, sql);
 						
 						rtb.AppendText("\nmodeDevMagId=" + util.getItem(userList[0], "magasin_id"));
 						rtb.AppendText("\nmodeDevUserId=" + util.getItem(userList[0], "utilisateur_id"));

@@ -17,11 +17,14 @@ namespace cmdUtils.Objets
 	{
 		private String magId;
 		private String instanceName;
+		private String instanceCommande;
 		private String lots;
 		private Boolean isDoc01;
 		private Boolean isJoint;
+		private DateTime dateJob;
 		public MouliUtilOptions()
 		{
+			//
 		}
 		public String getMagId()
 		{
@@ -63,6 +66,19 @@ namespace cmdUtils.Objets
 		{
 			isJoint = value;
 		}
-		
+		public DateTime getDateJob() {
+				return dateJob;
+		}
+		public void setDateJob (DateTime value) {
+				dateJob=value;
+		}
+		public String getInstanceCommande()
+		{
+			return instanceCommande;
+		}
+		public void setInstanceCommande(String value)
+		{
+			instanceCommande=value;;
+		}
 	}
 }

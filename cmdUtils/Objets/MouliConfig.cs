@@ -10,7 +10,8 @@
 using System;
 namespace cmdUtils.Objets {
 	
-	public class Mouliconfig {
+	// disable once ConvertToStaticType
+	public class MouliConfig {
 		
 		public const String serversConfigFile="conf/serveurs.xml";
 		public const String instancesConfigFile="conf/instances.xml";
