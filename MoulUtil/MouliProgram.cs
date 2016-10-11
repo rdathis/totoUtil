@@ -270,9 +270,6 @@ namespace MoulUtil
 			// zipUtil.complete(fichiers, dataMag, selectionY);
 			majProgression();
 			// Joint/xyz.pdf
-			if (selectionJ.Length>0) {
-				zipUtil.complete(fichiers, dataMagJoint, selectionJ);
-			}
 			
 			
 			Console.WriteLine(" list<Fichiers> : "+fichiers.Count);
@@ -284,12 +281,16 @@ namespace MoulUtil
 				// Console.WriteLine("z : "+z + " > '"+ selectionY[z]+"'");
 			}
 
+			for(int z=0;z<selectionJ.Length;z++) {
+				liste.Add(dataMag+mouliUtil.getJoint()+selectionJ[z]);
+			}
+			
 			
 			// Ajout de notre valeur ajoutee
 			liste.Add(scriptMoulinetteFile);
 			liste.Add(scriptJobMoulinetteFile);
 			
-			
+			/*
 			FileInfo spath=new FileInfo(sourceMoulinette);
 			foreach(FileInfo info in fichiers) {
 				majProgression();
@@ -298,6 +299,7 @@ namespace MoulUtil
 				liste.Add(fpath + info.Name);
 				Console.WriteLine("Fichier : "+fpath +info.Name);
 			}
+			*/
 
 			// maj stats
 			statsRecap.foundFiles=mouliUtil.analyseTopOrdoFixe(liste, dataMag+JFiles.ordo_top_fixe+".txt", statsRecap.notFoundList);
