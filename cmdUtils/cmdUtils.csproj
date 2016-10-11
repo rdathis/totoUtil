@@ -52,6 +52,9 @@
     <Reference Include="MySql.Web">
       <HintPath>libs\MySql.Web.dll</HintPath>
     </Reference>
+    <Reference Include="Renci.SshNet">
+      <HintPath>W:\GitStuff\SSH.NET\src\Renci.SshNet\bin\Debug\Renci.SshNet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
@@ -94,6 +97,7 @@
     <Compile Include="Objets\CmdUtil.cs" />
     <Compile Include="Objets\FilterReg.cs" />
     <Compile Include="Objets\RichTextBoxUtilcs.cs" />
+    <Compile Include="Objets\SshUtil.cs" />
     <Compile Include="Objets\YFiles.cs" />
     <Compile Include="Objets\ZipUtil.cs" />
     <Compile Include="Objets\ZipUtilOptions.cs" />

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+
 using cmdUtils;
 using cmdUtils.Objets;
 
@@ -207,9 +208,24 @@ namespace MoulUtil
 			util.launchWindowsCmd();
 			// cmdUtils.
 		}
+
+		
 		void UploadButtonClick(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			if (job!=null) {
+				CmdUtil util = new CmdUtil();
+				LinkLabel label = (LinkLabel) sender;
+				if (label.Tag!=null) {
+					MeoServeur server = (MeoServeur) label.Tag;
+					SshUtil sshUtil = new SshUtil();
+					try {
+						sshUtil.uploadArchive(server, "/database/transpo/", job.getArchiveName());
+						sshUtil.unzipArchive(server, "/database/transpo/", job);
+					} catch(Exception ex) {
+						MessageBox.Show("Erreur envoi data : "+ex.Message + "\n"+ex.Source + "\n" +ex.StackTrace);
+					}
+				}
+			}
 		}
 	}
 }
