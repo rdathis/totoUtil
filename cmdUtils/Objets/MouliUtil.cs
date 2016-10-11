@@ -267,10 +267,10 @@ namespace cmdUtils.Objets
 			outputFile.NewLine="\n";
 			//
 			outputFile.WriteLine("## job file automatique, pour planifier la maj");
-			//TODO: write choosen time & date from options
-			outputFile.WriteLine("MPATH=`dirname $0` ");
-			outputFile.WriteLine("cd $MPATH && MPATH=$PWD");
-			outputFile.WriteLine("echo (cd $MPATH && /bin/sh "+scriptMoulinetteFile+ ") | at "+formatDateJob(options.getDateJob())+ " " );
+			
+			// outputFile.WriteLine("MPATH=`dirname $0` ");
+			// outputFile.WriteLine("cd $MPATH && MPATH=$PWD");
+			outputFile.WriteLine("echo /bin/sh "+scriptMoulinetteFile+ " | at "+formatDateJob(options.getDateJob())+ " " );
 			//
 			outputFile.Close();
 		}

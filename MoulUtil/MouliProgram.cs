@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
+using Renci.SshNet;
 using cmdUtils;
 using cmdUtils.Objets;
 using log4net;
@@ -25,6 +26,31 @@ namespace MoulUtil
 		private static DateTime startDateTime;
 		static log4net.ILog ILOG = LogManager.GetLogger("mouliUtil");
 		
+		private static void testSSh() {
+			String server="null";
+			string user="null";
+			string password="null";
+			
+			ConnectionInfo  connectionInfo = new ConnectionInfo(server, user, new PasswordAuthenticationMethod(user, password));
+			Console.Write(connectionInfo.CurrentServerEncryption);
+			SshClient client = new SshClient(connectionInfo);
+			client.Connect();
+			SshCommand commande= client.RunCommand("/bin/pwd");
+			print(commande.Result);
+			commande= client.RunCommand("cd /home ; pwd \n");
+			print(commande.Result);
+			commande= client.RunCommand("/bin/pwd");
+			
+			print(commande.Result);
+			
+			client.Disconnect();
+			
+			
+		}
+		private static void print(String s) {
+			System.Diagnostics.Debug.Print(s);
+					
+		}
 		public static void Main(string[] args)
 		{
 			//testXml();
@@ -42,6 +68,7 @@ namespace MoulUtil
 				//return;
 			}
 			
+			// testSSh();
 			//
 			String sourceMoulinette = args[0].Trim();
 			if (((!sourceMoulinette.EndsWith("\\")) && (!sourceMoulinette.EndsWith("/")))) {
