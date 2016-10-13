@@ -270,7 +270,7 @@ namespace cmdUtils.Objets
 			
 			// outputFile.WriteLine("MPATH=`dirname $0` ");
 			// outputFile.WriteLine("cd $MPATH && MPATH=$PWD");
-			outputFile.WriteLine("echo /bin/sh "+scriptMoulinetteFile+ " | at "+formatDateJob(options.getDateJob())+ " " );
+			outputFile.WriteLine("export MAILTO=athis.r@cristallin.com && echo /bin/sh "+scriptMoulinetteFile+ " | at "+formatDateJob(options.getDateJob())+ " " );
 			//
 			outputFile.Close();
 		}

@@ -338,7 +338,7 @@ namespace MoulUtil
 			mouliUtil=null;
 			zipUtil=null;
 			majProgression(50);
-			MouliJob job = new MouliJob(archiveName, originalDir, liste, statsRecap, startDateTime, options);
+			MouliJob job = new MouliJob(archiveName, originalDir, liste, statsRecap, startDateTime, options, sourceMoulinette);
 			return job;
 			
 		}

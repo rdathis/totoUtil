@@ -78,6 +78,7 @@ namespace MoulUtil
 			try {
 				MouliUtilOptions options=updateMouliUtilOption(getSelectedInstance());
 				job= MouliProgram.doTraitement(pathLabel.Text, options);
+				//job.setzzz(pathLabel.Text);
 				analyseJob(job, checkedListBox1);
 				
 				MouliProgram.doArchive(job);
@@ -214,7 +215,7 @@ namespace MoulUtil
 		{
 			if (job!=null) {
 				CmdUtil util = new CmdUtil();
-				LinkLabel label = (LinkLabel) sender;
+				LinkLabel label = pscpLink;
 				if (label.Tag!=null) {
 					MeoServeur server = (MeoServeur) label.Tag;
 					SshUtil sshUtil = new SshUtil();

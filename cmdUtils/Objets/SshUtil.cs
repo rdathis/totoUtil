@@ -19,8 +19,8 @@ namespace cmdUtils.Objets {
 		}
 		private ConnectionInfo getConnectionInfo(MeoServeur server) {
 			ConnectionInfo  connectionInfo = new ConnectionInfo(
-				server.getAdresse(), server.getNom(),
-				new PasswordAuthenticationMethod(server.getNom(),server.getPassword()));
+				server.getAdresse(), server.getUtilisateur(),
+				new PasswordAuthenticationMethod(server.getUtilisateur(), server.getPassword()));
 			return connectionInfo;
 		}
 		
@@ -28,7 +28,8 @@ namespace cmdUtils.Objets {
 		{
 			ScpClient client = new ScpClient(getConnectionInfo(server));
 			client.Connect();
-			client.Upload(new FileInfo(archive), target + archive);
+			FileInfo info =new FileInfo(archive);
+			client.Upload(info, target + info.Name);
 			client.Disconnect();
 		}
 		public  List <String> unzipArchive(MeoServeur server, string target, MouliJob job)
@@ -36,12 +37,13 @@ namespace cmdUtils.Objets {
 			List <String> liste =new List<string>();
 			SshClient client = new SshClient(getConnectionInfo(server));
 			client.Connect();
-			String newdir=target + job.getOriginalDir();
+			String newdir=target + job.getMoulinettePath();
 			
 			//
 			liste.Add(client.RunCommand("mkdir "+newdir).Result);
 			
-			liste.Add(client.RunCommand("cd "+newdir +" && unzip -o "+target+job.getArchiveName()).Result);
+			FileInfo info =new FileInfo(job.getArchiveName());
+			liste.Add(client.RunCommand("cd "+newdir +" && unzip -o "+target+info.Name).Result);
 			//
 			
 			client.Disconnect();

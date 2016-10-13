@@ -20,13 +20,22 @@ namespace cmdUtils {
 		private MouliStatRecap  statRecap;
 		private DateTime startDateTime;
 		private MouliUtilOptions options;
-		public MouliJob(String archiveName, String originalDir, List<String> liste, MouliStatRecap statRecap, DateTime start, MouliUtilOptions options) {
+		private String moulinettePath;
+		public MouliJob(String archiveName, 
+		                String originalDir, 
+		                List<String> liste, 
+		                MouliStatRecap statRecap, 
+		                DateTime start, 
+		                MouliUtilOptions options,
+		                String moulinettePath
+		               ) {
 			this.archiveName=archiveName;
 			this.liste=liste;
 			this.originalDir=originalDir;
 			this.statRecap=statRecap;
 			this.startDateTime=start;
 			this.options=options;
+			this.moulinettePath=moulinettePath;
 		}
 		public String getArchiveName() {
 			return archiveName;
@@ -45,6 +54,9 @@ namespace cmdUtils {
 		}
 		public MouliUtilOptions getOptions() {
 			return options;
+		}
+		public String getMoulinettePath() {
+			return moulinettePath;
 		}
 /*		
 				- liste
