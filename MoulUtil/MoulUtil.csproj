@@ -35,7 +35,7 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <StartAction>Project</StartAction>
-    <StartArguments>MID1798-Anne-i3</StartArguments>
+    <StartArguments>mid1068-i1-sebban</StartArguments>
     <StartWorkingDirectory>W:/meo-moulinettes/</StartWorkingDirectory>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
   </PropertyGroup>

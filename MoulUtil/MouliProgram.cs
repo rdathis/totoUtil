@@ -308,9 +308,6 @@ namespace MoulUtil
 				// Console.WriteLine("z : "+z + " > '"+ selectionY[z]+"'");
 			}
 
-			for(int z=0;z<selectionJ.Length;z++) {
-				liste.Add(dataMag+mouliUtil.getJoint()+selectionJ[z]);
-			}
 			
 			
 			// Ajout de notre valeur ajoutee
@@ -331,6 +328,11 @@ namespace MoulUtil
 			// maj stats
 			statsRecap.foundFiles=mouliUtil.analyseTopOrdoFixe(liste, dataMag+JFiles.ordo_top_fixe+".txt", statsRecap.notFoundList);
 			if (Directory.Exists(dataMag+"Joint/")) {
+				
+				for(int z=0;z<selectionJ.Length;z++) {
+					liste.Add(dataMag+mouliUtil.getJoint()+selectionJ[z]);
+				}
+				
 				statsRecap.jointDocsTotal = Directory.GetFiles(dataMag+"Joint/").Length;
 			}
 			statsRecap.mag01FilesTotal = Directory.GetFiles(dataMag).Length;
