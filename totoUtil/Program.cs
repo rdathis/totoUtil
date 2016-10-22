@@ -7,6 +7,8 @@
  * Pour changer ce modèle utiliser Outils | Options | Codage | Editer les en-têtes standards.
  */
 using System;
+using System.IO;
+using System.IO.Compression;
 using System.Windows.Forms;
 
 namespace totoUtil
@@ -24,8 +26,12 @@ namespace totoUtil
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+			
 			Application.Run(new MainForm());
+			
 		}
+		
+
 		
 	}
 }
