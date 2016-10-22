@@ -52,6 +52,9 @@
     <Reference Include="MySql.Web">
       <HintPath>libs\MySql.Web.dll</HintPath>
     </Reference>
+    <Reference Include="Renci.SshNet">
+      <HintPath>W:\GitStuff\SSH.NET\src\Renci.SshNet\bin\Debug\Renci.SshNet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
@@ -71,17 +74,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssoControleParam.cs" />
+    <Compile Include="Objets\ConfigUtil.cs" />
+    <Compile Include="Objets\ConvertisseurUtil.cs" />
+    <Compile Include="Objets\JFiles.cs" />
+    <Compile Include="Objets\Horloge.cs" />
+    <Compile Include="Objets\MeoInstance.cs" />
+    <Compile Include="Objets\MeoServeur.cs" />
     <Compile Include="ConfElement.cs" />
     <Compile Include="ConfigSectionSettings.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MoulinetteAction.cs" />
+    <Compile Include="Objets\MouliConfig.cs" />
+    <Compile Include="Objets\MouliJob.cs" />
+    <Compile Include="Objets\MoulinetteAction.cs" />
+    <Compile Include="Objets\MouliStatRecap.cs" />
+    <Compile Include="Objets\MouliUtil.cs" />
+    <Compile Include="Objets\MouliUtilOptions.cs" />
     <Compile Include="Objets\MyUtil.cs" />
     <Compile Include="Objets\ProcessUtil.cs" />
     <Compile Include="Objets\CmdUtil.cs" />
     <Compile Include="Objets\FilterReg.cs" />
+    <Compile Include="Objets\RichTextBoxUtilcs.cs" />
+    <Compile Include="Objets\SshUtil.cs" />
+    <Compile Include="Objets\YFiles.cs" />
     <Compile Include="Objets\ZipUtil.cs" />
     <Compile Include="Objets\ZipUtilOptions.cs" />
     <Compile Include="Program.cs" />
@@ -89,6 +106,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="doc\mintty.txt" />
+    <None Include="doc\TODO.txt" />
     <None Include="libs\MySql.Data.dll" />
     <None Include="libs\MySql.Data.Entity.dll" />
     <None Include="libs\MySql.Data.Entity.EF6.dll" />
@@ -102,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="libs" />
+    <Folder Include="doc" />
     <Folder Include="Objets" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

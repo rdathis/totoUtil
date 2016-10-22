@@ -203,7 +203,7 @@ namespace cmdUtils
 			 * then remove this method and mark the constructor public.
 			 */
 			const String configMainKey="ConfigSectionSettings";
-			const String file="totoConfig.cfg";
+			String file=getConfigFileName();
 			String exePath = System.IO.Path.Combine(Environment.CurrentDirectory, file);
 			
 			//params xml node
@@ -234,6 +234,12 @@ namespace cmdUtils
 			oConfigSectionSettings._Config = Config;
 			
 			return oConfigSectionSettings;
+		}
+		public static String getConfigFileName() {
+			return "totoConfig.cfg";
+		}
+		public static String getFullConfigFileName() {
+			return getConfigFileName()+".config";
 		}
 		
 		//TODO:try to make it better

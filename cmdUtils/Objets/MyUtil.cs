@@ -110,7 +110,7 @@ namespace cmdUtils.Objets
 				return result;
 			}
 		}
-		public List<List<KeyValuePair<String, Object>>> getListResultAsKV(string connString, string sql) {
+		public List<List<KeyValuePair<String, Object>>> getListResultAsKeyValue(string connString, string sql) {
 			List<List<KeyValuePair<String, Object>>> result = new List<List<KeyValuePair<string, object>>>();
 			MySqlConnection cnx = getConnection(connString);
 			cnx.Open();
@@ -172,6 +172,13 @@ namespace cmdUtils.Objets
 //			https://www.edrawsoft.com/embed-pdf-vbnet.php
 //
 			
+		}
+		public Boolean createFolderIfNotExists(String path) {
+			DirectoryInfo di = Directory.CreateDirectory(path);
+			return true;
+		}
+		public String getDate8(DateTime date) {
+			return String.Format("{0:yyyyMMdd}", date);
 		}
 	}
 }

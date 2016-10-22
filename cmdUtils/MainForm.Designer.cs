@@ -46,6 +46,13 @@ namespace cmdUtils
 		private System.Windows.Forms.Label labelFichierConfig;
 		private System.Windows.Forms.Button reloadButton;
 		private System.Windows.Forms.Button defConfigButton;
+		private System.Windows.Forms.RichTextBox moulYFRtb;
+		private System.Windows.Forms.RichTextBox moulJFRtb;
+		private System.Windows.Forms.Button btnCheckY;
+		private System.Windows.Forms.Button btnCheckJ;
+		private System.Windows.Forms.Label label23;
+		private System.Windows.Forms.TextBox tboxMoulRepFinal;
+
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -72,6 +79,7 @@ namespace cmdUtils
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.tabParam = new System.Windows.Forms.TabPage();
+			this.editConfig = new System.Windows.Forms.Button();
 			this.label20 = new System.Windows.Forms.Label();
 			this.moulFichiersParam = new System.Windows.Forms.TextBox();
 			this.lmoulDstPath = new System.Windows.Forms.Label();
@@ -130,6 +138,18 @@ namespace cmdUtils
 			this.label11 = new System.Windows.Forms.Label();
 			this.tabPdf = new System.Windows.Forms.TabPage();
 			this.tabMoulinettes = new System.Windows.Forms.TabPage();
+			this.label25 = new System.Windows.Forms.Label();
+			this.label24 = new System.Windows.Forms.Label();
+			this.tboxMoulRepFinal = new System.Windows.Forms.TextBox();
+			this.label23 = new System.Windows.Forms.Label();
+			this.btnCheckJ = new System.Windows.Forms.Button();
+			this.btnCheckY = new System.Windows.Forms.Button();
+			this.moulJFRtb = new System.Windows.Forms.RichTextBox();
+			this.moulYFRtb = new System.Windows.Forms.RichTextBox();
+			this.moulRichTexBox = new System.Windows.Forms.RichTextBox();
+			this.moulCreaRepBtn = new System.Windows.Forms.Button();
+			this.moulDateTextBox = new System.Windows.Forms.TextBox();
+			this.instancesListBox = new System.Windows.Forms.ListBox();
 			this.bntMoulZipIt = new System.Windows.Forms.Button();
 			this.docs = new System.Windows.Forms.Label();
 			this.txtBoxMoulDocs = new System.Windows.Forms.TextBox();
@@ -154,6 +174,17 @@ namespace cmdUtils
 			this.label15 = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
 			this.btnSearch = new System.Windows.Forms.Button();
+			this.upData = new System.Windows.Forms.TabPage();
+			this.upDataArchivesList = new System.Windows.Forms.ListBox();
+			this.button5 = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
+			this.button1 = new System.Windows.Forms.Button();
+			this.upDataCandidatsArchivesList = new System.Windows.Forms.ListBox();
+			this.upTabInstanceList = new System.Windows.Forms.ListBox();
+			this.upDataMagId = new System.Windows.Forms.TextBox();
+			this.label27 = new System.Windows.Forms.Label();
+			this.upDataBaseMoulinettes = new System.Windows.Forms.TextBox();
+			this.label26 = new System.Windows.Forms.Label();
 			this.tabMeo = new System.Windows.Forms.TabPage();
 			this.tabMeoTest2 = new System.Windows.Forms.Label();
 			this.tabMeoTest1 = new System.Windows.Forms.Label();
@@ -161,6 +192,13 @@ namespace cmdUtils
 			this.TabMeoLabel1 = new System.Windows.Forms.Label();
 			this.tabMeoTxtExceptionLisible = new System.Windows.Forms.TextBox();
 			this.tabMeoTxtExceptionBrute = new System.Windows.Forms.TextBox();
+			this.tabHorloge = new System.Windows.Forms.TabPage();
+			this.tabCode = new System.Windows.Forms.TabPage();
+			this.tabCodeResult = new System.Windows.Forms.TextBox();
+			this.tabCodeBtn = new System.Windows.Forms.Button();
+			this.tabCodeApres = new System.Windows.Forms.TextBox();
+			this.tabCodeAvant = new System.Windows.Forms.TextBox();
+			this.tabCodeSource = new System.Windows.Forms.TextBox();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -170,6 +208,8 @@ namespace cmdUtils
 			this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
 			this.cygwinToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripCmdLabel = new System.Windows.Forms.ToolStripLabel();
+			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -177,7 +217,9 @@ namespace cmdUtils
 			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.tabMoulinettes.SuspendLayout();
+			this.upData.SuspendLayout();
 			this.tabMeo.SuspendLayout();
+			this.tabCode.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
 			this.toolStrip1.SuspendLayout();
@@ -193,7 +235,10 @@ namespace cmdUtils
 			this.tabs.Controls.Add(this.tabSQL);
 			this.tabs.Controls.Add(this.tabPdf);
 			this.tabs.Controls.Add(this.tabMoulinettes);
+			this.tabs.Controls.Add(this.upData);
 			this.tabs.Controls.Add(this.tabMeo);
+			this.tabs.Controls.Add(this.tabHorloge);
+			this.tabs.Controls.Add(this.tabCode);
 			this.tabs.Location = new System.Drawing.Point(12, 27);
 			this.tabs.Name = "tabs";
 			this.tabs.SelectedIndex = 0;
@@ -203,6 +248,7 @@ namespace cmdUtils
 			// 
 			// tabParam
 			// 
+			this.tabParam.Controls.Add(this.editConfig);
 			this.tabParam.Controls.Add(this.label20);
 			this.tabParam.Controls.Add(this.moulFichiersParam);
 			this.tabParam.Controls.Add(this.lmoulDstPath);
@@ -243,6 +289,16 @@ namespace cmdUtils
 			this.tabParam.Text = "Params";
 			this.tabParam.UseVisualStyleBackColor = true;
 			this.tabParam.Click += new System.EventHandler(this.TabParamClick);
+			// 
+			// editConfig
+			// 
+			this.editConfig.Location = new System.Drawing.Point(619, 460);
+			this.editConfig.Name = "editConfig";
+			this.editConfig.Size = new System.Drawing.Size(75, 23);
+			this.editConfig.TabIndex = 36;
+			this.editConfig.Text = "vi Conf";
+			this.editConfig.UseVisualStyleBackColor = true;
+			this.editConfig.Click += new System.EventHandler(this.EditConfigClick);
 			// 
 			// label20
 			// 
@@ -358,9 +414,9 @@ namespace cmdUtils
 			this.defConfigButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.defConfigButton.Location = new System.Drawing.Point(516, 460);
 			this.defConfigButton.Name = "defConfigButton";
-			this.defConfigButton.Size = new System.Drawing.Size(75, 23);
+			this.defConfigButton.Size = new System.Drawing.Size(97, 23);
 			this.defConfigButton.TabIndex = 18;
-			this.defConfigButton.Text = "&defConfig";
+			this.defConfigButton.Text = "&defaultConfig";
 			this.defConfigButton.UseVisualStyleBackColor = true;
 			// 
 			// reloadButton
@@ -750,6 +806,18 @@ namespace cmdUtils
 			// 
 			// tabMoulinettes
 			// 
+			this.tabMoulinettes.Controls.Add(this.label25);
+			this.tabMoulinettes.Controls.Add(this.label24);
+			this.tabMoulinettes.Controls.Add(this.tboxMoulRepFinal);
+			this.tabMoulinettes.Controls.Add(this.label23);
+			this.tabMoulinettes.Controls.Add(this.btnCheckJ);
+			this.tabMoulinettes.Controls.Add(this.btnCheckY);
+			this.tabMoulinettes.Controls.Add(this.moulJFRtb);
+			this.tabMoulinettes.Controls.Add(this.moulYFRtb);
+			this.tabMoulinettes.Controls.Add(this.moulRichTexBox);
+			this.tabMoulinettes.Controls.Add(this.moulCreaRepBtn);
+			this.tabMoulinettes.Controls.Add(this.moulDateTextBox);
+			this.tabMoulinettes.Controls.Add(this.instancesListBox);
 			this.tabMoulinettes.Controls.Add(this.bntMoulZipIt);
 			this.tabMoulinettes.Controls.Add(this.docs);
 			this.tabMoulinettes.Controls.Add(this.txtBoxMoulDocs);
@@ -782,6 +850,107 @@ namespace cmdUtils
 			this.tabMoulinettes.Text = "Moulinettes";
 			this.tabMoulinettes.UseVisualStyleBackColor = true;
 			// 
+			// label25
+			// 
+			this.label25.Location = new System.Drawing.Point(652, 397);
+			this.label25.Name = "label25";
+			this.label25.Size = new System.Drawing.Size(159, 23);
+			this.label25.TabIndex = 35;
+			this.label25.Text = "mag01/Joint/";
+			// 
+			// label24
+			// 
+			this.label24.Location = new System.Drawing.Point(652, 219);
+			this.label24.Name = "label24";
+			this.label24.Size = new System.Drawing.Size(159, 19);
+			this.label24.TabIndex = 34;
+			this.label24.Text = "mag01/Y*D";
+			// 
+			// tboxMoulRepFinal
+			// 
+			this.tboxMoulRepFinal.Location = new System.Drawing.Point(74, 432);
+			this.tboxMoulRepFinal.Name = "tboxMoulRepFinal";
+			this.tboxMoulRepFinal.ReadOnly = true;
+			this.tboxMoulRepFinal.Size = new System.Drawing.Size(310, 20);
+			this.tboxMoulRepFinal.TabIndex = 33;
+			// 
+			// label23
+			// 
+			this.label23.Location = new System.Drawing.Point(12, 429);
+			this.label23.Name = "label23";
+			this.label23.Size = new System.Drawing.Size(69, 27);
+			this.label23.TabIndex = 32;
+			this.label23.Text = "label23";
+			// 
+			// btnCheckJ
+			// 
+			this.btnCheckJ.Location = new System.Drawing.Point(445, 399);
+			this.btnCheckJ.Name = "btnCheckJ";
+			this.btnCheckJ.Size = new System.Drawing.Size(59, 27);
+			this.btnCheckJ.TabIndex = 31;
+			this.btnCheckJ.Text = "checkJ";
+			this.btnCheckJ.UseVisualStyleBackColor = true;
+			this.btnCheckJ.Click += new System.EventHandler(this.BtnCheckJClick);
+			// 
+			// btnCheckY
+			// 
+			this.btnCheckY.Location = new System.Drawing.Point(445, 370);
+			this.btnCheckY.Name = "btnCheckY";
+			this.btnCheckY.Size = new System.Drawing.Size(59, 27);
+			this.btnCheckY.TabIndex = 30;
+			this.btnCheckY.Text = "checkY";
+			this.btnCheckY.UseVisualStyleBackColor = true;
+			this.btnCheckY.Click += new System.EventHandler(this.BtnCheckYClick);
+			// 
+			// moulJFRtb
+			// 
+			this.moulJFRtb.Location = new System.Drawing.Point(652, 426);
+			this.moulJFRtb.Name = "moulJFRtb";
+			this.moulJFRtb.Size = new System.Drawing.Size(159, 64);
+			this.moulJFRtb.TabIndex = 29;
+			this.moulJFRtb.Text = "";
+			// 
+			// moulYFRtb
+			// 
+			this.moulYFRtb.Location = new System.Drawing.Point(652, 244);
+			this.moulYFRtb.Name = "moulYFRtb";
+			this.moulYFRtb.Size = new System.Drawing.Size(159, 153);
+			this.moulYFRtb.TabIndex = 28;
+			this.moulYFRtb.Text = "";
+			// 
+			// moulRichTexBox
+			// 
+			this.moulRichTexBox.Location = new System.Drawing.Point(3, 271);
+			this.moulRichTexBox.Name = "moulRichTexBox";
+			this.moulRichTexBox.Size = new System.Drawing.Size(447, 73);
+			this.moulRichTexBox.TabIndex = 27;
+			this.moulRichTexBox.Text = "";
+			// 
+			// moulCreaRepBtn
+			// 
+			this.moulCreaRepBtn.Location = new System.Drawing.Point(445, 344);
+			this.moulCreaRepBtn.Name = "moulCreaRepBtn";
+			this.moulCreaRepBtn.Size = new System.Drawing.Size(59, 25);
+			this.moulCreaRepBtn.TabIndex = 26;
+			this.moulCreaRepBtn.Text = "creaRep";
+			this.moulCreaRepBtn.UseVisualStyleBackColor = true;
+			this.moulCreaRepBtn.Click += new System.EventHandler(this.MoulCreaRepBtnClick);
+			// 
+			// moulDateTextBox
+			// 
+			this.moulDateTextBox.Location = new System.Drawing.Point(163, 344);
+			this.moulDateTextBox.Name = "moulDateTextBox";
+			this.moulDateTextBox.Size = new System.Drawing.Size(77, 20);
+			this.moulDateTextBox.TabIndex = 25;
+			// 
+			// instancesListBox
+			// 
+			this.instancesListBox.FormattingEnabled = true;
+			this.instancesListBox.Location = new System.Drawing.Point(239, 344);
+			this.instancesListBox.Name = "instancesListBox";
+			this.instancesListBox.Size = new System.Drawing.Size(202, 56);
+			this.instancesListBox.TabIndex = 24;
+			// 
 			// bntMoulZipIt
 			// 
 			this.bntMoulZipIt.Location = new System.Drawing.Point(527, 21);
@@ -804,7 +973,7 @@ namespace cmdUtils
 			// 
 			this.txtBoxMoulDocs.Location = new System.Drawing.Point(97, 245);
 			this.txtBoxMoulDocs.Name = "txtBoxMoulDocs";
-			this.txtBoxMoulDocs.Size = new System.Drawing.Size(470, 20);
+			this.txtBoxMoulDocs.Size = new System.Drawing.Size(353, 20);
 			this.txtBoxMoulDocs.TabIndex = 21;
 			// 
 			// data
@@ -819,30 +988,30 @@ namespace cmdUtils
 			// 
 			this.txtBoxMoulData.Location = new System.Drawing.Point(97, 219);
 			this.txtBoxMoulData.Name = "txtBoxMoulData";
-			this.txtBoxMoulData.Size = new System.Drawing.Size(470, 20);
+			this.txtBoxMoulData.Size = new System.Drawing.Size(353, 20);
 			this.txtBoxMoulData.TabIndex = 19;
 			// 
 			// button4
 			// 
-			this.button4.Location = new System.Drawing.Point(693, 407);
+			this.button4.Location = new System.Drawing.Point(585, 460);
 			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(75, 23);
+			this.button4.Size = new System.Drawing.Size(52, 23);
 			this.button4.TabIndex = 18;
 			this.button4.Text = "s2";
 			this.button4.UseVisualStyleBackColor = true;
 			// 
 			// button3
 			// 
-			this.button3.Location = new System.Drawing.Point(693, 378);
+			this.button3.Location = new System.Drawing.Point(527, 459);
 			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(75, 23);
+			this.button3.Size = new System.Drawing.Size(52, 23);
 			this.button3.TabIndex = 17;
 			this.button3.Text = "s1";
 			this.button3.UseVisualStyleBackColor = true;
 			// 
 			// btnMoulNavigDestBase
 			// 
-			this.btnMoulNavigDestBase.Location = new System.Drawing.Point(430, 407);
+			this.btnMoulNavigDestBase.Location = new System.Drawing.Point(390, 407);
 			this.btnMoulNavigDestBase.Name = "btnMoulNavigDestBase";
 			this.btnMoulNavigDestBase.Size = new System.Drawing.Size(51, 23);
 			this.btnMoulNavigDestBase.TabIndex = 16;
@@ -862,7 +1031,7 @@ namespace cmdUtils
 			// 
 			// btnZip
 			// 
-			this.btnZip.Location = new System.Drawing.Point(620, 460);
+			this.btnZip.Location = new System.Drawing.Point(445, 460);
 			this.btnZip.Name = "btnZip";
 			this.btnZip.Size = new System.Drawing.Size(75, 23);
 			this.btnZip.TabIndex = 14;
@@ -871,14 +1040,14 @@ namespace cmdUtils
 			// 
 			// txtFinal
 			// 
-			this.txtFinal.Location = new System.Drawing.Point(102, 444);
+			this.txtFinal.Location = new System.Drawing.Point(74, 459);
 			this.txtFinal.Name = "txtFinal";
 			this.txtFinal.Size = new System.Drawing.Size(310, 20);
 			this.txtFinal.TabIndex = 13;
 			// 
 			// label19
 			// 
-			this.label19.Location = new System.Drawing.Point(12, 444);
+			this.label19.Location = new System.Drawing.Point(12, 460);
 			this.label19.Name = "label19";
 			this.label19.Size = new System.Drawing.Size(84, 23);
 			this.label19.TabIndex = 12;
@@ -894,37 +1063,38 @@ namespace cmdUtils
 			// 
 			// txtMagClient
 			// 
-			this.txtMagClient.Location = new System.Drawing.Point(381, 363);
+			this.txtMagClient.Location = new System.Drawing.Point(57, 370);
 			this.txtMagClient.Name = "txtMagClient";
 			this.txtMagClient.Size = new System.Drawing.Size(100, 20);
 			this.txtMagClient.TabIndex = 10;
 			// 
 			// label18
 			// 
-			this.label18.Location = new System.Drawing.Point(245, 361);
+			this.label18.Location = new System.Drawing.Point(12, 367);
 			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(100, 23);
+			this.label18.Size = new System.Drawing.Size(42, 14);
 			this.label18.TabIndex = 9;
 			this.label18.Text = "client";
 			// 
 			// txtMagId
 			// 
-			this.txtMagId.Location = new System.Drawing.Point(102, 361);
+			this.txtMagId.Location = new System.Drawing.Point(57, 344);
 			this.txtMagId.Name = "txtMagId";
 			this.txtMagId.Size = new System.Drawing.Size(100, 20);
 			this.txtMagId.TabIndex = 8;
+			this.txtMagId.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MoulinetteMagIdKeyUp);
 			// 
 			// label17
 			// 
-			this.label17.Location = new System.Drawing.Point(12, 361);
+			this.label17.Location = new System.Drawing.Point(12, 347);
 			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(100, 23);
+			this.label17.Size = new System.Drawing.Size(39, 20);
 			this.label17.TabIndex = 7;
 			this.label17.Text = "magId";
 			// 
 			// txtBoxMoulDestBase
 			// 
-			this.txtBoxMoulDestBase.Location = new System.Drawing.Point(102, 407);
+			this.txtBoxMoulDestBase.Location = new System.Drawing.Point(74, 406);
 			this.txtBoxMoulDestBase.Name = "txtBoxMoulDestBase";
 			this.txtBoxMoulDestBase.Size = new System.Drawing.Size(310, 20);
 			this.txtBoxMoulDestBase.TabIndex = 6;
@@ -977,6 +1147,115 @@ namespace cmdUtils
 			this.btnSearch.UseVisualStyleBackColor = true;
 			this.btnSearch.Click += new System.EventHandler(this.BtnSearchClick);
 			// 
+			// upData
+			// 
+			this.upData.Controls.Add(this.upDataArchivesList);
+			this.upData.Controls.Add(this.button5);
+			this.upData.Controls.Add(this.button2);
+			this.upData.Controls.Add(this.button1);
+			this.upData.Controls.Add(this.upDataCandidatsArchivesList);
+			this.upData.Controls.Add(this.upTabInstanceList);
+			this.upData.Controls.Add(this.upDataMagId);
+			this.upData.Controls.Add(this.label27);
+			this.upData.Controls.Add(this.upDataBaseMoulinettes);
+			this.upData.Controls.Add(this.label26);
+			this.upData.Location = new System.Drawing.Point(4, 22);
+			this.upData.Name = "upData";
+			this.upData.Padding = new System.Windows.Forms.Padding(3);
+			this.upData.Size = new System.Drawing.Size(814, 489);
+			this.upData.TabIndex = 7;
+			this.upData.Text = "UpData";
+			this.upData.UseVisualStyleBackColor = true;
+			// 
+			// upDataArchivesList
+			// 
+			this.upDataArchivesList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+			this.upDataArchivesList.FormattingEnabled = true;
+			this.upDataArchivesList.Location = new System.Drawing.Point(8, 251);
+			this.upDataArchivesList.Name = "upDataArchivesList";
+			this.upDataArchivesList.Size = new System.Drawing.Size(803, 134);
+			this.upDataArchivesList.TabIndex = 9;
+			// 
+			// button5
+			// 
+			this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+			this.button5.Location = new System.Drawing.Point(341, 460);
+			this.button5.Name = "button5";
+			this.button5.Size = new System.Drawing.Size(75, 23);
+			this.button5.TabIndex = 8;
+			this.button5.Text = "upload";
+			this.button5.UseVisualStyleBackColor = false;
+			// 
+			// button2
+			// 
+			this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+			this.button2.Location = new System.Drawing.Point(91, 461);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(75, 23);
+			this.button2.TabIndex = 7;
+			this.button2.Text = "zip";
+			this.button2.UseVisualStyleBackColor = false;
+			// 
+			// button1
+			// 
+			this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+			this.button1.Location = new System.Drawing.Point(9, 462);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.TabIndex = 6;
+			this.button1.Text = "createScript";
+			this.button1.UseVisualStyleBackColor = false;
+			// 
+			// upDataCandidatsArchivesList
+			// 
+			this.upDataCandidatsArchivesList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+			this.upDataCandidatsArchivesList.FormattingEnabled = true;
+			this.upDataCandidatsArchivesList.Location = new System.Drawing.Point(10, 111);
+			this.upDataCandidatsArchivesList.Name = "upDataCandidatsArchivesList";
+			this.upDataCandidatsArchivesList.Size = new System.Drawing.Size(803, 134);
+			this.upDataCandidatsArchivesList.TabIndex = 5;
+			// 
+			// upTabInstanceList
+			// 
+			this.upTabInstanceList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+			this.upTabInstanceList.FormattingEnabled = true;
+			this.upTabInstanceList.Location = new System.Drawing.Point(423, 0);
+			this.upTabInstanceList.Name = "upTabInstanceList";
+			this.upTabInstanceList.Size = new System.Drawing.Size(391, 95);
+			this.upTabInstanceList.TabIndex = 4;
+			// 
+			// upDataMagId
+			// 
+			this.upDataMagId.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+			this.upDataMagId.Location = new System.Drawing.Point(112, 33);
+			this.upDataMagId.Name = "upDataMagId";
+			this.upDataMagId.Size = new System.Drawing.Size(100, 20);
+			this.upDataMagId.TabIndex = 3;
+			// 
+			// label27
+			// 
+			this.label27.Location = new System.Drawing.Point(6, 36);
+			this.label27.Name = "label27";
+			this.label27.Size = new System.Drawing.Size(84, 23);
+			this.label27.TabIndex = 2;
+			this.label27.Text = "magId";
+			// 
+			// upDataBaseMoulinettes
+			// 
+			this.upDataBaseMoulinettes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+			this.upDataBaseMoulinettes.Location = new System.Drawing.Point(112, 0);
+			this.upDataBaseMoulinettes.Name = "upDataBaseMoulinettes";
+			this.upDataBaseMoulinettes.Size = new System.Drawing.Size(258, 20);
+			this.upDataBaseMoulinettes.TabIndex = 1;
+			// 
+			// label26
+			// 
+			this.label26.Location = new System.Drawing.Point(6, 3);
+			this.label26.Name = "label26";
+			this.label26.Size = new System.Drawing.Size(100, 23);
+			this.label26.TabIndex = 0;
+			this.label26.Text = "rep Moulinette";
+			// 
 			// tabMeo
 			// 
 			this.tabMeo.Controls.Add(this.tabMeoTest2);
@@ -1000,7 +1279,6 @@ namespace cmdUtils
 			this.tabMeoTest2.Name = "tabMeoTest2";
 			this.tabMeoTest2.Size = new System.Drawing.Size(100, 23);
 			this.tabMeoTest2.TabIndex = 5;
-			this.tabMeoTest2.Text = "tabMeoTest2";
 			this.tabMeoTest2.Click += new System.EventHandler(this.TabMeoTest2Click);
 			// 
 			// tabMeoTest1
@@ -1010,7 +1288,6 @@ namespace cmdUtils
 			this.tabMeoTest1.Name = "tabMeoTest1";
 			this.tabMeoTest1.Size = new System.Drawing.Size(100, 23);
 			this.tabMeoTest1.TabIndex = 4;
-			this.tabMeoTest1.Text = "tabMeoTest1";
 			this.tabMeoTest1.Click += new System.EventHandler(this.TabMeoTest1Click);
 			// 
 			// TabMeoLabel2
@@ -1019,7 +1296,6 @@ namespace cmdUtils
 			this.TabMeoLabel2.Name = "TabMeoLabel2";
 			this.TabMeoLabel2.Size = new System.Drawing.Size(788, 14);
 			this.TabMeoLabel2.TabIndex = 3;
-			this.TabMeoLabel2.Text = "Grep dans Src";
 			// 
 			// TabMeoLabel1
 			// 
@@ -1027,7 +1303,6 @@ namespace cmdUtils
 			this.TabMeoLabel1.Name = "TabMeoLabel1";
 			this.TabMeoLabel1.Size = new System.Drawing.Size(788, 14);
 			this.TabMeoLabel1.TabIndex = 2;
-			this.TabMeoLabel1.Text = "Exception GWT.JavaScriptException - Copier exception ci dessous";
 			// 
 			// tabMeoTxtExceptionLisible
 			// 
@@ -1046,6 +1321,71 @@ namespace cmdUtils
 			this.tabMeoTxtExceptionBrute.Size = new System.Drawing.Size(800, 215);
 			this.tabMeoTxtExceptionBrute.TabIndex = 0;
 			this.tabMeoTxtExceptionBrute.TextChanged += new System.EventHandler(this.TabMeoTxtExceptionBruteTextChanged);
+			// 
+			// tabHorloge
+			// 
+			this.tabHorloge.Location = new System.Drawing.Point(4, 22);
+			this.tabHorloge.Name = "tabHorloge";
+			this.tabHorloge.Padding = new System.Windows.Forms.Padding(3);
+			this.tabHorloge.Size = new System.Drawing.Size(814, 489);
+			this.tabHorloge.TabIndex = 6;
+			this.tabHorloge.Text = "tabHorloge";
+			this.tabHorloge.UseVisualStyleBackColor = true;
+			// 
+			// tabCode
+			// 
+			this.tabCode.Controls.Add(this.tabCodeResult);
+			this.tabCode.Controls.Add(this.tabCodeBtn);
+			this.tabCode.Controls.Add(this.tabCodeApres);
+			this.tabCode.Controls.Add(this.tabCodeAvant);
+			this.tabCode.Controls.Add(this.tabCodeSource);
+			this.tabCode.Location = new System.Drawing.Point(4, 22);
+			this.tabCode.Name = "tabCode";
+			this.tabCode.Padding = new System.Windows.Forms.Padding(3);
+			this.tabCode.Size = new System.Drawing.Size(814, 489);
+			this.tabCode.TabIndex = 8;
+			this.tabCode.Text = "Code";
+			this.tabCode.UseVisualStyleBackColor = true;
+			// 
+			// tabCodeResult
+			// 
+			this.tabCodeResult.Location = new System.Drawing.Point(6, 204);
+			this.tabCodeResult.Multiline = true;
+			this.tabCodeResult.Name = "tabCodeResult";
+			this.tabCodeResult.Size = new System.Drawing.Size(802, 279);
+			this.tabCodeResult.TabIndex = 5;
+			// 
+			// tabCodeBtn
+			// 
+			this.tabCodeBtn.Location = new System.Drawing.Point(612, 3);
+			this.tabCodeBtn.Name = "tabCodeBtn";
+			this.tabCodeBtn.Size = new System.Drawing.Size(75, 23);
+			this.tabCodeBtn.TabIndex = 4;
+			this.tabCodeBtn.Text = "&go";
+			this.tabCodeBtn.UseVisualStyleBackColor = true;
+			this.tabCodeBtn.Click += new System.EventHandler(this.TabCodeBtnClick);
+			// 
+			// tabCodeApres
+			// 
+			this.tabCodeApres.Location = new System.Drawing.Point(324, 7);
+			this.tabCodeApres.Name = "tabCodeApres";
+			this.tabCodeApres.Size = new System.Drawing.Size(228, 20);
+			this.tabCodeApres.TabIndex = 2;
+			// 
+			// tabCodeAvant
+			// 
+			this.tabCodeAvant.Location = new System.Drawing.Point(30, 7);
+			this.tabCodeAvant.Name = "tabCodeAvant";
+			this.tabCodeAvant.Size = new System.Drawing.Size(228, 20);
+			this.tabCodeAvant.TabIndex = 1;
+			// 
+			// tabCodeSource
+			// 
+			this.tabCodeSource.Location = new System.Drawing.Point(6, 43);
+			this.tabCodeSource.Multiline = true;
+			this.tabCodeSource.Name = "tabCodeSource";
+			this.tabCodeSource.Size = new System.Drawing.Size(802, 155);
+			this.tabCodeSource.TabIndex = 0;
 			// 
 			// menuStrip1
 			// 
@@ -1086,7 +1426,9 @@ namespace cmdUtils
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.toolStripLabel1,
 			this.cygwinToolStripButton,
-			this.toolStripSeparator1});
+			this.toolStripSeparator1,
+			this.toolStripCmdLabel,
+			this.toolStripButton1});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(834, 25);
@@ -1096,8 +1438,8 @@ namespace cmdUtils
 			// toolStripLabel1
 			// 
 			this.toolStripLabel1.Name = "toolStripLabel1";
-			this.toolStripLabel1.Size = new System.Drawing.Size(42, 22);
-			this.toolStripLabel1.Text = "cygWin";
+			this.toolStripLabel1.Size = new System.Drawing.Size(64, 22);
+			this.toolStripLabel1.Text = "cygWinShell";
 			// 
 			// cygwinToolStripButton
 			// 
@@ -1113,6 +1455,22 @@ namespace cmdUtils
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripCmdLabel
+			// 
+			this.toolStripCmdLabel.Name = "toolStripCmdLabel";
+			this.toolStripCmdLabel.Size = new System.Drawing.Size(26, 22);
+			this.toolStripCmdLabel.Text = "cmd";
+			// 
+			// toolStripButton1
+			// 
+			this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton1.Name = "toolStripButton1";
+			this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton1.Text = "toolStripButton1";
+			this.toolStripButton1.Click += new System.EventHandler(this.ToolStripButton1Click);
 			// 
 			// MainForm
 			// 
@@ -1137,8 +1495,12 @@ namespace cmdUtils
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.tabMoulinettes.ResumeLayout(false);
 			this.tabMoulinettes.PerformLayout();
+			this.upData.ResumeLayout(false);
+			this.upData.PerformLayout();
 			this.tabMeo.ResumeLayout(false);
 			this.tabMeo.PerformLayout();
+			this.tabCode.ResumeLayout(false);
+			this.tabCode.PerformLayout();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
@@ -1148,6 +1510,34 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.TextBox tabCodeResult;
+		private System.Windows.Forms.Button tabCodeBtn;
+		private System.Windows.Forms.TextBox tabCodeApres;
+		private System.Windows.Forms.TextBox tabCodeAvant;
+		private System.Windows.Forms.TextBox tabCodeSource;
+		private System.Windows.Forms.TabPage tabCode;
+		private System.Windows.Forms.ToolStripButton toolStripButton1;
+		private System.Windows.Forms.ToolStripLabel toolStripCmdLabel;
+		private System.Windows.Forms.ListBox upDataArchivesList;
+		private System.Windows.Forms.Button button5;
+		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.ListBox upDataCandidatsArchivesList;
+		private System.Windows.Forms.TabPage upData;
+		private System.Windows.Forms.ListBox upTabInstanceList;
+		private System.Windows.Forms.TextBox upDataMagId;
+		private System.Windows.Forms.Label label27;
+		private System.Windows.Forms.TextBox upDataBaseMoulinettes;
+		private System.Windows.Forms.Label label26;
+		private System.Windows.Forms.Label label25;
+		private System.Windows.Forms.Label label24;
+		private System.Windows.Forms.Button editConfig;
+		private System.Windows.Forms.RichTextBox richTextBox3;
+		private System.Windows.Forms.RichTextBox moulRichTexBox;
+		private System.Windows.Forms.Button moulCreaRepBtn;
+		private System.Windows.Forms.TextBox moulDateTextBox;
+		private System.Windows.Forms.ListBox instancesListBox;
+		private System.Windows.Forms.TabPage tabHorloge;
 		private System.Windows.Forms.Label tabMeoTest2;
 		private System.Windows.Forms.Label tabMeoTest1;
 		private System.Windows.Forms.Label TabMeoLabel2;
@@ -1202,7 +1592,7 @@ namespace cmdUtils
 		private System.Windows.Forms.ToolStripButton cygwinToolStripButton;
 		private System.Windows.Forms.Label label12;
 		private System.Windows.Forms.Button meoCreateFiledb;
-		//private System.Windows.Forms.Button button1;
+//private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.NotifyIcon notifyIcon1;
 		private System.Windows.Forms.RichTextBox richTextBox2;
 		private System.Windows.Forms.TabPage tabPdf;

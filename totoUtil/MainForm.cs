@@ -63,9 +63,9 @@ namespace totoUtil
 			argTextBox.Text = "-Fi --color=always coins %userprofile%/AppData/Roaming/.minecraft/logs/*log";
 			argTextBox.Text = "-Fh -e \" Coins from \" -e \"tip \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			
-			argTextBox.Text = "-Fh -w -e Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
+			argTextBox.Text = "-Fh -w -e Coins -e \"You tipped \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			
-			argTextBox.Text = "-Fh -w -e Coins -e \"You sent a tip of\" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
+			argTextBox.Text = "-Fh -w -e Coins -e \"You tipped \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 		}
 		void BtnClick(object sender, EventArgs e)
 		{

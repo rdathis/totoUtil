@@ -31,8 +31,7 @@ namespace cmdUtils.Objets
 			listReg.Add(new Regex(@"administration"));
 			return listReg;
 		}
-		public CmdUtil()
-		{
+		public CmdUtil()	{
 		}
 
 		public string dingding()
@@ -140,6 +139,38 @@ namespace cmdUtils.Objets
 				}
 			}
 		}
+		
+		public void launchWindowsCmd()
+		{
+			// For the example.
+			//const string ex1 = "C:\\";
+			// const string ex2 = "C:\\Dir";
+
+			// Use ProcessStartInfo class.
+			ProcessStartInfo startInfo = new ProcessStartInfo();
+			startInfo.CreateNoWindow = false;
+			startInfo.UseShellExecute = false;
+			startInfo.FileName = "cmd.exe";
+			
+			startInfo.WindowStyle = ProcessWindowStyle.Normal;
+			//startInfo.Arguments = "-f j -o \"" + ex1 + "\" -z 1.0 -s y " + ex2;
+			startInfo.Arguments = "";
+
+			try
+			{
+				// Start the process with the info we specified.
+				// Call WaitForExit and then the using-statement will close.
+				using (Process exeProcess = Process.Start(startInfo))
+				{
+					// exeProcess.WaitForExit();
+				}
+			}
+			catch
+			{
+				// Log error.
+			}
+		}
+		
 		public List <String> getDatabases(ConfigSectionSettings cfg) {
 			String connString = myUtil.buildconnString("", "localhost", cfg.mysqlUser, cfg.mysqlPassword);
 			List <String> list = myUtil.getListResultSimple(connString, myUtil.getDatabaseList());
@@ -153,13 +184,16 @@ namespace cmdUtils.Objets
 			
 		}
 		
-		public List <String> executeCommand(String cmd, String args) {
+		public List <String> executeCommande(String cmd, String args) {
 			List <String> list = new List<String>();
 			
 			ProcessUtil pu = new ProcessUtil();
+			Console.WriteLine(cmd +" "+args);
+			// MessageBox.Show(cmd +" "+args);
 			Process p = pu.startProcess(cmd, args, ProcessWindowStyle.Minimized);
+/*
 			try {
-				if (p.ExitCode!=0) {
+				//if (p.ExitCode!=0) {
 					StreamReader srErr=p.StandardError;
 					String [] sErr =  srErr.ReadToEnd().Split('\n');
 					foreach(String ss in sErr) {
@@ -167,10 +201,11 @@ namespace cmdUtils.Objets
 					}
 					return list;
 					
-				}
+				//}
 			} catch (Exception e) {
 				System.Diagnostics.Debug.Print("Exception : "+e);
 			}
+			*/
 			StreamReader srOut= p.StandardOutput;
 			String [] sOut =  srOut.ReadToEnd().Split('\n');
 			foreach(String ss in sOut) {
@@ -183,7 +218,7 @@ namespace cmdUtils.Objets
 		
 		public void openWindowsExplorer(String path) {
 			path=path.Replace("/", "\\");
-			executeCommand("explorer", path);
+			executeCommande("explorer", path);
 		}
 		public List<String> filterListe(List<String> listStr, List<Regex> listReg, FiltersReg filter) {
 			
@@ -221,18 +256,6 @@ namespace cmdUtils.Objets
 		{
 			/**
 		
-com.google.gwt.core.client.JavaScriptException: (TypeError)
-line: 19730
-column: 54
-sourceURL: https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html: null is not an object (evaluating 'a.d'): at
-Unknown.f5h(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@76)
-Unknown.I5h(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@29)
-Unknown.K5h(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@621262)
-Unknown.hm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@28)
-Unknown.Eae(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@34)
-Unknown.Gae(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@309143)
-Unknown.hm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@28)
-Unknown.pm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@12990)
 
 ---
 cas 2 :
@@ -244,7 +267,7 @@ Unknown.dJg(<anonymous>@36)
 Unknown.gJg(<anonymous>@379529)
 Unknown.oQ(<anonymous>@258451)
 Unknown.<anonymous>(<anonymous>@155)
-Unknown._w(https://www.myeasyoptic.com/mag-opticaldiscount/myeasyoptic/78957C736ADB5FD05DCBA3DDACFEFF8F.cache.html@29)
+Unknown._w(https://server/instance/application/78957C736ADB5FD05DCBA3DDACFEFF8F.cache.html@29)
 
 			 */
 			//StringBuilder builder = new StringBuilder();
@@ -266,7 +289,7 @@ Unknown._w(https://www.myeasyoptic.com/mag-opticaldiscount/myeasyoptic/78957C736
 					motLst+=(mot+" ");
 				} else if (ligne.StartsWith("sourceURL:", StringComparison.Ordinal)) {
 					// CAS 1
-					// sourceURL: https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html: null is not an object (evaluating 'a.d'): at
+					// sourceURL: https://server/App-1.24.0/application/692C88F43AF9B7D20FD4598EF78AF777.cache.html: null is not an object (evaluating 'a.d'): at
 					// -> '692C88F43AF9B7D20FD4598EF78AF777.symbolMap'
 					
 					String mot = ligne;
@@ -286,7 +309,7 @@ Unknown._w(https://www.myeasyoptic.com/mag-opticaldiscount/myeasyoptic/78957C736
 				} ;
 				if (ligne.Contains(".cache.html")) {
 					// CAS 2
-					// Unknown._w(https://www.myeasyoptic.com/mag-opticaldiscount/myeasyoptic/78957C736ADB5FD05DCBA3DDACFEFF8F.cache.html@29)
+					// Unknown._w(https://server/instance/application/78957C736ADB5FD05DCBA3DDACFEFF8F.cache.html@29)
 					String mot = ligne;
 					String[] lst = ligne.Split('/');
 					server=lst[2];
@@ -326,15 +349,15 @@ Unknown._w(https://www.myeasyoptic.com/mag-opticaldiscount/myeasyoptic/78957C736
 				sb.AppendLine("com.google.gwt.core.client.JavaScriptException: (TypeError)");
 				sb.AppendLine("line: 19730");
 				sb.AppendLine("column: 54");
-				sb.AppendLine("sourceURL: https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html: null is not an object (evaluating 'a.d'): at");
-				sb.AppendLine("Unknown.f5h(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@76)");
-				sb.AppendLine("Unknown.I5h(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@29)");
-				sb.AppendLine("Unknown.K5h(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@621262)");
-				sb.AppendLine("Unknown.hm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@28)");
-				sb.AppendLine("Unknown.Eae(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@34)");
-				sb.AppendLine("Unknown.Gae(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@309143)");
-				sb.AppendLine("Unknown.hm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@28)");
-				sb.AppendLine("Unknown.pm(https://v3.cristallin.com/MyEasyOptic-1.24.0/myeasyoptic/692C88F43AF9B7D20FD4598EF78AF777.cache.html@12990)");
+				sb.AppendLine("sourceURL: https://server/App-1.24.0/application/692C88F43AF9B7D20FD4598EF78AF777.cache.html: null is not an object (evaluating 'a.d'): at");
+				sb.AppendLine("Unknown.f5h(https://server/App-1.24.0/application/692C88F43AF9B7D20FD4598EF78AF777.cache.html@76)");
+				sb.AppendLine("Unknown.I5h(https://server/App-1.24.0/application/692C88F43AF9B7D20FD4598EF78AF777.cache.html@29)");
+				sb.AppendLine("Unknown.K5h(https://server/App-1.24.0/application/692C88F43AF9B7D20FD4598EF78AF777.cache.html@621262)");
+				sb.AppendLine("Unknown.hm(https://server/App-1.24.0/application/692C88F43AF9B7D20FD4598EF78AF777.cache.html@28)");
+				sb.AppendLine("Unknown.Eae(https://server/App-1.24.0/application/692C88F43AF9B7D20FD4598EF78AF777.cache.html@34)");
+				sb.AppendLine("Unknown.Gae(https://server/App-1.24.0/application/692C88F43AF9B7D20FD4598EF78AF777.cache.html@309143)");
+				sb.AppendLine("Unknown.hm(https://server/App-1.24.0/application/692C88F43AF9B7D20FD4598EF78AF777.cache.html@28)");
+				sb.AppendLine("Unknown.pm(https://server/App-1.24.0/application/692C88F43AF9B7D20FD4598EF78AF777.cache.html@12990)");
 				
 				return sb.ToString();
 			}
@@ -347,11 +370,37 @@ Unknown._w(https://www.myeasyoptic.com/mag-opticaldiscount/myeasyoptic/78957C736
 				sb.AppendLine("Unknown.gJg(<anonymous>@379529)");
 				sb.AppendLine("Unknown.oQ(<anonymous>@258451)");
 				sb.AppendLine("Unknown.<anonymous>(<anonymous>@155)");
-				sb.AppendLine("Unknown._w(https://www.myeasyoptic.com/mag-opticaldiscount/myeasyoptic/78957C736ADB5FD05DCBA3DDACFEFF8F.cache.html@29)				");
+				sb.AppendLine("Unknown._w(https://server/instance_name/application/78957C736ADB5FD05DCBA3DDACFEFF8F.cache.html@29)				");
 				return sb.ToString();
 
 			}
 			return "";
+		}
+
+		public string buildPuttyArgs(MeoServeur server)
+		{
+			String retour="";
+			if (String.IsNullOrEmpty(server.getPassword())) {
+				retour+=" -pw "+server.getPassword();
+			}
+			if (!String.IsNullOrEmpty(server.getUtilisateur())) {
+				retour+=" "+server.getUtilisateur()+"@"+server.getAdresse();
+			}
+			return (" -pw "+server.getPassword() +" "+server.getUtilisateur()+"@"+server.getAdresse());
+		}
+
+		public string buildPscpArgs(MeoServeur server, MouliJob job)
+		{
+			String retour="";
+			if (!String.IsNullOrEmpty(server.getPassword())) {
+				retour+=" -pw "+server.getPassword();
+			}
+			retour+=" "+job.getArchiveName()+" ";
+			if (!String.IsNullOrEmpty(server.getUtilisateur())) {
+				retour+=" "+server.getUtilisateur()+"@"+server.getAdresse();
+			}
+			retour+=":/database/transpo/";
+			return (retour);
 		}
 	}
 }
