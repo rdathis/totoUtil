@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
+using System.IO.Compression;
 using System.Text.RegularExpressions;
 using System.Collections;
 using totoUtil.Objets;
@@ -96,23 +97,25 @@ static void Main(string[] args)
 	}
 	 */
 	
-	public class Greper {
+	public class Greper
+	{
 		/** */
 		
 		/** grep a single file (existing) */
-		public List <String> grepFile(String files, List <Regex> regX, GrepOptions options) {
+		public List <String> grepFile(String files, List <Regex> regX, GrepOptions options)
+		{
 			List <String> fichiersList = MainUtils.getFiles(files, "");
-			if (options==null) {
-				options=new GrepOptions();
+			if (options == null) {
+				options = new GrepOptions();
 			}
-			List <String> strResult=new List<String> ();
+			List <String> strResult = new List<String>();
 			
-			foreach	(String fichier in fichiersList) {
+			foreach (String fichier in fichiersList) {
 				//recherche
 				GrepResult results = grepFileAsResults(fichier, regX, options);
 				
 				
-				foreach(GrepLignes founded in results.getResults()) {
+				foreach (GrepLignes founded in results.getResults()) {
 					strResult.Add(simpleFormateResult(founded, options, results.getFilename()));
 				}
 
@@ -122,33 +125,41 @@ static void Main(string[] args)
 		}
 		
 		
-		private GrepResult grepFileAsResults(String file, List <Regex> regX, GrepOptions options) {
-			if ((regX ==null) || (regX.Count <1)) return null;
-			if (!File.Exists(file)) return null;
-			if (options==null) {
-				options=new GrepOptions();
+		private GrepResult grepFileAsResults(String file, List <Regex> regX, GrepOptions options)
+		{
+			if ((regX == null) || (regX.Count < 1))
+				return null;
+			if (!File.Exists(file))
+				return null;
+			if (options == null) {
+				options = new GrepOptions();
 			}
 
 			
 			GrepResult result = new GrepResult(file, null);
 			List <GrepLignes> results = new List<GrepLignes>();
 			result.setResults(results);
+			Stream stream=null;
+			
+			FileStream reader=null;
+			if (file.EndsWith("gz")) {
+				 reader= File.OpenRead(file);
+				stream = new GZipStream(reader, CompressionMode.Decompress, true);
+			} else {
+				stream = new FileStream(file, FileMode.Open);
+			}
 			
 			
-			//IMPORTANT:ouverture en lecture d'un fichier déja ouvert
-			Stream stream= File.Open(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+			StreamReader sr = new  StreamReader(stream);
 			
 			
-			StreamReader sr = new  StreamReader(stream) ;
-			
-			
-			String ligne=null;
+			String ligne = null;
 			long cptL = 0;
-			while (  (ligne=sr.ReadLine()) !=null) {
+			while ((ligne = sr.ReadLine()) != null) {
 				cptL++;
 				if (ligne.Length > 0) {
 					//System.Diagnostics.Debug.Print("ligne  ("+cptL+")"+ligne);
-					for(int i =0;i<regX.Count;i++) {
+					for (int i = 0; i < regX.Count; i++) {
 						if (regX[i].IsMatch(ligne)) {
 							GrepLignes ok = new GrepLignes();
 							ok.setIndexMatcher(i);
@@ -162,20 +173,25 @@ static void Main(string[] args)
 					}
 				}
 			}
+			
+			if (reader!=null) {
+				reader.Close();
+			}
 			//String flux = sr.ReadToEnd();
 			sr.Close();
 			return result;
 		}
 
-		string simpleFormateResult(GrepLignes founded, GrepOptions options, String filename="")
+		string simpleFormateResult(GrepLignes founded, GrepOptions options, String filename = "")
 		{
-			if (options==null) options=new GrepOptions();
-			String str =founded.getLigneContent();
+			if (options == null)
+				options = new GrepOptions();
+			String str = founded.getLigneContent();
 			if (options.getPrintLineNumber()) {
-				str=founded.getLigneNumber()+":"+str;
+				str = founded.getLigneNumber() + ":" + str;
 			}
-			if (options.getPrintFileName() ) {
-				str=filename+" "+str;
+			if (options.getPrintFileName()) {
+				str = filename + " " + str;
 			}
 			return str;
 		}

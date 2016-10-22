@@ -363,16 +363,22 @@ namespace totoUtil
 			tipTextbox.Focus();
 		}
 		void prepareGrepList() {
+			
+			String path="%userprofile%/AppData/Roaming/.minecraft/logs/";
+			String date=DateTime.Now.ToString("yyyy-M-dd")+"*log.gz";
 			//TODO:param
-			const String sourcePath = "%userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
+			String source01Path = path+"lat*log";
+			String source02Path= path+date;
 			
 			
 			//search stuff
-			List<String> liste =hyUtil.grepMatchesAndTip(sourcePath);
+			List<String> liste02 =hyUtil.grepMatchesAndTip(source02Path);
+			List<String> liste01 =hyUtil.grepMatchesAndTip(source01Path);
 			
 			
+			liste01.AddRange(liste02);
 			//update tipTB
-			tipTextbox.Text= hyUtil.parseTips(liste);
+			tipTextbox.Text= hyUtil.parseTips(liste01);
 			
 			tippedRichTextBox.Clear();
 			String emptyRtf=tippedRichTextBox.Rtf;
@@ -382,10 +388,10 @@ namespace totoUtil
 			tippedTextBox.Text = "";
 			
 			//update tippedRtf
-			hyUtil.updateTippedRtfBox(tippedRichTextBox, liste);
+			hyUtil.updateTippedRtfBox(tippedRichTextBox, liste01);
 			
 			//update list
-			hyUtil.updateSearchTextBox(infoTextBox, liste);
+			hyUtil.updateSearchTextBox(infoTextBox, liste01);
 
 		}
 		void Button2Click(object sender, EventArgs e)
