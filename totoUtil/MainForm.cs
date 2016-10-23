@@ -66,6 +66,8 @@ namespace totoUtil
 			argTextBox.Text = "-Fh -w -e Coins -e \"You tipped \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
 			
 			argTextBox.Text = "-Fh -w -e Coins -e \"You tipped \" %userprofile%/AppData/Roaming/.minecraft/logs/lat*log";
+			
+			argTextBox.Text+= " "+getOldLog("%userprofile%/AppData/Roaming/.minecraft/logs/");
 		}
 		void BtnClick(object sender, EventArgs e)
 		{
@@ -362,13 +364,17 @@ namespace totoUtil
 			prepareGrepList();
 			tipTextbox.Focus();
 		}
+		private String getOldLog(String path) {
+			String date=DateTime.Now.ToString("yyyy-M-dd")+"*log.gz";
+			return (path+date);
+		}
 		void prepareGrepList() {
 			
 			String path="%userprofile%/AppData/Roaming/.minecraft/logs/";
-			String date=DateTime.Now.ToString("yyyy-M-dd")+"*log.gz";
+			
 			//TODO:param
 			String source01Path = path+"lat*log";
-			String source02Path= path+date;
+			String source02Path = getOldLog(path);
 			
 			
 			//search stuff

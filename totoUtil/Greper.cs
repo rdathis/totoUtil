@@ -146,7 +146,11 @@ static void Main(string[] args)
 				 reader= File.OpenRead(file);
 				stream = new GZipStream(reader, CompressionMode.Decompress, true);
 			} else {
-				stream = new FileStream(file, FileMode.Open);
+				//IMPORTANT:ouverture en lecture d'un fichier dÃ©ja ouvert
+				stream= File.Open(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+				
+				//unshared
+				//stream = new FileStream(file, FileMode.Open);
 			}
 			
 			
