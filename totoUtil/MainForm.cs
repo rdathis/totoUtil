@@ -383,6 +383,8 @@ namespace totoUtil
 			
 			
 			liste01.AddRange(liste02);
+			
+			liste01.Sort();
 			//update tipTB
 			tipTextbox.Text= hyUtil.parseTips(liste01);
 			
