@@ -25,6 +25,7 @@ namespace MoulUtil
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
+			this.configDto=configDto;
 			
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
@@ -39,10 +40,10 @@ namespace MoulUtil
 		void PrepareBtnClick(object sender, EventArgs e)
 		{
 			if(workspaceBaseBox.Text.Length>0 && workspaceBox.Text.Length > 0) {
-				
 				MouliForm form = new MouliForm(configDto.getServeurs(), configDto.getInstances(), workspaceBox.Text);
 				form.ShowDialog();
-				
+			} else {
+				workspaceBaseBox.Focus();
 			}
 		}
 

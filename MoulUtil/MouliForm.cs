@@ -22,9 +22,13 @@ namespace MoulUtil
 		private List<MeoServeur> serveurs=null;
 		private List<MeoInstance> instances=null;
 		private MouliJob job=null;
-		public MouliForm()
+		public MouliForm(List<MeoServeur> serveurs, List<MeoInstance> instances, String path) 
 		{
 			InitializeComponent();
+			setServeurs(serveurs);
+			setInstances(instances);
+			setPath(path);
+			prepare();
 		}
 		public void setServeurs(List<MeoServeur> serveurs) {
 			this.serveurs=serveurs;

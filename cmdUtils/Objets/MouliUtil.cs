@@ -12,6 +12,7 @@ using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 namespace cmdUtils.Objets
 {
 	/// <summary>
@@ -327,7 +328,7 @@ namespace cmdUtils.Objets
 					for(int i=0;i<files.Length;i++) {
 						//String file = files[i];
 						FileInfo file = new FileInfo(files[i]);
-							
+						
 						String fileName=file.Name;
 						if ((exclusionPattern==null) || (!exclusionPattern.Match(fileName).Success)) {
 							if ((selectionPattern==null) || (selectionPattern.Match(fileName).Success)) {

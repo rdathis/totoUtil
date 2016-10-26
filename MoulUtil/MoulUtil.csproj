@@ -35,9 +35,9 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <StartAction>Project</StartAction>
-    <StartArguments>mid1068-i1-sebban</StartArguments>
     <StartWorkingDirectory>W:/meo-moulinettes/</StartWorkingDirectory>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <StartURL>MID2112-GUEUITIER-i3</StartURL>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -77,6 +77,10 @@
     <Compile Include="MouliForm.Designer.cs">
       <DependentUpon>MouliForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MouliPrepaForm.cs" />
+    <Compile Include="MouliPrepaForm.Designer.cs">
+      <DependentUpon>MouliPrepaForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MouliProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -92,6 +96,9 @@
   <ItemGroup>
     <EmbeddedResource Include="MouliForm.resx">
       <DependentUpon>MouliForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MouliPrepaForm.resx">
+      <DependentUpon>MouliPrepaForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

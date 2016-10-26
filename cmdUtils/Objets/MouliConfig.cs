@@ -13,8 +13,10 @@ namespace cmdUtils.Objets {
 	// disable once ConvertToStaticType
 	public class MouliConfig {
 		
-		public const String serversConfigFile="conf/serveurs.xml";
-		public const String instancesConfigFile="conf/instances.xml";
+		// public const String serversConfigFile="conf/serveurs.xml";
+		//public const String instancesConfigFile="conf/instances.xml";
+		public const String commonConfigFile="conf/common.xml";
+		
 		public const String puttyPath="bin/putty.exe";
 		public const String pscpPath="bin/pscp.exe";
 	}

@@ -8,8 +8,8 @@
  */
 using System;
 using System.Collections.Generic;
+
 using System.IO;
-using System.Xml.Serialization;
 using Renci.SshNet;
 using cmdUtils;
 using cmdUtils.Objets;
@@ -26,7 +26,7 @@ namespace MoulUtil
 		private static DateTime startDateTime;
 		static log4net.ILog ILOG = LogManager.GetLogger("mouliUtil");
 		
-		private static void testSSh() {
+		private static SshClient testSSh() {
 			String server="null";
 			string user="null";
 			string password="null";
@@ -35,121 +35,66 @@ namespace MoulUtil
 			Console.Write(connectionInfo.CurrentServerEncryption);
 			SshClient client = new SshClient(connectionInfo);
 			client.Connect();
-			SshCommand commande= client.RunCommand("/bin/pwd");
-			print(commande.Result);
-			commande= client.RunCommand("cd /home ; pwd \n");
-			print(commande.Result);
-			commande= client.RunCommand("/bin/pwd");
 			
-			print(commande.Result);
+			//SshCommand commande= client.RunCommand("/bin/pwd");
+			//print(commande.Result);
+			// commande= client.RunCommand("cd /home ; pwd \n");
+			// print(commande.Result);
+			// commande= client.RunCommand("/bin/pwd");
 			
-			client.Disconnect();
+			// print(commande.Result);
+			ForwardedPort port = new ForwardedPortLocal(23306, "serveur1", 3306);
+			//port.s
 			
+				client.AddForwardedPort(port);
+				
+			
+				return client;
 			
 		}
 		private static void print(String s) {
 			System.Diagnostics.Debug.Print(s);
-					
+			
 		}
 		public static void Main(string[] args)
 		{
-			//testXml();
 			//configure le ilog -- http://lutecefalco.developpez.com/tutoriels/dotnet/log4net/introduction/
 			BasicConfigurator.Configure();
+			
+			ConfigUtil configUtil = new ConfigUtil();
+			ConfigDto configDto = configUtil.getConfig();
+			List <MeoServeur> serveurs = configDto.getServeurs();
+			
+			// TODO:find serveur, tunnel SSH pour mysql
+			//SshClient sshClient = testSSh(meoServeur);
 			
 			Console.WriteLine("Moulinette util - ");
 			Console.WriteLine(" Args ("+args.Length+")");
 			for(int i=0;i<args.Length;i++) {
 				Console.WriteLine(" arg["+i+"] = '"+args[i]+"'");
 			}
-			if (args.Length< 1) {
-				printHelp();
-				printEnd();
-				//return;
+
+			String sourceMoulinette="";
+			if (args.Length> 0) {
+				sourceMoulinette = args[0].Trim();
+				if (((!sourceMoulinette.EndsWith("\\")) && (!sourceMoulinette.EndsWith("/")))) {
+					sourceMoulinette+="/";
+				}
 			}
+			MouliPrepaForm formPrepa = new MouliPrepaForm(configDto);
+			formPrepa.setWorkspacePath(sourceMoulinette);
+			formPrepa.setTargetSvgPath(configDto.getTargetSvgPath());
+			formPrepa.ShowDialog();
 			
-			// testSSh();
-			//
-			String sourceMoulinette = args[0].Trim();
-			if (((!sourceMoulinette.EndsWith("\\")) && (!sourceMoulinette.EndsWith("/")))) {
-				sourceMoulinette+="/";
-			}
 			
+//			if (sshClient !=null) {
+//			 sshClient.Disconnect();	
+//			}
 			ILOG.Info("Debut moulinette - chemin '"+sourceMoulinette+"'");
-			form= new MouliForm();
-			form.setServeurs(readServeurs());
-			form.setInstances(readInstances());
-			form.setPath(sourceMoulinette);
-			form.prepare();
-			form.ShowDialog();
-			
-			/*
-			doArchive(zipUtil, job);
-			mouliUtil = null;
-			TimeSpan ts = DateTime.Now - startDateTime;
-			printChrono(ts);
-			// printEnd();
-			majProgression(100);
-			 */
+		}
 
-		}
-		private static List<MeoServeur> readServeurs() {
-			XmlSerializer serializer = new XmlSerializer(typeof(List<MeoServeur>));
-			FileStream fs = new FileStream(MouliConfig.serversConfigFile, FileMode.Open);
-			List <MeoServeur> liste = (List<MeoServeur>)serializer.Deserialize(fs);
-			fs.Close();
-			return liste;
-		}
-		private static List<MeoInstance> readInstances() {
-			XmlSerializer serializer = new XmlSerializer(typeof(List<MeoInstance>));
-			FileStream fs = new FileStream(MouliConfig.instancesConfigFile, FileMode.Open);
-			List <MeoInstance> liste = (List<MeoInstance>)serializer.Deserialize(fs);
-			fs.Close();
-			return liste;
-		}
 		
-		private static void testXml() {
-			//fonctionne
-			Boolean ecriture = false;
-			Boolean lecture=false;
-			//
-			if (ecriture) {
-				XmlSerializer serverSerializer =      new XmlSerializer(typeof(List<MeoServeur>));
-				
-				XmlSerializer instancesSerializer =      new XmlSerializer(typeof(List<MeoInstance>));
-				
-				List<MeoInstance>instancesList = new List<MeoInstance>();
-				List <MeoServeur> serversList = new List<MeoServeur>();
-				TextWriter serverWriter = new StreamWriter(MouliConfig.serversConfigFile);
-				TextWriter instancesWriter = new StreamWriter(MouliConfig.instancesConfigFile);
-				MeoServeur serveur1 = new MeoServeur("meo1", "server1");
-				MeoServeur serveur2 = new MeoServeur("meo2", "server2");
-				MeoServeur serveur5 = new MeoServeur("meo5", "server5");
-				
-				MeoInstance instance1 = new MeoInstance(serveur1.getNom(), "instance1", "instance1", "meo_cli_instance1");
-				MeoInstance instance3 = new MeoInstance(serveur2.getNom(), "instance3", "instance3", "meo_cli_instance3");
-				
-				serversList.Add(serveur1);
-				serversList.Add(serveur2);
-				serversList.Add(serveur5);
-				
-				instancesList.Add(instance1);
-				instancesList.Add(instance3);
-				
-				instancesSerializer.Serialize(instancesWriter, instancesList);
-				serverSerializer.Serialize(serverWriter, serversList);
-				serverWriter.Close();
-				instancesWriter.Close();
-			}
-			//
-			if (lecture)  {
-				XmlSerializer serializer = new XmlSerializer(typeof(List<MeoServeur>));
-				FileStream fs = new FileStream(MouliConfig.serversConfigFile, FileMode.Open);
-				List <MeoServeur> liste = (List<MeoServeur>)serializer.Deserialize(fs);
-				fs.Close();
-			}
 
-		}
 		static void majProgression() {
 			majProgression(++progression);
 		}
@@ -182,7 +127,7 @@ namespace MoulUtil
 			
 			startDateTime = DateTime.Now;
 			MouliUtil mouliUtil = new MouliUtil();
-			ZipUtil  zipUtil = new ZipUtil();
+			ZipUtil zipUtil = new ZipUtil();
 			String archiveName = Path.GetFullPath(sourceMoulinette);
 			String dataPath=archiveName;
 			
@@ -323,7 +268,7 @@ namespace MoulUtil
 				liste.Add(fpath + info.Name);
 				Console.WriteLine("Fichier : "+fpath +info.Name);
 			}
-			*/
+			 */
 
 			// maj stats
 			statsRecap.foundFiles=mouliUtil.analyseTopOrdoFixe(liste, dataMag+JFiles.ordo_top_fixe+".txt", statsRecap.notFoundList);
