@@ -22,12 +22,14 @@ namespace MoulUtil
 		private List<MeoServeur> serveurs=null;
 		private List<MeoInstance> instances=null;
 		private MouliJob job=null;
-		public MouliForm(List<MeoServeur> serveurs, List<MeoInstance> instances, String path) 
+
+		public MouliForm(List<MeoServeur> serveurs, List<MeoInstance> instances, String magId, String path) 
 		{
 			InitializeComponent();
 			setServeurs(serveurs);
 			setInstances(instances);
 			setPath(path);
+			setMagId(magId);
 			prepare();
 		}
 		public void setServeurs(List<MeoServeur> serveurs) {
@@ -107,6 +109,9 @@ namespace MoulUtil
 		public void setPath(string sourceMoulinette)
 		{
 			pathLabel.Text=sourceMoulinette;
+			pathTextBox.Text=sourceMoulinette;
+			pathTextBox.Enabled=false;
+			
 		}
 		void ExitButtonClick(object sender, EventArgs e)
 		{
@@ -231,6 +236,12 @@ namespace MoulUtil
 					}
 				}
 			}
+		}
+
+		void setMagId(string magId)
+		{
+			magIdTextBox.Text=magId;
+			magIdTextBox.Enabled=false;
 		}
 	}
 }

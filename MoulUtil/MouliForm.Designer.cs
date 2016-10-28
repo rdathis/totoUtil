@@ -54,12 +54,16 @@ namespace MoulUtil
 			this.wmeomoulinettesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.echangesutilisateursToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.echangeftpmeoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.programmesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.puttiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.cmdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+			this.path = new System.Windows.Forms.Label();
+			this.magIdTextBox = new System.Windows.Forms.TextBox();
+			this.pathTextBox = new System.Windows.Forms.TextBox();
+			this.label2 = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -78,7 +82,7 @@ namespace MoulUtil
 			// dateTimePicker
 			// 
 			this.dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-			this.dateTimePicker.Location = new System.Drawing.Point(70, 78);
+			this.dateTimePicker.Location = new System.Drawing.Point(24, 79);
 			this.dateTimePicker.Name = "dateTimePicker";
 			this.dateTimePicker.Size = new System.Drawing.Size(200, 20);
 			this.dateTimePicker.TabIndex = 2;
@@ -234,17 +238,6 @@ namespace MoulUtil
 			this.echangeftpmeoToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
 			this.echangeftpmeoToolStripMenuItem.Text = "echange/ftp/meo";
 			// 
-			// statusStrip1
-			// 
-			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolStripStatusLabel1,
-			this.toolStripProgressBar1});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 408);
-			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(599, 22);
-			this.statusStrip1.TabIndex = 18;
-			this.statusStrip1.Text = "statusStrip1";
-			// 
 			// programmesToolStripMenuItem
 			// 
 			this.programmesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -257,14 +250,25 @@ namespace MoulUtil
 			// puttiesToolStripMenuItem
 			// 
 			this.puttiesToolStripMenuItem.Name = "puttiesToolStripMenuItem";
-			this.puttiesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.puttiesToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.puttiesToolStripMenuItem.Text = "putties";
 			// 
 			// cmdToolStripMenuItem
 			// 
 			this.cmdToolStripMenuItem.Name = "cmdToolStripMenuItem";
-			this.cmdToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.cmdToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.cmdToolStripMenuItem.Text = "cmd";
+			// 
+			// statusStrip1
+			// 
+			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.toolStripStatusLabel1,
+			this.toolStripProgressBar1});
+			this.statusStrip1.Location = new System.Drawing.Point(0, 408);
+			this.statusStrip1.Name = "statusStrip1";
+			this.statusStrip1.Size = new System.Drawing.Size(599, 22);
+			this.statusStrip1.TabIndex = 18;
+			this.statusStrip1.Text = "statusStrip1";
 			// 
 			// toolStripStatusLabel1
 			// 
@@ -277,11 +281,45 @@ namespace MoulUtil
 			this.toolStripProgressBar1.Name = "toolStripProgressBar1";
 			this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
 			// 
+			// path
+			// 
+			this.path.Location = new System.Drawing.Point(236, 79);
+			this.path.Name = "path";
+			this.path.Size = new System.Drawing.Size(58, 18);
+			this.path.TabIndex = 19;
+			this.path.Text = "magId";
+			// 
+			// magIdTextBox
+			// 
+			this.magIdTextBox.Location = new System.Drawing.Point(300, 76);
+			this.magIdTextBox.Name = "magIdTextBox";
+			this.magIdTextBox.Size = new System.Drawing.Size(154, 20);
+			this.magIdTextBox.TabIndex = 20;
+			// 
+			// pathTextBox
+			// 
+			this.pathTextBox.Location = new System.Drawing.Point(300, 47);
+			this.pathTextBox.Name = "pathTextBox";
+			this.pathTextBox.Size = new System.Drawing.Size(154, 20);
+			this.pathTextBox.TabIndex = 22;
+			// 
+			// label2
+			// 
+			this.label2.Location = new System.Drawing.Point(236, 50);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(58, 18);
+			this.label2.TabIndex = 21;
+			this.label2.Text = "path";
+			// 
 			// MouliForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(599, 430);
+			this.Controls.Add(this.pathTextBox);
+			this.Controls.Add(this.label2);
+			this.Controls.Add(this.magIdTextBox);
+			this.Controls.Add(this.path);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
 			this.Controls.Add(this.launchCmdLabel);
@@ -307,6 +345,10 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.TextBox pathTextBox;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label path;
+		private System.Windows.Forms.TextBox magIdTextBox;
 		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
 		private System.Windows.Forms.ToolStripMenuItem programmesToolStripMenuItem;

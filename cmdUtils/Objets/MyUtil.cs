@@ -25,9 +25,13 @@ namespace cmdUtils.Objets
 		{
 		}
 		
-		
 		public String buildconnString(String databaseName, String serverName, String user, String pwd) {
-			return string.Format("Database={0};Data Source={1};User Id={2};Password={3}", databaseName, serverName, user, pwd);
+			return buildconnString(databaseName, serverName, user, pwd, 3306);
+			
+		}
+		
+		public String buildconnString(String databaseName, String serverName, String user, String pwd, int port) {
+			return string.Format("Database={0};Data Source={1};User Id={2};Password={3};Port={4}", databaseName, serverName, user, pwd, port);
 			
 		}
 		public  MySqlConnection getConnection(String connectionString) {
@@ -47,11 +51,12 @@ namespace cmdUtils.Objets
 		}
 		public string doConnString(ConfigSectionSettings cfg)
 		{
-			return buildconnString("", "127.0.0.1", cfg.mysqlUser, cfg.mysqlPassword);
+			return buildconnString("", "127.0.0.1", cfg.mysqlUser, cfg.mysqlPassword, 3306);
 		}
 
-		public  MySqlConnection getConnection(String databaseName, String serverName, String user, String pwd) {
-			String cString = buildconnString(databaseName, serverName, user, pwd);
+	
+		public  MySqlConnection getConnection(String databaseName, String serverName, String user, String pwd, int port) {
+			String cString = buildconnString(databaseName, serverName, user, pwd, port);
 			return getConnection(cString);
 		}
 

@@ -69,6 +69,7 @@ namespace MoulUtil
 			this.rechMagIdBtn.TabIndex = 0;
 			this.rechMagIdBtn.Text = "recherche";
 			this.rechMagIdBtn.UseVisualStyleBackColor = true;
+			this.rechMagIdBtn.Click += new System.EventHandler(this.RechMagIdBtnClick);
 			// 
 			// rechMagIdBox
 			// 
@@ -201,6 +202,7 @@ namespace MoulUtil
 			this.sauvegardeBtn.TabIndex = 14;
 			this.sauvegardeBtn.Text = "&sauvegarde";
 			this.sauvegardeBtn.UseVisualStyleBackColor = true;
+			this.sauvegardeBtn.Click += new System.EventHandler(this.SauvegardeBtnClick);
 			// 
 			// statusStrip1
 			// 

@@ -26,32 +26,7 @@ namespace MoulUtil
 		private static DateTime startDateTime;
 		static log4net.ILog ILOG = LogManager.GetLogger("mouliUtil");
 		
-		private static SshClient testSSh() {
-			String server="null";
-			string user="null";
-			string password="null";
-			
-			ConnectionInfo  connectionInfo = new ConnectionInfo(server, user, new PasswordAuthenticationMethod(user, password));
-			Console.Write(connectionInfo.CurrentServerEncryption);
-			SshClient client = new SshClient(connectionInfo);
-			client.Connect();
-			
-			//SshCommand commande= client.RunCommand("/bin/pwd");
-			//print(commande.Result);
-			// commande= client.RunCommand("cd /home ; pwd \n");
-			// print(commande.Result);
-			// commande= client.RunCommand("/bin/pwd");
-			
-			// print(commande.Result);
-			ForwardedPort port = new ForwardedPortLocal(23306, "serveur1", 3306);
-			//port.s
-			
-				client.AddForwardedPort(port);
-				
-			
-				return client;
-			
-		}
+
 		private static void print(String s) {
 			System.Diagnostics.Debug.Print(s);
 			
@@ -63,10 +38,6 @@ namespace MoulUtil
 			
 			ConfigUtil configUtil = new ConfigUtil();
 			ConfigDto configDto = configUtil.getConfig();
-			List <MeoServeur> serveurs = configDto.getServeurs();
-			
-			// TODO:find serveur, tunnel SSH pour mysql
-			//SshClient sshClient = testSSh(meoServeur);
 			
 			Console.WriteLine("Moulinette util - ");
 			Console.WriteLine(" Args ("+args.Length+")");

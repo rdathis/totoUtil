@@ -11,7 +11,9 @@ namespace cmdUtils.Objets {
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
+	using System.Windows.Forms;
 	using Renci.SshNet;
+	using Renci.SshNet.Security;
 	public class SshUtil {
 		
 		public SshUtil() {
@@ -50,5 +52,30 @@ namespace cmdUtils.Objets {
 			return liste;
 		}
 		
+		public SshClient getClientWithForwardedPorts(MeoServeur serveur, List<KeyValuePair<int, int>>portsList )
+		{
+			ConnectionInfo  connectionInfo = getConnectionInfo(serveur);
+			Console.Write(connectionInfo.CurrentServerEncryption);
+			SshClient client = new SshClient(connectionInfo);
+			client.Connect();
+			
+			//SshCommand commande= client.RunCommand("/bin/pwd");
+			//print(commande.Result);
+			// commande= client.RunCommand("cd /home ; pwd \n");
+			// print(commande.Result);
+			// commande= client.RunCommand("/bin/pwd");
+			
+			// print(commande.Result);
+			
+			foreach(KeyValuePair<int, int> forwardedPort  in portsList) {
+				int local=forwardedPort.Key;
+				int distant=forwardedPort.Value;
+				ForwardedPort port = new ForwardedPortLocal((uint) distant, serveur.getNom(), (uint) local);
+				client.AddForwardedPort(port);
+			}
+			
+			
+			return client;
+		}
 	}
 }
