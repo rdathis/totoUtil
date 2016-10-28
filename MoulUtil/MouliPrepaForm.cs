@@ -8,8 +8,11 @@
  */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using Renci.SshNet;
 using cmdUtils;
 using cmdUtils.Objets;
@@ -28,7 +31,7 @@ namespace MoulUtil
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			this.configDto=configDto;
+			this.configDto = configDto;
 			
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
@@ -42,7 +45,7 @@ namespace MoulUtil
 		}
 		void PrepareBtnClick(object sender, EventArgs e)
 		{
-			if(workspaceBaseBox.Text.Length>0 && workspaceBox.Text.Length > 0) {
+			if (workspaceBaseBox.Text.Length > 0 && workspaceBox.Text.Length > 0) {
 				MouliForm form = new MouliForm(configDto.getServeurs(), configDto.getInstances(), "?", workspaceBox.Text);
 				form.ShowDialog();
 			} else {
@@ -56,7 +59,7 @@ namespace MoulUtil
 		}
 		public void setWorkspacePath(string sourceMoulinette)
 		{
-			workspaceBox.Text=sourceMoulinette;
+			workspaceBox.Text = sourceMoulinette;
 		}
 		void SauvegardeBtnClick(object sender, EventArgs e)
 		{
@@ -64,31 +67,80 @@ namespace MoulUtil
 		}
 		void RechMagIdBtnClick(object sender, EventArgs e)
 		{
+			rechercheMagasin();
+		}
+		void rechercheMagasin()
+		{
 			List <MeoServeur> serveurs = configDto.getServeurs();
 			
-			// TODO:find serveur, tunnel SSH pour mysql
-			MeoServeur adminServeur=MeoServeur.findServeurByName(serveurs, "meo1");
-			SshClient sshClient = getAdminServeur(adminServeur);
+			MeoServeur adminServeur = MeoServeur.findServeurByName(serveurs, "meo1");
+			SshClient sshClient = null;
+			//sshClient = getAdminServeur(adminServeur);
 			MyUtil myUtil = new MyUtil();
-			//TODO:add in config dto
-			String user="";
-			String pwd="";
-			String sql="";
-			String database="";
+			String user = configDto.getDatabaseAdminUser();
+			String pwd = configDto.getDatabaseAdminPwd();
+			String sql = configDto.getSQL01();
+			String database = configDto.getDatabaseAdminName();
+			int port = 23306;
+			String s = "connected by SSH \r\n";
+			String proposition = "";
+			// HACK:crado code
+			if (sshClient == null) {
+				s = "local database \r\n";
+				pwd = configDto.getDefaultPassword();
+				;
+				port = 3306;
+			}
+			String cnxString = myUtil.buildconnString(database, "127.0.0.1", user, pwd, port);
+			sql = sql + " WHERE magasin_id=" + rechMagIdBox.Text;
+			try {
+				var magasinList = myUtil.getListResultAsKeyValue(cnxString, sql);
+				magDescBox.Text = "";
+				
+				magDescBox.Text = s;
+				List<KeyValuePair<String, Object>> ligne = magasinList[0];
+				if (ligne.Count > 0) {
+					proposition = ligne[0].Value.ToString().Replace(" ", "");
+					proposition = "MID" + rechMagIdBox.Text.Trim() + "-" + proposition + "/";
+				}
+				
+				for (int i = 0; i < ligne.Count; i++) {
+					KeyValuePair<String, Object> item = ligne[i];
+					s += "[" + item.Key + "] = '" + item.Value + "' \r\n";
+				}
+				magDescBox.Text = s;
+				propositionBox.Text = proposition;
+			} catch (Exception ex) {
+				magDescBox.Text = "erreur :" + ex.Message + "\n" + ex.Source;
+			}
 			
-			String cnxString=myUtil.buildconnString(database, "127.0.0.1", user, pwd, 23306);
-			sql="select a from b where c="+rechMagIdBox.Text;
-			List<String> result =myUtil.getListResultSimple(cnxString, sql);
-			if (result.Count == 1) {
-				magDescBox.Text = result[0];
+			if (sshClient != null) {
+				sshClient.Disconnect();
 			}
 		}
-		private static SshClient getAdminServeur(MeoServeur serveur) {
-			
+		private static SshClient getAdminServeur(MeoServeur serveur)
+		{
 			SshUtil sshUtil = new SshUtil();
-			List<KeyValuePair<int, int>>portsList = new List<KeyValuePair<int, int>>();
-			portsList.Add(new KeyValuePair<int, int>(3306, 23306));
+			List<KeyValuePair<int, int>> portsList = new List<KeyValuePair<int, int>>();
+			portsList.Add(new KeyValuePair<int, int>(23306, 3306));
 			return sshUtil.getClientWithForwardedPorts(serveur, portsList);
-		}		
+		}
+		void RechMagIdBoxTextChanged(object sender, EventArgs e)
+		{
+			rechercheMagasin();
+		}
+		void CreateBtnClick(object sender, EventArgs e)
+		{
+			String proposition = propositionBox.Text;
+			if (proposition.Length > 0) {
+				MouliUtil mouliUtil = new MouliUtil();
+				mouliUtil.createArbo(proposition);
+				CmdUtil cmdUtil = new CmdUtil();
+				
+				
+				
+				cmdUtil.executeCommande("explorer", Path.GetFullPath(proposition));
+			}
+		}
 	}
 }

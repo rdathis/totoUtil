@@ -45,6 +45,8 @@ namespace MoulUtil
 			this.workspaceBaseBox = new System.Windows.Forms.TextBox();
 			this.workspaceBox = new System.Windows.Forms.TextBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.createBtn = new System.Windows.Forms.Button();
+			this.propositionBox = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.prepareBtn = new System.Windows.Forms.Button();
@@ -77,6 +79,7 @@ namespace MoulUtil
 			this.rechMagIdBox.Name = "rechMagIdBox";
 			this.rechMagIdBox.Size = new System.Drawing.Size(102, 20);
 			this.rechMagIdBox.TabIndex = 1;
+			this.rechMagIdBox.TextChanged += new System.EventHandler(this.RechMagIdBoxTextChanged);
 			// 
 			// sourceBaseBox
 			// 
@@ -126,6 +129,8 @@ namespace MoulUtil
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.createBtn);
+			this.groupBox1.Controls.Add(this.propositionBox);
 			this.groupBox1.Controls.Add(this.magDescBox);
 			this.groupBox1.Controls.Add(this.rechMagIdBtn);
 			this.groupBox1.Location = new System.Drawing.Point(25, 0);
@@ -134,6 +139,23 @@ namespace MoulUtil
 			this.groupBox1.TabIndex = 8;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "rechercheMagasin";
+			// 
+			// createBtn
+			// 
+			this.createBtn.Location = new System.Drawing.Point(253, 52);
+			this.createBtn.Name = "createBtn";
+			this.createBtn.Size = new System.Drawing.Size(51, 23);
+			this.createBtn.TabIndex = 6;
+			this.createBtn.Text = "&Create";
+			this.createBtn.UseVisualStyleBackColor = true;
+			this.createBtn.Click += new System.EventHandler(this.CreateBtnClick);
+			// 
+			// propositionBox
+			// 
+			this.propositionBox.Location = new System.Drawing.Point(13, 54);
+			this.propositionBox.Name = "propositionBox";
+			this.propositionBox.Size = new System.Drawing.Size(234, 20);
+			this.propositionBox.TabIndex = 5;
 			// 
 			// groupBox2
 			// 
@@ -249,6 +271,8 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Button createBtn;
+		private System.Windows.Forms.TextBox propositionBox;
 		private System.Windows.Forms.Button sauvegardeBtn;
 		private System.Windows.Forms.Button prepareBtn;
 		private System.Windows.Forms.StatusStrip statusStrip1;

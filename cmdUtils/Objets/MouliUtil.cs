@@ -4,7 +4,6 @@
  * Date: 13/06/2016
  * Heure: 13:35:10
  * 
- * Pour changer ce modèle utiliser Outils | Options | Codage | Editer les en-têtes standards.
  */
 using System;
 using System.Collections.Generic;
@@ -25,8 +24,9 @@ namespace cmdUtils.Objets
 		{
 		}
 
-		private void doCallback(Action<String> callback, String message) {
-			if (callback!=null) {
+		private void doCallback(Action<String> callback, String message)
+		{
+			if (callback != null) {
 				callback(message);
 			}
 		}
@@ -34,7 +34,7 @@ namespace cmdUtils.Objets
 		public String  creaEtVerifieRepMoulinette(MeoInstance instance, Action<String> callback, string destBase, string magId, string magClient, string date)
 		{
 			
-			String retour="";
+			String retour = "";
 			if (destBase.Length < 1) {
 				doCallback(callback, "manque base");
 				return retour;
@@ -54,12 +54,12 @@ namespace cmdUtils.Objets
 			
 			if (instance != null) {
 				// String instanceCode = if(instance!=null ? instance.getCode() : "?"); ;
-				String path = destBase + "MID" + magId + "-" + magClient+ "-" + date + "-" + instance.getCode() + "/";
+				String path = destBase + "MID" + magId + "-" + magClient + "-" + date + "-" + instance.getCode() + "/";
 				
 				MyUtil util = new MyUtil();
 				util.createFolderIfNotExists(path);
 				
-				retour=path;
+				retour = path;
 				doCallback(callback, "CREATE " + path + "\n");
 				path += getData();
 				util.createFolderIfNotExists(path);
@@ -79,51 +79,57 @@ namespace cmdUtils.Objets
 			}
 			return retour;
 		}
-		private String formatPath(String path) {
+		private String formatPath(String path)
+		{
 			if (!path.EndsWith("/")) {
-				path+="/";
+				path += "/";
 			}
 			return path;
 		}
-		public String getData() {
+		public String getData()
+		{
 			return formatPath("data/");
 		}
-		public String getMag01() {
+		public String getMag01()
+		{
 			return formatPath("mag01/");
 		}
-		public String getOrd01() {
+		public String getOrd01()
+		{
 			return formatPath("ord01/");
 		}
-		public String getDoc01() {
+		public String getDoc01()
+		{
 			return formatPath("doc01/");
 		}
-		public String getJoint() {
+		public String getJoint()
+		{
 			return formatPath("Joint/");
 		}
 		public Boolean checkOrdoFixe(String path)
 		{
-			String ordotxt=(JFiles.ordo_top_fixe+".txt");
-			String s = path + getMag01() +ordotxt;
-			Boolean done=false;
-			if (File.Exists(path + getMag01() +ordotxt)) {
-				if(!File.Exists(path+getMag01()+getJoint())) {
+			String ordotxt = (JFiles.ordo_top_fixe + ".txt");
+			String s = path + getMag01() + ordotxt;
+			Boolean done = false;
+			if (File.Exists(path + getMag01() + ordotxt)) {
+				if (!File.Exists(path + getMag01() + getJoint())) {
 					MyUtil util = new MyUtil();
-					util.createFolderIfNotExists(path+getMag01()+getJoint());
-					Console.WriteLine("Creation de "+path+getMag01()+getJoint()+" ");
+					util.createFolderIfNotExists(path + getMag01() + getJoint());
+					Console.WriteLine("Creation de " + path + getMag01() + getJoint() + " ");
 				}
-				if (File.Exists(path + getMag01() +getJoint() + ordotxt)) {
-					File.Delete(path + getMag01() +getJoint() + ordotxt);
+				if (File.Exists(path + getMag01() + getJoint() + ordotxt)) {
+					File.Delete(path + getMag01() + getJoint() + ordotxt);
 				}
-				File.Copy(path+getMag01()+ordotxt, path+getMag01()+getJoint()+ordotxt);
-				done=true;
+				File.Copy(path + getMag01() + ordotxt, path + getMag01() + getJoint() + ordotxt);
+				done = true;
 			}
 			return done;
 		}
 		public void checkIfYFilesExists(String path, RichTextBox rtb, string dataPath, string magPath, String extension)
 		{
-			foreach(YFiles yfile in Enum.GetValues(typeof(YFiles))) {
-				Boolean value= checkIfFileExists(path,  dataPath, magPath, yfile.ToString(), extension);
-				String str = yfile.ToString() +"\n";
+			foreach (YFiles yfile in Enum.GetValues(typeof(YFiles))) {
+				Boolean value = checkIfFileExists(path, dataPath, magPath, yfile.ToString(), extension);
+				String str = yfile.ToString() + "\n";
 				if (value) {
 					RichTextBoxUtilcs.colorit(rtb, str, Color.Green);
 				} else {
@@ -134,9 +140,9 @@ namespace cmdUtils.Objets
 		}
 		public void checkIfJFilesExists(String path, RichTextBox rtb, string dataPath, string magPath, String extension)
 		{
-			foreach(JFiles jfile in Enum.GetValues(typeof(JFiles))) {
-				Boolean value= checkIfFileExists(path,  dataPath, magPath, jfile.ToString(), extension);
-				String str = jfile.ToString() +"\n";
+			foreach (JFiles jfile in Enum.GetValues(typeof(JFiles))) {
+				Boolean value = checkIfFileExists(path, dataPath, magPath, jfile.ToString(), extension);
+				String str = jfile.ToString() + "\n";
 				if (value) {
 					RichTextBoxUtilcs.colorit(rtb, str, Color.Green);
 				} else {
@@ -148,16 +154,17 @@ namespace cmdUtils.Objets
 
 		public Boolean checkIfFileExists(string path, string dataPath, String magPath, String fileName, String extension)
 		{
-			String file = (path+dataPath+magPath+fileName);
+			String file = (path + dataPath + magPath + fileName);
 			
-			if (extension!=null ) {
-				file+=extension;
+			if (extension != null) {
+				file += extension;
 			}
-			Console.WriteLine(" file : "+file + " ? "+File.Exists(file));
+			Console.WriteLine(" file : " + file + " ? " + File.Exists(file));
 			return File.Exists(file);
 		}
 
-		public void updateMoulinetteMagasin(String magId, ConfigSectionSettings cfg, TextBox texbox,  System.Windows.Forms.RichTextBox rtb) {
+		public void updateMoulinetteMagasin(String magId, ConfigSectionSettings cfg, TextBox texbox, System.Windows.Forms.RichTextBox rtb)
+		{
 			
 			string sql = "select * from administration.magasins where magasin_id=" + magId;
 			MyUtil util = new MyUtil();
@@ -178,28 +185,29 @@ namespace cmdUtils.Objets
 			rtb.AppendText("\nmodeDevUserId=" + util.getItem(userList[0], "utilisateur_id"));
 		}
 
-		List<String>  parseMoulinetteScript(String source, MouliUtilOptions options) {
-			String[] tmp=source.Split('\n');
+		List<String>  parseMoulinetteScript(String source, MouliUtilOptions options)
+		{
+			String[] tmp = source.Split('\n');
 			List<String> retour = new List<string>();
 			
-			Console.WriteLine(" source : "+source);
-			Console.WriteLine ( "size :" +tmp.Length);
+			Console.WriteLine(" source : " + source);
+			Console.WriteLine("size :" + tmp.Length);
 			
-			for(int i =0;i<tmp.Length;i++) {
-				Console.WriteLine(" i :"+i);
+			for (int i = 0; i < tmp.Length; i++) {
+				Console.WriteLine(" i :" + i);
 				String ligne = tmp[i];
-				ligne=ligne.Replace("<%magId%>", options.getMagId());
-				ligne=ligne.Replace("<%ARG%>", options.getLots());
-				ligne=ligne.Replace("<%instanceName%>", options.getInstanceName());
-				ligne=ligne.Replace("<%instanceCommande%>", options.getInstanceCommande());
-				String joint="N";
+				ligne = ligne.Replace("<%magId%>", options.getMagId());
+				ligne = ligne.Replace("<%ARG%>", options.getLots());
+				ligne = ligne.Replace("<%instanceName%>", options.getInstanceName());
+				ligne = ligne.Replace("<%instanceCommande%>", options.getInstanceCommande());
+				String joint = "N";
 				if (options.getIsJoint()) {
-					joint="O";
+					joint = "O";
 				}
-				ligne=ligne.Replace("<%joint%>", joint);
-				ligne=ligne.Replace("<%dateCrea%>", new DateTime().Date.ToString());
-				ligne=ligne.Replace("\n", "");
-				ligne=ligne.Replace("\r", "");
+				ligne = ligne.Replace("<%joint%>", joint);
+				ligne = ligne.Replace("<%dateCrea%>", new DateTime().Date.ToString());
+				ligne = ligne.Replace("\n", "");
+				ligne = ligne.Replace("\r", "");
 				
 				retour.Add(ligne);
 			}
@@ -208,15 +216,15 @@ namespace cmdUtils.Objets
 
 		public int analyseTopOrdoFixe(List<string> liste, string file, List<string> notFoundList)
 		{
-			int foundFiles=0;
-			String path="data/mag01/Joint/";
+			int foundFiles = 0;
+			String path = "data/mag01/Joint/";
 			if (Directory.Exists(path) && (File.Exists(file))) {
 				MyUtil myUtil = new MyUtil();
-				String[] lignes= myUtil.readScript(file).Split('\n');
+				String[] lignes = myUtil.readScript(file).Split('\n');
 				//commencer ligne 2, cause titre.
-				for(int numLigne=1;numLigne<lignes.GetLength(0);numLigne++) {
-					String ligne=lignes[numLigne].Replace('\r', ' ').Trim();
-					String [] colonnes = ligne.Split(';');
+				for (int numLigne = 1; numLigne < lignes.GetLength(0); numLigne++) {
+					String ligne = lignes[numLigne].Replace('\r', ' ').Trim();
+					String[] colonnes = ligne.Split(';');
 					if (colonnes.GetLength(0) > 5) {
 //			clientNumeroGroupement = tab[0];
 //			creationDate = tab[1]
@@ -227,17 +235,17 @@ namespace cmdUtils.Objets
 //			fichier5 = tab[6];
 
 						
-						for(int c=2;c<7;c++) {
+						for (int c = 2; c < 7; c++) {
 							String colonne = colonnes[c].Trim();
-							if (colonne.Length> 1) {
-								if (File.Exists(path+colonne))   {
-									if (!liste.Contains(path+colonne)) {
-										liste.Add(path+colonne);
+							if (colonne.Length > 1) {
+								if (File.Exists(path + colonne)) {
+									if (!liste.Contains(path + colonne)) {
+										liste.Add(path + colonne);
 										foundFiles++;
 									}
 								} else {
-									if (!notFoundList.Contains(path+colonne)) {
-										notFoundList.Add(path+colonne);
+									if (!notFoundList.Contains(path + colonne)) {
+										notFoundList.Add(path + colonne);
 									}
 								}
 							}
@@ -256,8 +264,8 @@ namespace cmdUtils.Objets
 			String modele = new StreamReader(modeleFile).ReadToEnd();
 			List<String> moul = genereScript(modele, moulinetteFile, options);
 			StreamWriter outputFile = new StreamWriter(moulinetteFile);
-			outputFile.NewLine="\n";
-			foreach(String line in moul) {
+			outputFile.NewLine = "\n";
+			foreach (String line in moul) {
 				outputFile.WriteLine(line);
 			}
 			outputFile.Close();
@@ -265,13 +273,13 @@ namespace cmdUtils.Objets
 		public void writeJobFile(string scriptJobFile, string scriptMoulinetteFile, MouliUtilOptions options)
 		{
 			StreamWriter outputFile = new StreamWriter(scriptJobFile);
-			outputFile.NewLine="\n";
+			outputFile.NewLine = "\n";
 			//
 			outputFile.WriteLine("## job file automatique, pour planifier la maj");
 			
 			// outputFile.WriteLine("MPATH=`dirname $0` ");
 			// outputFile.WriteLine("cd $MPATH && MPATH=$PWD");
-			outputFile.WriteLine("export MAILTO=athis.r@cristallin.com && echo /bin/sh "+scriptMoulinetteFile+ " | at "+formatDateJob(options.getDateJob())+ " " );
+			outputFile.WriteLine("export MAILTO=athis.r@cristallin.com && echo /bin/sh " + scriptMoulinetteFile + " | at " + formatDateJob(options.getDateJob()) + " ");
 			//
 			outputFile.Close();
 		}
@@ -279,10 +287,10 @@ namespace cmdUtils.Objets
 		public DateTime calculeNextPlannedJob()
 		{
 			DateTime tmpDate = DateTime.Now;
-			tmpDate=tmpDate.AddDays(1);
+			tmpDate = tmpDate.AddDays(1);
 
-			while(tmpDate.DayOfWeek==DayOfWeek.Saturday || tmpDate.DayOfWeek==DayOfWeek.Sunday) {
-				tmpDate=tmpDate.AddDays(1);
+			while (tmpDate.DayOfWeek == DayOfWeek.Saturday || tmpDate.DayOfWeek == DayOfWeek.Sunday) {
+				tmpDate = tmpDate.AddDays(1);
 			}
 			DateTime jobPlanned = new DateTime(tmpDate.Year, tmpDate.Month, tmpDate.Day, 08, 0, 0);
 			return jobPlanned;
@@ -299,39 +307,43 @@ namespace cmdUtils.Objets
 			return String.Format("{0:HH:mm M/d/yyyy }", date);
 
 		}
-		public List<String> giveFiles(String path) {
-			Regex regex=null;
+		public List<String> giveFiles(String path)
+		{
+			Regex regex = null;
 			return giveFiles(path, regex, regex);
 		}
-		public List<String> giveFiles(String path, String selection, String exclusion) {
+		public List<String> giveFiles(String path, String selection, String exclusion)
+		{
 			Regex selectionRegex = null;
 			Regex exclusionRegex = null;
-			if (selection!=null) {
+			if (selection != null) {
 				selectionRegex = new Regex(selection);
 			}
-			if (exclusion!=null) {
+			if (exclusion != null) {
 				exclusionRegex = new Regex(exclusion);
 			}
 			
-			return giveFiles (path, selectionRegex, exclusionRegex);
+			return giveFiles(path, selectionRegex, exclusionRegex);
 		}
-		public List<String> giveFiles(String path, Regex selectionPattern) {
+		public List<String> giveFiles(String path, Regex selectionPattern)
+		{
 			return giveFiles(path, selectionPattern, null);
 		}
-		public List<String> giveFiles(String path, Regex selectionPattern, Regex exclusionPattern) {
-			List <String > liste =null;
+		public List<String> giveFiles(String path, Regex selectionPattern, Regex exclusionPattern)
+		{
+			List <String > liste = null;
 			
-			if(Directory.Exists(path)) {
+			if (Directory.Exists(path)) {
 				liste = new List<string>();
 				String[] files = Directory.GetFiles(path);
 				if (files.Length > 0) {
-					for(int i=0;i<files.Length;i++) {
+					for (int i = 0; i < files.Length; i++) {
 						//String file = files[i];
 						FileInfo file = new FileInfo(files[i]);
 						
-						String fileName=file.Name;
-						if ((exclusionPattern==null) || (!exclusionPattern.Match(fileName).Success)) {
-							if ((selectionPattern==null) || (selectionPattern.Match(fileName).Success)) {
+						String fileName = file.Name;
+						if ((exclusionPattern == null) || (!exclusionPattern.Match(fileName).Success)) {
+							if ((selectionPattern == null) || (selectionPattern.Match(fileName).Success)) {
 
 								liste.Add(files[i]);
 							}
@@ -350,6 +362,24 @@ namespace cmdUtils.Objets
 		public  List<String> checkIsDoc01(string path)
 		{
 			return giveFiles(path, "[\\.]", null);
+		}
+		
+		public void createArbo(String path)
+		{
+			safeCreateDirectory(path);
+			safeCreateDirectory(path + getData());
+			safeCreateDirectory(path + getData() + getDoc01());
+			safeCreateDirectory(path + getData() + getMag01());
+			safeCreateDirectory(path + getData() + getMag01() + getJoint());
+		}
+		public bool safeCreateDirectory(String path)
+		{
+			Boolean r = false;
+			if (!Directory.Exists(path)) {
+				Directory.CreateDirectory(path);
+				r = true;
+			}
+			return r;
 		}
 	}
 }

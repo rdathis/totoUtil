@@ -57,7 +57,7 @@ namespace cmdUtils.Objets {
 			ConnectionInfo  connectionInfo = getConnectionInfo(serveur);
 			Console.Write(connectionInfo.CurrentServerEncryption);
 			SshClient client = new SshClient(connectionInfo);
-			client.Connect();
+			
 			
 			//SshCommand commande= client.RunCommand("/bin/pwd");
 			//print(commande.Result);
@@ -66,15 +66,15 @@ namespace cmdUtils.Objets {
 			// commande= client.RunCommand("/bin/pwd");
 			
 			// print(commande.Result);
-			
+				client.Connect();
 			foreach(KeyValuePair<int, int> forwardedPort  in portsList) {
 				int local=forwardedPort.Key;
 				int distant=forwardedPort.Value;
-				ForwardedPort port = new ForwardedPortLocal((uint) distant, serveur.getNom(), (uint) local);
+				Console.WriteLine(" Ajout forward : (local) :"+local);
+				Console.WriteLine(" Ajout forward : (distant) :"+distant);
+				ForwardedPort port = new ForwardedPortRemote((uint) distant, serveur.getNom(), (uint) local);
 				client.AddForwardedPort(port);
 			}
-			
-			
 			return client;
 		}
 	}
