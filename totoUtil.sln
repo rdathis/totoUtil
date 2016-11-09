@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cmdUtils", "cmdUtils\cmdUti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoulUtil", "MoulUtil\MoulUtil.csproj", "{880EF030-A914-4C46-88BA-E83D9D37F69C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSSH", "TestSSH\TestSSH.csproj", "{E35A62A8-BEFF-43BB-AAC4-FE1EC7700B30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,5 +28,9 @@ Global
 		{880EF030-A914-4C46-88BA-E83D9D37F69C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{880EF030-A914-4C46-88BA-E83D9D37F69C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{880EF030-A914-4C46-88BA-E83D9D37F69C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E35A62A8-BEFF-43BB-AAC4-FE1EC7700B30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E35A62A8-BEFF-43BB-AAC4-FE1EC7700B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E35A62A8-BEFF-43BB-AAC4-FE1EC7700B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E35A62A8-BEFF-43BB-AAC4-FE1EC7700B30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

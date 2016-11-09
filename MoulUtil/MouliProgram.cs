@@ -89,7 +89,32 @@ namespace MoulUtil
 			return retour;
 		}
 
+		private static String getJournalFilePath() {
+			return "logs/journal.log";
+		}
+		private static String getDetails(MouliUtilOptions options) {
+			String s="";
+			s+=" MagId:"+options.getMagId();
+			s+=" instance:"+options.getInstanceName();
+			s+=" Lots:"+options.getLots() ;
+			s+=" joint:"+options.getIsJoint();
+			
+			return s;
+		}
+		private static void toJournal (String sourceMoulinette, MouliUtilOptions options) {
+			
+			MouliUtil mouliUtil = new MouliUtil();
+			mouliUtil.safeCreateDirectory("logs/");
+			
+			StreamWriter outputFile = new StreamWriter(getJournalFilePath());
+			outputFile.NewLine = "\n";
+			outputFile.WriteLine(DateTime.Now+ " prepa moulinette : "+sourceMoulinette + " "+getDetails(options));
+			outputFile.Close();
+			
+		}
 		public static MouliJob doTraitement(String sourceMoulinette, MouliUtilOptions options) {
+			toJournal(sourceMoulinette, options);
+			
 			majProgression(0);
 			sourceMoulinette = sourceMoulinette.Trim();
 			if (((!sourceMoulinette.EndsWith("\\")) && (!sourceMoulinette.EndsWith("/")))) {
@@ -132,13 +157,13 @@ namespace MoulUtil
 			/*
 			a faire pour finir le dev :
 				- (FAIT) sortir le xxx.job
-				- calculer si doc01 : donc isoler le code d'analyse dans une methode a part
-				- calculer si Joint : donc isoler le code d'analyse dans une methode a part
+				- (FAIT) calculer si doc01 : donc isoler le code d'analyse dans une methode a part
+				- (FAIT) calculer si Joint : donc isoler le code d'analyse dans une methode a part
 				- (FAIT)- calculer magId
-				- lister les serveurs et instance
-				- demander pour C et pour S
+				- (FAIT) lister les serveurs et instance
+				- (FAIT) demander pour C et pour S
 				- interroger la base admin prod pour les infos. (kiamo?)
-				- upload ?
+				- (FAIT) upload ?
 			 */
 			
 			
@@ -149,15 +174,6 @@ namespace MoulUtil
 			if((options!=null) && (options.getMagId()==null)) {
 				options.setMagId(calculMagId(sourceMoulinette));
 			}
-			/*
-			if(options==null) {
-				//TODO:change me
-				options = new MouliUtilOptions();
-				options.setMagId(calculMagId(sourceMoulinette));
-				options.setLots("CS");
-				options.setInstanceName("instance0");
-			}
-			 */
 			
 			options.setOrd01(mouliUtil.checkIsOrd01( mouliUtil.getData() + mouliUtil.getOrd01()));
 			options.setDoc01(mouliUtil.checkIsDoc01(mouliUtil.getData() + mouliUtil.getDoc01()));
@@ -191,28 +207,13 @@ namespace MoulUtil
 			}
 			
 			String dataMag=(mouliUtil.getData()+mouliUtil.getMag01());
-			//ICI:bug:si mag01 n'existe pas.
-			/* si data absent
-			 * si data/mag01 absent (que ord01)
-			 * */
-			
 			Console.WriteLine("Complete archive .."+dataMag);
 			String dataMagJoint=dataMag+"Joint/";
 			selectionY = ConvertisseurUtil.convertitListArray(selectionYfiles);
 			
 
-			
-			//TODO:analyser data/ord01/[123456789)*.pdf
-			// => statsRecap.ord01DocsTotal
-			//TODO:distinguer ycli et ystock
-			
-			
 			//script moulinette
-			// zipUtil.complete(fichiers, sourceMoulinette, selection0);
-			// yfiles.d
-			// zipUtil.complete(fichiers, dataMag, selectionY);
 			majProgression();
-			// Joint/xyz.pdf
 			
 			
 			Console.WriteLine(" list<Fichiers> : "+fichiers.Count);
@@ -229,17 +230,6 @@ namespace MoulUtil
 			// Ajout de notre valeur ajoutee
 			liste.Add(scriptMoulinetteFile);
 			liste.Add(scriptJobMoulinetteFile);
-			
-			/*
-			FileInfo spath=new FileInfo(sourceMoulinette);
-			foreach(FileInfo info in fichiers) {
-				majProgression();
-				String fpath =info.Directory.FullName.Replace(spath.FullName, "/").Replace("\\", "/")+"/";
-				fpath=fpath.Substring(1, fpath.Length -2)+"/";
-				liste.Add(fpath + info.Name);
-				Console.WriteLine("Fichier : "+fpath +info.Name);
-			}
-			 */
 
 			// maj stats
 			statsRecap.foundFiles=mouliUtil.analyseTopOrdoFixe(liste, dataMag+JFiles.ordo_top_fixe+".txt", statsRecap.notFoundList);

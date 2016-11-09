@@ -66,7 +66,6 @@ namespace cmdUtils.Objets
 			if (createFileDb) {
 				//cmdUtils.sourceSQL(cfg, databaseName, "X:/meo-datas/create_meo_filedb.sql");
 				connString = myUtil.buildconnString(databaseName, "localhost", cfg.mysqlUser, cfg.mysqlPassword);
-				//TODO:add a parameter
 				myUtil.getExecuteQueryResult(connString, myUtil.readScript("X:/meo-datas/create_meo_filedb.sql"));
 			}
 			

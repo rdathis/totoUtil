@@ -42,8 +42,8 @@ namespace totoUtil.Objets
 			Greper g = new Greper();
 			
 			List<Regex> liste =new List<Regex>();
-			liste.Add(tipWithPlayer);
-			liste.Add(tipWithoutPlayer);
+			//liste.Add(tipWithPlayer);
+			// liste.Add(tipWithoutPlayer);
 			liste.Add(tipSent);
 			
 			//TODO:PARAM + textbox
