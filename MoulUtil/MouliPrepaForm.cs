@@ -8,37 +8,40 @@
  */
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using Renci.SshNet;
-using cmdUtils;
 using cmdUtils.Objets;
 
 namespace MoulUtil
 {
 	/// <summary>
-	/// Description of MouliPrepa.
+	/// 
+	/// Form de preparation de moulinette
 	/// </summary>
 	public partial class MouliPrepaForm : Form
 	{
+		private System.Diagnostics.Process plink;
 		private ConfigDto configDto;
 		public MouliPrepaForm(ConfigDto configDto)
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
 			this.configDto = configDto;
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
 		}
 		void MouliPrepaLoad(object sender, EventArgs e)
 		{
+			try {
+				//demarrage du plink en arriere plan pour le tunnel SSH
+				ProcessUtil putil =new ProcessUtil();
+				plink= putil.startProcess(MouliConfig.plinkPath, configDto.appPlink, System.Diagnostics.ProcessWindowStyle.Normal);
+				this.BackColor = Color.LightBlue;
+			} catch(Exception exs) {
+				Console.WriteLine ("erreur sur start de plink",exs);
+				plink=null;
+				this.BackColor = Color.Orange;
+			}
+			if(configDto.appPlink!=null) {
+			}
 		}
 		void WorkspaceBoxTextChanged(object sender, EventArgs e)
 		{
@@ -46,7 +49,8 @@ namespace MoulUtil
 		void PrepareBtnClick(object sender, EventArgs e)
 		{
 			if (workspaceBaseBox.Text.Length > 0 && workspaceBox.Text.Length > 0) {
-				MouliForm form = new MouliForm(configDto.getServeurs(), configDto.getInstances(), "?", workspaceBox.Text);
+				String magId=rechMagIdBox.Text;
+				MouliForm form = new MouliForm(configDto.getServeurs(), configDto.getInstances(), magId, workspaceBox.Text);
 				form.ShowDialog();
 			} else {
 				workspaceBaseBox.Focus();
@@ -63,34 +67,71 @@ namespace MoulUtil
 		}
 		void SauvegardeBtnClick(object sender, EventArgs e)
 		{
-			//TODO:
+			String targetDir = Path.GetFullPath(targetSvgPathBox.Text)+"\\" + targetNameBox.Text;
+			MouliUtil mouliUtil = new MouliUtil();
+			mouliUtil.createArbo(targetDir);
+			CmdUtil cmdUtil = new CmdUtil();
+			cmdUtil.executeCommande("explorer", Path.GetFullPath(targetDir));
+			//TODO:copy src files to target dir.
 		}
 		void RechMagIdBtnClick(object sender, EventArgs e)
 		{
 			rechercheMagasin();
 		}
+
+		string convertitInstance(string url)
+		{
+			if(configDto!=null) {
+				String [] tablo = url.Split('/');
+				String str = tablo[tablo.Length -1];
+				foreach(MeoInstance meoInstance in configDto.getInstances()) {
+					if(meoInstance.getNom()==str) {
+						return meoInstance.getCode();
+					}
+				}
+			}
+			return "?";
+		}
+		void createMock(string path)
+		{
+			
+			MouliUtil mouliUtil = new MouliUtil();
+			String dataPath=mouliUtil.getData();
+			String magPath=mouliUtil.getMag01();
+			String extension = "d";
+			
+			foreach (YFiles yfile in Enum.GetValues(typeof(YFiles))) {
+				Boolean value = mouliUtil.checkIfFileExists(path, dataPath, magPath, yfile.ToString(), extension);
+				if(!value) {
+					String file=path+dataPath+magPath+ yfile.ToString().ToLower() +"."+extension;
+					StreamWriter outputFile = new StreamWriter(file);
+					outputFile.WriteLine("## MOCK : "+yfile);
+					outputFile.Close();
+				}
+			}
+			
+		}
 		void rechercheMagasin()
 		{
-			List <MeoServeur> serveurs = configDto.getServeurs();
-			
-			MeoServeur adminServeur = MeoServeur.findServeurByName(serveurs, "meo1");
-			SshClient sshClient = null;
-			//sshClient = getAdminServeur(adminServeur);
+			if(rechMagIdBox.Text.Equals("0")) {
+				magDescBox.Text = "Fake Shop";
+				String rep= "MID0000-TOTO-i0/";
+				propositionBox.Text = rep;
+				CreateBtnClick(null, null);
+				createMock(rep);
+				return;
+			}
 			MyUtil myUtil = new MyUtil();
 			String user = configDto.getDatabaseAdminUser();
 			String pwd = configDto.getDatabaseAdminPwd();
 			String sql = configDto.getSQL01();
 			String database = configDto.getDatabaseAdminName();
-			int port = 23306;
-			String s = "connected by SSH \r\n";
+			
+			const int port = 3615;
+			const string connectedBySSH = "connected by SSH \r\n";
+			String s = connectedBySSH;
 			String proposition = "";
-			// HACK:crado code
-			if (sshClient == null) {
-				s = "local database \r\n";
-				pwd = configDto.getDefaultPassword();
-				;
-				port = 3306;
-			}
+
 			String cnxString = myUtil.buildconnString(database, "127.0.0.1", user, pwd, port);
 			sql = sql + " WHERE magasin_id=" + rechMagIdBox.Text;
 			try {
@@ -101,6 +142,7 @@ namespace MoulUtil
 				List<KeyValuePair<String, Object>> ligne = magasinList[0];
 				if (ligne.Count > 0) {
 					proposition = ligne[0].Value.ToString().Replace(" ", "");
+					proposition+="-"+convertitInstance(ligne[2].Value.ToString());
 					proposition = "MID" + rechMagIdBox.Text.Trim() + "-" + proposition + "/";
 				}
 				
@@ -113,17 +155,6 @@ namespace MoulUtil
 			} catch (Exception ex) {
 				magDescBox.Text = "erreur :" + ex.Message + "\n" + ex.Source;
 			}
-			
-			if (sshClient != null) {
-				sshClient.Disconnect();
-			}
-		}
-		private static SshClient getAdminServeur(MeoServeur serveur)
-		{
-			SshUtil sshUtil = new SshUtil();
-			List<KeyValuePair<int, int>> portsList = new List<KeyValuePair<int, int>>();
-			portsList.Add(new KeyValuePair<int, int>(23306, 3306));
-			return sshUtil.getClientWithForwardedPorts(serveur, portsList);
 		}
 		void RechMagIdBoxTextChanged(object sender, EventArgs e)
 		{
@@ -140,6 +171,20 @@ namespace MoulUtil
 				
 				
 				cmdUtil.executeCommande("explorer", Path.GetFullPath(proposition));
+			}
+		}
+		void CopyBtnClick(object sender, EventArgs e)
+		{
+			String str = propositionBox.Text.Trim();
+			if (str.Length > 0) {
+				workspaceBox.Text = str;
+				targetNameBox.Text = str;
+			}
+		}
+		void MouliPrepaFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(plink!=null) {
+				plink.Close();
 			}
 		}
 	}

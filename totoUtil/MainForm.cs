@@ -397,6 +397,7 @@ namespace totoUtil
 			
 			//update tippedRtf
 			hyUtil.updateTippedRtfBox(tippedRichTextBox, liste01);
+			tippedRichTextBox.AppendText("\n nb : "+liste01.Count);
 			
 			//update list
 			hyUtil.updateSearchTextBox(infoTextBox, liste01);

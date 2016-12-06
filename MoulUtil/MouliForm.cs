@@ -23,7 +23,7 @@ namespace MoulUtil
 		private List<MeoInstance> instances=null;
 		private MouliJob job=null;
 
-		public MouliForm(List<MeoServeur> serveurs, List<MeoInstance> instances, String magId, String path) 
+		public MouliForm(List<MeoServeur> serveurs, List<MeoInstance> instances, String magId, String path)
 		{
 			InitializeComponent();
 			setServeurs(serveurs);
@@ -122,8 +122,10 @@ namespace MoulUtil
 			TreeView tv = (TreeView) sender;
 			String serverName=null;
 			MeoInstance instance = getSelectedInstance(tv);
+			String instanceName="";
 			if(instance!=null) {
 				serverName=instance.getServeur();
+				instanceName=instance.getNom();
 			}
 			
 			if (serverName!=null) {
@@ -135,11 +137,33 @@ namespace MoulUtil
 					puttyLink.Visible=true;
 					
 					
+					targetLabel.Text = "-> "+serverName+ "/"+instanceName;
+					targetLabel.Text+=getRecapWork();
+					targetLabel.BackColor=Color.Beige;
+					targetLabel.ForeColor=Color.Red;
+					
 					if (job!=null) {
 						pscpLink.Visible=true;
 					}
 				}
 			}
+		}
+		//UGLY CODE
+		String getRecapWork() {
+			String r="";
+			if(checkedListBox1.GetItemChecked(0)) {
+			   	r+="C";
+			   }
+			if(checkedListBox1.GetItemChecked(1)) {
+			   	r+="S";
+			   }
+			if(checkedListBox1.GetItemChecked(2)) {
+			   	r+="J";
+			   }
+			if(checkedListBox1.GetItemChecked(2)) {
+			   	r+="D";
+			   }
+			return r;
 		}
 		void PuttyLinkLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{

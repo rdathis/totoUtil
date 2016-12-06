@@ -25,7 +25,7 @@ namespace cmdUtils.Objets
 		public String sql01;
 		public String databaseAdminName;
 		public String defaultPassword;
-		
+		public String appPlink;
 		public ConfigDto()
 		{
 
@@ -98,6 +98,12 @@ namespace cmdUtils.Objets
 
 		public String getDefaultPassword() {
 			return defaultPassword;
+		}
+		public String getAppPlink() {
+			return appPlink;
+		}
+		public void setAppPlink(String value) {
+			appPlink=value;
 		}
 	}
 }

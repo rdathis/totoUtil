@@ -50,12 +50,15 @@ namespace MoulUtil
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.prepareBtn = new System.Windows.Forms.Button();
+			this.userControl11 = new cmdUtils.TotoRectangle();
 			this.targetNameBox = new System.Windows.Forms.TextBox();
 			this.targetSvgPathBox = new System.Windows.Forms.TextBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.sauvegardeBtn = new System.Windows.Forms.Button();
+			this.userControl12 = new cmdUtils.TotoRectangle();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolTipLable = new System.Windows.Forms.ToolStripStatusLabel();
+			this.copyBtn = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -173,6 +176,7 @@ namespace MoulUtil
 			this.groupBox3.Controls.Add(this.prepareBtn);
 			this.groupBox3.Controls.Add(this.workspaceBaseBox);
 			this.groupBox3.Controls.Add(this.workspaceBox);
+			this.groupBox3.Controls.Add(this.userControl11);
 			this.groupBox3.Location = new System.Drawing.Point(25, 261);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(644, 43);
@@ -189,6 +193,14 @@ namespace MoulUtil
 			this.prepareBtn.Text = "&Prepare";
 			this.prepareBtn.UseVisualStyleBackColor = true;
 			this.prepareBtn.Click += new System.EventHandler(this.PrepareBtnClick);
+			// 
+			// userControl11
+			// 
+			this.userControl11.BackColor = System.Drawing.Color.Red;
+			this.userControl11.Location = new System.Drawing.Point(312, 0);
+			this.userControl11.Name = "userControl11";
+			this.userControl11.Size = new System.Drawing.Size(332, 59);
+			this.userControl11.TabIndex = 16;
 			// 
 			// targetNameBox
 			// 
@@ -209,6 +221,7 @@ namespace MoulUtil
 			this.groupBox4.Controls.Add(this.sauvegardeBtn);
 			this.groupBox4.Controls.Add(this.targetNameBox);
 			this.groupBox4.Controls.Add(this.targetSvgPathBox);
+			this.groupBox4.Controls.Add(this.userControl12);
 			this.groupBox4.Location = new System.Drawing.Point(25, 320);
 			this.groupBox4.Name = "groupBox4";
 			this.groupBox4.Size = new System.Drawing.Size(644, 43);
@@ -226,6 +239,14 @@ namespace MoulUtil
 			this.sauvegardeBtn.UseVisualStyleBackColor = true;
 			this.sauvegardeBtn.Click += new System.EventHandler(this.SauvegardeBtnClick);
 			// 
+			// userControl12
+			// 
+			this.userControl12.BackColor = System.Drawing.Color.Red;
+			this.userControl12.Location = new System.Drawing.Point(312, 0);
+			this.userControl12.Name = "userControl12";
+			this.userControl12.Size = new System.Drawing.Size(332, 59);
+			this.userControl12.TabIndex = 17;
+			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -242,11 +263,24 @@ namespace MoulUtil
 			this.toolTipLable.Size = new System.Drawing.Size(29, 17);
 			this.toolTipLable.Text = "info:";
 			// 
+			// copyBtn
+			// 
+			this.copyBtn.BackColor = System.Drawing.Color.Red;
+			this.copyBtn.Location = new System.Drawing.Point(8, 56);
+			this.copyBtn.Name = "copyBtn";
+			this.copyBtn.Size = new System.Drawing.Size(29, 17);
+			this.copyBtn.TabIndex = 15;
+			this.copyBtn.Text = "!";
+			this.copyBtn.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			this.copyBtn.UseVisualStyleBackColor = false;
+			this.copyBtn.Click += new System.EventHandler(this.CopyBtnClick);
+			// 
 			// MouliPrepaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(681, 584);
+			this.Controls.Add(this.copyBtn);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.sourceListBox);
@@ -256,6 +290,7 @@ namespace MoulUtil
 			this.Controls.Add(this.groupBox3);
 			this.Name = "MouliPrepaForm";
 			this.Text = "MouliPrepa";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MouliPrepaFormFormClosing);
 			this.Load += new System.EventHandler(this.MouliPrepaLoad);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
@@ -271,6 +306,9 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private cmdUtils.TotoRectangle userControl12;
+		private cmdUtils.TotoRectangle userControl11;
+		private System.Windows.Forms.Button copyBtn;
 		private System.Windows.Forms.Button createBtn;
 		private System.Windows.Forms.TextBox propositionBox;
 		private System.Windows.Forms.Button sauvegardeBtn;

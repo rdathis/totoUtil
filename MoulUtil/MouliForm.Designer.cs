@@ -64,6 +64,7 @@ namespace MoulUtil
 			this.magIdTextBox = new System.Windows.Forms.TextBox();
 			this.pathTextBox = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
+			this.targetLabel = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -136,13 +137,13 @@ namespace MoulUtil
 			this.checkedListBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.checkedListBox1.FormattingEnabled = true;
 			this.checkedListBox1.Items.AddRange(new object[] {
-			"clients",
-			"stock",
-			"Joint/",
-			"ord01/"});
-			this.checkedListBox1.Location = new System.Drawing.Point(471, 27);
+			"clients (C)",
+			"stock (S)",
+			"Joint/ (J)",
+			"ord01+doc01 (D)/"});
+			this.checkedListBox1.Location = new System.Drawing.Point(460, 27);
 			this.checkedListBox1.Name = "checkedListBox1";
-			this.checkedListBox1.Size = new System.Drawing.Size(100, 94);
+			this.checkedListBox1.Size = new System.Drawing.Size(121, 79);
 			this.checkedListBox1.TabIndex = 12;
 			// 
 			// puttyLink
@@ -311,11 +312,20 @@ namespace MoulUtil
 			this.label2.TabIndex = 21;
 			this.label2.Text = "path";
 			// 
+			// targetLabel
+			// 
+			this.targetLabel.Location = new System.Drawing.Point(236, 99);
+			this.targetLabel.Name = "targetLabel";
+			this.targetLabel.Size = new System.Drawing.Size(218, 16);
+			this.targetLabel.TabIndex = 23;
+			this.targetLabel.Text = "Destination";
+			// 
 			// MouliForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(599, 430);
+			this.Controls.Add(this.targetLabel);
 			this.Controls.Add(this.pathTextBox);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.magIdTextBox);
@@ -345,6 +355,7 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Label targetLabel;
 		private System.Windows.Forms.TextBox pathTextBox;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label path;

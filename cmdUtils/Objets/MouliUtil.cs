@@ -366,7 +366,10 @@ namespace cmdUtils.Objets
 		
 		public void createArbo(String path)
 		{
-			safeCreateDirectory(path);
+			if(!path.EndsWith("/")) {
+				path+="/";
+			}
+			safeCreateDirectory(path + "/");
 			safeCreateDirectory(path + getData());
 			safeCreateDirectory(path + getData() + getDoc01());
 			safeCreateDirectory(path + getData() + getMag01());

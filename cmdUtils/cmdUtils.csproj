@@ -74,6 +74,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssoControleParam.cs" />
+    <Compile Include="Controles\TotoRectangle.cs" />
+    <Compile Include="Controles\TotoRectangle.Designer.cs">
+      <DependentUpon>TotoRectangle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Objets\ConfigDto.cs" />
     <Compile Include="Objets\ConfigUtil.cs" />
     <Compile Include="Objets\ConvertisseurUtil.cs" />
@@ -116,6 +120,9 @@
     <None Include="libs\MySql.Web.dll" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controles\TotoRectangle.resx">
+      <DependentUpon>TotoRectangle.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -123,6 +130,7 @@
   <ItemGroup>
     <Folder Include="libs" />
     <Folder Include="doc" />
+    <Folder Include="Controles" />
     <Folder Include="Objets" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

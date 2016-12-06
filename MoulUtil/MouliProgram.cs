@@ -59,7 +59,7 @@ namespace MoulUtil
 			
 			
 //			if (sshClient !=null) {
-//			 sshClient.Disconnect();	
+//			 sshClient.Disconnect();
 //			}
 			ILOG.Info("Debut moulinette - chemin '"+sourceMoulinette+"'");
 		}
@@ -98,7 +98,9 @@ namespace MoulUtil
 			s+=" instance:"+options.getInstanceName();
 			s+=" Lots:"+options.getLots() ;
 			s+=" joint:"+options.getIsJoint();
-			
+			if(options.getOrd01()!=null) {
+				s+=" ord01:"+(options.getOrd01().Count > 0);
+			}
 			return s;
 		}
 		private static void toJournal (String sourceMoulinette, MouliUtilOptions options) {
@@ -107,9 +109,15 @@ namespace MoulUtil
 			mouliUtil.safeCreateDirectory("logs/");
 			
 			StreamWriter outputFile = new StreamWriter(getJournalFilePath());
+			try {
 			outputFile.NewLine = "\n";
 			outputFile.WriteLine(DateTime.Now+ " prepa moulinette : "+sourceMoulinette + " "+getDetails(options));
-			outputFile.Close();
+			} catch (Exception e) {
+				Console.WriteLine(e);
+			} finally {
+				outputFile.Close();	
+			}
+			
 			
 		}
 		public static MouliJob doTraitement(String sourceMoulinette, MouliUtilOptions options) {

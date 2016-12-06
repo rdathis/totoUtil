@@ -19,6 +19,7 @@ namespace cmdUtils.Objets {
 		
 		public const String puttyPath="bin/putty.exe";
 		public const String pscpPath="bin/pscp.exe";
+		public const String plinkPath="bin/plink.exe";
 	}
 	
 }

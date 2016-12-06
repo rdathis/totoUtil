@@ -13,6 +13,7 @@ namespace cmdUtils.Objets
 	/// <summary>
 	/// Description of YFiles.
 	/// </summary>
+	/// 
 	public enum YFiles
 	{
 		YCLIENTS,
