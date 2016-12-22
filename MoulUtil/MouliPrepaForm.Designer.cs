@@ -59,6 +59,8 @@ namespace MoulUtil
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolTipLable = new System.Windows.Forms.ToolStripStatusLabel();
 			this.copyBtn = new System.Windows.Forms.Button();
+			this.workspaceLabel = new System.Windows.Forms.Label();
+			this.workingDirBox = new System.Windows.Forms.TextBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -68,7 +70,7 @@ namespace MoulUtil
 			// 
 			// rechMagIdBtn
 			// 
-			this.rechMagIdBtn.Location = new System.Drawing.Point(130, 25);
+			this.rechMagIdBtn.Location = new System.Drawing.Point(130, 49);
 			this.rechMagIdBtn.Name = "rechMagIdBtn";
 			this.rechMagIdBtn.Size = new System.Drawing.Size(75, 23);
 			this.rechMagIdBtn.TabIndex = 0;
@@ -78,11 +80,10 @@ namespace MoulUtil
 			// 
 			// rechMagIdBox
 			// 
-			this.rechMagIdBox.Location = new System.Drawing.Point(38, 27);
+			this.rechMagIdBox.Location = new System.Drawing.Point(12, 49);
 			this.rechMagIdBox.Name = "rechMagIdBox";
-			this.rechMagIdBox.Size = new System.Drawing.Size(102, 20);
+			this.rechMagIdBox.Size = new System.Drawing.Size(108, 20);
 			this.rechMagIdBox.TabIndex = 1;
-			this.rechMagIdBox.TextChanged += new System.EventHandler(this.RechMagIdBoxTextChanged);
 			// 
 			// sourceBaseBox
 			// 
@@ -103,13 +104,13 @@ namespace MoulUtil
 			this.magDescBox.Location = new System.Drawing.Point(311, 13);
 			this.magDescBox.Multiline = true;
 			this.magDescBox.Name = "magDescBox";
-			this.magDescBox.Size = new System.Drawing.Size(325, 66);
+			this.magDescBox.Size = new System.Drawing.Size(325, 85);
 			this.magDescBox.TabIndex = 4;
 			// 
 			// sourceListBox
 			// 
 			this.sourceListBox.FormattingEnabled = true;
-			this.sourceListBox.Location = new System.Drawing.Point(38, 129);
+			this.sourceListBox.Location = new System.Drawing.Point(37, 149);
 			this.sourceListBox.Name = "sourceListBox";
 			this.sourceListBox.Size = new System.Drawing.Size(624, 95);
 			this.sourceListBox.TabIndex = 5;
@@ -132,20 +133,23 @@ namespace MoulUtil
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.workingDirBox);
+			this.groupBox1.Controls.Add(this.workspaceLabel);
 			this.groupBox1.Controls.Add(this.createBtn);
 			this.groupBox1.Controls.Add(this.propositionBox);
 			this.groupBox1.Controls.Add(this.magDescBox);
 			this.groupBox1.Controls.Add(this.rechMagIdBtn);
+			this.groupBox1.Controls.Add(this.rechMagIdBox);
 			this.groupBox1.Location = new System.Drawing.Point(25, 0);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(644, 85);
+			this.groupBox1.Size = new System.Drawing.Size(644, 105);
 			this.groupBox1.TabIndex = 8;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "rechercheMagasin";
 			// 
 			// createBtn
 			// 
-			this.createBtn.Location = new System.Drawing.Point(253, 52);
+			this.createBtn.Location = new System.Drawing.Point(253, 76);
 			this.createBtn.Name = "createBtn";
 			this.createBtn.Size = new System.Drawing.Size(51, 23);
 			this.createBtn.TabIndex = 6;
@@ -155,7 +159,7 @@ namespace MoulUtil
 			// 
 			// propositionBox
 			// 
-			this.propositionBox.Location = new System.Drawing.Point(13, 54);
+			this.propositionBox.Location = new System.Drawing.Point(13, 78);
 			this.propositionBox.Name = "propositionBox";
 			this.propositionBox.Size = new System.Drawing.Size(234, 20);
 			this.propositionBox.TabIndex = 5;
@@ -164,7 +168,7 @@ namespace MoulUtil
 			// 
 			this.groupBox2.Controls.Add(this.sourceBaseBox);
 			this.groupBox2.Controls.Add(this.sourceFilterBox);
-			this.groupBox2.Location = new System.Drawing.Point(25, 91);
+			this.groupBox2.Location = new System.Drawing.Point(24, 111);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(644, 142);
 			this.groupBox2.TabIndex = 9;
@@ -275,6 +279,21 @@ namespace MoulUtil
 			this.copyBtn.UseVisualStyleBackColor = false;
 			this.copyBtn.Click += new System.EventHandler(this.CopyBtnClick);
 			// 
+			// workspaceLabel
+			// 
+			this.workspaceLabel.Location = new System.Drawing.Point(8, 19);
+			this.workspaceLabel.Name = "workspaceLabel";
+			this.workspaceLabel.Size = new System.Drawing.Size(89, 20);
+			this.workspaceLabel.TabIndex = 7;
+			this.workspaceLabel.Text = "workspace";
+			// 
+			// workingDirBox
+			// 
+			this.workingDirBox.Location = new System.Drawing.Point(103, 19);
+			this.workingDirBox.Name = "workingDirBox";
+			this.workingDirBox.Size = new System.Drawing.Size(179, 20);
+			this.workingDirBox.TabIndex = 8;
+			// 
 			// MouliPrepaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -284,7 +303,6 @@ namespace MoulUtil
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.sourceListBox);
-			this.Controls.Add(this.rechMagIdBox);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox3);
@@ -306,6 +324,8 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.TextBox workingDirBox;
+		private System.Windows.Forms.Label workspaceLabel;
 		private cmdUtils.TotoRectangle userControl12;
 		private cmdUtils.TotoRectangle userControl11;
 		private System.Windows.Forms.Button copyBtn;

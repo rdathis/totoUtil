@@ -26,6 +26,8 @@ namespace cmdUtils.Objets
 		public String databaseAdminName;
 		public String defaultPassword;
 		public String appPlink;
+		public String defaultEmail;
+		public String workingDir;
 		public ConfigDto()
 		{
 
@@ -105,5 +107,19 @@ namespace cmdUtils.Objets
 		public void setAppPlink(String value) {
 			appPlink=value;
 		}
+		public void setDefaultEmail(String value) {
+			defaultEmail=value;
+		}
+		public String getDefaultEmail() {
+			return defaultEmail;
+		}
+		public void setWorkingDir(String value) {
+			workingDir=value;
+		}
+		public String getWorkingDir() {
+			if(workingDir==null) workingDir="";
+			return workingDir;
+		}
+		
 	}
 }

@@ -24,15 +24,15 @@ namespace MoulUtil
 		private static MouliForm form =null;
 		private static int progression=0;
 		private static DateTime startDateTime;
+		private static String basePath;
 		static log4net.ILog ILOG = LogManager.GetLogger("mouliUtil");
-		
 
 		private static void print(String s) {
 			System.Diagnostics.Debug.Print(s);
-			
 		}
 		public static void Main(string[] args)
 		{
+			basePath=Directory.GetCurrentDirectory();;
 			//configure le ilog -- http://lutecefalco.developpez.com/tutoriels/dotnet/log4net/introduction/
 			BasicConfigurator.Configure();
 			
@@ -57,10 +57,6 @@ namespace MoulUtil
 			formPrepa.setTargetSvgPath(configDto.getTargetSvgPath());
 			formPrepa.ShowDialog();
 			
-			
-//			if (sshClient !=null) {
-//			 sshClient.Disconnect();
-//			}
 			ILOG.Info("Debut moulinette - chemin '"+sourceMoulinette+"'");
 		}
 
@@ -72,7 +68,6 @@ namespace MoulUtil
 		private static void majProgression(int value) {
 			progression=value;
 			if(form!=null) {
-				
 				form.updateProgression(progression);
 			}
 		}
@@ -108,19 +103,20 @@ namespace MoulUtil
 			MouliUtil mouliUtil = new MouliUtil();
 			mouliUtil.safeCreateDirectory("logs/");
 			
-			StreamWriter outputFile = new StreamWriter(getJournalFilePath());
+			StreamWriter outputFile = new StreamWriter(getJournalFilePath(), true);
 			try {
-			outputFile.NewLine = "\n";
-			outputFile.WriteLine(DateTime.Now+ " prepa moulinette : "+sourceMoulinette + " "+getDetails(options));
+				outputFile.NewLine = "\n";
+				outputFile.WriteLine(DateTime.Now+ " prepa moulinette : "+sourceMoulinette + " "+getDetails(options));
 			} catch (Exception e) {
 				Console.WriteLine(e);
 			} finally {
-				outputFile.Close();	
+				outputFile.Close();
 			}
 			
 			
 		}
 		public static MouliJob doTraitement(String sourceMoulinette, MouliUtilOptions options) {
+			Directory.SetCurrentDirectory(basePath);
 			toJournal(sourceMoulinette, options);
 			
 			majProgression(0);
@@ -131,6 +127,7 @@ namespace MoulUtil
 			
 			startDateTime = DateTime.Now;
 			MouliUtil mouliUtil = new MouliUtil();
+			mouliUtil.setMagasinIrris(options.getNumeroMagasinIrris());
 			ZipUtil zipUtil = new ZipUtil();
 			String archiveName = Path.GetFullPath(sourceMoulinette);
 			String dataPath=archiveName;
@@ -146,7 +143,19 @@ namespace MoulUtil
 			Directory.SetCurrentDirectory(sourceMoulinette);
 			
 			majProgression(5);
-			String tmpname=sourceMoulinette.Replace("/", "").Replace("\\", "");
+			
+			
+			String left="";
+			String tmpname=sourceMoulinette.Replace("\\", "/");
+			while (tmpname.EndsWith("/")) {
+				tmpname=tmpname.Substring(0, tmpname.Length -1);
+			}
+			int i=tmpname.LastIndexOf("/");
+			if(i>0) {
+				left=tmpname.Substring(0, i+1);
+				tmpname=tmpname.Substring(i).Replace("/", "");
+			}
+			
 			String scriptMoulinetteFile= tmpname +".moulinette.sh";
 			String scriptJobMoulinetteFile=tmpname+".job.sh";
 			
@@ -155,28 +164,12 @@ namespace MoulUtil
 			List <FileInfo> fichiers = new List<FileInfo>();
 			String [] selectionY=null;
 			String [] selectionJ=null;
-			//String [] selection0 = null;
 			
 			MouliStatRecap statsRecap = new MouliStatRecap() ;
 			Boolean toLowerCase = true;
 			
 			selectionJ = new string[1];
 			
-			/*
-			a faire pour finir le dev :
-				- (FAIT) sortir le xxx.job
-				- (FAIT) calculer si doc01 : donc isoler le code d'analyse dans une methode a part
-				- (FAIT) calculer si Joint : donc isoler le code d'analyse dans une methode a part
-				- (FAIT)- calculer magId
-				- (FAIT) lister les serveurs et instance
-				- (FAIT) demander pour C et pour S
-				- interroger la base admin prod pour les infos. (kiamo?)
-				- (FAIT) upload ?
-			 */
-			
-			
-			
-
 			String path = mouliUtil.getData()+mouliUtil.getMag01();
 			List <String> selectionYfiles = new List<string>();
 			if((options!=null) && (options.getMagId()==null)) {
@@ -186,7 +179,7 @@ namespace MoulUtil
 			options.setOrd01(mouliUtil.checkIsOrd01( mouliUtil.getData() + mouliUtil.getOrd01()));
 			options.setDoc01(mouliUtil.checkIsDoc01(mouliUtil.getData() + mouliUtil.getDoc01()));
 			
-			mouliUtil.writeMoulinetteFile("../conf/modele.moulinette", "",scriptMoulinetteFile, options);
+			mouliUtil.writeMoulinetteFile(basePath+"/conf/modele.moulinette", "",scriptMoulinetteFile, options);
 			
 			mouliUtil.writeJobFile(scriptJobMoulinetteFile, scriptMoulinetteFile, options);
 
@@ -230,21 +223,21 @@ namespace MoulUtil
 
 			for(int z=0;z<selectionY.Length;z++) {
 				liste.Add(selectionY[z]);
-				// Console.WriteLine("z : "+z + " > '"+ selectionY[z]+"'");
 			}
 
-			
-			
 			// Ajout de notre valeur ajoutee
 			liste.Add(scriptMoulinetteFile);
 			liste.Add(scriptJobMoulinetteFile);
 
 			// maj stats
+			statsRecap.datamag=dataMag;
 			statsRecap.foundFiles=mouliUtil.analyseTopOrdoFixe(liste, dataMag+JFiles.ordo_top_fixe+".txt", statsRecap.notFoundList);
 			if (Directory.Exists(dataMag+"Joint/")) {
 				
 				for(int z=0;z<selectionJ.Length;z++) {
-					liste.Add(dataMag+mouliUtil.getJoint()+selectionJ[z]);
+					if(File.Exists(dataMag+mouliUtil.getJoint()+selectionJ[z])) {
+						liste.Add(dataMag+mouliUtil.getJoint()+selectionJ[z]);
+					}
 				}
 				
 				statsRecap.jointDocsTotal = Directory.GetFiles(dataMag+"Joint/").Length;
@@ -288,7 +281,6 @@ namespace MoulUtil
 			Console.WriteLine("fin archive "+job.getArchiveName());
 			printRecap(job.getStatRecap());
 		}
-		//Exemple : W:\meo-moulinettes>M:\github\totoUtil\MoulUtil\bin\Debug\MoulUtil.exe MID1973-DUPOND-20160621-1973-i3
 		static void printEnd()
 		{
 			Console.Write("Press any key to continue . . . ");
@@ -310,7 +302,7 @@ namespace MoulUtil
 				Console.WriteLine("Absent : "+s);
 			}
 			Console.WriteLine(" PDF : trouvés : "+statRecap.foundFiles+"  -- NON TROUVES : "+statRecap.notFoundList.Count);
-			Console.WriteLine(" fichiers  présents : (mag01/) : "+statRecap.mag01FilesTotal+"  (Joint/) : "+statRecap.jointDocsTotal);
+			Console.WriteLine(" fichiers  présents : ("+statRecap.datamag+"/) : "+statRecap.mag01FilesTotal+"  (Joint/) : "+statRecap.jointDocsTotal);
 		}
 	}
 }

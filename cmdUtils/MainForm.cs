@@ -462,9 +462,9 @@ namespace cmdUtils
 			rtb.Clear();
 			
 			Action<String> callback = logInRtb;
-			String path=mouliUtil.creaEtVerifieRepMoulinette(instance, callback, txtBoxMoulDestBase.Text, txtMagId.Text, txtMagClient.Text, moulDateTextBox.Text);
-			tboxMoulRepFinal.Text = path;
-			mouliUtil.checkOrdoFixe(path );
+			//String path=mouliUtil.creaEtVerifieRepMoulinette(instance, callback, txtBoxMoulDestBase.Text, txtMagId.Text, txtMagClient.Text, moulDateTextBox.Text, "01");
+			//tboxMoulRepFinal.Text = path;
+			//mouliUtil.checkOrdoFixe(path );
 		}
 		void TabMeoTest1Click(object sender, EventArgs e)
 		{

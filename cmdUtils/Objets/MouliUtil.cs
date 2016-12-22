@@ -23,6 +23,7 @@ namespace cmdUtils.Objets
 		public MouliUtil()
 		{
 		}
+		private String m01="01";
 
 		private void doCallback(Action<String> callback, String message)
 		{
@@ -30,8 +31,15 @@ namespace cmdUtils.Objets
 				callback(message);
 			}
 		}
+
+		public void setMagasinIrris(string str)
+		{
+			m01=str;
+		}
+
+		/*
 		//txtBoxMoulDestBase.Text, txtMagId.Text, txtMagClient.Text, moulDateTextBox.Text
-		public String  creaEtVerifieRepMoulinette(MeoInstance instance, Action<String> callback, string destBase, string magId, string magClient, string date)
+		public String  creaEtVerifieRepMoulinette(MeoInstance instance, Action<String> callback, string destBase, string magId, string magClient, string date, String magIrris)
 		{
 			
 			String retour = "";
@@ -51,7 +59,7 @@ namespace cmdUtils.Objets
 				doCallback(callback, "manque Date install");
 				return retour;
 			}
-			
+			this.m01=magIrris;
 			if (instance != null) {
 				// String instanceCode = if(instance!=null ? instance.getCode() : "?"); ;
 				String path = destBase + "MID" + magId + "-" + magClient + "-" + date + "-" + instance.getCode() + "/";
@@ -79,6 +87,7 @@ namespace cmdUtils.Objets
 			}
 			return retour;
 		}
+		*/
 		private String formatPath(String path)
 		{
 			if (!path.EndsWith("/")) {
@@ -92,15 +101,15 @@ namespace cmdUtils.Objets
 		}
 		public String getMag01()
 		{
-			return formatPath("mag01/");
+			return formatPath("mag"+m01+"/");
 		}
 		public String getOrd01()
 		{
-			return formatPath("ord01/");
+			return formatPath("ord"+m01+"/");
 		}
 		public String getDoc01()
 		{
-			return formatPath("doc01/");
+			return formatPath("doc"+m01+"/");
 		}
 		public String getJoint()
 		{
@@ -197,6 +206,7 @@ namespace cmdUtils.Objets
 				Console.WriteLine(" i :" + i);
 				String ligne = tmp[i];
 				ligne = ligne.Replace("<%magId%>", options.getMagId());
+				ligne = ligne.Replace("<%magIRRIS%>", options.getNumeroMagasinIrris());
 				ligne = ligne.Replace("<%ARG%>", options.getLots());
 				ligne = ligne.Replace("<%instanceName%>", options.getInstanceName());
 				ligne = ligne.Replace("<%instanceCommande%>", options.getInstanceCommande());
@@ -217,7 +227,7 @@ namespace cmdUtils.Objets
 		public int analyseTopOrdoFixe(List<string> liste, string file, List<string> notFoundList)
 		{
 			int foundFiles = 0;
-			String path = "data/mag01/Joint/";
+			String path = "data/mag"+m01+"/Joint/";
 			if (Directory.Exists(path) && (File.Exists(file))) {
 				MyUtil myUtil = new MyUtil();
 				String[] lignes = myUtil.readScript(file).Split('\n');
@@ -279,8 +289,10 @@ namespace cmdUtils.Objets
 			
 			// outputFile.WriteLine("MPATH=`dirname $0` ");
 			// outputFile.WriteLine("cd $MPATH && MPATH=$PWD");
-			outputFile.WriteLine("export MAILTO=athis.r@cristallin.com && echo /bin/sh " + scriptMoulinetteFile + " | at " + formatDateJob(options.getDateJob()) + " ");
+			outputFile.WriteLine("echo /bin/sh " + scriptMoulinetteFile + " -mail | at " + formatDateJob(options.getDateJob()) + " ");
 			//
+			String mail=options.getDefaultEmail();
+			outputFile.WriteLine("mail -s \"planification moulinette + "+scriptMoulinetteFile+" \" "+mail+" < $0 ");
 			outputFile.Close();
 		}
 

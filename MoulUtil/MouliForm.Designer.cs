@@ -65,6 +65,8 @@ namespace MoulUtil
 			this.pathTextBox = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.targetLabel = new System.Windows.Forms.Label();
+			this.magIrrisLabel = new System.Windows.Forms.Label();
+			this.irrisMagTBox = new System.Windows.Forms.TextBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -320,11 +322,29 @@ namespace MoulUtil
 			this.targetLabel.TabIndex = 23;
 			this.targetLabel.Text = "Destination";
 			// 
+			// magIrrisLabel
+			// 
+			this.magIrrisLabel.Location = new System.Drawing.Point(37, 46);
+			this.magIrrisLabel.Name = "magIrrisLabel";
+			this.magIrrisLabel.Size = new System.Drawing.Size(83, 22);
+			this.magIrrisLabel.TabIndex = 24;
+			this.magIrrisLabel.Text = "mag Irris";
+			// 
+			// irrisMagTBox
+			// 
+			this.irrisMagTBox.Location = new System.Drawing.Point(126, 46);
+			this.irrisMagTBox.MaxLength = 2;
+			this.irrisMagTBox.Name = "irrisMagTBox";
+			this.irrisMagTBox.Size = new System.Drawing.Size(97, 20);
+			this.irrisMagTBox.TabIndex = 25;
+			// 
 			// MouliForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(599, 430);
+			this.Controls.Add(this.irrisMagTBox);
+			this.Controls.Add(this.magIrrisLabel);
 			this.Controls.Add(this.targetLabel);
 			this.Controls.Add(this.pathTextBox);
 			this.Controls.Add(this.label2);
@@ -355,6 +375,8 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.TextBox irrisMagTBox;
+		private System.Windows.Forms.Label magIrrisLabel;
 		private System.Windows.Forms.Label targetLabel;
 		private System.Windows.Forms.TextBox pathTextBox;
 		private System.Windows.Forms.Label label2;

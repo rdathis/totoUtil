@@ -24,6 +24,8 @@ namespace cmdUtils.Objets
 		private List<String> ord01;
 		private Boolean isJoint;
 		private DateTime dateJob;
+		private String defaultEmail;
+		private String numeroMagasinIrris;
 		public MouliUtilOptions()
 		{
 			//
@@ -91,6 +93,18 @@ namespace cmdUtils.Objets
 		public void setInstanceCommande(String value)
 		{
 			instanceCommande = value;
+		}
+		public void setDefaultEmail(String value) {
+			defaultEmail=value;
+		}
+		public String getDefaultEmail() {
+			return defaultEmail;
+		}
+		public void setNumeroMagasinIrris(String v) {
+			numeroMagasinIrris=v;
+		}
+		public String getNumeroMagasinIrris() {
+			return numeroMagasinIrris;
 		}
 	}
 }

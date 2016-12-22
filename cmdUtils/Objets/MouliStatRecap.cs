@@ -18,6 +18,7 @@ namespace cmdUtils.Objets {
 		public int jointDocsTotal=0;
 		public int ord01DocsTotal;
 		public int doc01DocsTotal;
+		public string datamag;
 		public MouliStatRecap() {
 			
 		}

@@ -22,19 +22,34 @@ namespace MoulUtil
 		private List<MeoServeur> serveurs=null;
 		private List<MeoInstance> instances=null;
 		private MouliJob job=null;
+		private ConfigDto configDto;
 
-		public MouliForm(List<MeoServeur> serveurs, List<MeoInstance> instances, String magId, String path)
+		public MouliForm(List<MeoServeur> serveurs, List<MeoInstance> instances, ConfigDto configDto, String magId, String path)
 		{
 			InitializeComponent();
+			setConfigDto(configDto);
 			setServeurs(serveurs);
 			setInstances(instances);
 			setPath(path);
 			setMagId(magId);
+			setMagasinIrris("01");
 			prepare();
 		}
+
+		void setConfigDto(ConfigDto configDto)
+		{
+			this.configDto=configDto;
+		}
+
 		public void setServeurs(List<MeoServeur> serveurs) {
 			this.serveurs=serveurs;
 		}
+
+		void setMagasinIrris(string str)
+		{
+			irrisMagTBox.Text=str;
+		}
+
 		public void setInstances(List<MeoInstance> instances) {
 			this.instances=instances;
 		}
@@ -152,17 +167,17 @@ namespace MoulUtil
 		String getRecapWork() {
 			String r="";
 			if(checkedListBox1.GetItemChecked(0)) {
-			   	r+="C";
-			   }
+				r+="C";
+			}
 			if(checkedListBox1.GetItemChecked(1)) {
-			   	r+="S";
-			   }
+				r+="S";
+			}
 			if(checkedListBox1.GetItemChecked(2)) {
-			   	r+="J";
-			   }
+				r+="J";
+			}
 			if(checkedListBox1.GetItemChecked(2)) {
-			   	r+="D";
-			   }
+				r+="D";
+			}
 			return r;
 		}
 		void PuttyLinkLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -192,7 +207,28 @@ namespace MoulUtil
 		{
 			//TODO:check if usefull
 		}
-		
+
+		private string calculateLots()
+		{
+			String retour="";
+			//[0]client [1]stock [2]joint [3]ord01
+			CheckedListBox  box = checkedListBox1;
+			if(box.GetItemChecked(0)) {
+				retour+="C";
+			}
+			if(box.GetItemChecked(1)) {
+				retour+="S";
+			}
+			if(box.GetItemChecked(2)) {
+				retour+="D";
+			}
+			if(box.GetItemChecked(3)) {
+				retour+="J";
+			}
+			
+			return retour;
+
+		}
 		MouliUtilOptions updateMouliUtilOption(MeoInstance instance)
 		{
 			MouliUtilOptions options = new MouliUtilOptions();
@@ -204,9 +240,11 @@ namespace MoulUtil
 			// options.setIsDoc01(false);
 			options.setIsJoint(false);
 //			# fin ici
+			options.setDefaultEmail(configDto.getDefaultEmail());
 			
-			options.setLots("CS"); //todo:calculer
+			options.setLots(calculateLots()); //todo:calculer
 			options.setDateJob(dateTimePicker.Value);
+			options.setNumeroMagasinIrris(irrisMagTBox.Text);
 			return options;
 			
 		}
