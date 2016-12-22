@@ -24,7 +24,7 @@ namespace MoulUtil
 		private MouliJob job=null;
 		private ConfigDto configDto;
 
-		public MouliForm(List<MeoServeur> serveurs, List<MeoInstance> instances, ConfigDto configDto, String magId, String path)
+		public MouliForm(List<MeoServeur> serveurs, List<MeoInstance> instances, ConfigDto configDto, String magId, String path, String meourl)
 		{
 			InitializeComponent();
 			setConfigDto(configDto);
@@ -33,11 +33,12 @@ namespace MoulUtil
 			setPath(path);
 			setMagId(magId);
 			setMagasinIrris("01");
+			
 			prepare();
+			setMeoInstance(meourl);
 		}
 
-		void setConfigDto(ConfigDto configDto)
-		{
+		void setConfigDto(ConfigDto configDto)	{
 			this.configDto=configDto;
 		}
 
@@ -211,7 +212,6 @@ namespace MoulUtil
 		private string calculateLots()
 		{
 			String retour="";
-			//[0]client [1]stock [2]joint [3]ord01
 			CheckedListBox  box = checkedListBox1;
 			if(box.GetItemChecked(0)) {
 				retour+="C";
@@ -225,7 +225,6 @@ namespace MoulUtil
 			if(box.GetItemChecked(3)) {
 				retour+="J";
 			}
-			
 			return retour;
 
 		}
@@ -235,11 +234,7 @@ namespace MoulUtil
 			options.setInstanceCommande(instance.getMeocli());
 			options.setInstanceName(instance.getNom());
 			
-			
-//			# ici
-			// options.setIsDoc01(false);
 			options.setIsJoint(false);
-//			# fin ici
 			options.setDefaultEmail(configDto.getDefaultEmail());
 			
 			options.setLots(calculateLots()); //todo:calculer
@@ -278,7 +273,6 @@ namespace MoulUtil
 		{
 			CmdUtil util = new CmdUtil();
 			util.launchWindowsCmd();
-			// cmdUtils.
 		}
 
 		
@@ -304,6 +298,24 @@ namespace MoulUtil
 		{
 			magIdTextBox.Text=magId;
 			magIdTextBox.Enabled=false;
+		}
+
+		void setMeoInstance(string meourl)
+		{
+			MeoInstance instance = MeoInstance.findInstanceByMeoURL(instances, meourl);
+			TreeView tv = targetTreeView;
+			if(instance!=null) {
+				foreach (TreeNode serveurNode in tv.Nodes) {
+					foreach(TreeNode instanceNode in serveurNode.Nodes) {
+						System.Diagnostics.Debug.Print("dbg:" + instanceNode.Text + "/"+instance.getNom());
+						if(instanceNode.Text == instance.getNom()) {
+							tv.SelectedNode=instanceNode;
+							break;
+						}
+						
+					}
+				}
+			}
 		}
 	}
 }

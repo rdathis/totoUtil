@@ -20,12 +20,13 @@ namespace cmdUtils.Objets
 		public MeoInstance() {
 			
 		}
-		public MeoInstance(String serveurName, String nom, String code, String meocli)
+		public MeoInstance(String serveurName, String nom, String code, String meocli, String meourl)
 		{
 			this.serveur=serveurName;
 			this.nom=nom;
 			this.code=code;
 			this.meocli=meocli;
+			this.meourl=meourl;
 		}
 		[XmlAttribute]
 		public String serveur;
@@ -35,6 +36,8 @@ namespace cmdUtils.Objets
 		public String code;
 		[XmlAttribute]
 		public String meocli;
+		[XmlAttribute]
+		public String meourl;
 		
 		
 		public String getServeur() {
@@ -49,7 +52,10 @@ namespace cmdUtils.Objets
 		public String getMeocli() {
 			return meocli;
 		}
-
+		public String getMeourl() {
+			return meourl;
+		}
+		
 		public static MeoInstance findInstanceByServerName(List<MeoInstance> instances, string serverName)
 		{
 			if(instances!=null) {
@@ -61,5 +67,17 @@ namespace cmdUtils.Objets
 			}
 			return null;
 		}
+		public static MeoInstance findInstanceByMeoURL(List<MeoInstance> instances, string meourl)
+		{
+			if(instances!=null) {
+				foreach(MeoInstance instance in instances) {
+					if (meourl==instance.getMeourl() ) {
+						return instance;
+					}
+				}
+			}
+			return null;
+		}
+		
 	}
 }

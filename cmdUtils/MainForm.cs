@@ -55,13 +55,13 @@ namespace cmdUtils
 			instanceList.Clear();
 			MeoServeur s1 = new MeoServeur("S-1",  "1.1.1.1");
 			MeoServeur s2 = new MeoServeur("S-2", "1.1.1.2");
-			
-			instanceList.Add(new MeoInstance(s1.getNom(), "m3035", "i01", "meocli_meo3035"));
-			
-			instanceList.Add(new MeoInstance(s1.getNom(), "od", "iOD", "meocli_od"));
-			
-			instanceList.Add(new MeoInstance(s2.getNom(), "2", "i02", "meocli_i2"));
-			instanceList.Add(new MeoInstance(s2.getNom(), "3", "i03", "meocli_i3"));
+			MeoServeur s4 = new MeoServeur("S-4", "1.1.1.4");
+			MeoServeur s5 = new MeoServeur("S-5", "1.1.1.5");
+		
+			//instanceList.Add(new MeoInstance(s1.getNom(), "m3035", "i01", "meocli_meo3035", "url"));
+			//instanceList.Add(new MeoInstance(s1.getNom(), "od", "iOD", "meocli_od", "url"));
+			//instanceList.Add(new MeoInstance(s2.getNom(), "2", "i02", "meocli_i2", "url"));
+			//instanceList.Add(new MeoInstance(s2.getNom(), "3", "i03", "meocli_i3", "url"));
 		}
 
 		void initInstanceListBox(ListBox listBox)

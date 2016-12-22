@@ -23,6 +23,7 @@ namespace MoulUtil
 	{
 		private System.Diagnostics.Process plink;
 		private ConfigDto configDto;
+		private String magasinUrl="";
 		
 		public MouliPrepaForm(ConfigDto configDto)
 		{
@@ -56,7 +57,7 @@ namespace MoulUtil
 		{
 			if (workspaceBaseBox.Text.Length > 0 && workspaceBox.Text.Length > 0) {
 				String magId=rechMagIdBox.Text;
-				MouliForm form = new MouliForm(configDto.getServeurs(), configDto.getInstances(), configDto, magId, workspaceBox.Text);
+				MouliForm form = new MouliForm(configDto.getServeurs(), configDto.getInstances(), configDto, magId, workspaceBox.Text, magasinUrl);
 				form.ShowDialog();
 			} else {
 				workspaceBaseBox.Focus();
@@ -136,6 +137,7 @@ namespace MoulUtil
 					magDescBox.Text = "Fake Shop";
 					String rep= "MID0000-TOTO-i0/";
 					propositionBox.Text = configDto.workingDir+rep;
+					magasinUrl="";
 					CreateBtnClick(null, null);
 					createMock(rep);
 					return;
@@ -162,6 +164,7 @@ namespace MoulUtil
 					if (ligne.Count > 0) {
 						proposition = ligne[0].Value.ToString().Replace(" ", "");
 						proposition+="-"+convertitInstance(ligne[2].Value.ToString());
+						magasinUrl=ligne[2].Value.ToString();
 						proposition = configDto.getWorkingDir()+ "MID" + rechMagIdBox.Text.Trim() + "-" + proposition + "/";
 					}
 					
