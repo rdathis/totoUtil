@@ -87,7 +87,7 @@ namespace cmdUtils.Objets
 			}
 			return retour;
 		}
-		*/
+		 */
 		private String formatPath(String path)
 		{
 			if (!path.EndsWith("/")) {
@@ -205,21 +205,12 @@ namespace cmdUtils.Objets
 			for (int i = 0; i < tmp.Length; i++) {
 				Console.WriteLine(" i :" + i);
 				String ligne = tmp[i];
-				ligne = ligne.Replace("<%magId%>", options.getMagId());
-				ligne = ligne.Replace("<%magIRRIS%>", options.getNumeroMagasinIrris());
-				ligne = ligne.Replace("<%ARG%>", options.getLots());
-				ligne = ligne.Replace("<%instanceName%>", options.getInstanceName());
-				ligne = ligne.Replace("<%instanceCommande%>", options.getInstanceCommande());
-				String joint = "N";
-				if (options.getIsJoint()) {
-					joint = "O";
+				if(!options.isCommentaire(ligne)) {
+					ligne = ligne.Replace("\n", "");
+					ligne = ligne.Replace("\r", "");
+					ligne = options.traduitScript(ligne);
+					retour.Add(ligne);
 				}
-				ligne = ligne.Replace("<%joint%>", joint);
-				ligne = ligne.Replace("<%dateCrea%>", new DateTime().Date.ToString());
-				ligne = ligne.Replace("\n", "");
-				ligne = ligne.Replace("\r", "");
-				
-				retour.Add(ligne);
 			}
 			return retour;
 		}

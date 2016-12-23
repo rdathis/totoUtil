@@ -106,5 +106,25 @@ namespace cmdUtils.Objets
 		public String getNumeroMagasinIrris() {
 			return numeroMagasinIrris;
 		}
+
+		public Boolean isCommentaire(String ligne) {
+			return ligne.StartsWith("#DoNotTranslate:");
+		}
+		public string traduitScript(string ligne)
+		{
+			ligne = ligne.Replace("<%mailto%>", this.getDefaultEmail());
+			ligne = ligne.Replace("<%magId%>", this.getMagId());
+			ligne = ligne.Replace("<%magIRRIS%>", this.getNumeroMagasinIrris());
+			ligne = ligne.Replace("<%ARG%>", this.getLots());
+			ligne = ligne.Replace("<%instanceName%>", this.getInstanceName());
+			ligne = ligne.Replace("<%instanceCommande%>", this.getInstanceCommande());
+			String joint = "N";
+			if (this.getIsJoint()) {
+				joint = "O";
+			}
+			ligne = ligne.Replace("<%joint%>", joint);
+			ligne = ligne.Replace("<%dateCrea%>", new DateTime().Date.ToString());
+			return ligne;
+		}
 	}
 }
