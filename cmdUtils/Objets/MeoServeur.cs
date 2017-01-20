@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace cmdUtils
+namespace cmdUtils.Objets
 {
 	/// <summary>
 	/// Description of Class1.

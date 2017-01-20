@@ -26,11 +26,13 @@ namespace MoulUtil
 		private ConfigDto configDto;
 		private String magasinUrl="";
 		
+		//private String instanceNom=null;
 		public MouliPrepaForm(ConfigDto configDto)
 		{
 			InitializeComponent();
 			this.configDto = configDto;
 			this.workingDirBox.Text=configDto.getWorkingDir();
+			new TreeViewUtil(configDto.instances,configDto.serveurs).populateTargets(targetTreeView);
 		}
 		void MouliPrepaLoad(object sender, EventArgs e)
 		{
@@ -164,6 +166,7 @@ namespace MoulUtil
 				List<KeyValuePair<String, Object>> ligne = magasinList[0];
 				if (ligne.Count > 0) {
 					proposition = ligne[0].Value.ToString().Replace(" ", "");
+
 					proposition+="-"+convertitInstance(ligne[2].Value.ToString());
 					magasinUrl=ligne[2].Value.ToString();
 					proposition = configDto.getWorkingDir()+ "MID" + rechMagIdBox.Text.Trim() + "-" + proposition + "/";
@@ -210,11 +213,13 @@ namespace MoulUtil
 		}
 		void SqlBtnClick(object sender, EventArgs e)
 		{
-			MouliSQLForm form = new MouliSQLForm(this.rechMagIdBox.Text);
+			MeoInstance meoInstance = MeoInstance.findInstanceByMeoURL(configDto.instances, magasinUrl); // convertitInstance(string url);
+			MouliSQLForm form = new MouliSQLForm(this.rechMagIdBox.Text, meoInstance);
 			form.ShowDialog();
 		}
 		void ConfigBtnClick(object sender, EventArgs e)
 		{
+			
 			MouliEditForm form = new MouliEditForm(configDto);
 			form.ShowDialog();
 		}

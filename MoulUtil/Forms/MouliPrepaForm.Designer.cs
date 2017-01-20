@@ -63,6 +63,7 @@ namespace MoulUtil
 			this.copyBtn = new System.Windows.Forms.Button();
 			this.sqlBtn = new System.Windows.Forms.Button();
 			this.configBtn = new System.Windows.Forms.Button();
+			this.targetTreeView = new System.Windows.Forms.TreeView();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -298,7 +299,7 @@ namespace MoulUtil
 			// 
 			// sqlBtn
 			// 
-			this.sqlBtn.Location = new System.Drawing.Point(25, 483);
+			this.sqlBtn.Location = new System.Drawing.Point(24, 414);
 			this.sqlBtn.Name = "sqlBtn";
 			this.sqlBtn.Size = new System.Drawing.Size(75, 23);
 			this.sqlBtn.TabIndex = 16;
@@ -310,7 +311,7 @@ namespace MoulUtil
 			// 
 			this.configBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
 			this.configBtn.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.configBtn.Location = new System.Drawing.Point(278, 483);
+			this.configBtn.Location = new System.Drawing.Point(24, 454);
 			this.configBtn.Name = "configBtn";
 			this.configBtn.Size = new System.Drawing.Size(75, 23);
 			this.configBtn.TabIndex = 17;
@@ -318,11 +319,19 @@ namespace MoulUtil
 			this.configBtn.UseVisualStyleBackColor = false;
 			this.configBtn.Click += new System.EventHandler(this.ConfigBtnClick);
 			// 
+			// targetTreeView
+			// 
+			this.targetTreeView.Location = new System.Drawing.Point(359, 369);
+			this.targetTreeView.Name = "targetTreeView";
+			this.targetTreeView.Size = new System.Drawing.Size(322, 190);
+			this.targetTreeView.TabIndex = 18;
+			// 
 			// MouliPrepaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(681, 584);
+			this.Controls.Add(this.targetTreeView);
 			this.Controls.Add(this.configBtn);
 			this.Controls.Add(this.sqlBtn);
 			this.Controls.Add(this.copyBtn);
@@ -350,6 +359,7 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.TreeView targetTreeView;
 		private System.Windows.Forms.Button configBtn;
 		private System.Windows.Forms.Button sqlBtn;
 		private System.Windows.Forms.TextBox workingDirBox;

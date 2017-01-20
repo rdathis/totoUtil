@@ -36,17 +36,18 @@ namespace MoulUtil
 		{
 			this.label1 = new System.Windows.Forms.Label();
 			this.magasinIdBox = new System.Windows.Forms.TextBox();
-			this.label2 = new System.Windows.Forms.Label();
+			this.statStockLabel = new System.Windows.Forms.Label();
 			this.detailmagasinBox = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.anneepurgeBox = new System.Windows.Forms.TextBox();
-			this.label4 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
-			this.label6 = new System.Windows.Forms.Label();
+			this.anneeStockPurgeBox = new System.Windows.Forms.TextBox();
+			this.statVisitesLabel = new System.Windows.Forms.Label();
+			this.purgeStockLabel = new System.Windows.Forms.Label();
+			this.purgeVisitesLabel = new System.Windows.Forms.Label();
 			this.resultatSQLBox = new System.Windows.Forms.TextBox();
 			this.dataGrid1 = new System.Windows.Forms.DataGrid();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
 			this.sqlCalculeBox = new System.Windows.Forms.TextBox();
+			this.anneeVisitePurgeBox = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
@@ -66,14 +67,15 @@ namespace MoulUtil
 			this.magasinIdBox.Size = new System.Drawing.Size(100, 20);
 			this.magasinIdBox.TabIndex = 1;
 			// 
-			// label2
+			// statStockLabel
 			// 
-			this.label2.BackColor = System.Drawing.Color.Lime;
-			this.label2.Location = new System.Drawing.Point(13, 68);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(73, 23);
-			this.label2.TabIndex = 2;
-			this.label2.Text = "stat Stock";
+			this.statStockLabel.BackColor = System.Drawing.Color.Lime;
+			this.statStockLabel.Location = new System.Drawing.Point(12, 78);
+			this.statStockLabel.Name = "statStockLabel";
+			this.statStockLabel.Size = new System.Drawing.Size(73, 23);
+			this.statStockLabel.TabIndex = 2;
+			this.statStockLabel.Text = "stat Stock";
+			this.statStockLabel.Click += new System.EventHandler(this.StatStockLabelClick);
 			// 
 			// detailmagasinBox
 			// 
@@ -91,39 +93,42 @@ namespace MoulUtil
 			this.label3.TabIndex = 4;
 			this.label3.Text = "Année purge";
 			// 
-			// anneepurgeBox
+			// anneeStockPurgeBox
 			// 
-			this.anneepurgeBox.Location = new System.Drawing.Point(120, 39);
-			this.anneepurgeBox.Name = "anneepurgeBox";
-			this.anneepurgeBox.Size = new System.Drawing.Size(100, 20);
-			this.anneepurgeBox.TabIndex = 5;
+			this.anneeStockPurgeBox.Location = new System.Drawing.Point(12, 55);
+			this.anneeStockPurgeBox.Name = "anneeStockPurgeBox";
+			this.anneeStockPurgeBox.Size = new System.Drawing.Size(74, 20);
+			this.anneeStockPurgeBox.TabIndex = 5;
 			// 
-			// label4
+			// statVisitesLabel
 			// 
-			this.label4.BackColor = System.Drawing.Color.Lime;
-			this.label4.Location = new System.Drawing.Point(120, 68);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(73, 23);
-			this.label4.TabIndex = 6;
-			this.label4.Text = "stat Visites";
+			this.statVisitesLabel.BackColor = System.Drawing.Color.Lime;
+			this.statVisitesLabel.Location = new System.Drawing.Point(120, 78);
+			this.statVisitesLabel.Name = "statVisitesLabel";
+			this.statVisitesLabel.Size = new System.Drawing.Size(73, 23);
+			this.statVisitesLabel.TabIndex = 6;
+			this.statVisitesLabel.Text = "stat Visites";
+			this.statVisitesLabel.Click += new System.EventHandler(this.StatVisitesLabelClick);
 			// 
-			// label5
+			// purgeStockLabel
 			// 
-			this.label5.BackColor = System.Drawing.Color.Fuchsia;
-			this.label5.Location = new System.Drawing.Point(389, 68);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(73, 23);
-			this.label5.TabIndex = 7;
-			this.label5.Text = "purge Stock";
+			this.purgeStockLabel.BackColor = System.Drawing.Color.Fuchsia;
+			this.purgeStockLabel.Location = new System.Drawing.Point(12, 106);
+			this.purgeStockLabel.Name = "purgeStockLabel";
+			this.purgeStockLabel.Size = new System.Drawing.Size(73, 23);
+			this.purgeStockLabel.TabIndex = 7;
+			this.purgeStockLabel.Text = "purge Stock";
+			this.purgeStockLabel.Click += new System.EventHandler(this.PurgeStockLabelClick);
 			// 
-			// label6
+			// purgeVisitesLabel
 			// 
-			this.label6.BackColor = System.Drawing.Color.Fuchsia;
-			this.label6.Location = new System.Drawing.Point(490, 68);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(73, 23);
-			this.label6.TabIndex = 8;
-			this.label6.Text = "purge Visites";
+			this.purgeVisitesLabel.BackColor = System.Drawing.Color.Fuchsia;
+			this.purgeVisitesLabel.Location = new System.Drawing.Point(120, 106);
+			this.purgeVisitesLabel.Name = "purgeVisitesLabel";
+			this.purgeVisitesLabel.Size = new System.Drawing.Size(73, 23);
+			this.purgeVisitesLabel.TabIndex = 8;
+			this.purgeVisitesLabel.Text = "purge Visites";
+			this.purgeVisitesLabel.Click += new System.EventHandler(this.PurgeVisitesLabelClick);
 			// 
 			// resultatSQLBox
 			// 
@@ -158,22 +163,30 @@ namespace MoulUtil
 			this.sqlCalculeBox.Size = new System.Drawing.Size(873, 47);
 			this.sqlCalculeBox.TabIndex = 12;
 			// 
+			// anneeVisitePurgeBox
+			// 
+			this.anneeVisitePurgeBox.Location = new System.Drawing.Point(120, 55);
+			this.anneeVisitePurgeBox.Name = "anneeVisitePurgeBox";
+			this.anneeVisitePurgeBox.Size = new System.Drawing.Size(73, 20);
+			this.anneeVisitePurgeBox.TabIndex = 13;
+			// 
 			// MouliSQLForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(886, 506);
+			this.Controls.Add(this.anneeVisitePurgeBox);
 			this.Controls.Add(this.sqlCalculeBox);
 			this.Controls.Add(this.dataGridView1);
 			this.Controls.Add(this.dataGrid1);
 			this.Controls.Add(this.resultatSQLBox);
-			this.Controls.Add(this.label6);
-			this.Controls.Add(this.label5);
-			this.Controls.Add(this.label4);
-			this.Controls.Add(this.anneepurgeBox);
+			this.Controls.Add(this.purgeVisitesLabel);
+			this.Controls.Add(this.purgeStockLabel);
+			this.Controls.Add(this.statVisitesLabel);
+			this.Controls.Add(this.anneeStockPurgeBox);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.detailmagasinBox);
-			this.Controls.Add(this.label2);
+			this.Controls.Add(this.statStockLabel);
 			this.Controls.Add(this.magasinIdBox);
 			this.Controls.Add(this.label1);
 			this.Name = "MouliSQLForm";
@@ -184,17 +197,18 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.TextBox anneeVisitePurgeBox;
 		private System.Windows.Forms.TextBox sqlCalculeBox;
 		private System.Windows.Forms.DataGrid dataGrid1;
 		private System.Windows.Forms.DataGridView dataGridView1;
 		private System.Windows.Forms.TextBox resultatSQLBox;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.TextBox anneepurgeBox;
+		private System.Windows.Forms.Label purgeVisitesLabel;
+		private System.Windows.Forms.Label purgeStockLabel;
+		private System.Windows.Forms.Label statVisitesLabel;
+		private System.Windows.Forms.TextBox anneeStockPurgeBox;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.TextBox detailmagasinBox;
-		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label statStockLabel;
 		private System.Windows.Forms.TextBox magasinIdBox;
 		private System.Windows.Forms.Label label1;
 	}

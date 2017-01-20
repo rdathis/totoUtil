@@ -59,24 +59,9 @@ namespace MoulUtil
 		public void prepare() {
 			puttyLink.Visible=false;
 			pscpLink.Visible=false;
-			populateTargets(targetTreeView);
+			new TreeViewUtil(instances, serveurs).populateTargets(targetTreeView);
+			
 			dateTimePicker.Value = new MouliUtil().calculeNextPlannedJob();
-		}
-		private void populateTargets(TreeView tv) {
-			if(serveurs!=null) {
-				foreach(MeoServeur serveur in serveurs) {
-					TreeNode node= tv.Nodes.Add (serveur.getNom());
-					completeInstances(node, serveur.getNom());
-					node.ExpandAll();
-				}
-			}
-		}
-		private void completeInstances(TreeNode node, String serverName) {
-			foreach(MeoInstance instance in instances) {
-				if (instance.getServeur()== serverName) {
-					TreeNode childNode=node.Nodes.Add(instance.getNom());
-				}
-			}
 		}
 
 		// disable once ParameterHidesMember
