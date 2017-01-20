@@ -56,11 +56,11 @@ namespace cmdUtils.Objets
 			return meourl;
 		}
 		
-		public static MeoInstance findInstanceByServerName(List<MeoInstance> instances, string serverName)
+		public static MeoInstance findInstanceByInstanceName(List<MeoInstance> instances, string instanceName)
 		{
 			if(instances!=null) {
 				foreach(MeoInstance instance in instances) {
-					if (serverName==instance.getServeur() ) {
+					if (instanceName==instance.getNom() ) {
 						return instance;
 					}
 				}

@@ -45,6 +45,8 @@ namespace MoulUtil
 			this.workspaceBaseBox = new System.Windows.Forms.TextBox();
 			this.workspaceBox = new System.Windows.Forms.TextBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.workingDirBox = new System.Windows.Forms.TextBox();
+			this.workspaceLabel = new System.Windows.Forms.Label();
 			this.createBtn = new System.Windows.Forms.Button();
 			this.propositionBox = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -59,8 +61,8 @@ namespace MoulUtil
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolTipLable = new System.Windows.Forms.ToolStripStatusLabel();
 			this.copyBtn = new System.Windows.Forms.Button();
-			this.workspaceLabel = new System.Windows.Forms.Label();
-			this.workingDirBox = new System.Windows.Forms.TextBox();
+			this.sqlBtn = new System.Windows.Forms.Button();
+			this.configBtn = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -146,6 +148,21 @@ namespace MoulUtil
 			this.groupBox1.TabIndex = 8;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "rechercheMagasin";
+			// 
+			// workingDirBox
+			// 
+			this.workingDirBox.Location = new System.Drawing.Point(103, 19);
+			this.workingDirBox.Name = "workingDirBox";
+			this.workingDirBox.Size = new System.Drawing.Size(179, 20);
+			this.workingDirBox.TabIndex = 8;
+			// 
+			// workspaceLabel
+			// 
+			this.workspaceLabel.Location = new System.Drawing.Point(8, 19);
+			this.workspaceLabel.Name = "workspaceLabel";
+			this.workspaceLabel.Size = new System.Drawing.Size(89, 20);
+			this.workspaceLabel.TabIndex = 7;
+			this.workspaceLabel.Text = "workspace";
 			// 
 			// createBtn
 			// 
@@ -279,26 +296,35 @@ namespace MoulUtil
 			this.copyBtn.UseVisualStyleBackColor = false;
 			this.copyBtn.Click += new System.EventHandler(this.CopyBtnClick);
 			// 
-			// workspaceLabel
+			// sqlBtn
 			// 
-			this.workspaceLabel.Location = new System.Drawing.Point(8, 19);
-			this.workspaceLabel.Name = "workspaceLabel";
-			this.workspaceLabel.Size = new System.Drawing.Size(89, 20);
-			this.workspaceLabel.TabIndex = 7;
-			this.workspaceLabel.Text = "workspace";
+			this.sqlBtn.Location = new System.Drawing.Point(25, 483);
+			this.sqlBtn.Name = "sqlBtn";
+			this.sqlBtn.Size = new System.Drawing.Size(75, 23);
+			this.sqlBtn.TabIndex = 16;
+			this.sqlBtn.Text = "&SQL";
+			this.sqlBtn.UseVisualStyleBackColor = true;
+			this.sqlBtn.Click += new System.EventHandler(this.SqlBtnClick);
 			// 
-			// workingDirBox
+			// configBtn
 			// 
-			this.workingDirBox.Location = new System.Drawing.Point(103, 19);
-			this.workingDirBox.Name = "workingDirBox";
-			this.workingDirBox.Size = new System.Drawing.Size(179, 20);
-			this.workingDirBox.TabIndex = 8;
+			this.configBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+			this.configBtn.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.configBtn.Location = new System.Drawing.Point(278, 483);
+			this.configBtn.Name = "configBtn";
+			this.configBtn.Size = new System.Drawing.Size(75, 23);
+			this.configBtn.TabIndex = 17;
+			this.configBtn.Text = "&Config";
+			this.configBtn.UseVisualStyleBackColor = false;
+			this.configBtn.Click += new System.EventHandler(this.ConfigBtnClick);
 			// 
 			// MouliPrepaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(681, 584);
+			this.Controls.Add(this.configBtn);
+			this.Controls.Add(this.sqlBtn);
 			this.Controls.Add(this.copyBtn);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.groupBox4);
@@ -324,6 +350,8 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Button configBtn;
+		private System.Windows.Forms.Button sqlBtn;
 		private System.Windows.Forms.TextBox workingDirBox;
 		private System.Windows.Forms.Label workspaceLabel;
 		private cmdUtils.TotoRectangle userControl12;

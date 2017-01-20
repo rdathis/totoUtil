@@ -22,7 +22,7 @@ namespace cmdUtils.Objets
 		YFORMULE,
 		YSTOCAT,
 		YSTOCK,
-		YHISTO,
+//		YHISTO, // not ready yet
 		YVITALE,
 		YTOPTIC,
 		YTOPSUIT,

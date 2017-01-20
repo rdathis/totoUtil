@@ -23,6 +23,7 @@ namespace MoulUtil
 		private List<MeoInstance> instances=null;
 		private MouliJob job=null;
 		private ConfigDto configDto;
+		private String magId=null;
 
 		public MouliForm(List<MeoServeur> serveurs, List<MeoInstance> instances, ConfigDto configDto, String magId, String path, String meourl)
 		{
@@ -38,6 +39,7 @@ namespace MoulUtil
 			setMeoInstance(meourl);
 		}
 
+		// disable once ParameterHidesMember
 		void setConfigDto(ConfigDto configDto)	{
 			this.configDto=configDto;
 		}
@@ -240,6 +242,7 @@ namespace MoulUtil
 			options.setLots(calculateLots()); //todo:calculer
 			options.setDateJob(dateTimePicker.Value);
 			options.setNumeroMagasinIrris(irrisMagTBox.Text);
+			options.setMagId(magId);
 			return options;
 			
 		}
@@ -261,8 +264,7 @@ namespace MoulUtil
 			if(level==0) {
 				serverName=text;
 			} else if(level==1) {
-				text=node.Parent.Text;
-				instance=MeoInstance.findInstanceByServerName(instances, text);
+				instance=MeoInstance.findInstanceByInstanceName(instances, text);
 				if(instance!=null) {
 					serverName=instance.getServeur();
 				}
@@ -294,8 +296,10 @@ namespace MoulUtil
 			}
 		}
 
+		// disable once ParameterHidesMember
 		void setMagId(string magId)
 		{
+			this.magId=magId;
 			magIdTextBox.Text=magId;
 			magIdTextBox.Enabled=false;
 		}
@@ -310,9 +314,8 @@ namespace MoulUtil
 						System.Diagnostics.Debug.Print("dbg:" + instanceNode.Text + "/"+instance.getNom());
 						if(instanceNode.Text == instance.getNom()) {
 							tv.SelectedNode=instanceNode;
-							break;
+							return; // pas break, car 2 foreach()
 						}
-						
 					}
 				}
 			}

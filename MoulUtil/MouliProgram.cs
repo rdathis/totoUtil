@@ -249,7 +249,6 @@ namespace MoulUtil
 			majProgression(50);
 			MouliJob job = new MouliJob(archiveName, originalDir, liste, statsRecap, startDateTime, options, sourceMoulinette);
 			return job;
-			
 		}
 
 		public static void doArchive(MouliJob job)

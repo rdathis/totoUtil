@@ -365,7 +365,7 @@ namespace totoUtil
 			tipTextbox.Focus();
 		}
 		private String getOldLog(String path) {
-			String date=DateTime.Now.ToString("yyyy-M-dd")+"*log.gz";
+			String date=DateTime.Now.ToString("yyyy-MM-dd")+"*log.gz";
 			return (path+date);
 		}
 		void prepareGrepList() {

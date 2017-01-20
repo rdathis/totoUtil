@@ -12,6 +12,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using cmdUtils.Objets;
+using MoulUtil.Forms;
 
 namespace MoulUtil
 {
@@ -123,89 +124,99 @@ namespace MoulUtil
 		{
 			String str=configDto.getWorkingDir();
 			if((str!=null) && (str.Length>0)) {
-					MouliUtil mouliUtil = new MouliUtil();
-					mouliUtil.safeCreateDirectory( configDto.getWorkingDir());
-				}
-			}
-
-			void rechercheMagasin()
-			{
-				safeWorkingDir();
-				
-				//mise en commentaire de prepadir, pas pret.
-				if(rechMagIdBox.Text.Equals("0")) {
-					magDescBox.Text = "Fake Shop";
-					String rep= "MID0000-TOTO-i0/";
-					propositionBox.Text = configDto.workingDir+rep;
-					magasinUrl="";
-					CreateBtnClick(null, null);
-					createMock(rep);
-					return;
-				}
-				MyUtil myUtil = new MyUtil();
-				String user = configDto.getDatabaseAdminUser();
-				String pwd = configDto.getDatabaseAdminPwd();
-				String sql = configDto.getSQL01();
-				String database = configDto.getDatabaseAdminName();
-				
-				const int port = 3615;
-				const string connectedBySSH = "connected by SSH \r\n";
-				String s = connectedBySSH;
-				String proposition = "";
-
-				String cnxString = myUtil.buildconnString(database, "127.0.0.1", user, pwd, port);
-				sql = sql + " WHERE magasin_id=" + rechMagIdBox.Text;
-				try {
-					var magasinList = myUtil.getListResultAsKeyValue(cnxString, sql);
-					magDescBox.Text = "";
-					
-					magDescBox.Text = s;
-					List<KeyValuePair<String, Object>> ligne = magasinList[0];
-					if (ligne.Count > 0) {
-						proposition = ligne[0].Value.ToString().Replace(" ", "");
-						proposition+="-"+convertitInstance(ligne[2].Value.ToString());
-						magasinUrl=ligne[2].Value.ToString();
-						proposition = configDto.getWorkingDir()+ "MID" + rechMagIdBox.Text.Trim() + "-" + proposition + "/";
-					}
-					
-					for (int i = 0; i < ligne.Count; i++) {
-						KeyValuePair<String, Object> item = ligne[i];
-						s += "[" + item.Key + "] = '" + item.Value + "' \r\n";
-					}
-					magDescBox.Text = s;
-					propositionBox.Text = proposition;
-				} catch (Exception ex) {
-					magDescBox.Text = "erreur :" + ex.Message + "\n" + ex.Source;
-				}
-			}
-			void RechMagIdBoxTextChanged(object sender, EventArgs e)
-			{
-				
-			}
-			void CreateBtnClick(object sender, EventArgs e)
-			{
-				String proposition = propositionBox.Text;
-				if (proposition.Length > 0) {
-					MouliUtil mouliUtil = new MouliUtil();
-					mouliUtil.createArbo(proposition);
-					CmdUtil cmdUtil = new CmdUtil();
-					
-					cmdUtil.executeCommande("explorer", Path.GetFullPath(proposition));
-				}
-			}
-			void CopyBtnClick(object sender, EventArgs e)
-			{
-				String str = propositionBox.Text.Trim();
-				if (str.Length > 0) {
-					workspaceBox.Text = str;
-					targetNameBox.Text = str;
-				}
-			}
-			void MouliPrepaFormFormClosing(object sender, FormClosingEventArgs e)
-			{
-				if(plink!=null) {
-					plink.Close();
-				}
+				MouliUtil mouliUtil = new MouliUtil();
+				mouliUtil.safeCreateDirectory( configDto.getWorkingDir());
 			}
 		}
+
+		void rechercheMagasin()
+		{
+			safeWorkingDir();
+			
+			//mise en commentaire de prepadir, pas pret.
+			if(rechMagIdBox.Text.Equals("0")) {
+				magDescBox.Text = "Fake Shop";
+				String rep= "MID0000-TOTO-i0/";
+				propositionBox.Text = configDto.workingDir+rep;
+				magasinUrl="";
+				CreateBtnClick(null, null);
+				createMock(rep);
+				return;
+			}
+			MyUtil myUtil = new MyUtil();
+			String user = configDto.getDatabaseAdminUser();
+			String pwd = configDto.getDatabaseAdminPwd();
+			String sql = configDto.getSQL01();
+			String database = configDto.getDatabaseAdminName();
+			
+			const int port = 3615;
+			const string connectedBySSH = "connected by SSH \r\n";
+			String s = connectedBySSH;
+			String proposition = "";
+
+			String cnxString = myUtil.buildconnString(database, "127.0.0.1", user, pwd, port);
+			sql = sql + " WHERE magasin_id=" + rechMagIdBox.Text;
+			try {
+				var magasinList = myUtil.getListResultAsKeyValue(cnxString, sql);
+				magDescBox.Text = "";
+				
+				magDescBox.Text = s;
+				List<KeyValuePair<String, Object>> ligne = magasinList[0];
+				if (ligne.Count > 0) {
+					proposition = ligne[0].Value.ToString().Replace(" ", "");
+					proposition+="-"+convertitInstance(ligne[2].Value.ToString());
+					magasinUrl=ligne[2].Value.ToString();
+					proposition = configDto.getWorkingDir()+ "MID" + rechMagIdBox.Text.Trim() + "-" + proposition + "/";
+				}
+				
+				for (int i = 0; i < ligne.Count; i++) {
+					KeyValuePair<String, Object> item = ligne[i];
+					s += "[" + item.Key + "] = '" + item.Value + "' \r\n";
+				}
+				magDescBox.Text = s;
+				propositionBox.Text = proposition;
+			} catch (Exception ex) {
+				magDescBox.Text = "erreur :" + ex.Message + "\n" + ex.Source;
+			}
+		}
+		void RechMagIdBoxTextChanged(object sender, EventArgs e)
+		{
+			
+		}
+		void CreateBtnClick(object sender, EventArgs e)
+		{
+			String proposition = propositionBox.Text;
+			if (proposition.Length > 0) {
+				MouliUtil mouliUtil = new MouliUtil();
+				mouliUtil.createArbo(proposition);
+				CmdUtil cmdUtil = new CmdUtil();
+				
+				cmdUtil.executeCommande("explorer", Path.GetFullPath(proposition));
+			}
+		}
+		void CopyBtnClick(object sender, EventArgs e)
+		{
+			String str = propositionBox.Text.Trim();
+			if (str.Length > 0) {
+				workspaceBox.Text = str;
+				targetNameBox.Text = str;
+			}
+		}
+		void MouliPrepaFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(plink!=null) {
+				plink.Close();
+			}
+		}
+		void SqlBtnClick(object sender, EventArgs e)
+		{
+			MouliSQLForm form = new MouliSQLForm(this.rechMagIdBox.Text);
+			form.ShowDialog();
+		}
+		void ConfigBtnClick(object sender, EventArgs e)
+		{
+			MouliEditForm form = new MouliEditForm(configDto);
+			form.ShowDialog();
+		}
 	}
+}

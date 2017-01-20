@@ -18,18 +18,21 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public class ConfigUtil
 	{
+		
 		public ConfigUtil()
 		{
 		}
+		
 		private ConfigDto readConfigXml()
 		{
-			FileStream fs;
+			
 			XmlSerializer serializer = new XmlSerializer(typeof(ConfigDto));
-			fs = new FileStream(MouliConfig.commonConfigFile, FileMode.Open);
-			ConfigDto dto = (ConfigDto)serializer.Deserialize(fs);
+			FileStream fileStream = new FileStream(MouliConfig.commonConfigFile, FileMode.Open);
+			ConfigDto dto = (ConfigDto)serializer.Deserialize(fileStream);
+			fileStream.Close();
 			return dto;
 		}
-		private void testWriteXml(ConfigDto dto)
+		private void writeXml(ConfigDto dto)
 		{
 			FileStream fs;
 			XmlSerializer serializer = new XmlSerializer(typeof(ConfigDto));
@@ -47,6 +50,19 @@ namespace cmdUtils.Objets
 			path += ConfigSectionSettings.getFullConfigFileName();
 			return path;
 		}
+
+		public void saveOldConfig()
+		{
+			String config=MouliConfig.commonConfigFile;
+			//File file = FileInfo new File(config);
+			FileInfo file =new FileInfo(config);
+			DateTime date = DateTime.Now;
+			long ts= date.Ticks;
+			String newFileName = file.Directory+"/"+file.Name + "-"+ts+""+file.Extension;
+			
+			File.Copy(config, newFileName);
+		}
+
 		/*
 		private void open(String file)
 		{
@@ -66,6 +82,10 @@ namespace cmdUtils.Objets
 			ConfigDto dto = readConfigXml();
 			
 			return dto;
+		}
+		public void saveConfig(ConfigDto configDto) {
+			Console.WriteLine("saving config:" + getConfigFilePath());
+			writeXml(configDto);
 		}
 		/*
 		private String targetSvgPath(FileStream fs)

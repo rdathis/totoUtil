@@ -73,13 +73,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MouliForm.cs" />
-    <Compile Include="MouliForm.Designer.cs">
+    <Compile Include="Forms\MouliEditForm.cs" />
+    <Compile Include="Forms\MouliEditForm.Designer.cs">
+      <DependentUpon>MouliEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MouliForm.cs" />
+    <Compile Include="Forms\MouliForm.Designer.cs">
       <DependentUpon>MouliForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MouliPrepaForm.cs" />
-    <Compile Include="MouliPrepaForm.Designer.cs">
+    <Compile Include="Forms\MouliPrepaForm.cs" />
+    <Compile Include="Forms\MouliPrepaForm.Designer.cs">
       <DependentUpon>MouliPrepaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MouliSQLForm.cs" />
+    <Compile Include="Forms\MouliSQLForm.Designer.cs">
+      <DependentUpon>MouliSQLForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MouliProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,12 +102,21 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MouliForm.resx">
+    <EmbeddedResource Include="Forms\MouliEditForm.resx">
+      <DependentUpon>MouliEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MouliForm.resx">
       <DependentUpon>MouliForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MouliPrepaForm.resx">
+    <EmbeddedResource Include="Forms\MouliPrepaForm.resx">
       <DependentUpon>MouliPrepaForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MouliSQLForm.resx">
+      <DependentUpon>MouliSQLForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Forms" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
