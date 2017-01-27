@@ -36,6 +36,7 @@ namespace MoulUtil
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.rechMagIdBtn = new System.Windows.Forms.Button();
 			this.rechMagIdBox = new System.Windows.Forms.TextBox();
 			this.sourceBaseBox = new System.Windows.Forms.TextBox();
@@ -64,11 +65,15 @@ namespace MoulUtil
 			this.sqlBtn = new System.Windows.Forms.Button();
 			this.configBtn = new System.Windows.Forms.Button();
 			this.targetTreeView = new System.Windows.Forms.TreeView();
+			this.serveursContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.mysqlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.puttyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
+			this.serveursContextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// rechMagIdBtn
@@ -273,7 +278,7 @@ namespace MoulUtil
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.toolTipLable});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 562);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 737);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(681, 22);
 			this.statusStrip1.TabIndex = 14;
@@ -321,16 +326,41 @@ namespace MoulUtil
 			// 
 			// targetTreeView
 			// 
+			this.targetTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.targetTreeView.ContextMenuStrip = this.serveursContextMenu;
 			this.targetTreeView.Location = new System.Drawing.Point(359, 369);
 			this.targetTreeView.Name = "targetTreeView";
-			this.targetTreeView.Size = new System.Drawing.Size(322, 190);
+			this.targetTreeView.Size = new System.Drawing.Size(322, 365);
 			this.targetTreeView.TabIndex = 18;
+			// 
+			// serveursContextMenu
+			// 
+			this.serveursContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.mysqlToolStripMenuItem,
+			this.puttyToolStripMenuItem});
+			this.serveursContextMenu.Name = "serveursContextMenu";
+			this.serveursContextMenu.Size = new System.Drawing.Size(153, 70);
+			this.serveursContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ServeursContextMenuOpening);
+			// 
+			// mysqlToolStripMenuItem
+			// 
+			this.mysqlToolStripMenuItem.Name = "mysqlToolStripMenuItem";
+			this.mysqlToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.mysqlToolStripMenuItem.Text = "mysql";
+			// 
+			// puttyToolStripMenuItem
+			// 
+			this.puttyToolStripMenuItem.Name = "puttyToolStripMenuItem";
+			this.puttyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.puttyToolStripMenuItem.Text = "putty";
 			// 
 			// MouliPrepaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(681, 584);
+			this.ClientSize = new System.Drawing.Size(681, 759);
 			this.Controls.Add(this.targetTreeView);
 			this.Controls.Add(this.configBtn);
 			this.Controls.Add(this.sqlBtn);
@@ -355,10 +385,14 @@ namespace MoulUtil
 			this.groupBox4.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
+			this.serveursContextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.ToolStripMenuItem mysqlToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem puttyToolStripMenuItem;
+		private System.Windows.Forms.ContextMenuStrip serveursContextMenu;
 		private System.Windows.Forms.TreeView targetTreeView;
 		private System.Windows.Forms.Button configBtn;
 		private System.Windows.Forms.Button sqlBtn;

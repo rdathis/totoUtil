@@ -77,9 +77,9 @@
     <Compile Include="Forms\MouliEditForm.Designer.cs">
       <DependentUpon>MouliEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MouliForm.cs" />
-    <Compile Include="Forms\MouliForm.Designer.cs">
-      <DependentUpon>MouliForm.cs</DependentUpon>
+    <Compile Include="Forms\MouliActionForm.cs" />
+    <Compile Include="Forms\MouliActionForm.Designer.cs">
+      <DependentUpon>MouliActionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MouliPrepaForm.cs" />
     <Compile Include="Forms\MouliPrepaForm.Designer.cs">
@@ -105,8 +105,8 @@
     <EmbeddedResource Include="Forms\MouliEditForm.resx">
       <DependentUpon>MouliEditForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MouliForm.resx">
-      <DependentUpon>MouliForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\MouliActionForm.resx">
+      <DependentUpon>MouliActionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MouliPrepaForm.resx">
       <DependentUpon>MouliPrepaForm.cs</DependentUpon>

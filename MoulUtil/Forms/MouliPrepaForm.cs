@@ -60,7 +60,7 @@ namespace MoulUtil
 		{
 			if (workspaceBaseBox.Text.Length > 0 && workspaceBox.Text.Length > 0) {
 				String magId=rechMagIdBox.Text;
-				MouliForm form = new MouliForm(configDto.getServeurs(), configDto.getInstances(), configDto, magId, workspaceBox.Text, magasinUrl);
+				MouliActionForm form = new MouliActionForm(configDto.getServeurs(), configDto.getInstances(), configDto, magId, workspaceBox.Text, magasinUrl);
 				form.ShowDialog();
 			} else {
 				workspaceBaseBox.Focus();
@@ -222,6 +222,10 @@ namespace MoulUtil
 			
 			MouliEditForm form = new MouliEditForm(configDto);
 			form.ShowDialog();
+		}
+		void ServeursContextMenuOpening(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			Console.WriteLine("here");
 		}
 	}
 }

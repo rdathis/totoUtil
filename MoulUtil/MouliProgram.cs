@@ -21,7 +21,7 @@ namespace MoulUtil
 
 	class MouliProgram
 	{
-		private static MouliForm form =null;
+		private static MouliActionForm form =null;
 		private static int progression=0;
 		private static DateTime startDateTime;
 		private static String basePath;
@@ -158,6 +158,7 @@ namespace MoulUtil
 			
 			String scriptMoulinetteFile= tmpname +".moulinette.sh";
 			String scriptJobMoulinetteFile=tmpname+".job.sh";
+			//String scriptInstallFile=tmpname+"install.file";
 			
 			archiveName+=".zip";
 			

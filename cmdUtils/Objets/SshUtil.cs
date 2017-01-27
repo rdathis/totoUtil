@@ -66,7 +66,7 @@ namespace cmdUtils.Objets {
 			// commande= client.RunCommand("/bin/pwd");
 			
 			// print(commande.Result);
-				client.Connect();
+			client.Connect();
 			foreach(KeyValuePair<int, int> forwardedPort  in portsList) {
 				int local=forwardedPort.Key;
 				int distant=forwardedPort.Value;
@@ -77,5 +77,6 @@ namespace cmdUtils.Objets {
 			}
 			return client;
 		}
+
 	}
 }

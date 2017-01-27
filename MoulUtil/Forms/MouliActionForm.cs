@@ -17,7 +17,7 @@ namespace MoulUtil
 	/// <summary>
 	/// Screen to pilot the work
 	/// </summary>
-	public partial class MouliForm : Form
+	public partial class MouliActionForm : Form
 	{
 		private List<MeoServeur> serveurs=null;
 		private List<MeoInstance> instances=null;
@@ -25,7 +25,7 @@ namespace MoulUtil
 		private ConfigDto configDto;
 		private String magId=null;
 
-		public MouliForm(List<MeoServeur> serveurs, List<MeoInstance> instances, ConfigDto configDto, String magId, String path, String meourl)
+		public MouliActionForm(List<MeoServeur> serveurs, List<MeoInstance> instances, ConfigDto configDto, String magId, String path, String meourl)
 		{
 			InitializeComponent();
 			setConfigDto(configDto);
@@ -84,6 +84,7 @@ namespace MoulUtil
 		void GoButtonClick(object sender, EventArgs e)
 		{
 			goButton.Enabled=false;
+			toolStripStatusLabel1.Text = "doing archive";
 			try {
 				MouliUtilOptions options=updateMouliUtilOption(getSelectedInstance());
 				job= MouliProgram.doTraitement(pathLabel.Text, options);
@@ -95,6 +96,7 @@ namespace MoulUtil
 				if(pscpLink.Tag!=null) {
 					pscpLink.Visible=true;
 				}
+				toolStripStatusLabel1.Text = "archive done";
 			} catch(Exception ex) {
 				MessageBox.Show(" Exception : "+ex.Message +"\n"+ex.Source + "\n"+ex.StackTrace);
 			}
@@ -266,6 +268,7 @@ namespace MoulUtil
 		void UploadButtonClick(object sender, EventArgs e)
 		{
 			if (job!=null) {
+				toolStripStatusLabel1.Text = "uploading archive...";
 				CmdUtil util = new CmdUtil();
 				LinkLabel label = pscpLink;
 				if (label.Tag!=null) {
@@ -273,7 +276,21 @@ namespace MoulUtil
 					SshUtil sshUtil = new SshUtil();
 					try {
 						sshUtil.uploadArchive(server, "/database/transpo/", job.getArchiveName());
+						toolStripStatusLabel1.Text = "done, unzip...";
 						sshUtil.unzipArchive(server, "/database/transpo/", job);
+						
+						MouliUtil mouliUtil = new MouliUtil();
+						
+						CmdUtil cmdUtil = new CmdUtil();
+						String cmd=mouliUtil.getUnzipCmd(server, "/database/transpo/", job);
+						String commandeFile = job.getMoulinettePath() +"install.file";
+						mouliUtil.writeInstallMoulinetteFile(cmd, commandeFile);
+						// plink -pw (password) -l (user) -m (command.file) server
+						cmd="-pw "+server.password+" -l "+server.utilisateur+" -m "+commandeFile+" "+server.adresse;
+						
+						cmdUtil.executeCommande(MouliConfig.plinkPath, cmd);
+						 
+						toolStripStatusLabel1.Text="finished";
 					} catch(Exception ex) {
 						MessageBox.Show("Erreur envoi data : "+ex.Message + "\n"+ex.Source + "\n" +ex.StackTrace);
 					}
