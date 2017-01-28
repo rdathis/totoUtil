@@ -123,7 +123,7 @@ namespace cmdUtils.Objets
 				joint = "O";
 			}
 			ligne = ligne.Replace("<%joint%>", joint);
-			ligne = ligne.Replace("<%dateCrea%>", new DateTime().Date.ToString());
+			ligne = ligne.Replace("<%dateCrea%>", DateTime.Now.ToString());
 			return ligne;
 		}
 	}

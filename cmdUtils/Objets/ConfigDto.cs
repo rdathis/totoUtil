@@ -23,6 +23,10 @@ namespace cmdUtils.Objets
 		public String databaseAdminUser;
 		public String databaseAdminPwd;
 		public String sql01;
+		public String sql02;
+		public String sql03;
+		public String sql04;
+		public String sql05;
 		public String databaseAdminName;
 		public String defaultPassword;
 		public String appPlink;
@@ -69,9 +73,20 @@ namespace cmdUtils.Objets
 			return databaseAdminPwd;
 		}
 		
-		public string getSQL01()
-		{
+		public string getSQL01() {
 			return sql01;
+		}
+		public string getSQL02() {
+			return sql02;
+		}
+		public string getSQL03() {
+			return sql03;
+		}
+		public string getSQL04() {
+			return sql04;
+		}
+		public string getSQL05() {
+			return sql05;
 		}
 
 		public string getDatabaseAdminName()
@@ -83,23 +98,33 @@ namespace cmdUtils.Objets
 		{
 			databaseAdminUser = value;
 		}
-		public void setDatabaseAdminPwd(String value)
-		{
+		public void setDatabaseAdminPwd(String value) {
 			databaseAdminPwd = value;
 		}
 		
-		public void setSQL01(String value)
-		{
+		public void setSQL01(String value) {
 			sql01 = value;
 		}
-
-		public void setDatabaseAdminName(String value)
-		{
+		public void setSQL02(String value){
+			sql02 = value;
+		}
+		public void setSQL03(String value){
+			sql03 = value;
+		}
+		public void setSQL04(String value){
+			sql04 = value;
+		}
+		public void setSQL05(String value){
+			sql05 = value;
+		}
+		public void setDatabaseAdminName(String value){
 			databaseAdminName = value;
 		}
-
 		public String getDefaultPassword() {
 			return defaultPassword;
+		}
+		public void setDefaultPassword(String value) {
+			defaultPassword=value;
 		}
 		public String getAppPlink() {
 			return appPlink;

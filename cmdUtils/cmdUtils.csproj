@@ -103,6 +103,7 @@
     <Compile Include="Objets\FilterReg.cs" />
     <Compile Include="Objets\RichTextBoxUtilcs.cs" />
     <Compile Include="Objets\SshUtil.cs" />
+    <Compile Include="Objets\TreeViewUtil.cs" />
     <Compile Include="Objets\YFiles.cs" />
     <Compile Include="Objets\ZipUtil.cs" />
     <Compile Include="Objets\ZipUtilOptions.cs" />

@@ -17,14 +17,15 @@ namespace MoulUtil
 	/// <summary>
 	/// Screen to pilot the work
 	/// </summary>
-	public partial class MouliForm : Form
+	public partial class MouliActionForm : Form
 	{
 		private List<MeoServeur> serveurs=null;
 		private List<MeoInstance> instances=null;
 		private MouliJob job=null;
 		private ConfigDto configDto;
+		private String magId=null;
 
-		public MouliForm(List<MeoServeur> serveurs, List<MeoInstance> instances, ConfigDto configDto, String magId, String path, String meourl)
+		public MouliActionForm(List<MeoServeur> serveurs, List<MeoInstance> instances, ConfigDto configDto, String magId, String path, String meourl)
 		{
 			InitializeComponent();
 			setConfigDto(configDto);
@@ -38,6 +39,7 @@ namespace MoulUtil
 			setMeoInstance(meourl);
 		}
 
+		// disable once ParameterHidesMember
 		void setConfigDto(ConfigDto configDto)	{
 			this.configDto=configDto;
 		}
@@ -57,24 +59,9 @@ namespace MoulUtil
 		public void prepare() {
 			puttyLink.Visible=false;
 			pscpLink.Visible=false;
-			populateTargets(targetTreeView);
+			new TreeViewUtil(instances, serveurs).populateTargets(targetTreeView);
+			
 			dateTimePicker.Value = new MouliUtil().calculeNextPlannedJob();
-		}
-		private void populateTargets(TreeView tv) {
-			if(serveurs!=null) {
-				foreach(MeoServeur serveur in serveurs) {
-					TreeNode node= tv.Nodes.Add (serveur.getNom());
-					completeInstances(node, serveur.getNom());
-					node.ExpandAll();
-				}
-			}
-		}
-		private void completeInstances(TreeNode node, String serverName) {
-			foreach(MeoInstance instance in instances) {
-				if (instance.getServeur()== serverName) {
-					TreeNode childNode=node.Nodes.Add(instance.getNom());
-				}
-			}
 		}
 
 		// disable once ParameterHidesMember
@@ -97,6 +84,7 @@ namespace MoulUtil
 		void GoButtonClick(object sender, EventArgs e)
 		{
 			goButton.Enabled=false;
+			toolStripStatusLabel1.Text = "doing archive";
 			try {
 				MouliUtilOptions options=updateMouliUtilOption(getSelectedInstance());
 				job= MouliProgram.doTraitement(pathLabel.Text, options);
@@ -108,6 +96,7 @@ namespace MoulUtil
 				if(pscpLink.Tag!=null) {
 					pscpLink.Visible=true;
 				}
+				toolStripStatusLabel1.Text = "archive done";
 			} catch(Exception ex) {
 				MessageBox.Show(" Exception : "+ex.Message +"\n"+ex.Source + "\n"+ex.StackTrace);
 			}
@@ -240,6 +229,7 @@ namespace MoulUtil
 			options.setLots(calculateLots()); //todo:calculer
 			options.setDateJob(dateTimePicker.Value);
 			options.setNumeroMagasinIrris(irrisMagTBox.Text);
+			options.setMagId(magId);
 			return options;
 			
 		}
@@ -261,8 +251,7 @@ namespace MoulUtil
 			if(level==0) {
 				serverName=text;
 			} else if(level==1) {
-				text=node.Parent.Text;
-				instance=MeoInstance.findInstanceByServerName(instances, text);
+				instance=MeoInstance.findInstanceByInstanceName(instances, text);
 				if(instance!=null) {
 					serverName=instance.getServeur();
 				}
@@ -279,6 +268,7 @@ namespace MoulUtil
 		void UploadButtonClick(object sender, EventArgs e)
 		{
 			if (job!=null) {
+				toolStripStatusLabel1.Text = "uploading archive...";
 				CmdUtil util = new CmdUtil();
 				LinkLabel label = pscpLink;
 				if (label.Tag!=null) {
@@ -286,7 +276,21 @@ namespace MoulUtil
 					SshUtil sshUtil = new SshUtil();
 					try {
 						sshUtil.uploadArchive(server, "/database/transpo/", job.getArchiveName());
+						toolStripStatusLabel1.Text = "done, unzip...";
 						sshUtil.unzipArchive(server, "/database/transpo/", job);
+						
+						MouliUtil mouliUtil = new MouliUtil();
+						
+						CmdUtil cmdUtil = new CmdUtil();
+						String cmd=mouliUtil.getUnzipCmd(server, "/database/transpo/", job);
+						String commandeFile = job.getMoulinettePath() +"install.file";
+						mouliUtil.writeInstallMoulinetteFile(cmd, commandeFile);
+						// plink -pw (password) -l (user) -m (command.file) server
+						cmd="-pw "+server.password+" -l "+server.utilisateur+" -m "+commandeFile+" "+server.adresse;
+						
+						cmdUtil.executeCommande(MouliConfig.plinkPath, cmd);
+						 
+						toolStripStatusLabel1.Text="finished";
 					} catch(Exception ex) {
 						MessageBox.Show("Erreur envoi data : "+ex.Message + "\n"+ex.Source + "\n" +ex.StackTrace);
 					}
@@ -294,8 +298,10 @@ namespace MoulUtil
 			}
 		}
 
+		// disable once ParameterHidesMember
 		void setMagId(string magId)
 		{
+			this.magId=magId;
 			magIdTextBox.Text=magId;
 			magIdTextBox.Enabled=false;
 		}
@@ -310,9 +316,8 @@ namespace MoulUtil
 						System.Diagnostics.Debug.Print("dbg:" + instanceNode.Text + "/"+instance.getNom());
 						if(instanceNode.Text == instance.getNom()) {
 							tv.SelectedNode=instanceNode;
-							break;
+							return; // pas break, car 2 foreach()
 						}
-						
 					}
 				}
 			}

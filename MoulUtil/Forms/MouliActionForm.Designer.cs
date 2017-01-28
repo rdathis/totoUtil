@@ -8,7 +8,7 @@
  */
 namespace MoulUtil
 {
-	partial class MouliForm
+	partial class MouliActionForm
 	{
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.

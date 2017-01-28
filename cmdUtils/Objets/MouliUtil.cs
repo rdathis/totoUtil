@@ -387,5 +387,33 @@ namespace cmdUtils.Objets
 			}
 			return r;
 		}
+		
+		public void writeInstallMoulinetteFile(String commande, String path)
+		{
+			
+			StreamWriter outputFile = new StreamWriter(path);
+			outputFile.NewLine = "\n";
+			
+			outputFile.WriteLine(commande);
+			outputFile.Close();
+		}
+		
+		public string getUnzipCmd(MeoServeur server, string target, MouliJob job)
+		{
+			
+			FileInfo info =new FileInfo(job.getArchiveName());
+			String tmp=info.Name;
+			tmp=tmp.Substring(0, tmp.Length -4);
+			String newdir=target + tmp;
+			String cmd="mkdir "+newdir;
+			
+			
+			cmd+=" && cd " +newdir +" && unzip -o "+target+info.Name;
+			// cd /database/transpo/bidule && mkdir pouet && cd pouet && unzip ../pouet.zip
+			return cmd;
+
+			
+
+		}
 	}
 }
