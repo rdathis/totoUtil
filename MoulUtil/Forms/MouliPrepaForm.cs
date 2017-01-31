@@ -22,7 +22,7 @@ namespace MoulUtil
 	/// </summary>
 	public partial class MouliPrepaForm : Form
 	{
-		private System.Diagnostics.Process plink;
+		private System.Diagnostics.Process plinkProcess;
 		private ConfigDto configDto;
 		private String magasinUrl="";
 		
@@ -39,11 +39,11 @@ namespace MoulUtil
 			try {
 				//demarrage du plink en arriere plan pour le tunnel SSH
 				ProcessUtil putil =new ProcessUtil();
-				plink= putil.startProcess(MouliConfig.plinkPath, configDto.appPlink, System.Diagnostics.ProcessWindowStyle.Normal);
+				plinkProcess= putil.startProcess(MouliConfig.plinkPath, configDto.appPlink, System.Diagnostics.ProcessWindowStyle.Normal);
 				this.BackColor = Color.LightBlue;
 			} catch(Exception exs) {
 				Console.WriteLine ("erreur sur start de plink",exs);
-				plink=null;
+				plinkProcess=null;
 				this.BackColor = Color.Orange;
 			}
 			if(configDto.appPlink!=null) {
@@ -178,15 +178,12 @@ namespace MoulUtil
 				}
 				magDescBox.Text = s;
 				propositionBox.Text = proposition;
+				sqlBtn.Enabled=true;
 			} catch (Exception ex) {
 				magDescBox.Text = "erreur :" + ex.Message + "\n" + ex.Source;
 			}
 		}
-		void RechMagIdBoxTextChanged(object sender, EventArgs e)
-		{
-			
-		}
-		void CreateBtnClick(object sender, EventArgs e)
+ 		void CreateBtnClick(object sender, EventArgs e)
 		{
 			String proposition = propositionBox.Text;
 			if (proposition.Length > 0) {
@@ -207,8 +204,8 @@ namespace MoulUtil
 		}
 		void MouliPrepaFormFormClosing(object sender, FormClosingEventArgs e)
 		{
-			if(plink!=null) {
-				plink.Close();
+			if(plinkProcess!=null) {
+				plinkProcess.Close();
 			}
 		}
 		void SqlBtnClick(object sender, EventArgs e)
@@ -225,7 +222,17 @@ namespace MoulUtil
 		}
 		void ServeursContextMenuOpening(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			Console.WriteLine("here");
+			Console.WriteLine("in menu");
+		}
+		void PuttyToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			Console.WriteLine("putty asked");
+			//retrouver l'objet recu
+			// trouver le serveur, et faire un putty dedans
+		}
+		void RechMagIdBoxEnter(object sender, EventArgs e)
+		{
+			rechercheMagasin();
 		}
 	}
 }

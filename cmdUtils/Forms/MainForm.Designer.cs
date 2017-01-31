@@ -759,6 +759,7 @@ namespace cmdUtils
 			this.importMagId.Name = "importMagId";
 			this.importMagId.Size = new System.Drawing.Size(104, 20);
 			this.importMagId.TabIndex = 26;
+			this.importMagId.TextChanged += new System.EventHandler(this.ImportMagIdTextChanged);
 			this.importMagId.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ImportMagIdKeyUp);
 			// 
 			// richTextBox2

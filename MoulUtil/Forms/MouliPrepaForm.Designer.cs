@@ -92,6 +92,7 @@ namespace MoulUtil
 			this.rechMagIdBox.Name = "rechMagIdBox";
 			this.rechMagIdBox.Size = new System.Drawing.Size(108, 20);
 			this.rechMagIdBox.TabIndex = 1;
+			this.rechMagIdBox.Enter += new System.EventHandler(this.RechMagIdBoxEnter);
 			// 
 			// sourceBaseBox
 			// 
@@ -304,6 +305,7 @@ namespace MoulUtil
 			// 
 			// sqlBtn
 			// 
+			this.sqlBtn.Enabled = false;
 			this.sqlBtn.Location = new System.Drawing.Point(24, 414);
 			this.sqlBtn.Name = "sqlBtn";
 			this.sqlBtn.Size = new System.Drawing.Size(75, 23);
@@ -341,20 +343,21 @@ namespace MoulUtil
 			this.mysqlToolStripMenuItem,
 			this.puttyToolStripMenuItem});
 			this.serveursContextMenu.Name = "serveursContextMenu";
-			this.serveursContextMenu.Size = new System.Drawing.Size(153, 70);
+			this.serveursContextMenu.Size = new System.Drawing.Size(102, 48);
 			this.serveursContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ServeursContextMenuOpening);
 			// 
 			// mysqlToolStripMenuItem
 			// 
 			this.mysqlToolStripMenuItem.Name = "mysqlToolStripMenuItem";
-			this.mysqlToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.mysqlToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
 			this.mysqlToolStripMenuItem.Text = "mysql";
 			// 
 			// puttyToolStripMenuItem
 			// 
 			this.puttyToolStripMenuItem.Name = "puttyToolStripMenuItem";
-			this.puttyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.puttyToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
 			this.puttyToolStripMenuItem.Text = "putty";
+			this.puttyToolStripMenuItem.Click += new System.EventHandler(this.PuttyToolStripMenuItemClick);
 			// 
 			// MouliPrepaForm
 			// 

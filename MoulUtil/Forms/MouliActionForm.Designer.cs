@@ -365,8 +365,8 @@ namespace MoulUtil
 			this.Controls.Add(this.exitButton);
 			this.Controls.Add(this.goButton);
 			this.MainMenuStrip = this.menuStrip1;
-			this.Name = "MouliForm";
-			this.Text = "MouliForm";
+			this.Name = "MouliActionForm";
+			this.Text = "MouliActionForm";
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);

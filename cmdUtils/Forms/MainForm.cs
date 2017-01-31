@@ -573,6 +573,9 @@ namespace cmdUtils
 			
 			Console.WriteLine("p");
 		}
+		void ImportMagIdTextChanged(object sender, EventArgs e)
+		{
+		}
 		
 	}
 
