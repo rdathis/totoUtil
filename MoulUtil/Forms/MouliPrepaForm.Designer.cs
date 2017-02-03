@@ -375,6 +375,7 @@ namespace MoulUtil
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox3);
 			this.Name = "MouliPrepaForm";
+			this.ShowIcon = false;
 			this.Text = "MouliPrepa";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MouliPrepaFormFormClosing);
 			this.Load += new System.EventHandler(this.MouliPrepaLoad);

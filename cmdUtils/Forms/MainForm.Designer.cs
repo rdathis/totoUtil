@@ -210,6 +210,7 @@ namespace cmdUtils
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripCmdLabel = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+			this.mouliUtilToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -1429,7 +1430,8 @@ namespace cmdUtils
 			this.cygwinToolStripButton,
 			this.toolStripSeparator1,
 			this.toolStripCmdLabel,
-			this.toolStripButton1});
+			this.toolStripButton1,
+			this.mouliUtilToolStripButton});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(834, 25);
@@ -1473,6 +1475,16 @@ namespace cmdUtils
 			this.toolStripButton1.Text = "toolStripButton1";
 			this.toolStripButton1.Click += new System.EventHandler(this.ToolStripButton1Click);
 			// 
+			// mouliUtilToolStripButton
+			// 
+			this.mouliUtilToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.mouliUtilToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("mouliUtilToolStripButton.Image")));
+			this.mouliUtilToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.mouliUtilToolStripButton.Name = "mouliUtilToolStripButton";
+			this.mouliUtilToolStripButton.Size = new System.Drawing.Size(23, 22);
+			this.mouliUtilToolStripButton.Text = "mouliUtil";
+			this.mouliUtilToolStripButton.Click += new System.EventHandler(this.mouliUtilToolStripButtonClick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1511,6 +1523,7 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.ToolStripButton mouliUtilToolStripButton;
 		private System.Windows.Forms.TextBox tabCodeResult;
 		private System.Windows.Forms.Button tabCodeBtn;
 		private System.Windows.Forms.TextBox tabCodeApres;

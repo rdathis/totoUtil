@@ -111,6 +111,11 @@ namespace MoulUtil
 		private void doPurge(String sql, String annee) {
 			sql=prepareSQL(sql, magId, annee);
 			resultatSQLBox.Text=sql;
+			DialogResult result = MessageBox.Show("Purger les données magasins <= "+annee+" ?",   "confirme purge",    MessageBoxButtons.YesNo);
+			if(result==DialogResult.Yes) {
+				String connectionString = myUtil.buildConnectionStringFromInstance(instance, configDto, sqlPort);
+				myUtil.getExecuteQueryResult(connectionString, sql);
+			}
 		}
 		private String prepareSQL(String sql, String magId, String year) {
 			sql=sql.Trim();

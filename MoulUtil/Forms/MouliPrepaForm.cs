@@ -25,6 +25,7 @@ namespace MoulUtil
 		private System.Diagnostics.Process plinkProcess;
 		private ConfigDto configDto;
 		private String magasinUrl="";
+		private MouliSQLForm sqlForm;
 		
 		//private String instanceNom=null;
 		public MouliPrepaForm(ConfigDto configDto)
@@ -133,6 +134,10 @@ namespace MoulUtil
 
 		void rechercheMagasin()
 		{
+			rechMagIdBox.Text=rechMagIdBox.Text.Trim();
+			if(rechMagIdBox.Text.Length < 1) {
+				return;
+			}
 			safeWorkingDir();
 			
 			//mise en commentaire de prepadir, pas pret.
@@ -211,8 +216,9 @@ namespace MoulUtil
 		void SqlBtnClick(object sender, EventArgs e)
 		{
 			MeoInstance meoInstance = MeoInstance.findInstanceByMeoURL(configDto.instances, magasinUrl); // convertitInstance(string url);
-			MouliSQLForm form = new MouliSQLForm(this.rechMagIdBox.Text, meoInstance);
-			form.ShowDialog();
+			 sqlForm = new MouliSQLForm(this.rechMagIdBox.Text, meoInstance);
+			//form.ShowDialog();
+			sqlForm.Show();
 		}
 		void ConfigBtnClick(object sender, EventArgs e)
 		{

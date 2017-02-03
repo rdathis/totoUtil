@@ -91,7 +91,6 @@ namespace cmdUtils.Objets
 
 		public List<String> getListResultSimple(string connString, string str, int fieldIndex=0)
 		{
-			
 			List<Object> liste = getListResult(connString, str, fieldIndex);
 			List <String> retour = new List<string>();
 			foreach(Object data in liste) {

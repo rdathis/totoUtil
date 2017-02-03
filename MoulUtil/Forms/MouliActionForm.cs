@@ -209,10 +209,10 @@ namespace MoulUtil
 				retour+="S";
 			}
 			if(box.GetItemChecked(2)) {
-				retour+="D";
+				retour+="J";
 			}
 			if(box.GetItemChecked(3)) {
-				retour+="J";
+				retour+="D";
 			}
 			return retour;
 

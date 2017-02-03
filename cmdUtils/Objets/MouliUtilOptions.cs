@@ -112,13 +112,20 @@ namespace cmdUtils.Objets
 		}
 		public string traduitScript(string ligne)
 		{
+			String joint = "N";
+			String lot = this.getLots();
+			// disable once StringIndexOfIsCultureSpecific
+			if(lot.IndexOf("D") >= 0) {
+				lot=lot.Replace("D", "");
+				joint = "D";
+			}
 			ligne = ligne.Replace("<%mailto%>", this.getDefaultEmail());
 			ligne = ligne.Replace("<%magId%>", this.getMagId());
 			ligne = ligne.Replace("<%magIRRIS%>", this.getNumeroMagasinIrris());
-			ligne = ligne.Replace("<%ARG%>", this.getLots());
+			ligne = ligne.Replace("<%ARG%>", lot);
 			ligne = ligne.Replace("<%instanceName%>", this.getInstanceName());
 			ligne = ligne.Replace("<%instanceCommande%>", this.getInstanceCommande());
-			String joint = "N";
+
 			if (this.getIsJoint()) {
 				joint = "O";
 			}
