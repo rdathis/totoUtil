@@ -26,6 +26,11 @@ namespace cmdUtils.Objets
 		private DateTime dateJob;
 		private String defaultEmail;
 		private String numeroMagasinIrris;
+
+		//		
+		private MoulinettePurgeOptionTypes extensionClient=MoulinettePurgeOptionTypes.INCONNU;
+		private MoulinettePurgeOptionTypes extensionStock=MoulinettePurgeOptionTypes.INCONNU;
+		//
 		public MouliUtilOptions()
 		{
 			//
@@ -110,6 +115,19 @@ namespace cmdUtils.Objets
 		public Boolean isCommentaire(String ligne) {
 			return ligne.StartsWith("#DoNotTranslate:");
 		}
+		public MoulinettePurgeOptionTypes getExtensionClient() {
+			return extensionClient;
+		}
+		public void setExtensionClient(MoulinettePurgeOptionTypes value) {
+			this.extensionClient=value;
+		}
+		public MoulinettePurgeOptionTypes getExtensionStock() {
+			return extensionStock;
+		}
+		public void setExtensionStock(MoulinettePurgeOptionTypes value) {
+			this.extensionStock=value;
+		}
+		//
 		public string traduitScript(string ligne)
 		{
 			String joint = "N";

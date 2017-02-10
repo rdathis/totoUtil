@@ -592,6 +592,12 @@ namespace cmdUtils
 			
 			//util.startProcess(path+cmd, "", ProcessWindowStyle.Normal);			
 		}
+		void RichTextBox2TextChanged(object sender, EventArgs e)
+		{
+			String sql = richTextBox2.Text;
+			MeoSavUtil meosavUtil = new MeoSavUtil();
+			sqlRechRichTextBox.Text = meosavUtil.convertiSql(sql);
+		}
 		
 	}
 
