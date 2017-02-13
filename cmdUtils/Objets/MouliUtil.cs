@@ -196,6 +196,7 @@ namespace cmdUtils.Objets
 
 		List<String>  parseMoulinetteScript(String source, MouliUtilOptions options)
 		{
+			MouliUtilOptionsTraductor trad = (MouliUtilOptionsTraductor) options;
 			String[] tmp = source.Split('\n');
 			List<String> retour = new List<string>();
 			
@@ -208,7 +209,7 @@ namespace cmdUtils.Objets
 				if(!options.isCommentaire(ligne)) {
 					ligne = ligne.Replace("\n", "");
 					ligne = ligne.Replace("\r", "");
-					ligne = options.traduitScript(ligne);
+					ligne = trad.traduitScript(ligne);
 					retour.Add(ligne);
 				}
 			}

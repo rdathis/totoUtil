@@ -19,6 +19,10 @@ namespace cmdUtils.Objets
 		//[XmlAttribute]
 		public List<MeoInstance> instances;
 
+		//[XmlAttribute]
+		public List <MeoSql> sqlcommands;
+		
+		
 		public String targetSvgPath;
 		public String databaseAdminUser;
 		public String databaseAdminPwd;
@@ -37,8 +41,13 @@ namespace cmdUtils.Objets
 
 		}
 		
-		
-		public List<MeoServeur> getServeurs()
+		public List <MeoSql> getSqlCommands () {
+			return sqlcommands;
+		}
+		public MeoSql getSql(String nom) {
+			return null;
+		}
+			public List<MeoServeur> getServeurs()
 		{
 			return serveurs;
 		}

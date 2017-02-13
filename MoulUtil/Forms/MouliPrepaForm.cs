@@ -26,7 +26,8 @@ namespace MoulUtil
 		private ConfigDto configDto;
 		private String magasinUrl="";
 		private MouliSQLForm sqlForm;
-		
+
+		MouliUtilOptions options = null;
 		//private String instanceNom=null;
 		public MouliPrepaForm(ConfigDto configDto)
 		{
@@ -59,9 +60,11 @@ namespace MoulUtil
 		}
 		void PrepareBtnClick(object sender, EventArgs e)
 		{
+			
+			if(options==null) return;
+			
 			if (workspaceBaseBox.Text.Length > 0 && workspaceBox.Text.Length > 0) {
-				String magId=rechMagIdBox.Text;
-				MouliActionForm form = new MouliActionForm(configDto.getServeurs(), configDto.getInstances(), configDto, magId, workspaceBox.Text, magasinUrl);
+				MouliActionForm form = new MouliActionForm(options, configDto, workspaceBox.Text, magasinUrl);
 				form.ShowDialog();
 			} else {
 				workspaceBaseBox.Focus();
@@ -134,6 +137,8 @@ namespace MoulUtil
 
 		void rechercheMagasin()
 		{
+			
+			options=null;
 			rechMagIdBox.Text=rechMagIdBox.Text.Trim();
 			if(rechMagIdBox.Text.Length < 1) {
 				return;
@@ -162,7 +167,7 @@ namespace MoulUtil
 			String proposition = "";
 
 			String cnxString = myUtil.buildconnString(database, "127.0.0.1", user, pwd, port);
-			sql = sql + " WHERE magasin_id=" + rechMagIdBox.Text;
+			sql = sql + " WHERE magasins.magasin_id=" + rechMagIdBox.Text;
 			try {
 				var magasinList = myUtil.getListResultAsKeyValue(cnxString, sql);
 				magDescBox.Text = "";
@@ -175,6 +180,20 @@ namespace MoulUtil
 					proposition+="-"+convertitInstance(ligne[2].Value.ToString());
 					magasinUrl=ligne[2].Value.ToString();
 					proposition = configDto.getWorkingDir()+ "MID" + rechMagIdBox.Text.Trim() + "-" + proposition + "/";
+					
+					
+					options = new MouliUtilOptions();
+					options.setMagId(rechMagIdBox.Text);
+					
+					String extensionStock = ligne[3].Value.ToString();
+					String extensionVisite = ligne[4].Value.ToString();
+					
+					if(extensionStock=="1") {
+						options.setExtensionStock(MoulinettePurgeOptionTypes.CLIENT_POSSEDE_EXTENSION);
+					}
+					if(extensionVisite=="1") {
+						options.setExtensionClient(MoulinettePurgeOptionTypes.CLIENT_POSSEDE_EXTENSION);
+					}
 				}
 				
 				for (int i = 0; i < ligne.Count; i++) {
@@ -188,7 +207,7 @@ namespace MoulUtil
 				magDescBox.Text = "erreur :" + ex.Message + "\n" + ex.Source;
 			}
 		}
- 		void CreateBtnClick(object sender, EventArgs e)
+		void CreateBtnClick(object sender, EventArgs e)
 		{
 			String proposition = propositionBox.Text;
 			if (proposition.Length > 0) {
@@ -216,7 +235,7 @@ namespace MoulUtil
 		void SqlBtnClick(object sender, EventArgs e)
 		{
 			MeoInstance meoInstance = MeoInstance.findInstanceByMeoURL(configDto.instances, magasinUrl); // convertitInstance(string url);
-			 sqlForm = new MouliSQLForm(this.rechMagIdBox.Text, meoInstance);
+			sqlForm = new MouliSQLForm(this.rechMagIdBox.Text, meoInstance);
 			//form.ShowDialog();
 			sqlForm.Show();
 		}
