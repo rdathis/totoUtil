@@ -73,7 +73,7 @@ namespace MoulUtil
 		{
 			Boolean value=true;
 			if(MoulinettePurgeOptionTypes.CLIENT_POSSEDE_EXTENSION==moulinettePurgeOptionTypes) {
-				value=true;
+				value=false;
 			}
 			chkBox.Enabled=value;
 			chkBox.Checked=value;
@@ -234,7 +234,7 @@ namespace MoulUtil
 		}
 		MouliUtilOptions updateMouliUtilOption(MeoInstance instance)
 		{
-			MouliUtilOptions options = new MouliUtilOptions();
+			options = new MouliUtilOptions();
 			options.setInstanceCommande(instance.getMeocli());
 			options.setInstanceName(instance.getNom());
 			
@@ -352,6 +352,26 @@ namespace MoulUtil
 						}
 					}
 				}
+			}
+		}
+		void CheckedListBox1ItemCheck(object sender, ItemCheckEventArgs e)
+		{
+			if(!CheckState.Checked.Equals(e.NewValue)) {
+				return;
+			}
+			int newidx=e.Index;
+			int oldIdx=0;
+			if(newidx==2) {
+				oldIdx=3;
+			} else if(newidx==3) {
+				oldIdx=2;
+			} else {
+				return;
+			}
+			bool newv=checkedListBox1.GetItemChecked(newidx);
+			bool oldv=checkedListBox1.GetItemChecked(oldIdx);
+			if(checkedListBox1.GetItemChecked(oldIdx)) {
+				checkedListBox1.SetItemChecked(oldIdx, false);
 			}
 		}
 	}

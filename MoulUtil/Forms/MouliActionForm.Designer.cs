@@ -149,6 +149,7 @@ namespace MoulUtil
 			this.checkedListBox1.Name = "checkedListBox1";
 			this.checkedListBox1.Size = new System.Drawing.Size(121, 79);
 			this.checkedListBox1.TabIndex = 12;
+			this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.CheckedListBox1ItemCheck);
 			// 
 			// puttyLink
 			// 

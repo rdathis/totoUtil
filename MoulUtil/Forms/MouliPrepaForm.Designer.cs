@@ -93,6 +93,7 @@ namespace MoulUtil
 			this.rechMagIdBox.Size = new System.Drawing.Size(108, 20);
 			this.rechMagIdBox.TabIndex = 1;
 			this.rechMagIdBox.Enter += new System.EventHandler(this.RechMagIdBoxEnter);
+			this.rechMagIdBox.Validated += new System.EventHandler(this.RechMagIdBoxValidated);
 			// 
 			// sourceBaseBox
 			// 

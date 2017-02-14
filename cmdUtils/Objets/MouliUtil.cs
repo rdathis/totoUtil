@@ -37,57 +37,7 @@ namespace cmdUtils.Objets
 			m01=str;
 		}
 
-		/*
-		//txtBoxMoulDestBase.Text, txtMagId.Text, txtMagClient.Text, moulDateTextBox.Text
-		public String  creaEtVerifieRepMoulinette(MeoInstance instance, Action<String> callback, string destBase, string magId, string magClient, string date, String magIrris)
-		{
-			
-			String retour = "";
-			if (destBase.Length < 1) {
-				doCallback(callback, "manque base");
-				return retour;
-			}
-			if (magId.Length < 1) {
-				doCallback(callback, "manque MagId");
-				return retour;
-			}
-			if (magClient.Length < 1) {
-				doCallback(callback, "manque Client");
-				return retour;
-			}
-			if (date.Length < 1) {
-				doCallback(callback, "manque Date install");
-				return retour;
-			}
-			this.m01=magIrris;
-			if (instance != null) {
-				// String instanceCode = if(instance!=null ? instance.getCode() : "?"); ;
-				String path = destBase + "MID" + magId + "-" + magClient + "-" + date + "-" + instance.getCode() + "/";
-				
-				MyUtil util = new MyUtil();
-				util.createFolderIfNotExists(path);
-				
-				retour = path;
-				doCallback(callback, "CREATE " + path + "\n");
-				path += getData();
-				util.createFolderIfNotExists(path);
-				doCallback(callback, "CREATE " + path + "\n");
-				
-				path += getMag01();
-				util.createFolderIfNotExists(path);
-				doCallback(callback, "CREATE " + path + "\n");
-				
-				path += getJoint();
-				util.createFolderIfNotExists(path);
-				doCallback(callback, "CREATE " + path + "\n");
-				
-				util = null;
-			} else {
-				callback("manque instance.");
-			}
-			return retour;
-		}
-		 */
+
 		private String formatPath(String path)
 		{
 			if (!path.EndsWith("/")) {
@@ -196,7 +146,7 @@ namespace cmdUtils.Objets
 
 		List<String>  parseMoulinetteScript(String source, MouliUtilOptions options)
 		{
-			MouliUtilOptionsTraductor trad = (MouliUtilOptionsTraductor) options;
+			//  trad = (MouliUtilOptionsTraductor) options;
 			String[] tmp = source.Split('\n');
 			List<String> retour = new List<string>();
 			
@@ -209,7 +159,7 @@ namespace cmdUtils.Objets
 				if(!options.isCommentaire(ligne)) {
 					ligne = ligne.Replace("\n", "");
 					ligne = ligne.Replace("\r", "");
-					ligne = trad.traduitScript(ligne);
+					ligne = MouliUtilOptionsTraductor.traduitScript(options, ligne);
 					retour.Add(ligne);
 				}
 			}
