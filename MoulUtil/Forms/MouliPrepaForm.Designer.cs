@@ -32,7 +32,7 @@ namespace MoulUtil
 		/// <summary>
 		/// This method is required for Windows Forms designer support.
 		/// Do not change the method contents inside the source code editor. The Forms designer might
-		/// not be able to load this method if it was changed manually.
+		/// not be able to load this method iit was changed manually.
 		/// </summary>
 		private void InitializeComponent()
 		{
@@ -44,7 +44,7 @@ namespace MoulUtil
 			this.magDescBox = new System.Windows.Forms.TextBox();
 			this.sourceListBox = new System.Windows.Forms.ListBox();
 			this.workspaceBaseBox = new System.Windows.Forms.TextBox();
-			this.workspaceBox = new System.Windows.Forms.TextBox();
+			this.workspaceZoneBox = new System.Windows.Forms.TextBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.workingDirBox = new System.Windows.Forms.TextBox();
 			this.workspaceLabel = new System.Windows.Forms.Label();
@@ -52,11 +52,16 @@ namespace MoulUtil
 			this.propositionBox = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.workspaceNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
+			this.navigatorUserControl2 = new cmdUtils.Controles.NavigatorUserControl();
+			this.zonePrepaNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
 			this.prepareBtn = new System.Windows.Forms.Button();
 			this.userControl11 = new cmdUtils.TotoRectangle();
 			this.targetNameBox = new System.Windows.Forms.TextBox();
 			this.targetSvgPathBox = new System.Windows.Forms.TextBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.svgFinalNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
+			this.svgBaseNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
 			this.sauvegardeBtn = new System.Windows.Forms.Button();
 			this.userControl12 = new cmdUtils.TotoRectangle();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -133,13 +138,13 @@ namespace MoulUtil
 			this.workspaceBaseBox.TabIndex = 6;
 			this.workspaceBaseBox.Text = "W:/meo-moulinettes/";
 			// 
-			// workspaceBox
+			// workspaceZoneBox
 			// 
-			this.workspaceBox.Location = new System.Drawing.Point(311, 23);
-			this.workspaceBox.Name = "workspaceBox";
-			this.workspaceBox.Size = new System.Drawing.Size(325, 20);
-			this.workspaceBox.TabIndex = 7;
-			this.workspaceBox.TextChanged += new System.EventHandler(this.WorkspaceBoxTextChanged);
+			this.workspaceZoneBox.Location = new System.Drawing.Point(311, 23);
+			this.workspaceZoneBox.Name = "workspaceZoneBox";
+			this.workspaceZoneBox.Size = new System.Drawing.Size(325, 20);
+			this.workspaceZoneBox.TabIndex = 7;
+			this.workspaceZoneBox.TextChanged += new System.EventHandler(this.WorkspaceBoxTextChanged);
 			// 
 			// groupBox1
 			// 
@@ -202,9 +207,12 @@ namespace MoulUtil
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.Controls.Add(this.workspaceNavigatorUserControl);
+			this.groupBox3.Controls.Add(this.navigatorUserControl2);
+			this.groupBox3.Controls.Add(this.zonePrepaNavigatorUserControl);
 			this.groupBox3.Controls.Add(this.prepareBtn);
 			this.groupBox3.Controls.Add(this.workspaceBaseBox);
-			this.groupBox3.Controls.Add(this.workspaceBox);
+			this.groupBox3.Controls.Add(this.workspaceZoneBox);
 			this.groupBox3.Controls.Add(this.userControl11);
 			this.groupBox3.Location = new System.Drawing.Point(25, 261);
 			this.groupBox3.Name = "groupBox3";
@@ -212,6 +220,30 @@ namespace MoulUtil
 			this.groupBox3.TabIndex = 10;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Zone préparation";
+			// 
+			// workspaceNavigatorUserControl
+			// 
+			this.workspaceNavigatorUserControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			this.workspaceNavigatorUserControl.Location = new System.Drawing.Point(334, 1);
+			this.workspaceNavigatorUserControl.Name = "workspaceNavigatorUserControl";
+			this.workspaceNavigatorUserControl.Size = new System.Drawing.Size(85, 23);
+			this.workspaceNavigatorUserControl.TabIndex = 19;
+			// 
+			// navigatorUserControl2
+			// 
+			this.navigatorUserControl2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			this.navigatorUserControl2.Location = new System.Drawing.Point(177, 16);
+			this.navigatorUserControl2.Name = "navigatorUserControl2";
+			this.navigatorUserControl2.Size = new System.Drawing.Size(8, 8);
+			this.navigatorUserControl2.TabIndex = 18;
+			// 
+			// zonePrepaNavigatorUserControl
+			// 
+			this.zonePrepaNavigatorUserControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			this.zonePrepaNavigatorUserControl.Location = new System.Drawing.Point(130, 0);
+			this.zonePrepaNavigatorUserControl.Name = "zonePrepaNavigatorUserControl";
+			this.zonePrepaNavigatorUserControl.Size = new System.Drawing.Size(85, 23);
+			this.zonePrepaNavigatorUserControl.TabIndex = 17;
 			// 
 			// prepareBtn
 			// 
@@ -247,16 +279,34 @@ namespace MoulUtil
 			// 
 			// groupBox4
 			// 
+			this.groupBox4.Controls.Add(this.svgFinalNavigatorUserControl);
+			this.groupBox4.Controls.Add(this.svgBaseNavigatorUserControl);
 			this.groupBox4.Controls.Add(this.sauvegardeBtn);
 			this.groupBox4.Controls.Add(this.targetNameBox);
 			this.groupBox4.Controls.Add(this.targetSvgPathBox);
 			this.groupBox4.Controls.Add(this.userControl12);
 			this.groupBox4.Location = new System.Drawing.Point(25, 320);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(644, 43);
+			this.groupBox4.Size = new System.Drawing.Size(644, 49);
 			this.groupBox4.TabIndex = 13;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Sauvegarde";
+			// 
+			// svgFinalNavigatorUserControl
+			// 
+			this.svgFinalNavigatorUserControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			this.svgFinalNavigatorUserControl.Location = new System.Drawing.Point(334, 0);
+			this.svgFinalNavigatorUserControl.Name = "svgFinalNavigatorUserControl";
+			this.svgFinalNavigatorUserControl.Size = new System.Drawing.Size(85, 23);
+			this.svgFinalNavigatorUserControl.TabIndex = 19;
+			// 
+			// svgBaseNavigatorUserControl
+			// 
+			this.svgBaseNavigatorUserControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			this.svgBaseNavigatorUserControl.Location = new System.Drawing.Point(130, 0);
+			this.svgBaseNavigatorUserControl.Name = "svgBaseNavigatorUserControl";
+			this.svgBaseNavigatorUserControl.Size = new System.Drawing.Size(85, 23);
+			this.svgBaseNavigatorUserControl.TabIndex = 18;
 			// 
 			// sauvegardeBtn
 			// 
@@ -395,36 +445,42 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
-		private System.Windows.Forms.ToolStripMenuItem mysqlToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem puttyToolStripMenuItem;
-		private System.Windows.Forms.ContextMenuStrip serveursContextMenu;
-		private System.Windows.Forms.TreeView targetTreeView;
-		private System.Windows.Forms.Button configBtn;
-		private System.Windows.Forms.Button sqlBtn;
-		private System.Windows.Forms.TextBox workingDirBox;
-		private System.Windows.Forms.Label workspaceLabel;
-		private cmdUtils.TotoRectangle userControl12;
-		private cmdUtils.TotoRectangle userControl11;
-		private System.Windows.Forms.Button copyBtn;
-		private System.Windows.Forms.Button createBtn;
-		private System.Windows.Forms.TextBox propositionBox;
-		private System.Windows.Forms.Button sauvegardeBtn;
-		private System.Windows.Forms.Button prepareBtn;
-		private System.Windows.Forms.StatusStrip statusStrip1;
-		private System.Windows.Forms.ToolStripStatusLabel toolTipLable;
-		private System.Windows.Forms.TextBox targetNameBox;
-		private System.Windows.Forms.TextBox targetSvgPathBox;
-		private System.Windows.Forms.GroupBox groupBox4;
-		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.TextBox workspaceBox;
-		private System.Windows.Forms.TextBox workspaceBaseBox;
-		private System.Windows.Forms.ListBox sourceListBox;
-		private System.Windows.Forms.Button rechMagIdBtn;
-		private System.Windows.Forms.TextBox rechMagIdBox;
-		private System.Windows.Forms.TextBox sourceBaseBox;
-		private System.Windows.Forms.TextBox sourceFilterBox;
-		private System.Windows.Forms.TextBox magDescBox;
+		private cmdUtils.Controles.NavigatorUserControl svgFinalNavigatorUserControl;
+		private cmdUtils.Controles.NavigatorUserControl svgBaseNavigatorUserControl;
+		private cmdUtils.Controles.NavigatorUserControl workspaceNavigatorUserControl;
+		private cmdUtils.Controles.NavigatorUserControl navigatorUserControl2;
+
+			private cmdUtils.Controles.NavigatorUserControl zonePrepaNavigatorUserControl;
+			private System.Windows.Forms.ToolStripMenuItem mysqlToolStripMenuItem;
+			private System.Windows.Forms.ToolStripMenuItem puttyToolStripMenuItem;
+			private System.Windows.Forms.ContextMenuStrip serveursContextMenu;
+			private System.Windows.Forms.TreeView targetTreeView;
+			private System.Windows.Forms.Button configBtn;
+			private System.Windows.Forms.Button sqlBtn;
+			private System.Windows.Forms.TextBox workingDirBox;
+			private System.Windows.Forms.Label workspaceLabel;
+			private cmdUtils.TotoRectangle userControl12;
+			private cmdUtils.TotoRectangle userControl11;
+			private System.Windows.Forms.Button copyBtn;
+			private System.Windows.Forms.Button createBtn;
+			private System.Windows.Forms.TextBox propositionBox;
+			private System.Windows.Forms.Button sauvegardeBtn;
+			private System.Windows.Forms.Button prepareBtn;
+			private System.Windows.Forms.StatusStrip statusStrip1;
+			private System.Windows.Forms.ToolStripStatusLabel toolTipLable;
+			private System.Windows.Forms.TextBox targetNameBox;
+			private System.Windows.Forms.TextBox targetSvgPathBox;
+			private System.Windows.Forms.GroupBox groupBox4;
+			private System.Windows.Forms.GroupBox groupBox3;
+			private System.Windows.Forms.GroupBox groupBox2;
+			private System.Windows.Forms.GroupBox groupBox1;
+			private System.Windows.Forms.TextBox workspaceZoneBox;
+			private System.Windows.Forms.TextBox workspaceBaseBox;
+			private System.Windows.Forms.ListBox sourceListBox;
+			private System.Windows.Forms.Button rechMagIdBtn;
+			private System.Windows.Forms.TextBox rechMagIdBox;
+			private System.Windows.Forms.TextBox sourceBaseBox;
+			private System.Windows.Forms.TextBox sourceFilterBox;
+			private System.Windows.Forms.TextBox magDescBox;
+		}
 	}
-}

@@ -26,7 +26,7 @@ namespace MoulUtil
 		private String magId=null;
 		private MouliUtilOptions options=null;
 
-		public MouliActionForm(MouliUtilOptions options, ConfigDto configDto, string path, string meoUrl)
+		public MouliActionForm(MouliUtilOptions options, ConfigDto configDto, string path)
 		{
 			InitializeComponent();
 			this.options=options;
@@ -38,7 +38,7 @@ namespace MoulUtil
 			setMagasinIrris("01");
 			
 			prepare();
-			setMeoInstance(meoUrl);
+			setMeoInstance(options.getInstanceName());
 		}
 
 		// disable once ParameterHidesMember
@@ -338,9 +338,9 @@ namespace MoulUtil
 			magIdTextBox.Enabled=false;
 		}
 
-		void setMeoInstance(string meourl)
+		void setMeoInstance(string instanceName)
 		{
-			MeoInstance instance = MeoInstance.findInstanceByMeoURL(instances, meourl);
+			MeoInstance instance = MeoInstance.findInstanceByInstanceName(instances, instanceName);
 			TreeView tv = targetTreeView;
 			if(instance!=null) {
 				foreach (TreeNode serveurNode in tv.Nodes) {

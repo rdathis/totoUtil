@@ -74,12 +74,12 @@ namespace MoulUtil.Forms.utils
 			
 		}
 
-		public MouliUtilOptions  rechercheMagasin( //                        
-		                             TextBox rechMagIdBox, //
-		                             TextBox magDescBox, //
-		                             TextBox propositionBox,//
-		                             Button sqlBtn//
-		                            ) {
+		public MouliUtilOptions  rechercheMagasin( //
+		                                          TextBox rechMagIdBox, //
+		                                          TextBox magDescBox, //
+		                                          TextBox propositionBox,//
+		                                          Button sqlBtn//
+		                                         ) {
 			
 			MouliUtilOptions options=null;
 			rechMagIdBox.Text=rechMagIdBox.Text.Trim();
@@ -119,16 +119,26 @@ namespace MoulUtil.Forms.utils
 				if (ligne.Count > 0) {
 					proposition =  normaliseNom(ligne[0].Value.ToString());
 
-					proposition+="-"+convertitInstance(ligne[2].Value.ToString());
+					
+					MeoInstance magInstance=convertitInstance(ligne[2].Value.ToString());
+					if(magInstance!=null) {
+						proposition+="-"+magInstance.getCode();;
+					}
 					//magasinUrl=ligne[2].Value.ToString();
 					proposition = configDto.getWorkingDir()+ "MID" + rechMagIdBox.Text.Trim() + "-" + proposition + "/";
 					
 					
 					options = new MouliUtilOptions();
+					if(magInstance!=null) {
+						options.setInstanceName(magInstance.getNom());
+						options.setInstanceCommande(magInstance.getMeocli());
+					}
 					options.setMagId(rechMagIdBox.Text);
 					
 					String extensionStock = ligne[5].Value.ToString();
 					String extensionVisite = ligne[6].Value.ToString();
+					options.setLimiteStock(ligne[3].Value.ToString());
+					options.setLimiteVisite(ligne[4].Value.ToString());
 					
 					if(extensionStock=="1") {
 						options.setExtensionStock(MoulinettePurgeOptionTypes.CLIENT_POSSEDE_EXTENSION);
@@ -150,17 +160,17 @@ namespace MoulUtil.Forms.utils
 			}
 			return options;
 		}
-		private string convertitInstance(string url) {
+		private MeoInstance convertitInstance(string url) {
 			if(configDto!=null) {
 				String [] tablo = url.Split('/');
 				String str = tablo[tablo.Length -1];
 				foreach(MeoInstance meoInstance in configDto.getInstances()) {
 					if(meoInstance.getNom()==str) {
-						return meoInstance.getCode();
+						return meoInstance;
 					}
 				}
 			}
-			return "?";
+			return null;
 		}
 	}
 }

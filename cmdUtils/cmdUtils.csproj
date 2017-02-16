@@ -74,6 +74,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssoControleParam.cs" />
+    <Compile Include="Controles\NavigatorUserControl.cs" />
+    <Compile Include="Controles\NavigatorUserControl.Designer.cs">
+      <DependentUpon>NavigatorUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controles\TotoRectangle.cs" />
     <Compile Include="Controles\TotoRectangle.Designer.cs">
       <DependentUpon>TotoRectangle.cs</DependentUpon>
@@ -127,6 +131,9 @@
     <None Include="libs\MySql.Web.dll" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controles\NavigatorUserControl.resx">
+      <DependentUpon>NavigatorUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controles\TotoRectangle.resx">
       <DependentUpon>TotoRectangle.cs</DependentUpon>
     </EmbeddedResource>

@@ -33,6 +33,8 @@ namespace cmdUtils.Objets
 		private DateTime dateJob;
 		private String defaultEmail;
 		private String numeroMagasinIrris;
+		private String limiteVisite;
+		private String limiteStock;
 		//
 		private MoulinettePurgeOptionTypes extensionClient=MoulinettePurgeOptionTypes.INCONNU;
 		private MoulinettePurgeOptionTypes extensionStock=MoulinettePurgeOptionTypes.INCONNU;
@@ -136,6 +138,15 @@ namespace cmdUtils.Objets
 
 		public int getAnneesConservationStockSiPurge() {
 			return anneesConservationStockSiPurge;
+		}
+
+		public void setLimiteStock(string str)
+		{
+			limiteStock=str;
+		}
+		public void setLimiteVisite(string str)
+		{
+			limiteVisite=str;
 		}
 		public int getAnneesConservationVisiteSiPurge() {
 			return (anneesConservationVisiteSiPurge);

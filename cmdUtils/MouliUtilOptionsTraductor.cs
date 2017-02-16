@@ -57,7 +57,7 @@ namespace cmdUtils
 			if(MoulinettePurgeOptionTypes.PURGE_DEMANDEE==options.getExtensionClient()) {
 				purgeArg+="  -datvismin "+getPurgeArg(options.getAnneesConservationVisiteSiPurge());
 			}
-			ligne=ligne.Replace("%purgeArg%", purgeArg);
+			ligne=ligne.Replace("<%purgeArg%>", purgeArg);
 			ligne = ligne.Replace("<%joint%>", joint);
 			ligne = ligne.Replace("<%dateCrea%>", DateTime.Now.ToString());
 			return ligne;

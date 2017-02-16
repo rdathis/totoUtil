@@ -9,6 +9,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Net.Mime;
 using System.Windows.Forms;
 using cmdUtils.Objets;
 using MoulUtil.Forms;
@@ -25,16 +26,25 @@ namespace MoulUtil
 		private MouliPrepaUtil mouliPrepaUtil;
 		private System.Diagnostics.Process plinkProcess;
 		private ConfigDto configDto;
-		private String magasinUrl="";
+		//protected String magasinUrl="";
 		private MouliSQLForm sqlForm;
-		MouliUtilOptions options = null;
+		private MouliUtil mouliUtil = null;
+		private MouliUtilOptions options = null;
+		protected CmdUtil cmdUtil = null;
 		public MouliPrepaForm(ConfigDto configDto)
 		{
 			InitializeComponent();
 			mouliPrepaUtil = new MouliPrepaUtil(this, configDto);
 			this.configDto = configDto;
 			this.workingDirBox.Text=configDto.getWorkingDir();
+			mouliUtil = new MouliUtil();
+			cmdUtil=new CmdUtil();
 			new TreeViewUtil(configDto.instances,configDto.serveurs).populateTargets(targetTreeView);
+			//
+			zonePrepaNavigatorUserControl.setBox(workspaceBaseBox);
+			workspaceNavigatorUserControl.setBoxes(workspaceBaseBox, workspaceZoneBox);
+			svgBaseNavigatorUserControl.setBox(targetSvgPathBox);
+			svgFinalNavigatorUserControl.setBoxes(targetSvgPathBox, targetNameBox);
 		}
 		void MouliPrepaLoad(object sender, EventArgs e)
 		{
@@ -42,14 +52,13 @@ namespace MoulUtil
 		}
 		void WorkspaceBoxTextChanged(object sender, EventArgs e)
 		{
-			MouliUtil mouliUtil = new MouliUtil();
 			mouliUtil.safeCreateDirectory( configDto.getWorkingDir());
 		}
 		void PrepareBtnClick(object sender, EventArgs e)
 		{
 			if(options==null) return;
-			if (workspaceBaseBox.Text.Length > 0 && workspaceBox.Text.Length > 0) {
-				MouliActionForm form = new MouliActionForm(options, configDto, workspaceBox.Text, magasinUrl);
+			if (workspaceBaseBox.Text.Length > 0 && workspaceZoneBox.Text.Length > 0) {
+				MouliActionForm form = new MouliActionForm(options, configDto, workspaceZoneBox.Text);
 				form.ShowDialog();
 			} else {
 				workspaceBaseBox.Focus();
@@ -62,14 +71,12 @@ namespace MoulUtil
 		}
 		public void setWorkspacePath(string sourceMoulinette)
 		{
-			workspaceBox.Text = sourceMoulinette;
+			workspaceZoneBox.Text = sourceMoulinette;
 		}
 		void SauvegardeBtnClick(object sender, EventArgs e)
 		{
 			String targetDir = Path.GetFullPath(targetSvgPathBox.Text)+"\\" + targetNameBox.Text;
-			MouliUtil mouliUtil = new MouliUtil();
 			mouliUtil.createArbo(targetDir);
-			CmdUtil cmdUtil = new CmdUtil();
 			cmdUtil.executeCommande("explorer", Path.GetFullPath(targetDir));
 			//TODO:copy src files to target dir.
 		}
@@ -86,10 +93,7 @@ namespace MoulUtil
 		{
 			String proposition = propositionBox.Text;
 			if (proposition.Length > 0) {
-				MouliUtil mouliUtil = new MouliUtil();
 				mouliUtil.createArbo(proposition);
-				CmdUtil cmdUtil = new CmdUtil();
-				
 				cmdUtil.executeCommande("explorer", Path.GetFullPath(proposition));
 			}
 		}
@@ -97,8 +101,11 @@ namespace MoulUtil
 		{
 			String str = propositionBox.Text.Trim();
 			if (str.Length > 0) {
-				workspaceBox.Text = str;
-				targetNameBox.Text = str;
+				String subPath="MEO"+DateTime.Now.Year+"/";
+				mouliUtil.safeCreateDirectory(targetSvgPathBox.Text+"/"+subPath);
+				workspaceZoneBox.Text = str;
+				targetNameBox.Text = subPath+ str.Replace(workingDirBox.Text, "");
+				
 			}
 		}
 		void MouliPrepaFormFormClosing(object sender, FormClosingEventArgs e)
@@ -109,7 +116,7 @@ namespace MoulUtil
 		}
 		void SqlBtnClick(object sender, EventArgs e)
 		{
-			MeoInstance meoInstance = MeoInstance.findInstanceByMeoURL(configDto.instances, magasinUrl); // convertitInstance(string url);
+			MeoInstance meoInstance = MeoInstance.findInstanceByInstanceName(configDto.instances, options.getInstanceName()); // convertitInstance(string url);
 			sqlForm = new MouliSQLForm(this.rechMagIdBox.Text, meoInstance);
 			//form.ShowDialog();
 			sqlForm.Show();
