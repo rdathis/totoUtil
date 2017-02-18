@@ -1,0 +1,5 @@
+C:\Users\Renaud\Documents\GitHub\totoUtil\TestEditorUtil\obj\Debug\TestEditorUtil.csprojResolveAssemblyReference.cache
+C:\Users\Renaud\Documents\GitHub\totoUtil\TestEditorUtil\bin\Debug\TestEditorUtil.exe
+C:\Users\Renaud\Documents\GitHub\totoUtil\TestEditorUtil\bin\Debug\TestEditorUtil.pdb
+C:\Users\Renaud\Documents\GitHub\totoUtil\TestEditorUtil\obj\Debug\TestEditorUtil.exe
+C:\Users\Renaud\Documents\GitHub\totoUtil\TestEditorUtil\obj\Debug\TestEditorUtil.pdb
