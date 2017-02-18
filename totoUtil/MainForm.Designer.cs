@@ -67,6 +67,7 @@ namespace totoUtil
 			this.goButton.TabIndex = 0;
 			this.goButton.Text = "go!";
 			this.goButton.UseVisualStyleBackColor = false;
+			this.goButton.Visible = false;
 			this.goButton.Click += new System.EventHandler(this.BtnClick);
 			// 
 			// pathTextBox
@@ -75,6 +76,7 @@ namespace totoUtil
 			this.pathTextBox.Name = "pathTextBox";
 			this.pathTextBox.Size = new System.Drawing.Size(601, 20);
 			this.pathTextBox.TabIndex = 1;
+			this.pathTextBox.Visible = false;
 			// 
 			// tipTextbox
 			// 
@@ -92,6 +94,7 @@ namespace totoUtil
 			this.argTextBox.Name = "argTextBox";
 			this.argTextBox.Size = new System.Drawing.Size(601, 20);
 			this.argTextBox.TabIndex = 3;
+			this.argTextBox.Visible = false;
 			// 
 			// infoTextBox
 			// 
@@ -112,6 +115,7 @@ namespace totoUtil
 			this.initButton.TabIndex = 5;
 			this.initButton.Text = "&init";
 			this.initButton.UseVisualStyleBackColor = false;
+			this.initButton.Visible = false;
 			this.initButton.Click += new System.EventHandler(this.InitButtonClick);
 			// 
 			// cmdLabel
@@ -121,6 +125,7 @@ namespace totoUtil
 			this.cmdLabel.Size = new System.Drawing.Size(70, 23);
 			this.cmdLabel.TabIndex = 6;
 			this.cmdLabel.Text = "grep:";
+			this.cmdLabel.Visible = false;
 			// 
 			// cmdArgsLabel
 			// 
@@ -129,6 +134,7 @@ namespace totoUtil
 			this.cmdArgsLabel.Size = new System.Drawing.Size(70, 23);
 			this.cmdArgsLabel.TabIndex = 7;
 			this.cmdArgsLabel.Text = "grep args";
+			this.cmdArgsLabel.Visible = false;
 			// 
 			// tippedTextBox
 			// 
@@ -159,6 +165,7 @@ namespace totoUtil
 			this.sendKeysButton.TabIndex = 10;
 			this.sendKeysButton.Text = "&sendKeys";
 			this.sendKeysButton.UseVisualStyleBackColor = false;
+			this.sendKeysButton.Visible = false;
 			this.sendKeysButton.Click += new System.EventHandler(this.Button1Click);
 			// 
 			// launchMCButton
@@ -191,6 +198,7 @@ namespace totoUtil
 			this.btnExplore.Text = "...";
 			this.btnExplore.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			this.btnExplore.UseVisualStyleBackColor = true;
+			this.btnExplore.Visible = false;
 			// 
 			// button2
 			// 
@@ -200,6 +208,7 @@ namespace totoUtil
 			this.button2.TabIndex = 15;
 			this.button2.Text = "timerButton";
 			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Visible = false;
 			this.button2.Click += new System.EventHandler(this.Button2Click);
 			// 
 			// statusStrip1
@@ -224,6 +233,7 @@ namespace totoUtil
 			this.userLabel.Size = new System.Drawing.Size(76, 20);
 			this.userLabel.TabIndex = 17;
 			this.userLabel.Text = "MC User";
+			this.userLabel.Visible = false;
 			// 
 			// userTextBox
 			// 
@@ -231,6 +241,7 @@ namespace totoUtil
 			this.userTextBox.Name = "userTextBox";
 			this.userTextBox.Size = new System.Drawing.Size(234, 20);
 			this.userTextBox.TabIndex = 18;
+			this.userTextBox.Visible = false;
 			this.userTextBox.Leave += new System.EventHandler(this.UserTextBoxLeave);
 			// 
 			// MainForm

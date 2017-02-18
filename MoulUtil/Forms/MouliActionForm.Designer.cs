@@ -67,6 +67,8 @@ namespace MoulUtil
 			this.targetLabel = new System.Windows.Forms.Label();
 			this.magIrrisLabel = new System.Windows.Forms.Label();
 			this.irrisMagTBox = new System.Windows.Forms.TextBox();
+			this.purgeClientChkBox = new System.Windows.Forms.CheckBox();
+			this.purgeStockChkBox = new System.Windows.Forms.CheckBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -147,6 +149,7 @@ namespace MoulUtil
 			this.checkedListBox1.Name = "checkedListBox1";
 			this.checkedListBox1.Size = new System.Drawing.Size(121, 79);
 			this.checkedListBox1.TabIndex = 12;
+			this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.CheckedListBox1ItemCheck);
 			// 
 			// puttyLink
 			// 
@@ -338,11 +341,31 @@ namespace MoulUtil
 			this.irrisMagTBox.Size = new System.Drawing.Size(97, 20);
 			this.irrisMagTBox.TabIndex = 25;
 			// 
-			// MouliForm
+			// purgeClientChkBox
+			// 
+			this.purgeClientChkBox.Location = new System.Drawing.Point(149, 23);
+			this.purgeClientChkBox.Name = "purgeClientChkBox";
+			this.purgeClientChkBox.Size = new System.Drawing.Size(89, 24);
+			this.purgeClientChkBox.TabIndex = 26;
+			this.purgeClientChkBox.Text = "purger Client";
+			this.purgeClientChkBox.UseVisualStyleBackColor = true;
+			// 
+			// purgeStockChkBox
+			// 
+			this.purgeStockChkBox.Location = new System.Drawing.Point(254, 23);
+			this.purgeStockChkBox.Name = "purgeStockChkBox";
+			this.purgeStockChkBox.Size = new System.Drawing.Size(89, 24);
+			this.purgeStockChkBox.TabIndex = 27;
+			this.purgeStockChkBox.Text = "purger Stock";
+			this.purgeStockChkBox.UseVisualStyleBackColor = true;
+			// 
+			// MouliActionForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(599, 430);
+			this.Controls.Add(this.purgeStockChkBox);
+			this.Controls.Add(this.purgeClientChkBox);
 			this.Controls.Add(this.irrisMagTBox);
 			this.Controls.Add(this.magIrrisLabel);
 			this.Controls.Add(this.targetLabel);
@@ -365,8 +388,8 @@ namespace MoulUtil
 			this.Controls.Add(this.exitButton);
 			this.Controls.Add(this.goButton);
 			this.MainMenuStrip = this.menuStrip1;
-			this.Name = "MouliForm";
-			this.Text = "MouliForm";
+			this.Name = "MouliActionForm";
+			this.Text = "MouliActionForm";
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
@@ -375,6 +398,8 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.CheckBox purgeStockChkBox;
+		private System.Windows.Forms.CheckBox purgeClientChkBox;
 		private System.Windows.Forms.TextBox irrisMagTBox;
 		private System.Windows.Forms.Label magIrrisLabel;
 		private System.Windows.Forms.Label targetLabel;

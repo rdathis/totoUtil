@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-# SharpDevelop 5.0
+# SharpDevelop 4.3
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "totoUtil", "totoUtil\totoUtil.csproj", "{91190D9B-CD31-4E95-8E5E-AE905D5AD625}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cmdUtils", "cmdUtils\cmdUtils.csproj", "{82161C4E-7D1B-4168-B4FB-5916BC45348B}"
@@ -9,6 +9,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoulUtil", "MoulUtil\MoulUtil.csproj", "{880EF030-A914-4C46-88BA-E83D9D37F69C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSSH", "TestSSH\TestSSH.csproj", "{E35A62A8-BEFF-43BB-AAC4-FE1EC7700B30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUtil", "TestUtil\TestUtil.csproj", "{C57D8106-3550-4E68-9CD2-ADD550B7ED56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEditorUtil", "TestEditorUtil\TestEditorUtil.csproj", "{FC0ACDD1-CA8D-4E30-9120-3122102F020A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,5 +36,13 @@ Global
 		{E35A62A8-BEFF-43BB-AAC4-FE1EC7700B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E35A62A8-BEFF-43BB-AAC4-FE1EC7700B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E35A62A8-BEFF-43BB-AAC4-FE1EC7700B30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C57D8106-3550-4E68-9CD2-ADD550B7ED56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C57D8106-3550-4E68-9CD2-ADD550B7ED56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C57D8106-3550-4E68-9CD2-ADD550B7ED56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C57D8106-3550-4E68-9CD2-ADD550B7ED56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC0ACDD1-CA8D-4E30-9120-3122102F020A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC0ACDD1-CA8D-4E30-9120-3122102F020A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC0ACDD1-CA8D-4E30-9120-3122102F020A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC0ACDD1-CA8D-4E30-9120-3122102F020A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal

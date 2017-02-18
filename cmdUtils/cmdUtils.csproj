@@ -74,29 +74,39 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssoControleParam.cs" />
+    <Compile Include="Controles\NavigatorUserControl.cs" />
+    <Compile Include="Controles\NavigatorUserControl.Designer.cs">
+      <DependentUpon>NavigatorUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controles\TotoRectangle.cs" />
     <Compile Include="Controles\TotoRectangle.Designer.cs">
       <DependentUpon>TotoRectangle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MainForm.cs" />
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MouliUtilOptionsTraductor.cs" />
     <Compile Include="Objets\ConfigDto.cs" />
     <Compile Include="Objets\ConfigUtil.cs" />
     <Compile Include="Objets\ConvertisseurUtil.cs" />
     <Compile Include="Objets\JFiles.cs" />
     <Compile Include="Objets\Horloge.cs" />
     <Compile Include="Objets\MeoInstance.cs" />
+    <Compile Include="Objets\MeoSavUtil.cs" />
     <Compile Include="Objets\MeoServeur.cs" />
     <Compile Include="ConfElement.cs" />
     <Compile Include="ConfigSectionSettings.cs" />
-    <Compile Include="MainForm.cs" />
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Objets\MeoSql.cs" />
+    <Compile Include="Objets\MioulinettePurgeOptionType.cs" />
     <Compile Include="Objets\MouliConfig.cs" />
     <Compile Include="Objets\MouliJob.cs" />
     <Compile Include="Objets\MoulinetteAction.cs" />
+    <Compile Include="Objets\MoulinettePurgeOptionTypes.cs" />
     <Compile Include="Objets\MouliStatRecap.cs" />
     <Compile Include="Objets\MouliUtil.cs" />
     <Compile Include="Objets\MouliUtilOptions.cs" />
+    <Compile Include="Objets\MySQLDico.cs" />
     <Compile Include="Objets\MyUtil.cs" />
     <Compile Include="Objets\ProcessUtil.cs" />
     <Compile Include="Objets\CmdUtil.cs" />
@@ -121,10 +131,13 @@
     <None Include="libs\MySql.Web.dll" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controles\NavigatorUserControl.resx">
+      <DependentUpon>NavigatorUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controles\TotoRectangle.resx">
       <DependentUpon>TotoRectangle.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -132,6 +145,7 @@
     <Folder Include="libs" />
     <Folder Include="doc" />
     <Folder Include="Controles" />
+    <Folder Include="Forms" />
     <Folder Include="Objets" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

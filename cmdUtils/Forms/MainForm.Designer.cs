@@ -210,6 +210,7 @@ namespace cmdUtils
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripCmdLabel = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+			this.mouliUtilToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -747,48 +748,50 @@ namespace cmdUtils
 			// 
 			// sqlRechRichTextBox
 			// 
-			this.sqlRechRichTextBox.Location = new System.Drawing.Point(219, 136);
+			this.sqlRechRichTextBox.Location = new System.Drawing.Point(3, 162);
 			this.sqlRechRichTextBox.Name = "sqlRechRichTextBox";
-			this.sqlRechRichTextBox.Size = new System.Drawing.Size(552, 95);
+			this.sqlRechRichTextBox.Size = new System.Drawing.Size(803, 246);
 			this.sqlRechRichTextBox.TabIndex = 27;
 			this.sqlRechRichTextBox.Text = "";
 			// 
 			// importMagId
 			// 
-			this.importMagId.Location = new System.Drawing.Point(109, 158);
+			this.importMagId.Location = new System.Drawing.Point(110, 136);
 			this.importMagId.Name = "importMagId";
 			this.importMagId.Size = new System.Drawing.Size(104, 20);
 			this.importMagId.TabIndex = 26;
+			this.importMagId.TextChanged += new System.EventHandler(this.ImportMagIdTextChanged);
 			this.importMagId.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ImportMagIdKeyUp);
 			// 
 			// richTextBox2
 			// 
 			this.richTextBox2.Location = new System.Drawing.Point(3, 3);
 			this.richTextBox2.Name = "richTextBox2";
-			this.richTextBox2.Size = new System.Drawing.Size(768, 127);
+			this.richTextBox2.Size = new System.Drawing.Size(808, 127);
 			this.richTextBox2.TabIndex = 25;
-			this.richTextBox2.Text = "";
+			this.richTextBox2.Text = resources.GetString("richTextBox2.Text");
+			this.richTextBox2.TextChanged += new System.EventHandler(this.RichTextBox2TextChanged);
 			// 
 			// dataGrid1
 			// 
 			this.dataGrid1.DataMember = "";
 			this.dataGrid1.HeaderForeColor = System.Drawing.SystemColors.ControlText;
-			this.dataGrid1.Location = new System.Drawing.Point(386, 237);
+			this.dataGrid1.Location = new System.Drawing.Point(386, 414);
 			this.dataGrid1.Name = "dataGrid1";
-			this.dataGrid1.Size = new System.Drawing.Size(385, 209);
+			this.dataGrid1.Size = new System.Drawing.Size(385, 72);
 			this.dataGrid1.TabIndex = 24;
 			// 
 			// dataGridView1
 			// 
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView1.Location = new System.Drawing.Point(22, 237);
+			this.dataGridView1.Location = new System.Drawing.Point(22, 414);
 			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.Size = new System.Drawing.Size(358, 209);
+			this.dataGridView1.Size = new System.Drawing.Size(358, 72);
 			this.dataGridView1.TabIndex = 23;
 			// 
 			// label11
 			// 
-			this.label11.Location = new System.Drawing.Point(3, 161);
+			this.label11.Location = new System.Drawing.Point(4, 139);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(100, 23);
 			this.label11.TabIndex = 22;
@@ -1428,7 +1431,8 @@ namespace cmdUtils
 			this.cygwinToolStripButton,
 			this.toolStripSeparator1,
 			this.toolStripCmdLabel,
-			this.toolStripButton1});
+			this.toolStripButton1,
+			this.mouliUtilToolStripButton});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(834, 25);
@@ -1465,12 +1469,21 @@ namespace cmdUtils
 			// toolStripButton1
 			// 
 			this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
 			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStripButton1.Name = "toolStripButton1";
 			this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
 			this.toolStripButton1.Text = "toolStripButton1";
 			this.toolStripButton1.Click += new System.EventHandler(this.ToolStripButton1Click);
+			// 
+			// mouliUtilToolStripButton
+			// 
+			this.mouliUtilToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.mouliUtilToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("mouliUtilToolStripButton.Image")));
+			this.mouliUtilToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.mouliUtilToolStripButton.Name = "mouliUtilToolStripButton";
+			this.mouliUtilToolStripButton.Size = new System.Drawing.Size(23, 22);
+			this.mouliUtilToolStripButton.Text = "mouliUtil";
+			this.mouliUtilToolStripButton.Click += new System.EventHandler(this.mouliUtilToolStripButtonClick);
 			// 
 			// MainForm
 			// 
@@ -1510,6 +1523,7 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.ToolStripButton mouliUtilToolStripButton;
 		private System.Windows.Forms.TextBox tabCodeResult;
 		private System.Windows.Forms.Button tabCodeBtn;
 		private System.Windows.Forms.TextBox tabCodeApres;

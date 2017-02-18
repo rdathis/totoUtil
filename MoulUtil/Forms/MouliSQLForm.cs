@@ -18,14 +18,19 @@ namespace MoulUtil
 		private String magId=null;
 		private ConfigDto configDto;
 		private MeoInstance instance = null;
-		MeoServeur meoServeur =null;
+		private MyUtil myUtil=null;
+		private MeoServeur meoServeur =null;
+		private	const int sqlPort=5000;
+		private System.Diagnostics.Process plinkProcess = null;
 
+		
 		public MouliSQLForm(String magId, MeoInstance instance)		{
 			InitializeComponent();
 			this.magId=magId;
 			this.instance=instance;
 			ConfigUtil configUtil= new ConfigUtil();
 			configDto = configUtil.getConfig();
+			myUtil=new MyUtil();
 			if(instance!=null) {
 				meoServeur = MeoServeur.findServeurByName(configDto.serveurs, instance.serveur);
 			}
@@ -44,7 +49,21 @@ namespace MoulUtil
 				return;
 			}
 			detailmagasinBox.Text = "I:" +instance.nom + " - S :" +meoServeur.adresse + " D:"+instance.nom;
+			startPlink(meoServeur);
+			//plink a faire.
 		}
+
+		void startPlink(MeoServeur meoServeur)
+		{
+			String args = " -ssh -batch -pw "+meoServeur.password+" -L "+sqlPort+":127.0.0.1:3306 "+meoServeur.getUtilisateur()+"@"+meoServeur.adresse;
+
+			ProcessUtil putil =new ProcessUtil();
+			plinkProcess = putil.startProcess(MouliConfig.plinkPath, args, System.Diagnostics.ProcessWindowStyle.Normal);
+			this.BackColor = Color.LightBlue;
+			statStockLabel.Visible=true;
+			statVisitesLabel.Visible=true;
+		}
+
 		private void populate() {
 			this.magasinIdBox.Text=magId;
 			this.magasinIdBox.Enabled=false;
@@ -84,16 +103,32 @@ namespace MoulUtil
 		private void populateGrid(String sql, String annee) {
 			sql=prepareSQL(sql, magId, annee);
 			sqlCalculeBox.Text=sql;
+			String connectionString = myUtil.buildConnectionStringFromInstance(instance, configDto, sqlPort);
+			dataGridView1.DataSource= myUtil.buildDataSource(connectionString, sql);
+			dataGridView1.Refresh();
+			
 		}
 		private void doPurge(String sql, String annee) {
 			sql=prepareSQL(sql, magId, annee);
 			resultatSQLBox.Text=sql;
+			DialogResult result = MessageBox.Show("Purger les données magasins <= "+annee+" ?",   "confirme purge",    MessageBoxButtons.YesNo);
+			if(result==DialogResult.Yes) {
+				String connectionString = myUtil.buildConnectionStringFromInstance(instance, configDto, sqlPort);
+				myUtil.getExecuteQueryResult(connectionString, sql);
+			}
 		}
 		private String prepareSQL(String sql, String magId, String year) {
 			sql=sql.Trim();
 			sql=sql.Replace("@MAGID", magId);
 			sql=sql.Replace("@MYEAR", year);
 			return sql;
+		}
+		void MouliSQLFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(plinkProcess!=null) {
+				plinkProcess.Close();
+			}
+
 		}
 	}
 }

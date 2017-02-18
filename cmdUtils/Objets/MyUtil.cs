@@ -8,7 +8,9 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
+using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using System.Xml.Linq;
 using MySql.Data.MySqlClient;
@@ -34,6 +36,13 @@ namespace cmdUtils.Objets
 			return string.Format("Database={0};Data Source={1};User Id={2};Password={3};Port={4}", databaseName, serverName, user, pwd, port);
 			
 		}
+
+		public string buildConnectionStringFromInstance(MeoInstance instance, ConfigDto dto, int sqlPort)
+		{
+			String str=buildconnString(instance.nom, "127.0.0.1", dto.databaseAdminUser,dto.databaseAdminPwd, sqlPort );
+			return str;
+		}
+
 		public  MySqlConnection getConnection(String connectionString) {
 			MySqlConnection cnx = new MySqlConnection();
 			cnx.ConnectionString = connectionString;
@@ -54,7 +63,7 @@ namespace cmdUtils.Objets
 			return buildconnString("", "127.0.0.1", cfg.mysqlUser, cfg.mysqlPassword, 3306);
 		}
 
-	
+		
 		public  MySqlConnection getConnection(String databaseName, String serverName, String user, String pwd, int port) {
 			String cString = buildconnString(databaseName, serverName, user, pwd, port);
 			return getConnection(cString);
@@ -82,7 +91,6 @@ namespace cmdUtils.Objets
 
 		public List<String> getListResultSimple(string connString, string str, int fieldIndex=0)
 		{
-			
 			List<Object> liste = getListResult(connString, str, fieldIndex);
 			List <String> retour = new List<string>();
 			foreach(Object data in liste) {
@@ -106,7 +114,7 @@ namespace cmdUtils.Objets
 				
 				MySqlDataReader data = command.ExecuteReader();
 				while(data.Read()) {
-				
+					
 					result.Add(convertit(data, fieldIndex));
 
 					System.Diagnostics.Debug.Print("data:("+data.GetFieldType(0)+")" + data.GetValue(0) +" "+ data.FieldCount);
@@ -184,6 +192,23 @@ namespace cmdUtils.Objets
 		}
 		public String getDate8(DateTime date) {
 			return String.Format("{0:yyyyMMdd}", date);
+		}
+
+		public BindingSource buildDataSource(string connString, string sql)
+		{
+			MySqlConnection mysqlCon = new MySqlConnection(connString);
+			mysqlCon.Open();
+
+			MySqlDataAdapter MyDA = new MySqlDataAdapter();
+			
+			MyDA.SelectCommand = new MySqlCommand(sql, mysqlCon);
+
+			DataTable table = new DataTable();
+			MyDA.Fill(table);
+
+			BindingSource bSource = new BindingSource();
+			bSource.DataSource = table;
+			return bSource;
 		}
 	}
 }

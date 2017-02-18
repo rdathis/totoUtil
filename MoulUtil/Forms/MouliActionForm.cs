@@ -24,19 +24,21 @@ namespace MoulUtil
 		private MouliJob job=null;
 		private ConfigDto configDto;
 		private String magId=null;
+		private MouliUtilOptions options=null;
 
-		public MouliActionForm(List<MeoServeur> serveurs, List<MeoInstance> instances, ConfigDto configDto, String magId, String path, String meourl)
+		public MouliActionForm(MouliUtilOptions options, ConfigDto configDto, string path)
 		{
 			InitializeComponent();
+			this.options=options;
 			setConfigDto(configDto);
-			setServeurs(serveurs);
-			setInstances(instances);
+			setServeurs(configDto.getServeurs());
+			setInstances(configDto.getInstances());
 			setPath(path);
-			setMagId(magId);
+			setMagId(options.getMagId());
 			setMagasinIrris("01");
 			
 			prepare();
-			setMeoInstance(meourl);
+			setMeoInstance(options.getInstanceName());
 		}
 
 		// disable once ParameterHidesMember
@@ -62,8 +64,21 @@ namespace MoulUtil
 			new TreeViewUtil(instances, serveurs).populateTargets(targetTreeView);
 			
 			dateTimePicker.Value = new MouliUtil().calculeNextPlannedJob();
+		
+			activeExtension(purgeClientChkBox, options.getExtensionClient());
+			activeExtension(purgeStockChkBox, options.getExtensionStock());
 		}
 
+		void activeExtension(CheckBox chkBox, MoulinettePurgeOptionTypes moulinettePurgeOptionTypes)
+		{
+			Boolean value=true;
+			if(MoulinettePurgeOptionTypes.CLIENT_POSSEDE_EXTENSION==moulinettePurgeOptionTypes) {
+				value=false;
+			}
+			chkBox.Enabled=value;
+			chkBox.Checked=value;
+			
+		}
 		// disable once ParameterHidesMember
 		void analyseJob(MouliJob job, CheckedListBox box)
 		{
@@ -86,7 +101,7 @@ namespace MoulUtil
 			goButton.Enabled=false;
 			toolStripStatusLabel1.Text = "doing archive";
 			try {
-				MouliUtilOptions options=updateMouliUtilOption(getSelectedInstance());
+				options=updateMouliUtilOption(getSelectedInstance());
 				job= MouliProgram.doTraitement(pathLabel.Text, options);
 				//job.setzzz(pathLabel.Text);
 				analyseJob(job, checkedListBox1);
@@ -209,17 +224,17 @@ namespace MoulUtil
 				retour+="S";
 			}
 			if(box.GetItemChecked(2)) {
-				retour+="D";
+				retour+="J";
 			}
 			if(box.GetItemChecked(3)) {
-				retour+="J";
+				retour+="D";
 			}
 			return retour;
 
 		}
 		MouliUtilOptions updateMouliUtilOption(MeoInstance instance)
 		{
-			MouliUtilOptions options = new MouliUtilOptions();
+			options = new MouliUtilOptions();
 			options.setInstanceCommande(instance.getMeocli());
 			options.setInstanceName(instance.getNom());
 			
@@ -230,10 +245,27 @@ namespace MoulUtil
 			options.setDateJob(dateTimePicker.Value);
 			options.setNumeroMagasinIrris(irrisMagTBox.Text);
 			options.setMagId(magId);
+			
+			options.setExtensionClient(calculExtension(purgeClientChkBox));
+			options.setExtensionStock(calculExtension(purgeStockChkBox));
 			return options;
 			
 		}
 
+		MoulinettePurgeOptionTypes calculExtension(CheckBox checkBox)
+		{
+			if(checkBox.Enabled) {
+				if(checkBox.Checked) {
+					return MoulinettePurgeOptionTypes.PURGE_DEMANDEE;
+				} else {
+					return MoulinettePurgeOptionTypes.PURGE_REFUSEE;
+				}
+					
+			} else {
+				return MoulinettePurgeOptionTypes.CLIENT_POSSEDE_EXTENSION;
+			}
+			 
+		}
 		MeoInstance getSelectedInstance()
 		{
 			return getSelectedInstance(targetTreeView);
@@ -289,7 +321,7 @@ namespace MoulUtil
 						cmd="-pw "+server.password+" -l "+server.utilisateur+" -m "+commandeFile+" "+server.adresse;
 						
 						cmdUtil.executeCommande(MouliConfig.plinkPath, cmd);
-						 
+						
 						toolStripStatusLabel1.Text="finished";
 					} catch(Exception ex) {
 						MessageBox.Show("Erreur envoi data : "+ex.Message + "\n"+ex.Source + "\n" +ex.StackTrace);
@@ -306,9 +338,9 @@ namespace MoulUtil
 			magIdTextBox.Enabled=false;
 		}
 
-		void setMeoInstance(string meourl)
+		void setMeoInstance(string instanceName)
 		{
-			MeoInstance instance = MeoInstance.findInstanceByMeoURL(instances, meourl);
+			MeoInstance instance = MeoInstance.findInstanceByInstanceName(instances, instanceName);
 			TreeView tv = targetTreeView;
 			if(instance!=null) {
 				foreach (TreeNode serveurNode in tv.Nodes) {
@@ -320,6 +352,26 @@ namespace MoulUtil
 						}
 					}
 				}
+			}
+		}
+		void CheckedListBox1ItemCheck(object sender, ItemCheckEventArgs e)
+		{
+			if(!CheckState.Checked.Equals(e.NewValue)) {
+				return;
+			}
+			int newidx=e.Index;
+			int oldIdx=0;
+			if(newidx==2) {
+				oldIdx=3;
+			} else if(newidx==3) {
+				oldIdx=2;
+			} else {
+				return;
+			}
+			bool newv=checkedListBox1.GetItemChecked(newidx);
+			bool oldv=checkedListBox1.GetItemChecked(oldIdx);
+			if(checkedListBox1.GetItemChecked(oldIdx)) {
+				checkedListBox1.SetItemChecked(oldIdx, false);
 			}
 		}
 	}

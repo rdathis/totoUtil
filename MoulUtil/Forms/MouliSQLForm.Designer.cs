@@ -44,11 +44,9 @@ namespace MoulUtil
 			this.purgeStockLabel = new System.Windows.Forms.Label();
 			this.purgeVisitesLabel = new System.Windows.Forms.Label();
 			this.resultatSQLBox = new System.Windows.Forms.TextBox();
-			this.dataGrid1 = new System.Windows.Forms.DataGrid();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
 			this.sqlCalculeBox = new System.Windows.Forms.TextBox();
 			this.anneeVisitePurgeBox = new System.Windows.Forms.TextBox();
-			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -75,6 +73,7 @@ namespace MoulUtil
 			this.statStockLabel.Size = new System.Drawing.Size(73, 23);
 			this.statStockLabel.TabIndex = 2;
 			this.statStockLabel.Text = "stat Stock";
+			this.statStockLabel.Visible = false;
 			this.statStockLabel.Click += new System.EventHandler(this.StatStockLabelClick);
 			// 
 			// detailmagasinBox
@@ -108,6 +107,7 @@ namespace MoulUtil
 			this.statVisitesLabel.Size = new System.Drawing.Size(73, 23);
 			this.statVisitesLabel.TabIndex = 6;
 			this.statVisitesLabel.Text = "stat Visites";
+			this.statVisitesLabel.Visible = false;
 			this.statVisitesLabel.Click += new System.EventHandler(this.StatVisitesLabelClick);
 			// 
 			// purgeStockLabel
@@ -132,32 +132,32 @@ namespace MoulUtil
 			// 
 			// resultatSQLBox
 			// 
-			this.resultatSQLBox.Location = new System.Drawing.Point(1, 447);
+			this.resultatSQLBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.resultatSQLBox.Location = new System.Drawing.Point(1, 557);
 			this.resultatSQLBox.Multiline = true;
 			this.resultatSQLBox.Name = "resultatSQLBox";
 			this.resultatSQLBox.Size = new System.Drawing.Size(873, 47);
 			this.resultatSQLBox.TabIndex = 9;
 			// 
-			// dataGrid1
-			// 
-			this.dataGrid1.DataMember = "";
-			this.dataGrid1.HeaderForeColor = System.Drawing.SystemColors.ControlText;
-			this.dataGrid1.Location = new System.Drawing.Point(35, 132);
-			this.dataGrid1.Name = "dataGrid1";
-			this.dataGrid1.Size = new System.Drawing.Size(344, 96);
-			this.dataGrid1.TabIndex = 10;
-			// 
 			// dataGridView1
 			// 
+			this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView1.Location = new System.Drawing.Point(22, 273);
+			this.dataGridView1.Location = new System.Drawing.Point(1, 132);
 			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.Size = new System.Drawing.Size(550, 94);
+			this.dataGridView1.Size = new System.Drawing.Size(873, 366);
 			this.dataGridView1.TabIndex = 11;
 			// 
 			// sqlCalculeBox
 			// 
-			this.sqlCalculeBox.Location = new System.Drawing.Point(1, 394);
+			this.sqlCalculeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.sqlCalculeBox.Location = new System.Drawing.Point(1, 504);
 			this.sqlCalculeBox.Multiline = true;
 			this.sqlCalculeBox.Name = "sqlCalculeBox";
 			this.sqlCalculeBox.Size = new System.Drawing.Size(873, 47);
@@ -174,11 +174,10 @@ namespace MoulUtil
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(886, 506);
+			this.ClientSize = new System.Drawing.Size(886, 608);
 			this.Controls.Add(this.anneeVisitePurgeBox);
 			this.Controls.Add(this.sqlCalculeBox);
 			this.Controls.Add(this.dataGridView1);
-			this.Controls.Add(this.dataGrid1);
 			this.Controls.Add(this.resultatSQLBox);
 			this.Controls.Add(this.purgeVisitesLabel);
 			this.Controls.Add(this.purgeStockLabel);
@@ -191,7 +190,7 @@ namespace MoulUtil
 			this.Controls.Add(this.label1);
 			this.Name = "MouliSQLForm";
 			this.Text = "MouliSQLForm";
-			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MouliSQLFormFormClosing);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -199,7 +198,6 @@ namespace MoulUtil
 		}
 		private System.Windows.Forms.TextBox anneeVisitePurgeBox;
 		private System.Windows.Forms.TextBox sqlCalculeBox;
-		private System.Windows.Forms.DataGrid dataGrid1;
 		private System.Windows.Forms.DataGridView dataGridView1;
 		private System.Windows.Forms.TextBox resultatSQLBox;
 		private System.Windows.Forms.Label purgeVisitesLabel;

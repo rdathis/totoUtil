@@ -16,6 +16,13 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public class MouliUtilOptions
 	{
+		public enum SQLCommands {
+			getExtensionStock,
+			getExtensionClient
+		}
+
+		private const int anneesConservationStockSiPurge=2;
+		private const int anneesConservationVisiteSiPurge=10;
 		private String magId;
 		private String instanceName;
 		private String instanceCommande;
@@ -26,6 +33,12 @@ namespace cmdUtils.Objets
 		private DateTime dateJob;
 		private String defaultEmail;
 		private String numeroMagasinIrris;
+		private String limiteVisite;
+		private String limiteStock;
+		//
+		private MoulinettePurgeOptionTypes extensionClient=MoulinettePurgeOptionTypes.INCONNU;
+		private MoulinettePurgeOptionTypes extensionStock=MoulinettePurgeOptionTypes.INCONNU;
+		//
 		public MouliUtilOptions()
 		{
 			//
@@ -110,21 +123,66 @@ namespace cmdUtils.Objets
 		public Boolean isCommentaire(String ligne) {
 			return ligne.StartsWith("#DoNotTranslate:");
 		}
-		public string traduitScript(string ligne)
-		{
-			ligne = ligne.Replace("<%mailto%>", this.getDefaultEmail());
-			ligne = ligne.Replace("<%magId%>", this.getMagId());
-			ligne = ligne.Replace("<%magIRRIS%>", this.getNumeroMagasinIrris());
-			ligne = ligne.Replace("<%ARG%>", this.getLots());
-			ligne = ligne.Replace("<%instanceName%>", this.getInstanceName());
-			ligne = ligne.Replace("<%instanceCommande%>", this.getInstanceCommande());
-			String joint = "N";
-			if (this.getIsJoint()) {
-				joint = "O";
-			}
-			ligne = ligne.Replace("<%joint%>", joint);
-			ligne = ligne.Replace("<%dateCrea%>", DateTime.Now.ToString());
-			return ligne;
+		public MoulinettePurgeOptionTypes getExtensionClient() {
+			return extensionClient;
 		}
+		public void setExtensionClient(MoulinettePurgeOptionTypes value) {
+			this.extensionClient=value;
+		}
+		public MoulinettePurgeOptionTypes getExtensionStock() {
+			return extensionStock;
+		}
+		public void setExtensionStock(MoulinettePurgeOptionTypes value) {
+			this.extensionStock=value;
+		}
+
+		public int getAnneesConservationStockSiPurge() {
+			return anneesConservationStockSiPurge;
+		}
+
+		public void setLimiteStock(string str)
+		{
+			limiteStock=str;
+		}
+		public void setLimiteVisite(string str)
+		{
+			limiteVisite=str;
+		}
+		public int getAnneesConservationVisiteSiPurge() {
+			return (anneesConservationVisiteSiPurge);
+		}
+
+		//
+//		public string traduitScript(string ligne)
+//		{
+//			String joint = "N";
+//			String lot = this.getLots();
+//			// disable once StringIndexOfIsCultureSpecific
+//			if(lot.IndexOf("D") >= 0) {
+//				lot=lot.Replace("D", "");
+//				joint = "D";
+//			}
+//			ligne = ligne.Replace("<%mailto%>", this.getDefaultEmail());
+//			ligne = ligne.Replace("<%magId%>", this.getMagId());
+//			ligne = ligne.Replace("<%magIRRIS%>", this.getNumeroMagasinIrris());
+//			ligne = ligne.Replace("<%ARG%>", lot);
+//			ligne = ligne.Replace("<%instanceName%>", this.getInstanceName());
+//			ligne = ligne.Replace("<%instanceCommande%>", this.getInstanceCommande());
+//
+//			if (this.getIsJoint()) {
+//				joint = "O";
+//			}
+//			String purgeArg="";
+//			if(MoulinettePurgeOptionTypes.PURGE_DEMANDEE==this.extensionStock) {
+//				purgeArg+="  -datartmin "+getPurgeArg(anneesConservationStockSiPurge);
+//			}
+//			if(MoulinettePurgeOptionTypes.PURGE_DEMANDEE==this.extensionClient) {
+//				purgeArg+="  -datvismin "+getPurgeArg(anneesConservationVisiteSiPurge);
+//			}
+//			ligne=ligne.Replace("%purgeArg%", purgeArg);
+//			ligne = ligne.Replace("<%joint%>", joint);
+//			ligne = ligne.Replace("<%dateCrea%>", DateTime.Now.ToString());
+//			return ligne;
+//		}
 	}
 }

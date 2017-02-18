@@ -89,6 +89,7 @@
     <Compile Include="Forms\MouliSQLForm.Designer.cs">
       <DependentUpon>MouliSQLForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\utils\MouliPrepaUtil.cs" />
     <Compile Include="MouliProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -117,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms" />
+    <Folder Include="Forms\utils" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
