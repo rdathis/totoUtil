@@ -4,23 +4,16 @@ using System.ComponentModel;
 using System.Drawing.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
-
+//using cmdUtils.Objets;
 class MyType
 {
-	//    private Bidule bidule = new Bidule();
-	//    public Bidule Bidule { get { return bidule; } }
-	
 	private List<Bidule> bidules= null;
 	public List<Bidule> Bidule  {
 		get { return bidules; }
 	}
-	
-	public MyType()	{
-		bidules=new List<Bidule>();
-		bidules.Add(new Bidule());
-		bidules.Add(new Bidule());
+	public MyType(List <Bidule> liste) {
+		this.bidules=liste;
 	}
-	//}
 }
 
 [Editor(typeof(BiduleEditor), typeof(UITypeEditor))]
@@ -93,19 +86,44 @@ class BiduleForm : Form
 		set { textbox.Text = value; }
 	}
 }
+
+class ParamEditorForm : Form {
+	PropertyGrid grid=null;
+	private void init() {
+		Application.EnableVisualStyles();
+		grid = new PropertyGrid();
+		grid.Dock = DockStyle.Fill;
+		this.Controls.Add(grid);
+	}
+	/*
+	public ParamEditorForm (List<MeoInstance> liste) {
+		init();
+		grid.SelectedObject = new MyType(liste);
+	}
+	*/
+	public ParamEditorForm (List<Bidule> liste) {
+		init();
+		grid.SelectedObject = new MyType(liste);
+	}
+}
 static class Program
 {
 	[STAThread]
 	static void Main()
 	{
-		Application.EnableVisualStyles();
-		Form form = new Form();
-		PropertyGrid grid = new PropertyGrid();
-		grid.Dock = DockStyle.Fill;
-		form.Controls.Add(grid);
+		/*
+		List<MeoInstance> liste = new List<MeoInstance>();
+		liste.Add(new MeoInstance("s1", "s1", "s1", "cli-s1", "http://s1.com"));
+		liste.Add(new MeoInstance("s2", "s2", "s2", "cli-s2", "http://s2.com"));
+		Application.Run(new ParamEditorForm(liste));
+		*/
+		List<Bidule> liste =new List<Bidule>();
+		liste.Add(new Bidule());
+		liste.Add(new Bidule());
+		liste.Add(new Bidule());
+
 		
-		grid.SelectedObject = new MyType();
-		Application.Run(form);
+		Application.Run(new ParamEditorForm(liste));
 	}
 }
 
