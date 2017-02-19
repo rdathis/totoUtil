@@ -5,18 +5,18 @@ using System.Drawing.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 //using cmdUtils.Objets;
-class MyType
+class EditedType
 {
 	private List<Bidule> bidules= null;
 	public List<Bidule> Bidule  {
 		get { return bidules; }
 	}
-	public MyType(List <Bidule> liste) {
+	public EditedType(List <Bidule> liste) {
 		this.bidules=liste;
 	}
 }
 
-[Editor(typeof(BiduleEditor), typeof(UITypeEditor))]
+[Editor(typeof(ParamEditorEditor), typeof(UITypeEditor))]
 [TypeConverter(typeof(ExpandableObjectConverter))]
 class Bidule
 {
@@ -24,6 +24,12 @@ class Bidule
 	private string prenom;
 	private int age;
 	private DateTime entree;
+	public Bidule() {
+	}
+	public Bidule(int age) {
+		this.age=age;
+	}
+	
 	public string Prenom {
 		get { return prenom; }
 		set { prenom=value; }
@@ -41,7 +47,7 @@ class Bidule
 		set { entree = value; }
 	}
 }
-class BiduleEditor : UITypeEditor
+class ParamEditorEditor : UITypeEditor
 {
 	public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
 	{
@@ -54,7 +60,7 @@ class BiduleEditor : UITypeEditor
 		Bidule bidule = value as Bidule;
 		if (svc != null && bidule != null)
 		{
-			using (BiduleForm form = new BiduleForm())
+			using (EditParamForm form = new EditParamForm())
 			{
 				form.Value = bidule.Nom;
 				if (svc.ShowDialog(form) == DialogResult.OK)
@@ -67,11 +73,11 @@ class BiduleEditor : UITypeEditor
 		return value; // can also replace the wrapper object here
 	}
 }
-class BiduleForm : Form
+class EditParamForm : Form
 {
 	private TextBox textbox;
 	private Button okButton;
-	public BiduleForm() {
+	public EditParamForm() {
 		textbox = new TextBox();
 		Controls.Add(textbox);
 		okButton = new Button();
@@ -103,7 +109,7 @@ class ParamEditorForm : Form {
 	*/
 	public ParamEditorForm (List<Bidule> liste) {
 		init();
-		grid.SelectedObject = new MyType(liste);
+		grid.SelectedObject = new EditedType(liste);
 	}
 }
 static class Program
@@ -118,11 +124,10 @@ static class Program
 		Application.Run(new ParamEditorForm(liste));
 		*/
 		List<Bidule> liste =new List<Bidule>();
-		liste.Add(new Bidule());
-		liste.Add(new Bidule());
-		liste.Add(new Bidule());
-
-		
+		liste.Add(new Bidule(1));
+		liste.Add(new Bidule(2));
+		liste.Add(new Bidule(3));
+		//
 		Application.Run(new ParamEditorForm(liste));
 	}
 }
