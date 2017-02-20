@@ -6,6 +6,7 @@
  */
 using System;
 using System.Drawing;
+using System.Net.Mime;
 using System.Windows.Forms;
 using cmdUtils.Objets;
 namespace MoulUtil
@@ -22,12 +23,16 @@ namespace MoulUtil
 		private MeoServeur meoServeur =null;
 		private	const int sqlPort=5000;
 		private System.Diagnostics.Process plinkProcess = null;
-
+		private MouliUtilOptions options = null;
 		
-		public MouliSQLForm(String magId, MeoInstance instance)		{
+		public MouliSQLForm(String magId, MouliUtilOptions options) {
+		                    
 			InitializeComponent();
 			this.magId=magId;
-			this.instance=instance;
+			this.options=options;
+			
+			this.instance=MeoInstance.findInstanceByInstanceName(configDto.instances, options.getInstanceName()); 
+
 			ConfigUtil configUtil= new ConfigUtil();
 			configDto = configUtil.getConfig();
 			myUtil=new MyUtil();
@@ -75,6 +80,12 @@ namespace MoulUtil
 			DateTime dt = DateTime.Now;
 			anneeStockPurgeBox.Text = "2001";
 			anneeVisitePurgeBox.Text = (dt.Year -10) +"";
+			
+			visiteLimiteBox.Text=options.getLimiteVisite();
+			stockLimiteBox.Text = options.getLimiteStock();
+			
+			visiteLimiteBox.Enabled=false;
+			stockLimiteBox.Enabled=false;
 		}
 		private void doStatStock() {
 			populateGrid(statStockLabel.Tag.ToString(), anneeStockPurgeBox.Text);

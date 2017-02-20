@@ -22,7 +22,7 @@ namespace cmdUtils.Objets
 		//[XmlAttribute]
 		public List <MeoSql> sqlcommands;
 		
-		
+		//public List<ConfigParam> configParams;
 		public String targetSvgPath;
 		public String databaseAdminUser;
 		public String databaseAdminPwd;
@@ -154,6 +154,20 @@ namespace cmdUtils.Objets
 			if(workingDir==null) workingDir="";
 			return workingDir;
 		}
-		
+/*
+		public ConfigParam getConfigParamByName(ConfigParam.ParamNamesType paramName) {
+				return getConfigParamByName(paramName.ToString());
+		}
+		public ConfigParam getConfigParamByName(String nom) {
+			if(configParams!=null) {
+				foreach(ConfigParam configParam in configParams) {
+					if(configParam.nom.Equals(nom)) {
+						return configParam;
+					}
+				}
+			} 
+			return null;
+		}
+		*/
 	}
 }

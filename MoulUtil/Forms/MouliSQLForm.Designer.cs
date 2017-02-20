@@ -47,6 +47,9 @@ namespace MoulUtil
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
 			this.sqlCalculeBox = new System.Windows.Forms.TextBox();
 			this.anneeVisitePurgeBox = new System.Windows.Forms.TextBox();
+			this.visiteLimiteBox = new System.Windows.Forms.TextBox();
+			this.stockLimiteBox = new System.Windows.Forms.TextBox();
+			this.label2 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -68,7 +71,7 @@ namespace MoulUtil
 			// statStockLabel
 			// 
 			this.statStockLabel.BackColor = System.Drawing.Color.Lime;
-			this.statStockLabel.Location = new System.Drawing.Point(12, 78);
+			this.statStockLabel.Location = new System.Drawing.Point(316, 35);
 			this.statStockLabel.Name = "statStockLabel";
 			this.statStockLabel.Size = new System.Drawing.Size(73, 23);
 			this.statStockLabel.TabIndex = 2;
@@ -78,15 +81,15 @@ namespace MoulUtil
 			// 
 			// detailmagasinBox
 			// 
-			this.detailmagasinBox.Location = new System.Drawing.Point(245, 12);
+			this.detailmagasinBox.Location = new System.Drawing.Point(553, 5);
 			this.detailmagasinBox.Multiline = true;
 			this.detailmagasinBox.Name = "detailmagasinBox";
-			this.detailmagasinBox.Size = new System.Drawing.Size(474, 47);
+			this.detailmagasinBox.Size = new System.Drawing.Size(332, 106);
 			this.detailmagasinBox.TabIndex = 3;
 			// 
 			// label3
 			// 
-			this.label3.Location = new System.Drawing.Point(14, 36);
+			this.label3.Location = new System.Drawing.Point(226, 13);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(72, 16);
 			this.label3.TabIndex = 4;
@@ -94,7 +97,7 @@ namespace MoulUtil
 			// 
 			// anneeStockPurgeBox
 			// 
-			this.anneeStockPurgeBox.Location = new System.Drawing.Point(12, 55);
+			this.anneeStockPurgeBox.Location = new System.Drawing.Point(316, 12);
 			this.anneeStockPurgeBox.Name = "anneeStockPurgeBox";
 			this.anneeStockPurgeBox.Size = new System.Drawing.Size(74, 20);
 			this.anneeStockPurgeBox.TabIndex = 5;
@@ -102,7 +105,7 @@ namespace MoulUtil
 			// statVisitesLabel
 			// 
 			this.statVisitesLabel.BackColor = System.Drawing.Color.Lime;
-			this.statVisitesLabel.Location = new System.Drawing.Point(120, 78);
+			this.statVisitesLabel.Location = new System.Drawing.Point(424, 35);
 			this.statVisitesLabel.Name = "statVisitesLabel";
 			this.statVisitesLabel.Size = new System.Drawing.Size(73, 23);
 			this.statVisitesLabel.TabIndex = 6;
@@ -113,7 +116,7 @@ namespace MoulUtil
 			// purgeStockLabel
 			// 
 			this.purgeStockLabel.BackColor = System.Drawing.Color.Fuchsia;
-			this.purgeStockLabel.Location = new System.Drawing.Point(12, 106);
+			this.purgeStockLabel.Location = new System.Drawing.Point(316, 88);
 			this.purgeStockLabel.Name = "purgeStockLabel";
 			this.purgeStockLabel.Size = new System.Drawing.Size(73, 23);
 			this.purgeStockLabel.TabIndex = 7;
@@ -123,7 +126,7 @@ namespace MoulUtil
 			// purgeVisitesLabel
 			// 
 			this.purgeVisitesLabel.BackColor = System.Drawing.Color.Fuchsia;
-			this.purgeVisitesLabel.Location = new System.Drawing.Point(120, 106);
+			this.purgeVisitesLabel.Location = new System.Drawing.Point(424, 88);
 			this.purgeVisitesLabel.Name = "purgeVisitesLabel";
 			this.purgeVisitesLabel.Size = new System.Drawing.Size(73, 23);
 			this.purgeVisitesLabel.TabIndex = 8;
@@ -165,16 +168,41 @@ namespace MoulUtil
 			// 
 			// anneeVisitePurgeBox
 			// 
-			this.anneeVisitePurgeBox.Location = new System.Drawing.Point(120, 55);
+			this.anneeVisitePurgeBox.Location = new System.Drawing.Point(424, 12);
 			this.anneeVisitePurgeBox.Name = "anneeVisitePurgeBox";
 			this.anneeVisitePurgeBox.Size = new System.Drawing.Size(73, 20);
 			this.anneeVisitePurgeBox.TabIndex = 13;
+			// 
+			// visiteLimiteBox
+			// 
+			this.visiteLimiteBox.Location = new System.Drawing.Point(423, 65);
+			this.visiteLimiteBox.Name = "visiteLimiteBox";
+			this.visiteLimiteBox.Size = new System.Drawing.Size(73, 20);
+			this.visiteLimiteBox.TabIndex = 15;
+			// 
+			// stockLimiteBox
+			// 
+			this.stockLimiteBox.Location = new System.Drawing.Point(315, 65);
+			this.stockLimiteBox.Name = "stockLimiteBox";
+			this.stockLimiteBox.Size = new System.Drawing.Size(74, 20);
+			this.stockLimiteBox.TabIndex = 14;
+			// 
+			// label2
+			// 
+			this.label2.Location = new System.Drawing.Point(226, 65);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(72, 16);
+			this.label2.TabIndex = 16;
+			this.label2.Text = "Limites";
 			// 
 			// MouliSQLForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(886, 608);
+			this.Controls.Add(this.label2);
+			this.Controls.Add(this.visiteLimiteBox);
+			this.Controls.Add(this.stockLimiteBox);
 			this.Controls.Add(this.anneeVisitePurgeBox);
 			this.Controls.Add(this.sqlCalculeBox);
 			this.Controls.Add(this.dataGridView1);
@@ -196,6 +224,9 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.TextBox visiteLimiteBox;
+		private System.Windows.Forms.TextBox stockLimiteBox;
 		private System.Windows.Forms.TextBox anneeVisitePurgeBox;
 		private System.Windows.Forms.TextBox sqlCalculeBox;
 		private System.Windows.Forms.DataGridView dataGridView1;

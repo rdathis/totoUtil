@@ -108,6 +108,7 @@
     <Compile Include="Objets\MouliUtilOptions.cs" />
     <Compile Include="Objets\MySQLDico.cs" />
     <Compile Include="Objets\MyUtil.cs" />
+    <Compile Include="Objets\ConfigParam.cs" />
     <Compile Include="Objets\ProcessUtil.cs" />
     <Compile Include="Objets\CmdUtil.cs" />
     <Compile Include="Objets\FilterReg.cs" />

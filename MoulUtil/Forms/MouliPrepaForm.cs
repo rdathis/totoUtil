@@ -116,8 +116,7 @@ namespace MoulUtil
 		}
 		void SqlBtnClick(object sender, EventArgs e)
 		{
-			MeoInstance meoInstance = MeoInstance.findInstanceByInstanceName(configDto.instances, options.getInstanceName()); // convertitInstance(string url);
-			sqlForm = new MouliSQLForm(this.rechMagIdBox.Text, meoInstance);
+			sqlForm = new MouliSQLForm(this.rechMagIdBox.Text, options);
 			//form.ShowDialog();
 			sqlForm.Show();
 		}
