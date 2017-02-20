@@ -81,6 +81,7 @@
     <Compile Include="Forms\MouliActionForm.Designer.cs">
       <DependentUpon>MouliActionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MouliParamEditorForm.cs" />
     <Compile Include="Forms\MouliPrepaForm.cs" />
     <Compile Include="Forms\MouliPrepaForm.Designer.cs">
       <DependentUpon>MouliPrepaForm.cs</DependentUpon>

@@ -23,3 +23,5 @@ TestEditorUtil/bin/Debug/TestEditorUtil.exe
 *.pdb
 TestEditorUtil/obj/Debug/TestEditorUtil.exe
 *.pdb
+/TestEditorUtil/obj/Debug/*.exe
+/TestEditorUtil/obj/Debug/*.pdb

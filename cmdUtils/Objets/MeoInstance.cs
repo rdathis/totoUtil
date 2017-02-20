@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Channels;
 using System.Xml.Serialization;
 
 namespace cmdUtils.Objets
@@ -29,15 +30,33 @@ namespace cmdUtils.Objets
 			this.meourl=meourl;
 		}
 		[XmlAttribute]
-		public String serveur;
+		public String serveur {
+			get ;
+			set;
+		}
+		
 		[XmlAttribute]
-		public String nom;
+		public String nom {
+			get ;
+			set;
+		}
 		[XmlAttribute]
-		public String code;
+		public String code{
+			get ;
+			set;
+		}
+		
 		[XmlAttribute]
-		public String meocli;
+		public String meocli{
+			get ;
+			set;
+		}
 		[XmlAttribute]
-		public String meourl;
+		public String meourl{
+			get ;
+			set;
+		}
+		
 		
 		
 		public String getServeur() {

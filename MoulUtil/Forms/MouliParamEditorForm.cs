@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * Utilisateur: Renaud
+ * Date: 20/02/2017
+ * Heure: 13:41:17
+ * 
+*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
@@ -7,54 +14,35 @@ using System.Windows.Forms.Design;
 using cmdUtils.Objets;
 class EditedType
 {
+	//
 	private List<MeoInstance> instances=null;
 	public List<MeoInstance> Instance {
 		get {return instances; }
 	}
-	private List<Bidule> bidules= null;
-	public List<Bidule> Bidule  {
-		get { return bidules; }
+	//
+	private List<MeoServeur> serveurs= null;
+	public List<MeoServeur> Serveur  {
+		get { return serveurs; }
 	}
-	public EditedType(List <Bidule> liste) {
-		this.bidules=liste;
+	//
+	private List<MeoSql> sqls= null;
+	public List<MeoSql> Sql  {
+		get { return sqls; }
+	}
+	//
+	public EditedType(List <MeoServeur> liste) {
+		this.serveurs=liste;
 	}
 	public EditedType(List <MeoInstance> liste) {
 		this.instances=liste;
-		//this.bidules=liste;
 	}
-	
+	public EditedType(List <MeoSql> liste) {
+		this.sqls=liste;
+	}
 }
 
 [Editor(typeof(ParamEditorEditor), typeof(UITypeEditor))]
 [TypeConverter(typeof(ExpandableObjectConverter))]
-class Bidule
-{
-	//private string nom;
-	//private int age;
-	//private DateTime entree;
-	public Bidule() {
-	}
-	public Bidule(int age) {
-		this.age=age;
-	}
-	
-	public string prenom {
-		get;
-		set;
-	}
-	public string nom     {
-		get;
-		set;
-	}
-	public int age     {
-		get;
-		set;
-	}
-	public DateTime entree {
-		get;
-		set;
-	}
-}
 class ParamEditorEditor : UITypeEditor
 {
 	public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
@@ -101,7 +89,7 @@ class EditParamForm : Form
 	}
 }
 
-class ParamEditorForm : Form {
+class MouliParamEditorForm : Form {
 	PropertyGrid grid=null;
 	private void init() {
 		Application.EnableVisualStyles();
@@ -110,35 +98,19 @@ class ParamEditorForm : Form {
 		this.Controls.Add(grid);
 	}
 
-	public ParamEditorForm (List<MeoInstance> liste) {
+	public MouliParamEditorForm (List<MeoInstance> liste) {
 		init();
 		grid.SelectedObject = new EditedType(liste);
 	}
 
-	public ParamEditorForm (List<Bidule> liste) {
+	public MouliParamEditorForm (List<MeoServeur> liste) {
 		init();
 		grid.SelectedObject = new EditedType(liste);
 	}
-}
-static class Program
-{
-	[STAThread]
-	static void Main()
-	{
-		{
-			List<MeoInstance> liste = new List<MeoInstance>();
-			liste.Add(new MeoInstance("s1", "s1", "s1", "cli-s1", "http://s1.com"));
-			liste.Add(new MeoInstance("s2", "s2", "s2", "cli-s2", "http://s2.com"));
-			Application.Run(new ParamEditorForm(liste));
-		}
-		{
-			List<Bidule> liste =new List<Bidule>();
-			liste.Add(new Bidule(1));
-			liste.Add(new Bidule(2));
-			liste.Add(new Bidule(3));
-			//
-			Application.Run(new ParamEditorForm(liste));
-		}
+	public MouliParamEditorForm (List<MeoSql> liste) {
+		init();
+		grid.SelectedObject = new EditedType(liste);
 	}
+	
+	
 }
-
