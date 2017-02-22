@@ -122,12 +122,15 @@ namespace cmdUtils.Objets
 			return File.Exists(file);
 		}
 
-		public void updateMoulinetteMagasin(String magId, ConfigSectionSettings cfg, TextBox texbox, System.Windows.Forms.RichTextBox rtb)
+		public void updateMoulinetteMagasin(ConfigDto configDto, String magId, ConfigSectionSettings cfg, TextBox texbox, System.Windows.Forms.RichTextBox rtb)
 		{
 			
 			string sql = "select * from administration.magasins where magasin_id=" + magId;
 			MyUtil util = new MyUtil();
-
+			// MeoInstance instance=configDto.getInstances().
+			//ici:
+			// (1) ssh connection, port
+			// (2) find instance by name 'administration,'
 			string cstr = util.doConnString(cfg);
 			var magasinList = util.getListResultAsKeyValue(cstr, sql);
 			

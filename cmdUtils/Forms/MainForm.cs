@@ -481,11 +481,13 @@ namespace cmdUtils
 			if (e.KeyValue.Equals(13)) {
 				string magId = ((TextBox)sender).Text;
 				
+				ConfigDto configDto= new ConfigUtil().getConfig();
+				
 				RichTextBox rtb = moulRichTexBox;
 				rtb.Clear();
 				if (magId.Length > 0) {
 					try {
-						mouliUtil.updateMoulinetteMagasin(magId,cfg,  txtMagClient, rtb);
+						mouliUtil.updateMoulinetteMagasin(configDto, magId,cfg,  txtMagClient, rtb);
 //					string sql = "select * from administration.magasins where magasin_id=" + magId;
 //					MyUtil util = new MyUtil();
 //					try {
