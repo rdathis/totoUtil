@@ -130,6 +130,7 @@ namespace cmdUtils
 			this.label8 = new System.Windows.Forms.Label();
 			this.dumpsListBox = new System.Windows.Forms.ListBox();
 			this.tabSQL = new System.Windows.Forms.TabPage();
+			this.label28 = new System.Windows.Forms.Label();
 			this.sqlRechRichTextBox = new System.Windows.Forms.RichTextBox();
 			this.importMagId = new System.Windows.Forms.TextBox();
 			this.richTextBox2 = new System.Windows.Forms.RichTextBox();
@@ -245,6 +246,7 @@ namespace cmdUtils
 			this.tabs.SelectedIndex = 0;
 			this.tabs.Size = new System.Drawing.Size(822, 515);
 			this.tabs.TabIndex = 0;
+			this.tabs.Selected += new System.Windows.Forms.TabControlEventHandler(this.TabsSelected);
 			this.tabs.Click += new System.EventHandler(this.tabImportClick);
 			// 
 			// tabParam
@@ -733,6 +735,7 @@ namespace cmdUtils
 			// 
 			// tabSQL
 			// 
+			this.tabSQL.Controls.Add(this.label28);
 			this.tabSQL.Controls.Add(this.sqlRechRichTextBox);
 			this.tabSQL.Controls.Add(this.importMagId);
 			this.tabSQL.Controls.Add(this.richTextBox2);
@@ -745,6 +748,19 @@ namespace cmdUtils
 			this.tabSQL.TabIndex = 2;
 			this.tabSQL.Text = "tabSQL";
 			this.tabSQL.UseVisualStyleBackColor = true;
+			this.tabSQL.Enter += new System.EventHandler(this.TabSQLEnter);
+			this.tabSQL.Leave += new System.EventHandler(this.TabSQLLeave);
+			// 
+			// label28
+			// 
+			this.label28.BackColor = System.Drawing.Color.Yellow;
+			this.label28.ForeColor = System.Drawing.Color.Red;
+			this.label28.Location = new System.Drawing.Point(220, 136);
+			this.label28.Name = "label28";
+			this.label28.Size = new System.Drawing.Size(586, 23);
+			this.label28.TabIndex = 28;
+			this.label28.Text = "connection mysql://production/administration";
+			this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// sqlRechRichTextBox
 			// 
@@ -1523,6 +1539,7 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Label label28;
 		private System.Windows.Forms.ToolStripButton mouliUtilToolStripButton;
 		private System.Windows.Forms.TextBox tabCodeResult;
 		private System.Windows.Forms.Button tabCodeBtn;

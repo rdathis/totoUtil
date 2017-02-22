@@ -22,7 +22,8 @@ namespace cmdUtils.Objets
 		//[XmlAttribute]
 		public List <MeoSql> sqlcommands;
 		
-		//public List<ConfigParam> configParams;
+//		public List<ConfigParam> configParams;
+		
 		public String targetSvgPath;
 		public String databaseAdminUser;
 		public String databaseAdminPwd;
@@ -168,6 +169,6 @@ namespace cmdUtils.Objets
 			} 
 			return null;
 		}
-		*/
+*/
 	}
 }

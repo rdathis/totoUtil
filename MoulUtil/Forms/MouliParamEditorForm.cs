@@ -12,34 +12,49 @@ using System.Drawing.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using cmdUtils.Objets;
-class EditedType
+class InstancesEditedType
 {
 	//
 	private List<MeoInstance> instances=null;
 	public List<MeoInstance> Instance {
 		get {return instances; }
 	}
-	//
+	public InstancesEditedType(List <MeoInstance> liste) {
+		this.instances=liste;
+	}
+}
+class ServeursEditedType
+{
 	private List<MeoServeur> serveurs= null;
 	public List<MeoServeur> Serveur  {
 		get { return serveurs; }
 	}
-	//
+	public ServeursEditedType(List <MeoServeur> liste) {
+		this.serveurs=liste;
+	}
+}
+class MeoSqlEditedType
+{
 	private List<MeoSql> sqls= null;
 	public List<MeoSql> Sql  {
 		get { return sqls; }
 	}
-	//
-	public EditedType(List <MeoServeur> liste) {
-		this.serveurs=liste;
-	}
-	public EditedType(List <MeoInstance> liste) {
-		this.instances=liste;
-	}
-	public EditedType(List <MeoSql> liste) {
+	public MeoSqlEditedType(List <MeoSql> liste) {
 		this.sqls=liste;
 	}
 }
+
+class ConfigParamEditedType
+{
+	private List<ConfigParam> liste= null;
+	public List<ConfigParam> Values  {
+		get { return liste; }
+	}
+	public ConfigParamEditedType(List <ConfigParam> liste) {
+		this.liste=liste;
+	}
+}
+
 
 [Editor(typeof(ParamEditorEditor), typeof(UITypeEditor))]
 [TypeConverter(typeof(ExpandableObjectConverter))]
@@ -100,17 +115,21 @@ class MouliParamEditorForm : Form {
 
 	public MouliParamEditorForm (List<MeoInstance> liste) {
 		init();
-		grid.SelectedObject = new EditedType(liste);
+		grid.SelectedObject = new InstancesEditedType(liste);
 	}
 
 	public MouliParamEditorForm (List<MeoServeur> liste) {
 		init();
-		grid.SelectedObject = new EditedType(liste);
+		grid.SelectedObject = new ServeursEditedType(liste);
 	}
 	public MouliParamEditorForm (List<MeoSql> liste) {
 		init();
-		grid.SelectedObject = new EditedType(liste);
+		grid.SelectedObject = new  MeoSqlEditedType(liste);
 	}
 	
+	public MouliParamEditorForm (List<ConfigParam> liste) {
+		init();
+		grid.SelectedObject = new  ConfigParamEditedType(liste);
+	}
 	
 }

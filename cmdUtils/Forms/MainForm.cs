@@ -598,8 +598,17 @@ namespace cmdUtils
 			MeoSavUtil meosavUtil = new MeoSavUtil();
 			sqlRechRichTextBox.Text = meosavUtil.convertiSql(sql);
 		}
-		
+		void TabsSelected(object sender, TabControlEventArgs e)
+		{
+			//MessageBox.Show(" selected ");
+		}
+		void TabSQLEnter(object sender, EventArgs e)
+		{
+			Console.WriteLine("entering tab SQL");
+		}
+		void TabSQLLeave(object sender, EventArgs e)
+		{
+			Console.WriteLine("leaving tab SQL");
+		}
 	}
-
-	
 }
