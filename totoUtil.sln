@@ -16,6 +16,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUtil", "TestUtil\TestUt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEditorUtil", "TestEditorUtil\TestEditorUtil.csproj", "{FC0ACDD1-CA8D-4E30-9120-3122102F020A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestUnitaires", "TestUnitaires", "{97048693-F8F9-4883-B9A8-69A19C7EC324}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSQLOverSSH", "TestSQLOverSSH\TestSQLOverSSH.csproj", "{9634EB7C-98F4-4016-84D7-14FE9FBDAB63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,5 +50,12 @@ Global
 		{FC0ACDD1-CA8D-4E30-9120-3122102F020A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC0ACDD1-CA8D-4E30-9120-3122102F020A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC0ACDD1-CA8D-4E30-9120-3122102F020A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9634EB7C-98F4-4016-84D7-14FE9FBDAB63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9634EB7C-98F4-4016-84D7-14FE9FBDAB63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9634EB7C-98F4-4016-84D7-14FE9FBDAB63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9634EB7C-98F4-4016-84D7-14FE9FBDAB63}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9634EB7C-98F4-4016-84D7-14FE9FBDAB63} = {97048693-F8F9-4883-B9A8-69A19C7EC324}
 	EndGlobalSection
 EndGlobal

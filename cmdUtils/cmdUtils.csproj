@@ -112,6 +112,7 @@
     <Compile Include="Objets\ProcessUtil.cs" />
     <Compile Include="Objets\CmdUtil.cs" />
     <Compile Include="Objets\FilterReg.cs" />
+    <Compile Include="Objets\RechercheMagasinUtil.cs" />
     <Compile Include="Objets\RichTextBoxUtilcs.cs" />
     <Compile Include="Objets\SshUtil.cs" />
     <Compile Include="Objets\TreeViewUtil.cs" />

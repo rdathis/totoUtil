@@ -23,11 +23,12 @@ namespace cmdUtils.Objets
 		{
 		}
 		
-		private ConfigDto readConfigXml()
+		public ConfigDto readConfigXml(String path="")
 		{
 			
 			XmlSerializer serializer = new XmlSerializer(typeof(ConfigDto));
-			FileStream fileStream = new FileStream(MouliConfig.commonConfigFile, FileMode.Open);
+			
+			FileStream fileStream = new FileStream(path+MouliConfig.commonConfigFile, FileMode.Open);
 			ConfigDto dto = (ConfigDto)serializer.Deserialize(fileStream);
 			fileStream.Close();
 			return dto;

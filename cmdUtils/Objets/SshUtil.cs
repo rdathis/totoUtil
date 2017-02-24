@@ -67,13 +67,17 @@ namespace cmdUtils.Objets {
 			
 			// print(commande.Result);
 			client.Connect();
-			foreach(KeyValuePair<int, int> forwardedPort  in portsList) {
-				int local=forwardedPort.Key;
-				int distant=forwardedPort.Value;
-				Console.WriteLine(" Ajout forward : (local) :"+local);
-				Console.WriteLine(" Ajout forward : (distant) :"+distant);
-				ForwardedPort port = new ForwardedPortRemote((uint) distant, serveur.getNom(), (uint) local);
-				client.AddForwardedPort(port);
+			if(client.IsConnected) {
+				foreach(KeyValuePair<int, int> forwardedPort  in portsList) {
+					int local=forwardedPort.Key;
+					int distant=forwardedPort.Value;
+					Console.WriteLine(" Ajout forward : (local) :"+local);
+					Console.WriteLine(" Ajout forward : (distant) :"+distant);
+					//ForwardedPort port = new ForwardedPortRemote(serveur.getAdresse(), (uint) distant, "127.0.0.1", (uint) local);
+					ForwardedPort port = new ForwardedPortRemote((uint) distant,"127.0.0.1", (uint) local);
+					client.AddForwardedPort(port);
+					port.Start();
+				}
 			}
 			return client;
 		}
