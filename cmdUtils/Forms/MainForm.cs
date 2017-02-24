@@ -42,6 +42,7 @@ namespace cmdUtils
 		MouliUtil mouliUtil = new MouliUtil();
 		MoulinetteAction moulinetteAction = new MoulinetteAction();
 		ConfigSectionSettings cfg =	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
+
 		public MainForm()
 		{
 			InitializeComponent();
@@ -57,7 +58,7 @@ namespace cmdUtils
 			MeoServeur s2 = new MeoServeur("S-2", "1.1.1.2");
 			MeoServeur s4 = new MeoServeur("S-4", "1.1.1.4");
 			MeoServeur s5 = new MeoServeur("S-5", "1.1.1.5");
-		
+			
 			//instanceList.Add(new MeoInstance(s1.getNom(), "m3035", "i01", "meocli_meo3035", "url"));
 			//instanceList.Add(new MeoInstance(s1.getNom(), "od", "iOD", "meocli_od", "url"));
 			//instanceList.Add(new MeoInstance(s2.getNom(), "2", "i02", "meocli_i2", "url"));
@@ -199,6 +200,10 @@ namespace cmdUtils
 		{
 			statusStrip1.Text = "Erreur : " + e.Message;
 			statusStrip1.BackColor = Color.Yellow;
+			sqlRechRichTextBox.Clear();
+			sqlRechRichTextBox.AppendText(e.Message+"\n"+e.StackTrace);
+			sqlRechRichTextBox.ForeColor=Color.Red;
+				
 		}
 
 		void GetMysqlDatabaseButtonClick(object sender, EventArgs e)
@@ -370,30 +375,10 @@ namespace cmdUtils
 		void ImportMagIdKeyUp(object sender, KeyEventArgs e)
 		{
 			if (e.KeyValue.Equals(13)) {
-				string magId = ((TextBox)sender).Text;
-				
-				RichTextBox rtb = sqlRechRichTextBox;
-				rtb.Clear();
-				if (magId.Length > 0) {
-					string sql = "select * from administration.magasins where magasin_id=" + magId;
-					MyUtil util = new MyUtil();
-					try {
-						string cstr = util.doConnString(cfg);
-						var magasinList = util.getListResultAsKeyValue(cstr, sql);
-						
-						rtb.AppendText("#libe:" + util.getItem(magasinList[0], "magasin_libelle") + " - url :" + util.getItem(magasinList[0], "url"));
-						rtb.AppendText("\n#cli_id:" + util.getItem(magasinList[0], "client_id"));
-						//Console.WriteLine("libe:"+util.getItem(magasinList[0], "magasin_libelle"));
-						//Console.WriteLine("cli_id:"+util.getItem(magasinList[0], "client_id"));
-						
-						sql = "SELECT utilisateur_id,magasin_id FROM administration.utilisateurs where utilisateur_active=true AND magasin_id=" + magId + ";";
-						var userList = util.getListResultAsKeyValue(cstr, sql);
-						
-						rtb.AppendText("\nmodeDevMagId=" + util.getItem(userList[0], "magasin_id"));
-						rtb.AppendText("\nmodeDevUserId=" + util.getItem(userList[0], "utilisateur_id"));
-					} catch (Exception ex) {
-						reportError(ex);
-					}
+				try {
+					updateMagasinsInfo(((TextBox)sender).Text, sqlRechRichTextBox);
+				} catch(Exception ex) {
+					reportError(ex);
 				}
 			}
 		}
@@ -402,6 +387,16 @@ namespace cmdUtils
 			
 		}
 
+		void updateMagasinsInfo(string magId, RichTextBox rtb)
+		{
+			
+
+			if (magId.Length > 0) {
+				rtb.Clear();
+				RechercheMagasinUtil rechercheUtil = new RechercheMagasinUtil();
+				rtb.AppendText(rechercheUtil.getMagasinDescription(magId));
+			}
+		}
 		Boolean checkFormat(TextBox box)
 		{
 			String texte = box.Text;
@@ -592,7 +587,7 @@ namespace cmdUtils
 			process.StartInfo.WorkingDirectory = path;
 			process.Start();
 			
-			//util.startProcess(path+cmd, "", ProcessWindowStyle.Normal);			
+			//util.startProcess(path+cmd, "", ProcessWindowStyle.Normal);
 		}
 		void RichTextBox2TextChanged(object sender, EventArgs e)
 		{
