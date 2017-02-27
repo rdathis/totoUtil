@@ -32,27 +32,29 @@ namespace cmdUtils {
 			portFwld.Start();
 			 */
 		}
-		public String getMagasinDescription(String magId) {
+		public String getMagasinDescription(String magId, SshClient client=null, int newPort = 23306) {
 			ConfigUtil configUtil = new ConfigUtil();
 			ConfigDto configDto= configUtil.readConfigXml(mouliUtilConfigPath );
+			
 			
 			String retour=null;
 			if(configDto==null) {
 				return "config nulle";
 			}
-			MeoInstance adminInstance = MeoInstance.findInstanceByInstanceName(configDto.getInstances(), dbName);
-			if (adminInstance==null) {
-				return "instance non trouvee";
-			}
-			MeoServeur adminServeur = MeoServeur.findServeurByName(configDto.getServeurs(), adminInstance.getServeur());
-			if(adminServeur == null) {
-				return ("server is null");
-			}
-			int newPort = 23306;
-			//SshClient client = doConnection(adminServeur, newPort, 3306);
-			SshClient client = getAdminServeur(adminServeur);
-			if(client==null) {
-				return "ssh connection failed";
+			if(client == null ) {
+				MeoInstance adminInstance = MeoInstance.findInstanceByInstanceName(configDto.getInstances(), dbName);
+				if (adminInstance==null) {
+					return "instance non trouvee";
+				}
+				MeoServeur adminServeur = MeoServeur.findServeurByName(configDto.getServeurs(), adminInstance.getServeur());
+				if(adminServeur == null) {
+					return ("server is null");
+				}
+				//SshClient client = doConnection(adminServeur, newPort, 3306);
+				client = getAdminServeur(adminServeur);
+				if(client==null) {
+					return "ssh connection failed";
+				}
 			}
 			
 			//here : openssh conn with sss
@@ -80,6 +82,15 @@ namespace cmdUtils {
 			
 			retour+=("\nmodeDevMagId=" + util.getItem(userList[0], "magasin_id"));
 			retour+=("\nmodeDevUserId=" + util.getItem(userList[0], "utilisateur_id"));
+			
+			sql = "SELECT group_concat(distinct options.option_module) as OLIST FROM administration.magasins_options ";
+			sql+= " inner join administration.options on options.option_id=magasins_options.option_id ";
+			sql+=" WHERE magasin_id="+magId+" and options.option_module is not null ;";
+			var optionsList = util.getListResultAsKeyValue(cstr, sql);
+			
+			retour+=("\nmodeDevModuleList=" + util.getItem(optionsList[0], "OLIST"));		
+			
+			
 			if((client !=null)  && (client.IsConnected)) {
 				client.Disconnect();
 			}
