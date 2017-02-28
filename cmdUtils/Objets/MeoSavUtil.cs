@@ -22,10 +22,10 @@ namespace cmdUtils.Objets
 			String sqlTmp=sql;
 			//http://lgmorand.developpez.com/dotnet/regex/
 			sqlTmp=sqlTmp.Replace("Hibernate:", "");
-			sqlTmp=sqlTmp.Replace(" client ", "`client`"); //todo, change for regexp, funny
-			sqlTmp=sqlTmp.Replace(" client.", "`client`");
-			sqlTmp=sqlTmp.Replace(" user ", "`user`");
-			sqlTmp=sqlTmp.Replace(" user.", "`user`");
+			sqlTmp=sqlTmp.Replace(" client ", " `client` "); //todo, change for regexp, funny
+			sqlTmp=sqlTmp.Replace(" client.", " `client`.");
+			sqlTmp=sqlTmp.Replace(" user ", " `user` ");
+			sqlTmp=sqlTmp.Replace(" user.", " `user`.");
 			//
 			//$texte = preg_replace('#<!--.*?-->#s', '', $texte);
 			//https://www.developpez.net/forums/d391114/autres-langages/perl/langage/expression-reguliere-commentaire-comptenu-commentaire/
