@@ -14,6 +14,8 @@ namespace cmdUtils {
 	public class RechercheMagasinUtil {
 		const String mouliUtilConfigPath="w:/meo-moulinettes/";
 		const String dbName="administration";
+		private ConfigUtil configUtil = new ConfigUtil();
+		private ConfigDto configDto=null;
 		
 		private SshClient doConnection(MeoServeur serveur, int localPort, int forwardPort) {
 			List<KeyValuePair<int, int>>portsList = new List<KeyValuePair<int, int>>();
@@ -32,13 +34,16 @@ namespace cmdUtils {
 			portFwld.Start();
 			 */
 		}
-		public String getMagasinDescription(String magId, SshClient client=null, int newPort = 23306) {
-			ConfigUtil configUtil = new ConfigUtil();
-			ConfigDto configDto= configUtil.readConfigXml(mouliUtilConfigPath );
+		private ConfigDto getConfig() {
 			
+			configDto= configUtil.readConfigXml(mouliUtilConfigPath );
+			return configDto;
+		}
+		public String  getAdminServeur(ref SshClient client, int newPort) {
 			
+			configDto=getConfig();
 			String retour=null;
-			if(configDto==null) {
+			if(getConfig()==null) {
 				return "config nulle";
 			}
 			if(client == null ) {
@@ -56,7 +61,18 @@ namespace cmdUtils {
 					return "ssh connection failed";
 				}
 			}
+			return "";
+		}
+		public String getMagasinDescription(String magId, ref SshClient client, int newPort = 23306, Boolean disconnectAfter=true) {
+			String retour="";
+			if(client==null) {
+				retour=getAdminServeur(ref client, newPort);
+				if(retour.Length>0) {
+					return retour;
+				}
+			}
 			
+			configDto = getConfig();
 			//here : openssh conn with sss
 			// sortir le tout dans une classe X  util =  new X("administration"), 12345;
 			
@@ -88,13 +104,14 @@ namespace cmdUtils {
 			sql+=" WHERE magasin_id="+magId+" and options.option_module is not null ;";
 			var optionsList = util.getListResultAsKeyValue(cstr, sql);
 			
-			retour+=("\nmodeDevModuleList=" + util.getItem(optionsList[0], "OLIST"));		
+			retour+=("\nmodeDevModuleList=" + util.getItem(optionsList[0], "OLIST"));
 			
-			
-			if((client !=null)  && (client.IsConnected)) {
-				client.Disconnect();
+			if(disconnectAfter==true) {
+				if((client !=null)  && (client.IsConnected)) {
+					client.Disconnect();
+				}
+				client=null;
 			}
-			client=null;
 			return retour;
 		}
 		
