@@ -227,6 +227,8 @@ namespace cmdUtils.Objets
 		}
 		public void writeJobFile(string scriptJobFile, string scriptMoulinetteFile, MouliUtilOptions options)
 		{
+			
+			String jobtime=formatDateJob(options.getDateJob());
 			StreamWriter outputFile = new StreamWriter(scriptJobFile);
 			outputFile.NewLine = "\n";
 			//
@@ -234,10 +236,11 @@ namespace cmdUtils.Objets
 			
 			// outputFile.WriteLine("MPATH=`dirname $0` ");
 			// outputFile.WriteLine("cd $MPATH && MPATH=$PWD");
-			outputFile.WriteLine("echo /bin/sh " + scriptMoulinetteFile + " -mail | at " + formatDateJob(options.getDateJob()) + " ");
+			outputFile.WriteLine("echo /bin/sh " + scriptMoulinetteFile + " -mail | at " + jobtime + " ");
 			//
-			String mail=options.getDefaultEmail();
-			outputFile.WriteLine("mail -s \"planification moulinette + "+scriptMoulinetteFile+" \" "+mail+" < $0 ");
+			String mailTo=options.getDefaultEmail();
+			String mailCmd="mail -s \"planification moulinette + "+scriptMoulinetteFile+" ("+jobtime+")\" "+mailTo+" < " + scriptMoulinetteFile;
+			outputFile.WriteLine(mailCmd);
 			outputFile.Close();
 		}
 

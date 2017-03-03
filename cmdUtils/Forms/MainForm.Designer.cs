@@ -212,6 +212,7 @@ namespace cmdUtils
 			this.toolStripCmdLabel = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.mouliUtilToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.sshConnectionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -223,6 +224,7 @@ namespace cmdUtils
 			this.tabMeo.SuspendLayout();
 			this.tabCode.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
+			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
 			this.toolStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -1424,11 +1426,14 @@ namespace cmdUtils
 			// 
 			// statusStrip1
 			// 
+			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.sshConnectionStatusLabel});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 545);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(834, 22);
 			this.statusStrip1.TabIndex = 2;
 			this.statusStrip1.Text = "statusStrip1";
+			this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.StatusStrip1ItemClicked);
 			// 
 			// dataSet1
 			// 
@@ -1501,6 +1506,12 @@ namespace cmdUtils
 			this.mouliUtilToolStripButton.Text = "mouliUtil";
 			this.mouliUtilToolStripButton.Click += new System.EventHandler(this.mouliUtilToolStripButtonClick);
 			// 
+			// sshConnectionStatusLabel
+			// 
+			this.sshConnectionStatusLabel.Name = "sshConnectionStatusLabel";
+			this.sshConnectionStatusLabel.Size = new System.Drawing.Size(109, 17);
+			this.sshConnectionStatusLabel.Text = "toolStripStatusLabel1";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1532,6 +1543,8 @@ namespace cmdUtils
 			this.tabCode.PerformLayout();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
+			this.statusStrip1.ResumeLayout(false);
+			this.statusStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
@@ -1539,6 +1552,7 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.ToolStripStatusLabel sshConnectionStatusLabel;
 		private System.Windows.Forms.Label label28;
 		private System.Windows.Forms.ToolStripButton mouliUtilToolStripButton;
 		private System.Windows.Forms.TextBox tabCodeResult;

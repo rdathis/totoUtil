@@ -43,6 +43,10 @@ namespace cmdUtils
 		MoulinetteAction moulinetteAction = new MoulinetteAction();
 		ConfigSectionSettings cfg =	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
 
+		const int mysqlPort=3306;
+		const int redirectedPort=43306;
+
+		private Renci.SshNet.SshClient adminServeurSshClient = null;
 		public MainForm()
 		{
 			InitializeComponent();
@@ -150,8 +154,28 @@ namespace cmdUtils
 				DateTime now = DateTime.Now;
 				filterGzTextBox.Text = "meo*anq*" + now.ToString("yyyyMMdd") + "*.sql.gz";
 			}
+			sshConnectionStatusLabel.Text="not connected";
 			populateMoulinettes();
+			populateSshServer();
 			
+		}
+		void populateSshServer () {
+			
+			AsyncCallback callBack = new AsyncCallback(prepareAdminServeur);
+			
+			sshConnectionStatusLabel.Text = "connection to admin ...";
+			callBack.Invoke(null);
+			//callBack.e
+			
+		}
+		private void prepareAdminServeur(IAsyncResult result) {
+			RechercheMagasinUtil rechercheUtil = new RechercheMagasinUtil();
+			String etat= rechercheUtil.getAdminServeur(ref adminServeurSshClient, mysqlPort, redirectedPort);
+			if(etat=="") {
+				sshConnectionStatusLabel.Text = "Connected to admin";
+			} else {
+				sshConnectionStatusLabel.Text = "connection error : "+etat;
+			}
 		}
 
 		void populateMoulinettes()
@@ -203,7 +227,7 @@ namespace cmdUtils
 			sqlRechRichTextBox.Clear();
 			sqlRechRichTextBox.AppendText(e.Message+"\n"+e.StackTrace);
 			sqlRechRichTextBox.ForeColor=Color.Red;
-				
+			
 		}
 
 		void GetMysqlDatabaseButtonClick(object sender, EventArgs e)
@@ -394,7 +418,8 @@ namespace cmdUtils
 			if (magId.Length > 0) {
 				rtb.Clear();
 				RechercheMagasinUtil rechercheUtil = new RechercheMagasinUtil();
-				rtb.AppendText(rechercheUtil.getMagasinDescription(magId));
+				
+				rtb.AppendText(rechercheUtil.getMagasinDescription(magId, ref adminServeurSshClient, mysqlPort, redirectedPort, false));
 			}
 		}
 		Boolean checkFormat(TextBox box)
@@ -606,6 +631,10 @@ namespace cmdUtils
 		void TabSQLLeave(object sender, EventArgs e)
 		{
 			Console.WriteLine("leaving tab SQL");
+		}
+		void StatusStrip1ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

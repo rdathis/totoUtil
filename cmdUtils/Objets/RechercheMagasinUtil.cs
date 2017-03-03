@@ -14,6 +14,8 @@ namespace cmdUtils {
 	public class RechercheMagasinUtil {
 		const String mouliUtilConfigPath="w:/meo-moulinettes/";
 		const String dbName="administration";
+		private ConfigUtil configUtil = new ConfigUtil();
+		private ConfigDto configDto=null;
 		
 		private SshClient doConnection(MeoServeur serveur, int localPort, int forwardPort) {
 			List<KeyValuePair<int, int>>portsList = new List<KeyValuePair<int, int>>();
@@ -32,13 +34,16 @@ namespace cmdUtils {
 			portFwld.Start();
 			 */
 		}
-		public String getMagasinDescription(String magId, SshClient client=null, int newPort = 23306) {
-			ConfigUtil configUtil = new ConfigUtil();
-			ConfigDto configDto= configUtil.readConfigXml(mouliUtilConfigPath );
+		private ConfigDto getConfig() {
 			
+			configDto= configUtil.readConfigXml(mouliUtilConfigPath );
+			return configDto;
+		}
+		public String  getAdminServeur(ref SshClient client, int hiddenPort, int visiblePort) {
 			
-			String retour=null;
-			if(configDto==null) {
+			configDto=getConfig();
+			//String retour=null;
+			if(getConfig()==null) {
 				return "config nulle";
 			}
 			if(client == null ) {
@@ -51,12 +56,23 @@ namespace cmdUtils {
 					return ("server is null");
 				}
 				//SshClient client = doConnection(adminServeur, newPort, 3306);
-				client = getAdminServeur(adminServeur);
+				client = getAdminServeur(adminServeur, hiddenPort, visiblePort);
 				if(client==null) {
 					return "ssh connection failed";
 				}
 			}
+			return "";
+		}
+		public String getMagasinDescription(String magId, ref SshClient client, int hiddenPort, int visiblePort, Boolean disconnectAfter=true) {
+			String retour="";
+			if(client==null) {
+				retour=getAdminServeur(ref client, hiddenPort, visiblePort);
+				if(retour.Length>0) {
+					return retour;
+				}
+			}
 			
+			configDto = getConfig();
 			//here : openssh conn with sss
 			// sortir le tout dans une classe X  util =  new X("administration"), 12345;
 			
@@ -66,7 +82,7 @@ namespace cmdUtils {
 			String user=configDto.getDatabaseAdminUser();
 			String pwd = configDto.getDatabaseAdminPwd();
 
-			string cstr = util.buildconnString(dbName, "127.0.0.1", user, pwd, newPort);
+			string cstr = util.buildconnString(dbName, "127.0.0.1", user, pwd, visiblePort);
 			
 			System.Diagnostics.Debug.Print ("cst : "+cstr);
 			
@@ -88,22 +104,23 @@ namespace cmdUtils {
 			sql+=" WHERE magasin_id="+magId+" and options.option_module is not null ;";
 			var optionsList = util.getListResultAsKeyValue(cstr, sql);
 			
-			retour+=("\nmodeDevModuleList=" + util.getItem(optionsList[0], "OLIST"));		
+			retour+=("\nmodeDevModuleList=" + util.getItem(optionsList[0], "OLIST"));
 			
-			
-			if((client !=null)  && (client.IsConnected)) {
-				client.Disconnect();
+			if(disconnectAfter==true) {
+				if((client !=null)  && (client.IsConnected)) {
+					client.Disconnect();
+				}
+				client=null;
 			}
-			client=null;
 			return retour;
 		}
 		
 		//tmp stuff, to clear
-		private static SshClient getAdminServeur(MeoServeur serveur) {
+		private static SshClient getAdminServeur(MeoServeur serveur, int hiddenPort, int visiblePort) {
 			
 			SshUtil sshUtil = new SshUtil();
 			List<KeyValuePair<int, int>>portsList = new List<KeyValuePair<int, int>>();
-			portsList.Add(new KeyValuePair<int, int>(3306, 23306));
+			portsList.Add(new KeyValuePair<int, int>(hiddenPort, visiblePort));
 			return sshUtil.getClientWithForwardedPorts(serveur, portsList);
 		}
 	}
