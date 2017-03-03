@@ -226,5 +226,33 @@ namespace cmdUtils.Objets
 			}
 			
 		}
+		
+		public string Encrypt(string data)
+		{
+			TripleDESCryptoServiceProvider DES = new TripleDESCryptoServiceProvider();
+
+			DES.Mode = CipherMode.ECB;
+			DES.Key = GetKey("a1!B78s!5(");
+
+			DES.Padding = PaddingMode.PKCS7;
+			ICryptoTransform DESEncrypt = DES.CreateEncryptor();
+			Byte[] Buffer = ASCIIEncoding.ASCII.GetBytes(data);
+
+			return Convert.ToBase64String(DESEncrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
+		}
+
+		public string Decrypt(string data)
+		{
+			TripleDESCryptoServiceProvider DES = new TripleDESCryptoServiceProvider();
+
+			DES.Mode = CipherMode.ECB;
+			DES.Key = GetKey("a1!B78s!5(");
+			
+			DES.Padding = PaddingMode.PKCS7;
+			ICryptoTransform DESEncrypt = DES.CreateDecryptor();
+			Byte[] Buffer = Convert.FromBase64String(data.Replace(" ","+"));
+
+			return Encoding.UTF8.GetString(DESEncrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
+		}
 	}
 }
