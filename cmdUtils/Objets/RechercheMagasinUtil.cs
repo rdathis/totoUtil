@@ -39,10 +39,10 @@ namespace cmdUtils {
 			configDto= configUtil.readConfigXml(mouliUtilConfigPath );
 			return configDto;
 		}
-		public String  getAdminServeur(ref SshClient client, int newPort) {
+		public String  getAdminServeur(ref SshClient client, int hiddenPort, int visiblePort) {
 			
 			configDto=getConfig();
-			String retour=null;
+			//String retour=null;
 			if(getConfig()==null) {
 				return "config nulle";
 			}
@@ -56,17 +56,17 @@ namespace cmdUtils {
 					return ("server is null");
 				}
 				//SshClient client = doConnection(adminServeur, newPort, 3306);
-				client = getAdminServeur(adminServeur);
+				client = getAdminServeur(adminServeur, hiddenPort, visiblePort);
 				if(client==null) {
 					return "ssh connection failed";
 				}
 			}
 			return "";
 		}
-		public String getMagasinDescription(String magId, ref SshClient client, int newPort = 23306, Boolean disconnectAfter=true) {
+		public String getMagasinDescription(String magId, ref SshClient client, int hiddenPort, int visiblePort, Boolean disconnectAfter=true) {
 			String retour="";
 			if(client==null) {
-				retour=getAdminServeur(ref client, newPort);
+				retour=getAdminServeur(ref client, hiddenPort, visiblePort);
 				if(retour.Length>0) {
 					return retour;
 				}
@@ -82,7 +82,7 @@ namespace cmdUtils {
 			String user=configDto.getDatabaseAdminUser();
 			String pwd = configDto.getDatabaseAdminPwd();
 
-			string cstr = util.buildconnString(dbName, "127.0.0.1", user, pwd, newPort);
+			string cstr = util.buildconnString(dbName, "127.0.0.1", user, pwd, visiblePort);
 			
 			System.Diagnostics.Debug.Print ("cst : "+cstr);
 			
@@ -116,11 +116,11 @@ namespace cmdUtils {
 		}
 		
 		//tmp stuff, to clear
-		private static SshClient getAdminServeur(MeoServeur serveur) {
+		private static SshClient getAdminServeur(MeoServeur serveur, int hiddenPort, int visiblePort) {
 			
 			SshUtil sshUtil = new SshUtil();
 			List<KeyValuePair<int, int>>portsList = new List<KeyValuePair<int, int>>();
-			portsList.Add(new KeyValuePair<int, int>(3306, 23306));
+			portsList.Add(new KeyValuePair<int, int>(hiddenPort, visiblePort));
 			return sshUtil.getClientWithForwardedPorts(serveur, portsList);
 		}
 	}

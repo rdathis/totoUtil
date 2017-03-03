@@ -43,6 +43,9 @@ namespace cmdUtils
 		MoulinetteAction moulinetteAction = new MoulinetteAction();
 		ConfigSectionSettings cfg =	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
 
+		const int mysqlPort=3306;
+		const int redirectedPort=43306;
+
 		private Renci.SshNet.SshClient adminServeurSshClient = null;
 		public MainForm()
 		{
@@ -167,7 +170,7 @@ namespace cmdUtils
 		}
 		private void prepareAdminServeur(IAsyncResult result) {
 			RechercheMagasinUtil rechercheUtil = new RechercheMagasinUtil();
-			String etat= rechercheUtil.getAdminServeur(ref adminServeurSshClient, 2999);
+			String etat= rechercheUtil.getAdminServeur(ref adminServeurSshClient, mysqlPort, redirectedPort);
 			if(etat=="") {
 				sshConnectionStatusLabel.Text = "Connected to admin";
 			} else {
@@ -416,7 +419,7 @@ namespace cmdUtils
 				rtb.Clear();
 				RechercheMagasinUtil rechercheUtil = new RechercheMagasinUtil();
 				
-				rtb.AppendText(rechercheUtil.getMagasinDescription(magId, ref adminServeurSshClient, 23306, false));
+				rtb.AppendText(rechercheUtil.getMagasinDescription(magId, ref adminServeurSshClient, mysqlPort, redirectedPort, false));
 			}
 		}
 		Boolean checkFormat(TextBox box)

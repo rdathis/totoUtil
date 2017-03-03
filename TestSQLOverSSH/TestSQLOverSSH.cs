@@ -62,7 +62,7 @@ namespace TestSQLOverSSH
 			}
 			xclient.Disconnect();
 			return;
-			
+			/*
 			//work fine
 			using (var client = new SshClient(sshserver, sshuser, sshpassword)) { // establishing ssh connection to server where MySql is hosted
 				client.Connect();
@@ -86,6 +86,7 @@ namespace TestSQLOverSSH
 					Console.WriteLine("Client cannot be reached...");
 				}
 			}
+			*/
 		}
 		public MySqlConnection getConn(String serveur, int port, String user, String passw, String dbName) {
 			MyUtil util = new MyUtil();
