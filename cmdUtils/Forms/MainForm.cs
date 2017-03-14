@@ -170,11 +170,15 @@ namespace cmdUtils
 		}
 		private void prepareAdminServeur(IAsyncResult result) {
 			RechercheMagasinUtil rechercheUtil = new RechercheMagasinUtil();
-			String etat= rechercheUtil.getAdminServeur(ref adminServeurSshClient, mysqlPort, redirectedPort);
-			if(etat=="") {
-				sshConnectionStatusLabel.Text = "Connected to admin";
-			} else {
-				sshConnectionStatusLabel.Text = "connection error : "+etat;
+			try {
+				String etat= rechercheUtil.getAdminServeur(ref adminServeurSshClient, mysqlPort, redirectedPort);
+				if(etat=="") {
+					sshConnectionStatusLabel.Text = "Connected to admin";
+				} else {
+					sshConnectionStatusLabel.Text = "connection error : "+etat;
+				}
+			} catch(Exception exception) {
+				reportError(exception);
 			}
 		}
 
@@ -634,7 +638,14 @@ namespace cmdUtils
 		}
 		void StatusStrip1ItemClicked(object sender, ToolStripItemClickedEventArgs e)
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
+		}
+		void StopCnxLabelClick(object sender, EventArgs e)
+		{
+			if(adminServeurSshClient!=null) {
+				adminServeurSshClient.Disconnect();
+				adminServeurSshClient=null;
+			}
 		}
 	}
 }

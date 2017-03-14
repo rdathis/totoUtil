@@ -79,7 +79,6 @@ namespace cmdUtils.Objets {
 			} else {
 				Console.WriteLine("Client cannot be reached...");
 			}
-			
 			return client;
 		}
 		/*

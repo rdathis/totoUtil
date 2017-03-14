@@ -7,9 +7,11 @@
  * Pour changer ce modèle utiliser Outils | Options | Codage | Editer les en-têtes standards.
  */
 using System;
+using System.Collections;
 using System.Configuration;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 using System.Xml.Serialization;
 
 namespace cmdUtils.Objets
@@ -134,7 +136,7 @@ namespace cmdUtils.Objets
 			rsaCryptoServiceProvider.FromXmlString( xmlString );
 			int keySize = dwKeySize / 8;
 			byte[] bytes = Encoding.UTF32.GetBytes( inputString );
-			RSACryptoServiceProvider here
+			//RSACryptoServiceProvider here
 				int maxLength = keySize - 42;
 			int dataLength = bytes.Length;
 			int iterations = dataLength / maxLength;
@@ -226,12 +228,19 @@ namespace cmdUtils.Objets
 			}
 			
 		}
-		
+
+		byte[] GetKey(string str)
+		{
+			return Encoding.ASCII.GetBytes(str);
+		}
+
 		public string Encrypt(string data)
 		{
 			TripleDESCryptoServiceProvider DES = new TripleDESCryptoServiceProvider();
 
 			DES.Mode = CipherMode.ECB;
+			 DES.GenerateKey();
+			 
 			DES.Key = GetKey("a1!B78s!5(");
 
 			DES.Padding = PaddingMode.PKCS7;
@@ -254,5 +263,6 @@ namespace cmdUtils.Objets
 
 			return Encoding.UTF8.GetString(DESEncrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
 		}
+
 	}
 }

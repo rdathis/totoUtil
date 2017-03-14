@@ -368,9 +368,17 @@ namespace cmdUtils.Objets
 			cmd+=" && cd " +newdir +" && unzip -o "+target+info.Name;
 			// cd /database/transpo/bidule && mkdir pouet && cd pouet && unzip ../pouet.zip
 			return cmd;
-
-			
-
+		}
+		public String calculeArchiveName(String sourceMoulinette) {
+			String archiveName = Path.GetFullPath(sourceMoulinette);	
+			while (archiveName.EndsWith("/")) {
+				archiveName=archiveName.Substring(0, archiveName.Length -1);
+			}
+			while (archiveName.EndsWith("\\")) {
+				archiveName=archiveName.Substring(0, archiveName.Length -1);
+			}
+			archiveName+=".zip";
+			return archiveName;
 		}
 	}
 }

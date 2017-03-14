@@ -77,6 +77,8 @@ namespace MoulUtil
 		{
 			String targetDir = Path.GetFullPath(targetSvgPathBox.Text)+"\\" + targetNameBox.Text;
 			mouliUtil.createArbo(targetDir);
+			//copier le resultat.zip dans le sousrep, 
+			//generer un zip du rep tmp dans le sousrep. (comment le nommer ?)
 			cmdUtil.executeCommande("explorer", Path.GetFullPath(targetDir));
 			//TODO:copy src files to target dir.
 		}
@@ -87,6 +89,13 @@ namespace MoulUtil
 
 		void rechercheMagasin() {
 			options=mouliPrepaUtil.rechercheMagasin(rechMagIdBox, magDescBox, propositionBox, sqlBtn);
+			if(options!=null) {
+				calculeMoulinettePath();
+				String path=workspaceZoneBox.Text;
+				options.setArchiveName(mouliUtil.calculeArchiveName(path ));
+				Console.WriteLine("name: "+options.getarchiveName());
+			}
+
 		}
 
 		public void CreateBtnClick(object sender, EventArgs e)
@@ -99,14 +108,19 @@ namespace MoulUtil
 		}
 		void CopyBtnClick(object sender, EventArgs e)
 		{
+			calculeMoulinettePath();
+		}
+		
+		///TODO:move in MPUtil
+		private String calculeMoulinettePath() {
 			String str = propositionBox.Text.Trim();
 			if (str.Length > 0) {
 				String subPath="MEO"+DateTime.Now.Year+"/";
 				mouliUtil.safeCreateDirectory(targetSvgPathBox.Text+"/"+subPath);
 				workspaceZoneBox.Text = str;
 				targetNameBox.Text = subPath+ str.Replace(workingDirBox.Text, "");
-				
 			}
+			return str;
 		}
 		void MouliPrepaFormFormClosing(object sender, FormClosingEventArgs e)
 		{

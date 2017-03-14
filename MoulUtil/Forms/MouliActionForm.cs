@@ -249,7 +249,6 @@ namespace MoulUtil
 			options.setExtensionClient(calculExtension(purgeClientChkBox));
 			options.setExtensionStock(calculExtension(purgeStockChkBox));
 			return options;
-			
 		}
 
 		MoulinettePurgeOptionTypes calculExtension(CheckBox checkBox)

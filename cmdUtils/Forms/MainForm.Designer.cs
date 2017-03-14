@@ -203,6 +203,7 @@ namespace cmdUtils
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.sshConnectionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.dataSet1 = new System.Data.DataSet();
 			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -212,7 +213,7 @@ namespace cmdUtils
 			this.toolStripCmdLabel = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.mouliUtilToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.sshConnectionStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.stopCnxLabel = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -737,6 +738,7 @@ namespace cmdUtils
 			// 
 			// tabSQL
 			// 
+			this.tabSQL.Controls.Add(this.stopCnxLabel);
 			this.tabSQL.Controls.Add(this.label28);
 			this.tabSQL.Controls.Add(this.sqlRechRichTextBox);
 			this.tabSQL.Controls.Add(this.importMagId);
@@ -759,7 +761,7 @@ namespace cmdUtils
 			this.label28.ForeColor = System.Drawing.Color.Red;
 			this.label28.Location = new System.Drawing.Point(220, 136);
 			this.label28.Name = "label28";
-			this.label28.Size = new System.Drawing.Size(586, 23);
+			this.label28.Size = new System.Drawing.Size(332, 23);
 			this.label28.TabIndex = 28;
 			this.label28.Text = "connection mysql://production/administration";
 			this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1435,6 +1437,12 @@ namespace cmdUtils
 			this.statusStrip1.Text = "statusStrip1";
 			this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.StatusStrip1ItemClicked);
 			// 
+			// sshConnectionStatusLabel
+			// 
+			this.sshConnectionStatusLabel.Name = "sshConnectionStatusLabel";
+			this.sshConnectionStatusLabel.Size = new System.Drawing.Size(109, 17);
+			this.sshConnectionStatusLabel.Text = "toolStripStatusLabel1";
+			// 
 			// dataSet1
 			// 
 			this.dataSet1.DataSetName = "NewDataSet";
@@ -1506,11 +1514,17 @@ namespace cmdUtils
 			this.mouliUtilToolStripButton.Text = "mouliUtil";
 			this.mouliUtilToolStripButton.Click += new System.EventHandler(this.mouliUtilToolStripButtonClick);
 			// 
-			// sshConnectionStatusLabel
+			// stopCnxLabel
 			// 
-			this.sshConnectionStatusLabel.Name = "sshConnectionStatusLabel";
-			this.sshConnectionStatusLabel.Size = new System.Drawing.Size(109, 17);
-			this.sshConnectionStatusLabel.Text = "toolStripStatusLabel1";
+			this.stopCnxLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+			this.stopCnxLabel.ForeColor = System.Drawing.Color.Red;
+			this.stopCnxLabel.Location = new System.Drawing.Point(588, 140);
+			this.stopCnxLabel.Name = "stopCnxLabel";
+			this.stopCnxLabel.Size = new System.Drawing.Size(195, 22);
+			this.stopCnxLabel.TabIndex = 29;
+			this.stopCnxLabel.Text = "StopCnx";
+			this.stopCnxLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.stopCnxLabel.Click += new System.EventHandler(this.StopCnxLabelClick);
 			// 
 			// MainForm
 			// 
@@ -1552,6 +1566,7 @@ namespace cmdUtils
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Label stopCnxLabel;
 		private System.Windows.Forms.ToolStripStatusLabel sshConnectionStatusLabel;
 		private System.Windows.Forms.Label label28;
 		private System.Windows.Forms.ToolStripButton mouliUtilToolStripButton;

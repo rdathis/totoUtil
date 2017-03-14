@@ -36,6 +36,7 @@ namespace cmdUtils.Objets
 		private String numeroMagasinIrris;
 		private String limiteVisite;
 		private String limiteStock;
+		private String archiveName;
 		//
 		private MoulinettePurgeOptionTypes extensionClient = MoulinettePurgeOptionTypes.INCONNU;
 		private MoulinettePurgeOptionTypes extensionStock = MoulinettePurgeOptionTypes.INCONNU;
@@ -170,6 +171,12 @@ namespace cmdUtils.Objets
 		public int getAnneesConservationVisiteSiPurge()
 		{
 			return (anneesConservationVisiteSiPurge);
+		}
+		public String getarchiveName() {
+			return archiveName;
+		}
+		public void setArchiveName(String value) {
+			archiveName=value;
 		}
 
 		//
