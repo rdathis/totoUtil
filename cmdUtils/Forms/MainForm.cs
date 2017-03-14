@@ -645,6 +645,17 @@ namespace cmdUtils
 			if(adminServeurSshClient!=null) {
 				adminServeurSshClient.Disconnect();
 				adminServeurSshClient=null;
+				stopCnxLabel.Text = "disconnected";
+			} else {
+				stopCnxLabel.Text = "connecting";
+				populateSshServer();
+			}
+		}
+		void MainFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(adminServeurSshClient!=null) {
+				adminServeurSshClient.Disconnect();
+				adminServeurSshClient=null;
 			}
 		}
 	}

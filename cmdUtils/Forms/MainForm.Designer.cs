@@ -130,6 +130,7 @@ namespace cmdUtils
 			this.label8 = new System.Windows.Forms.Label();
 			this.dumpsListBox = new System.Windows.Forms.ListBox();
 			this.tabSQL = new System.Windows.Forms.TabPage();
+			this.stopCnxLabel = new System.Windows.Forms.Label();
 			this.label28 = new System.Windows.Forms.Label();
 			this.sqlRechRichTextBox = new System.Windows.Forms.RichTextBox();
 			this.importMagId = new System.Windows.Forms.TextBox();
@@ -213,7 +214,6 @@ namespace cmdUtils
 			this.toolStripCmdLabel = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.mouliUtilToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.stopCnxLabel = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabParam.SuspendLayout();
 			this.tabImport.SuspendLayout();
@@ -754,6 +754,18 @@ namespace cmdUtils
 			this.tabSQL.UseVisualStyleBackColor = true;
 			this.tabSQL.Enter += new System.EventHandler(this.TabSQLEnter);
 			this.tabSQL.Leave += new System.EventHandler(this.TabSQLLeave);
+			// 
+			// stopCnxLabel
+			// 
+			this.stopCnxLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+			this.stopCnxLabel.ForeColor = System.Drawing.Color.Red;
+			this.stopCnxLabel.Location = new System.Drawing.Point(588, 140);
+			this.stopCnxLabel.Name = "stopCnxLabel";
+			this.stopCnxLabel.Size = new System.Drawing.Size(195, 22);
+			this.stopCnxLabel.TabIndex = 29;
+			this.stopCnxLabel.Text = "StopCnx";
+			this.stopCnxLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.stopCnxLabel.Click += new System.EventHandler(this.StopCnxLabelClick);
 			// 
 			// label28
 			// 
@@ -1514,18 +1526,6 @@ namespace cmdUtils
 			this.mouliUtilToolStripButton.Text = "mouliUtil";
 			this.mouliUtilToolStripButton.Click += new System.EventHandler(this.mouliUtilToolStripButtonClick);
 			// 
-			// stopCnxLabel
-			// 
-			this.stopCnxLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-			this.stopCnxLabel.ForeColor = System.Drawing.Color.Red;
-			this.stopCnxLabel.Location = new System.Drawing.Point(588, 140);
-			this.stopCnxLabel.Name = "stopCnxLabel";
-			this.stopCnxLabel.Size = new System.Drawing.Size(195, 22);
-			this.stopCnxLabel.TabIndex = 29;
-			this.stopCnxLabel.Text = "StopCnx";
-			this.stopCnxLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.stopCnxLabel.Click += new System.EventHandler(this.StopCnxLabelClick);
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1538,6 +1538,7 @@ namespace cmdUtils
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MainForm";
 			this.Text = "cmdUtils";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
 			this.tabs.ResumeLayout(false);
 			this.tabParam.ResumeLayout(false);
 			this.tabParam.PerformLayout();
