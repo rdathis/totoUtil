@@ -31,10 +31,10 @@ namespace MoulUtil
 			this.magId=magId;
 			this.options=options;
 			
-			this.instance=MeoInstance.findInstanceByInstanceName(configDto.instances, options.getInstanceName()); 
-
 			ConfigUtil configUtil= new ConfigUtil();
 			configDto = configUtil.getConfig();
+			
+			this.instance=MeoInstance.findInstanceByInstanceName(configDto.instances, options.getInstanceName());
 			myUtil=new MyUtil();
 			if(instance!=null) {
 				meoServeur = MeoServeur.findServeurByName(configDto.serveurs, instance.serveur);
