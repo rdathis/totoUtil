@@ -16,10 +16,11 @@ namespace EcUtil
 	/// <summary>
 	/// Description of MainForm.
 	/// </summary>
-	public partial class MainForm : Form
+	public partial class ECUtilMainForm : Form
 	{
 		MouliUtil mouliUtil = new MouliUtil();
-		public MainForm()
+		CmdUtil cmdUtils = new CmdUtil();
+		public ECUtilMainForm()
 		{
 			InitializeComponent();
 			populate();
@@ -59,31 +60,13 @@ namespace EcUtil
 				args=" -data \""+args+"\"";
 				Debug.Print(" cmd : "+cmd +" args : "+args);
 				
-				ExecuteCommand(cmd, args);
+				cmdUtils.executeCommandAsDetachedProcess(cmd, args);
 				if(!stayAliveCheckBox.Checked) {
 					Application.Exit();
 				}
 			}
 		}
 		
-		//TODO:move in CmdUtil
-		public int ExecuteCommand(string Command, string args)
-		{
-			//int ExitCode;
-			ProcessStartInfo ProcessInfo;
-			Process Process;
-			
-			//ProcessInfo = new ProcessStartInfo("cmd.exe", "/C " + Command);
-			ProcessInfo = new ProcessStartInfo(Command, args);
-			ProcessInfo.CreateNoWindow = false;
-			ProcessInfo.UseShellExecute = false;
-			Process = Process.Start(ProcessInfo);
-			//Process.WaitForExit(Timeout);
-			//ExitCode = Process.ExitCode;
-			//Process.Close();
-			
-			return 0;
-		}
 		void WkspacesLViewClick(object sender, EventArgs e)
 		{
 			String value=getWorkspace();

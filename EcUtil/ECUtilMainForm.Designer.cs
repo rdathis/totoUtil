@@ -6,7 +6,7 @@
 */
 namespace EcUtil
 {
-	partial class MainForm
+	partial class ECUtilMainForm
 	{
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.

@@ -401,5 +401,22 @@ Unknown._w(https://server/instance/application/78957C736ADB5FD05DCBA3DDACFEFF8F.
 			retour+=":/database/transpo/";
 			return (retour);
 		}
+		public Process executeCommandAsDetachedProcess(string command, string args)
+		{
+			//int ExitCode;
+			ProcessStartInfo ProcessInfo;
+			Process process;
+
+			// for dos command: 			
+			//ProcessInfo = new ProcessStartInfo("cmd.exe", "/C " + Command);
+			ProcessInfo = new ProcessStartInfo(command, args);
+			ProcessInfo.CreateNoWindow = false;
+			ProcessInfo.UseShellExecute = false;
+			process = Process.Start(ProcessInfo);
+			//Process.WaitForExit(Timeout);
+			//ExitCode = Process.ExitCode;
+			//Process.Close();
+			return process;
+		}
 	}
 }

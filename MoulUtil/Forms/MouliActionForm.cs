@@ -171,11 +171,11 @@ namespace MoulUtil
 		//UGLY CODE
 		String getRecapWork() {
 			String r="";
+			if(checkedListBox1.GetItemChecked(1)) {
+				r+="S";//S before C (201703:LH)
+			}
 			if(checkedListBox1.GetItemChecked(0)) {
 				r+="C";
-			}
-			if(checkedListBox1.GetItemChecked(1)) {
-				r+="S";
 			}
 			if(checkedListBox1.GetItemChecked(2)) {
 				r+="J";
