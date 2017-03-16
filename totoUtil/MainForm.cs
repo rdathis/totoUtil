@@ -334,11 +334,13 @@ namespace totoUtil
 		{
 			//TODO:param
 			
-			String cmd=@"C:/Program Files (x86)/Minecraft/MinecraftLauncher.exe";
+			String path=@"C:/Program Files (x86)/Minecraft/";
+			String cmd=@"MinecraftLauncher.exe";
 			
 			var info = new ProcessStartInfo();
 			info.FileName = cmd;
 			info.Arguments = "";
+			info.WorkingDirectory = path;
 			//Process.Start(info);
 			
 			String us = Environment.ExpandEnvironmentVariables("%userprofile%");
@@ -353,6 +355,7 @@ namespace totoUtil
 			var p = new Process();
 			//p.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
 			p.StartInfo = info;
+			
 
 			//Execution
 			p.Start();
