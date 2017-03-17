@@ -61,6 +61,7 @@ namespace MoulUtil
 		public void prepare() {
 			puttyLink.Visible=false;
 			pscpLink.Visible=false;
+			targetTreeView.Enabled = false;
 			new TreeViewUtil(instances, serveurs).populateTargets(targetTreeView);
 			
 			dateTimePicker.Value = new MouliUtil().calculeNextPlannedJob();
@@ -135,7 +136,8 @@ namespace MoulUtil
 		}
 		void ExitButtonClick(object sender, EventArgs e)
 		{
-			Application.Exit();
+			//Application.Exit();
+			Hide();
 		}
 		void TargetTreeViewAfterSelect(object sender, TreeViewEventArgs e)
 		{
@@ -171,11 +173,11 @@ namespace MoulUtil
 		//UGLY CODE
 		String getRecapWork() {
 			String r="";
+			if(checkedListBox1.GetItemChecked(1)) {
+				r+="S";//S before C (201703:LH)
+			} 
 			if(checkedListBox1.GetItemChecked(0)) {
 				r+="C";
-			}
-			if(checkedListBox1.GetItemChecked(1)) {
-				r+="S";
 			}
 			if(checkedListBox1.GetItemChecked(2)) {
 				r+="J";
@@ -249,7 +251,6 @@ namespace MoulUtil
 			options.setExtensionClient(calculExtension(purgeClientChkBox));
 			options.setExtensionStock(calculExtension(purgeStockChkBox));
 			return options;
-			
 		}
 
 		MoulinettePurgeOptionTypes calculExtension(CheckBox checkBox)
@@ -373,6 +374,10 @@ namespace MoulUtil
 			if(checkedListBox1.GetItemChecked(oldIdx)) {
 				checkedListBox1.SetItemChecked(oldIdx, false);
 			}
+		}
+		void TargetTreeViewDoubleClick(object sender, EventArgs e)
+		{
+			targetTreeView.Enabled = true;
 		}
 	}
 }

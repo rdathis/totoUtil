@@ -90,6 +90,7 @@
     <Compile Include="Objets\ConfigDto.cs" />
     <Compile Include="Objets\ConfigUtil.cs" />
     <Compile Include="Objets\ConvertisseurUtil.cs" />
+    <Compile Include="Objets\FileCopyUtil.cs" />
     <Compile Include="Objets\JFiles.cs" />
     <Compile Include="Objets\Horloge.cs" />
     <Compile Include="Objets\MeoInstance.cs" />
@@ -98,7 +99,7 @@
     <Compile Include="ConfElement.cs" />
     <Compile Include="ConfigSectionSettings.cs" />
     <Compile Include="Objets\MeoSql.cs" />
-    <Compile Include="Objets\MioulinettePurgeOptionType.cs" />
+    <Compile Include="Objets\MoulinettePurgeOptionType.cs" />
     <Compile Include="Objets\MouliConfig.cs" />
     <Compile Include="Objets\MouliJob.cs" />
     <Compile Include="Objets\MoulinetteAction.cs" />
@@ -108,9 +109,11 @@
     <Compile Include="Objets\MouliUtilOptions.cs" />
     <Compile Include="Objets\MySQLDico.cs" />
     <Compile Include="Objets\MyUtil.cs" />
+    <Compile Include="Objets\ConfigParam.cs" />
     <Compile Include="Objets\ProcessUtil.cs" />
     <Compile Include="Objets\CmdUtil.cs" />
     <Compile Include="Objets\FilterReg.cs" />
+    <Compile Include="Objets\RechercheMagasinUtil.cs" />
     <Compile Include="Objets\RichTextBoxUtilcs.cs" />
     <Compile Include="Objets\SshUtil.cs" />
     <Compile Include="Objets\TreeViewUtil.cs" />

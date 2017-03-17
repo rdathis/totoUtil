@@ -122,12 +122,15 @@ namespace cmdUtils.Objets
 			return File.Exists(file);
 		}
 
-		public void updateMoulinetteMagasin(String magId, ConfigSectionSettings cfg, TextBox texbox, System.Windows.Forms.RichTextBox rtb)
+		public void updateMoulinetteMagasin(ConfigDto configDto, String magId, ConfigSectionSettings cfg, TextBox texbox, System.Windows.Forms.RichTextBox rtb)
 		{
 			
 			string sql = "select * from administration.magasins where magasin_id=" + magId;
 			MyUtil util = new MyUtil();
-
+			// MeoInstance instance=configDto.getInstances().
+			//ici:
+			// (1) ssh connection, port
+			// (2) find instance by name 'administration,'
 			string cstr = util.doConnString(cfg);
 			var magasinList = util.getListResultAsKeyValue(cstr, sql);
 			
@@ -224,6 +227,8 @@ namespace cmdUtils.Objets
 		}
 		public void writeJobFile(string scriptJobFile, string scriptMoulinetteFile, MouliUtilOptions options)
 		{
+			
+			String jobtime=formatDateJob(options.getDateJob());
 			StreamWriter outputFile = new StreamWriter(scriptJobFile);
 			outputFile.NewLine = "\n";
 			//
@@ -231,10 +236,11 @@ namespace cmdUtils.Objets
 			
 			// outputFile.WriteLine("MPATH=`dirname $0` ");
 			// outputFile.WriteLine("cd $MPATH && MPATH=$PWD");
-			outputFile.WriteLine("echo /bin/sh " + scriptMoulinetteFile + " -mail | at " + formatDateJob(options.getDateJob()) + " ");
+			outputFile.WriteLine("echo /bin/sh " + scriptMoulinetteFile + " -mail | at " + jobtime + " ");
 			//
-			String mail=options.getDefaultEmail();
-			outputFile.WriteLine("mail -s \"planification moulinette + "+scriptMoulinetteFile+" \" "+mail+" < $0 ");
+			String mailTo=options.getDefaultEmail();
+			String mailCmd="mail -s \"planification moulinette + "+scriptMoulinetteFile+" ("+jobtime+")\" "+mailTo+" < " + scriptMoulinetteFile;
+			outputFile.WriteLine(mailCmd);
 			outputFile.Close();
 		}
 
@@ -362,9 +368,17 @@ namespace cmdUtils.Objets
 			cmd+=" && cd " +newdir +" && unzip -o "+target+info.Name;
 			// cd /database/transpo/bidule && mkdir pouet && cd pouet && unzip ../pouet.zip
 			return cmd;
-
-			
-
+		}
+		public String calculeArchiveName(String sourceMoulinette) {
+			String archiveName = Path.GetFullPath(sourceMoulinette);	
+			while (archiveName.EndsWith("/")) {
+				archiveName=archiveName.Substring(0, archiveName.Length -1);
+			}
+			while (archiveName.EndsWith("\\")) {
+				archiveName=archiveName.Substring(0, archiveName.Length -1);
+			}
+			archiveName+=".zip";
+			return archiveName;
 		}
 	}
 }

@@ -54,11 +54,41 @@ namespace cmdUtils.Objets {
 		
 		public SshClient getClientWithForwardedPorts(MeoServeur serveur, List<KeyValuePair<int, int>>portsList )
 		{
-			ConnectionInfo  connectionInfo = getConnectionInfo(serveur);
-			Console.Write(connectionInfo.CurrentServerEncryption);
-			SshClient client = new SshClient(connectionInfo);
+			SshClient client = null;
 			
+			client=	new SshClient(serveur.adresse, serveur.utilisateur, serveur.password); // establishing ssh connection to server where MySql is hosted
+			client.Connect();
+			if (client.IsConnected) {
+				
+				foreach(KeyValuePair<int, int> forwardedPort  in portsList) {
+					int local=forwardedPort.Key;
+					int distant=forwardedPort.Value;
+					Console.WriteLine(" Ajout forward : (local) :"+local);
+					Console.WriteLine(" Ajout forward : (distant) :"+distant);
+					//ForwardedPort port = new ForwardedPortRemote(serveur.getAdresse(), (uint) distant, "127.0.0.1", (uint) local);
+					//
+					ForwardedPort port = new ForwardedPortLocal("127.0.0.1", (uint) distant, "127.0.0.1", (uint) local);
+					client.AddForwardedPort(port);
+					port.Start();
+				}
+				//var portForwarded = new ForwardedPortLocal("127.0.0.1", (uint) forwardPort, "127.0.0.1", (uint) originalPort);
+				//client.AddForwardedPort(portForwarded);
+				//portForwarded.Start();
+
+				//client.Disconnect();
+			} else {
+				Console.WriteLine("Client cannot be reached...");
+			}
+			return client;
+		}
+		/*
+		public SshClient getClientWithForwardedPorts(MeoServeur serveur, List<KeyValuePair<int, int>>portsList )
+		{
+			//ConnectionInfo  connectionInfo = getConnectionInfo(serveur);
+			//Console.Write(connectionInfo.CurrentServerEncryption);
+			//SshClient client = new SshClient(connectionInfo);
 			
+			SshClient client = new SshClient(serveur.adresse, serveur.utilisateur, serveur.password);
 			//SshCommand commande= client.RunCommand("/bin/pwd");
 			//print(commande.Result);
 			// commande= client.RunCommand("cd /home ; pwd \n");
@@ -67,16 +97,24 @@ namespace cmdUtils.Objets {
 			
 			// print(commande.Result);
 			client.Connect();
-			foreach(KeyValuePair<int, int> forwardedPort  in portsList) {
-				int local=forwardedPort.Key;
-				int distant=forwardedPort.Value;
-				Console.WriteLine(" Ajout forward : (local) :"+local);
-				Console.WriteLine(" Ajout forward : (distant) :"+distant);
-				ForwardedPort port = new ForwardedPortRemote((uint) distant, serveur.getNom(), (uint) local);
-				client.AddForwardedPort(port);
+			if(client.IsConnected) {
+				foreach(KeyValuePair<int, int> forwardedPort  in portsList) {
+					int local=forwardedPort.Key;
+					int distant=forwardedPort.Value;
+					
+					
+					Console.WriteLine(" Ajout forward : (local) :"+local);
+					Console.WriteLine(" Ajout forward : (distant) :"+distant);
+					//ForwardedPort port = new ForwardedPortRemote(serveur.getAdresse(), (uint) distant, "127.0.0.1", (uint) local);
+					//
+					ForwardedPort port = new ForwardedPortRemote((uint) distant,"127.0.0.1", (uint) local);
+					client.AddForwardedPort(port);
+					port.Start();
+				}
 			}
 			return client;
 		}
+		*/
 
 	}
 }

@@ -38,7 +38,6 @@ namespace MoulUtil
 		{
 			this.goButton = new System.Windows.Forms.Button();
 			this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
-			this.listView1 = new System.Windows.Forms.ListView();
 			this.pathLabel = new System.Windows.Forms.Label();
 			this.uploadButton = new System.Windows.Forms.Button();
 			this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -92,14 +91,6 @@ namespace MoulUtil
 			this.dateTimePicker.Size = new System.Drawing.Size(200, 20);
 			this.dateTimePicker.TabIndex = 2;
 			// 
-			// listView1
-			// 
-			this.listView1.Location = new System.Drawing.Point(187, 118);
-			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(384, 161);
-			this.listView1.TabIndex = 3;
-			this.listView1.UseCompatibleStateImageBehavior = false;
-			// 
 			// pathLabel
 			// 
 			this.pathLabel.Location = new System.Drawing.Point(12, 13);
@@ -132,9 +123,10 @@ namespace MoulUtil
 			// 
 			this.targetTreeView.Location = new System.Drawing.Point(13, 118);
 			this.targetTreeView.Name = "targetTreeView";
-			this.targetTreeView.Size = new System.Drawing.Size(168, 161);
+			this.targetTreeView.Size = new System.Drawing.Size(568, 161);
 			this.targetTreeView.TabIndex = 11;
 			this.targetTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TargetTreeViewAfterSelect);
+			this.targetTreeView.DoubleClick += new System.EventHandler(this.TargetTreeViewDoubleClick);
 			// 
 			// checkedListBox1
 			// 
@@ -383,7 +375,6 @@ namespace MoulUtil
 			this.Controls.Add(this.progressBar1);
 			this.Controls.Add(this.uploadButton);
 			this.Controls.Add(this.pathLabel);
-			this.Controls.Add(this.listView1);
 			this.Controls.Add(this.dateTimePicker);
 			this.Controls.Add(this.exitButton);
 			this.Controls.Add(this.goButton);
@@ -427,7 +418,6 @@ namespace MoulUtil
 		private System.Windows.Forms.TreeView targetTreeView;
 		private System.Windows.Forms.Button uploadButton;
 		private System.Windows.Forms.Label pathLabel;
-		private System.Windows.Forms.ListView listView1;
 		private System.Windows.Forms.DateTimePicker dateTimePicker;
 		private System.Windows.Forms.Button exitButton;
 		private System.Windows.Forms.Button goButton;

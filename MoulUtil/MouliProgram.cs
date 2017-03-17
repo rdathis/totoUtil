@@ -125,19 +125,21 @@ namespace MoulUtil
 				sourceMoulinette+="/";
 			}
 			
+			
+			
 			startDateTime = DateTime.Now;
 			MouliUtil mouliUtil = new MouliUtil();
+			
+			if(options.getarchiveName()==null) {
+				options.setArchiveName(mouliUtil.calculeArchiveName(sourceMoulinette));
+			}
+			String archiveName=options.getarchiveName();
+			
+			
 			mouliUtil.setMagasinIrris(options.getNumeroMagasinIrris());
 			ZipUtil zipUtil = new ZipUtil();
-			String archiveName = Path.GetFullPath(sourceMoulinette);
-			String dataPath=archiveName;
-			
-			while (archiveName.EndsWith("/")) {
-				archiveName=archiveName.Substring(0, archiveName.Length -1);
-			}
-			while (archiveName.EndsWith("\\")) {
-				archiveName=archiveName.Substring(0, archiveName.Length -1);
-			}
+			//String archiveName = Path.GetFullPath(sourceMoulinette);
+			//String dataPath=archiveName;
 			
 			String originalDir = Directory.GetCurrentDirectory();
 			Directory.SetCurrentDirectory(sourceMoulinette);
@@ -160,7 +162,8 @@ namespace MoulUtil
 			String scriptJobMoulinetteFile=tmpname+".job.sh";
 			//String scriptInstallFile=tmpname+"install.file";
 			
-			archiveName+=".zip";
+			//archiveName+=".zip";
+			
 			
 			List <FileInfo> fichiers = new List<FileInfo>();
 			String [] selectionY=null;
@@ -216,7 +219,6 @@ namespace MoulUtil
 
 			//script moulinette
 			majProgression();
-			
 			
 			Console.WriteLine(" list<Fichiers> : "+fichiers.Count);
 			Console.WriteLine(" Creation archive : "+archiveName);

@@ -158,6 +158,7 @@ namespace MoulUtil.Forms.utils
 			} catch (Exception ex) {
 				magDescBox.Text = "erreur :" + ex.Message + "\n" + ex.Source;
 			}
+			
 			return options;
 		}
 		private MeoInstance convertitInstance(string url) {

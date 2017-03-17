@@ -42,6 +42,11 @@ namespace cmdUtils
 		MouliUtil mouliUtil = new MouliUtil();
 		MoulinetteAction moulinetteAction = new MoulinetteAction();
 		ConfigSectionSettings cfg =	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
+
+		const int mysqlPort=3306;
+		const int redirectedPort=43306;
+
+		private Renci.SshNet.SshClient adminServeurSshClient = null;
 		public MainForm()
 		{
 			InitializeComponent();
@@ -57,7 +62,7 @@ namespace cmdUtils
 			MeoServeur s2 = new MeoServeur("S-2", "1.1.1.2");
 			MeoServeur s4 = new MeoServeur("S-4", "1.1.1.4");
 			MeoServeur s5 = new MeoServeur("S-5", "1.1.1.5");
-		
+			
 			//instanceList.Add(new MeoInstance(s1.getNom(), "m3035", "i01", "meocli_meo3035", "url"));
 			//instanceList.Add(new MeoInstance(s1.getNom(), "od", "iOD", "meocli_od", "url"));
 			//instanceList.Add(new MeoInstance(s2.getNom(), "2", "i02", "meocli_i2", "url"));
@@ -149,8 +154,32 @@ namespace cmdUtils
 				DateTime now = DateTime.Now;
 				filterGzTextBox.Text = "meo*anq*" + now.ToString("yyyyMMdd") + "*.sql.gz";
 			}
+			sshConnectionStatusLabel.Text="not connected";
 			populateMoulinettes();
+			populateSshServer();
 			
+		}
+		void populateSshServer () {
+			
+			AsyncCallback callBack = new AsyncCallback(prepareAdminServeur);
+			
+			sshConnectionStatusLabel.Text = "connection to admin ...";
+			callBack.Invoke(null);
+			//callBack.e
+			
+		}
+		private void prepareAdminServeur(IAsyncResult result) {
+			RechercheMagasinUtil rechercheUtil = new RechercheMagasinUtil();
+			try {
+				String etat= rechercheUtil.getAdminServeur(ref adminServeurSshClient, mysqlPort, redirectedPort);
+				if(etat=="") {
+					sshConnectionStatusLabel.Text = "Connected to admin";
+				} else {
+					sshConnectionStatusLabel.Text = "connection error : "+etat;
+				}
+			} catch(Exception exception) {
+				reportError(exception);
+			}
 		}
 
 		void populateMoulinettes()
@@ -199,6 +228,10 @@ namespace cmdUtils
 		{
 			statusStrip1.Text = "Erreur : " + e.Message;
 			statusStrip1.BackColor = Color.Yellow;
+			sqlRechRichTextBox.Clear();
+			sqlRechRichTextBox.AppendText(e.Message+"\n"+e.StackTrace);
+			sqlRechRichTextBox.ForeColor=Color.Red;
+			
 		}
 
 		void GetMysqlDatabaseButtonClick(object sender, EventArgs e)
@@ -370,30 +403,10 @@ namespace cmdUtils
 		void ImportMagIdKeyUp(object sender, KeyEventArgs e)
 		{
 			if (e.KeyValue.Equals(13)) {
-				string magId = ((TextBox)sender).Text;
-				
-				RichTextBox rtb = sqlRechRichTextBox;
-				rtb.Clear();
-				if (magId.Length > 0) {
-					string sql = "select * from administration.magasins where magasin_id=" + magId;
-					MyUtil util = new MyUtil();
-					try {
-						string cstr = util.doConnString(cfg);
-						var magasinList = util.getListResultAsKeyValue(cstr, sql);
-						
-						rtb.AppendText("#libe:" + util.getItem(magasinList[0], "magasin_libelle") + " - url :" + util.getItem(magasinList[0], "url"));
-						rtb.AppendText("\n#cli_id:" + util.getItem(magasinList[0], "client_id"));
-						//Console.WriteLine("libe:"+util.getItem(magasinList[0], "magasin_libelle"));
-						//Console.WriteLine("cli_id:"+util.getItem(magasinList[0], "client_id"));
-						
-						sql = "SELECT utilisateur_id,magasin_id FROM administration.utilisateurs where utilisateur_active=true AND magasin_id=" + magId + ";";
-						var userList = util.getListResultAsKeyValue(cstr, sql);
-						
-						rtb.AppendText("\nmodeDevMagId=" + util.getItem(userList[0], "magasin_id"));
-						rtb.AppendText("\nmodeDevUserId=" + util.getItem(userList[0], "utilisateur_id"));
-					} catch (Exception ex) {
-						reportError(ex);
-					}
+				try {
+					updateMagasinsInfo(((TextBox)sender).Text, sqlRechRichTextBox);
+				} catch(Exception ex) {
+					reportError(ex);
 				}
 			}
 		}
@@ -402,6 +415,17 @@ namespace cmdUtils
 			
 		}
 
+		void updateMagasinsInfo(string magId, RichTextBox rtb)
+		{
+			
+
+			if (magId.Length > 0) {
+				rtb.Clear();
+				RechercheMagasinUtil rechercheUtil = new RechercheMagasinUtil();
+				
+				rtb.AppendText(rechercheUtil.getMagasinDescription(magId, ref adminServeurSshClient, mysqlPort, redirectedPort, false));
+			}
+		}
 		Boolean checkFormat(TextBox box)
 		{
 			String texte = box.Text;
@@ -481,11 +505,13 @@ namespace cmdUtils
 			if (e.KeyValue.Equals(13)) {
 				string magId = ((TextBox)sender).Text;
 				
+				ConfigDto configDto= new ConfigUtil().getConfig();
+				
 				RichTextBox rtb = moulRichTexBox;
 				rtb.Clear();
 				if (magId.Length > 0) {
 					try {
-						mouliUtil.updateMoulinetteMagasin(magId,cfg,  txtMagClient, rtb);
+						mouliUtil.updateMoulinetteMagasin(configDto, magId,cfg,  txtMagClient, rtb);
 //					string sql = "select * from administration.magasins where magasin_id=" + magId;
 //					MyUtil util = new MyUtil();
 //					try {
@@ -590,7 +616,7 @@ namespace cmdUtils
 			process.StartInfo.WorkingDirectory = path;
 			process.Start();
 			
-			//util.startProcess(path+cmd, "", ProcessWindowStyle.Normal);			
+			//util.startProcess(path+cmd, "", ProcessWindowStyle.Normal);
 		}
 		void RichTextBox2TextChanged(object sender, EventArgs e)
 		{
@@ -598,8 +624,39 @@ namespace cmdUtils
 			MeoSavUtil meosavUtil = new MeoSavUtil();
 			sqlRechRichTextBox.Text = meosavUtil.convertiSql(sql);
 		}
-		
+		void TabsSelected(object sender, TabControlEventArgs e)
+		{
+			//MessageBox.Show(" selected ");
+		}
+		void TabSQLEnter(object sender, EventArgs e)
+		{
+			Console.WriteLine("entering tab SQL");
+		}
+		void TabSQLLeave(object sender, EventArgs e)
+		{
+			Console.WriteLine("leaving tab SQL");
+		}
+		void StatusStrip1ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+		{
+			//throw new NotImplementedException();
+		}
+		void StopCnxLabelClick(object sender, EventArgs e)
+		{
+			if(adminServeurSshClient!=null) {
+				adminServeurSshClient.Disconnect();
+				adminServeurSshClient=null;
+				stopCnxLabel.Text = "disconnected";
+			} else {
+				stopCnxLabel.Text = "connecting";
+				populateSshServer();
+			}
+		}
+		void MainFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(adminServeurSshClient!=null) {
+				adminServeurSshClient.Disconnect();
+				adminServeurSshClient=null;
+			}
+		}
 	}
-
-	
 }

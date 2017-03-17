@@ -18,3 +18,15 @@
 /MoulUtil/obj/Debug/MoulUtil.csprojResolveAssemblyReference.cache
 /MoulUtil/obj/Debug/MoulUtil.exe
 /MoulUtil/obj/Debug/MoulUtil.pdb
+*.exe
+TestEditorUtil/bin/Debug/TestEditorUtil.exe
+*.pdb
+TestEditorUtil/obj/Debug/TestEditorUtil.exe
+*.pdb
+/TestEditorUtil/obj/Debug/*.exe
+/TestEditorUtil/obj/Debug/*.pdb
+/TestUtil/bin/Debug/*.exe
+/TestUtil/bin/Debug/TestUtil.pdb
+/TestEditorUtil/bin/Debug/*.exe
+/TestEditorUtil/bin/Debug/TestEditorUtil.pdb
+/TestEditorUtil/bin/Debug/TestEditorUtil.exe

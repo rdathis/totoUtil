@@ -3,3 +3,8 @@ C:\Users\Renaud\Documents\GitHub\totoUtil\TestUtil\bin\Debug\TestUtil.pdb
 C:\Users\Renaud\Documents\GitHub\totoUtil\TestUtil\obj\Debug\TestUtil.csprojResolveAssemblyReference.cache
 C:\Users\Renaud\Documents\GitHub\totoUtil\TestUtil\obj\Debug\TestUtil.exe
 C:\Users\Renaud\Documents\GitHub\totoUtil\TestUtil\obj\Debug\TestUtil.pdb
+M:\github\totoUtil\TestUtil\bin\Debug\TestUtil.exe
+M:\github\totoUtil\TestUtil\bin\Debug\TestUtil.pdb
+M:\github\totoUtil\TestUtil\obj\Debug\TestUtil.csprojResolveAssemblyReference.cache
+M:\github\totoUtil\TestUtil\obj\Debug\TestUtil.exe
+M:\github\totoUtil\TestUtil\obj\Debug\TestUtil.pdb

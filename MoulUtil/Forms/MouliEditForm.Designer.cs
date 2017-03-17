@@ -67,6 +67,10 @@ namespace MoulUtil.Forms
 			this.label14 = new System.Windows.Forms.Label();
 			this.sql05 = new System.Windows.Forms.TextBox();
 			this.label15 = new System.Windows.Forms.Label();
+			this.serveursButtons = new System.Windows.Forms.Button();
+			this.instancesButton = new System.Windows.Forms.Button();
+			this.sqlButton = new System.Windows.Forms.Button();
+			this.paramButton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -329,11 +333,55 @@ namespace MoulUtil.Forms
 			this.label15.TabIndex = 33;
 			this.label15.Text = "sql05";
 			// 
+			// serveursButtons
+			// 
+			this.serveursButtons.Location = new System.Drawing.Point(253, 9);
+			this.serveursButtons.Name = "serveursButtons";
+			this.serveursButtons.Size = new System.Drawing.Size(63, 23);
+			this.serveursButtons.TabIndex = 35;
+			this.serveursButtons.Text = "Serveurs";
+			this.serveursButtons.UseVisualStyleBackColor = true;
+			this.serveursButtons.Click += new System.EventHandler(this.ServeursButtonsClick);
+			// 
+			// instancesButton
+			// 
+			this.instancesButton.Location = new System.Drawing.Point(331, 9);
+			this.instancesButton.Name = "instancesButton";
+			this.instancesButton.Size = new System.Drawing.Size(63, 23);
+			this.instancesButton.TabIndex = 36;
+			this.instancesButton.Text = "Instances";
+			this.instancesButton.UseVisualStyleBackColor = true;
+			this.instancesButton.Click += new System.EventHandler(this.InstancesButtonClick);
+			// 
+			// sqlButton
+			// 
+			this.sqlButton.Location = new System.Drawing.Point(411, 9);
+			this.sqlButton.Name = "sqlButton";
+			this.sqlButton.Size = new System.Drawing.Size(63, 23);
+			this.sqlButton.TabIndex = 37;
+			this.sqlButton.Text = "Sql";
+			this.sqlButton.UseVisualStyleBackColor = true;
+			this.sqlButton.Click += new System.EventHandler(this.SqlButtonClick);
+			// 
+			// paramButton
+			// 
+			this.paramButton.Location = new System.Drawing.Point(498, 9);
+			this.paramButton.Name = "paramButton";
+			this.paramButton.Size = new System.Drawing.Size(63, 23);
+			this.paramButton.TabIndex = 38;
+			this.paramButton.Text = "Params";
+			this.paramButton.UseVisualStyleBackColor = true;
+			this.paramButton.Click += new System.EventHandler(this.ParamButtonClick);
+			// 
 			// MouliEditForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(960, 721);
+			this.Controls.Add(this.paramButton);
+			this.Controls.Add(this.sqlButton);
+			this.Controls.Add(this.instancesButton);
+			this.Controls.Add(this.serveursButtons);
 			this.Controls.Add(this.sql05);
 			this.Controls.Add(this.label15);
 			this.Controls.Add(this.sql04);
@@ -373,6 +421,10 @@ namespace MoulUtil.Forms
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Button paramButton;
+		private System.Windows.Forms.Button sqlButton;
+		private System.Windows.Forms.Button instancesButton;
+		private System.Windows.Forms.Button serveursButtons;
 		private System.Windows.Forms.TextBox sql02;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.TextBox sql03;
