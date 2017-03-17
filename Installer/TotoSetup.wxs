@@ -15,5 +15,15 @@
 	<Media Id="1" Cabinet="contents.cab" EmbedCab="yes" CompressionLevel="high" /> 
   <!-- Installation directory and files are defined in Files.wxs --> 
   <Directory Id="totoUtil" Name="CibleDir"/> 
+		<Directory Id="TARGETDIR" SourceName="SourceDir" Name="abcd">
+			<Directory Id="ProgramFilesFolder" Name="ProFilFol" >
+				<Directory Id="bin" Name="bin">
+					<Directory Id="Debug" Name="Debug" />
+					<Component Id="TotoUtilExe" Guid="5732D924-4E80-48FD-BB9C-1B5471270728" DiskId="1">
+						<File Id="totoUtil.exe" Name="totoUtil.exe" Source="..\totoUtil\bin\Debug\totoUtil.exe" KeyPath="yes" />
+					</Component>
+				</Directory>
+			</Directory>
+		</Directory>
 	</Product>
 </Wix>
