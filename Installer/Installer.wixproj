@@ -27,7 +27,8 @@
     <Optimize>True</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Setup.wxs" />
+    <Compile Include="Files.wxs" />
+    <Compile Include="TotoSetup.wxs" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
 </Project>

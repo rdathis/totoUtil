@@ -6,7 +6,7 @@
 		Version="1.0.0.0"
 		UpgradeCode="7EE1F414-0789-4942-B1C2-14F51D03D9F3"
 		Manufacturer="Toto by Toto">
-		<Package Description=""
+		<Package Description="Description"
 			Comments= "guess who is toto"
 			InstallerVersion="200"
 			Compressed="yes"
@@ -14,6 +14,6 @@
 	
 	<Media Id="1" Cabinet="contents.cab" EmbedCab="yes" CompressionLevel="high" /> 
   <!-- Installation directory and files are defined in Files.wxs --> 
-  <Directory Id="totoUtil" Name="SourceDir"/> 
+  <Directory Id="totoUtil" Name="CibleDir"/> 
 	</Product>
 </Wix>

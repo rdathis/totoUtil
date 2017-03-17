@@ -8,3 +8,8 @@ M:\github\totoUtil\TestUtil\bin\Debug\TestUtil.pdb
 M:\github\totoUtil\TestUtil\obj\Debug\TestUtil.csprojResolveAssemblyReference.cache
 M:\github\totoUtil\TestUtil\obj\Debug\TestUtil.exe
 M:\github\totoUtil\TestUtil\obj\Debug\TestUtil.pdb
+C:\renaud\totoUtil\TestUtil\bin\Debug\TestUtil.exe
+C:\renaud\totoUtil\TestUtil\bin\Debug\TestUtil.pdb
+C:\renaud\totoUtil\TestUtil\obj\Debug\TestUtil.csprojResolveAssemblyReference.cache
+C:\renaud\totoUtil\TestUtil\obj\Debug\TestUtil.exe
+C:\renaud\totoUtil\TestUtil\obj\Debug\TestUtil.pdb
