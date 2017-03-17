@@ -135,7 +135,7 @@ namespace MoulUtil
 		}
 		void ExitButtonClick(object sender, EventArgs e)
 		{
-			Application.Exit();
+			//Application.Exit();
 		}
 		void TargetTreeViewAfterSelect(object sender, TreeViewEventArgs e)
 		{
