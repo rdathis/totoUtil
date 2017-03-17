@@ -45,6 +45,8 @@ namespace MoulUtil
 			workspaceNavigatorUserControl.setBoxes(workspaceBaseBox, workspaceZoneBox);
 			svgBaseNavigatorUserControl.setBox(targetSvgPathBox);
 			svgFinalNavigatorUserControl.setBoxes(targetSvgPathBox, targetNameBox);
+			
+			rechMagIdBox.Focus();
 		}
 		void MouliPrepaLoad(object sender, EventArgs e)
 		{
@@ -77,7 +79,7 @@ namespace MoulUtil
 		{
 			String targetDir = Path.GetFullPath(targetSvgPathBox.Text)+"\\" + targetNameBox.Text;
 			mouliUtil.createArbo(targetDir);
-			//copier le resultat.zip dans le sousrep, 
+			//copier le resultat.zip dans le sousrep,
 			//generer un zip du rep tmp dans le sousrep. (comment le nommer ?)
 			cmdUtil.executeCommande("explorer", Path.GetFullPath(targetDir));
 			//TODO:copy src files to target dir.
@@ -159,6 +161,22 @@ namespace MoulUtil
 		{
 			//ne marche pas
 			rechercheMagasin();
+		}
+		void RechMagIdBoxTextChanged(object sender, EventArgs e)
+		{
+			
+
+		}
+		void RechMagIdBoxKeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.KeyValue.Equals(13)) {
+				try {
+					rechercheMagasin();
+				} catch(Exception ex) {
+					//reportError(ex);
+				}
+			}
+
 		}
 	}
 }

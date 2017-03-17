@@ -86,18 +86,20 @@ namespace MoulUtil
 			this.rechMagIdBtn.Location = new System.Drawing.Point(130, 49);
 			this.rechMagIdBtn.Name = "rechMagIdBtn";
 			this.rechMagIdBtn.Size = new System.Drawing.Size(75, 23);
-			this.rechMagIdBtn.TabIndex = 0;
+			this.rechMagIdBtn.TabIndex = 1;
 			this.rechMagIdBtn.Text = "recherche";
 			this.rechMagIdBtn.UseVisualStyleBackColor = true;
 			this.rechMagIdBtn.Click += new System.EventHandler(this.RechMagIdBtnClick);
 			// 
 			// rechMagIdBox
 			// 
+			this.rechMagIdBox.AcceptsReturn = true;
 			this.rechMagIdBox.Location = new System.Drawing.Point(12, 49);
 			this.rechMagIdBox.Name = "rechMagIdBox";
 			this.rechMagIdBox.Size = new System.Drawing.Size(108, 20);
-			this.rechMagIdBox.TabIndex = 1;
+			this.rechMagIdBox.TabIndex = 0;
 			this.rechMagIdBox.Enter += new System.EventHandler(this.RechMagIdBoxEnter);
+			this.rechMagIdBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.RechMagIdBoxKeyUp);
 			this.rechMagIdBox.Validated += new System.EventHandler(this.RechMagIdBoxValidated);
 			// 
 			// sourceBaseBox
@@ -124,11 +126,12 @@ namespace MoulUtil
 			// 
 			// sourceListBox
 			// 
+			this.sourceListBox.Enabled = false;
 			this.sourceListBox.FormattingEnabled = true;
 			this.sourceListBox.Location = new System.Drawing.Point(37, 149);
 			this.sourceListBox.Name = "sourceListBox";
 			this.sourceListBox.Size = new System.Drawing.Size(624, 95);
-			this.sourceListBox.TabIndex = 5;
+			this.sourceListBox.TabIndex = 8;
 			// 
 			// workspaceBaseBox
 			// 
@@ -383,9 +386,9 @@ namespace MoulUtil
 			| System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.targetTreeView.ContextMenuStrip = this.serveursContextMenu;
-			this.targetTreeView.Location = new System.Drawing.Point(359, 369);
+			this.targetTreeView.Location = new System.Drawing.Point(336, 369);
 			this.targetTreeView.Name = "targetTreeView";
-			this.targetTreeView.Size = new System.Drawing.Size(322, 365);
+			this.targetTreeView.Size = new System.Drawing.Size(345, 365);
 			this.targetTreeView.TabIndex = 18;
 			// 
 			// serveursContextMenu

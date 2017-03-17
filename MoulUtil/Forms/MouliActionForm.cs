@@ -61,6 +61,7 @@ namespace MoulUtil
 		public void prepare() {
 			puttyLink.Visible=false;
 			pscpLink.Visible=false;
+			targetTreeView.Enabled = false;
 			new TreeViewUtil(instances, serveurs).populateTargets(targetTreeView);
 			
 			dateTimePicker.Value = new MouliUtil().calculeNextPlannedJob();
@@ -136,6 +137,7 @@ namespace MoulUtil
 		void ExitButtonClick(object sender, EventArgs e)
 		{
 			//Application.Exit();
+			Hide();
 		}
 		void TargetTreeViewAfterSelect(object sender, TreeViewEventArgs e)
 		{
@@ -173,7 +175,7 @@ namespace MoulUtil
 			String r="";
 			if(checkedListBox1.GetItemChecked(1)) {
 				r+="S";//S before C (201703:LH)
-			}
+			} 
 			if(checkedListBox1.GetItemChecked(0)) {
 				r+="C";
 			}
@@ -372,6 +374,10 @@ namespace MoulUtil
 			if(checkedListBox1.GetItemChecked(oldIdx)) {
 				checkedListBox1.SetItemChecked(oldIdx, false);
 			}
+		}
+		void TargetTreeViewDoubleClick(object sender, EventArgs e)
+		{
+			targetTreeView.Enabled = true;
 		}
 	}
 }
