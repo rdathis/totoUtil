@@ -70,7 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="grephelp.txt" />
+    <None Include="grephelp.txt">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
