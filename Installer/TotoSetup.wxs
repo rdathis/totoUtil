@@ -7,7 +7,7 @@
 	         UpgradeCode="7EE1F414-0789-4942-B1C2-14F51D03D9F3"
 	         Manufacturer="Toto by Toto">
 		<Package Description="Description"
-		         Comments= "guess who is toto"
+		         Comments= "Millser PACK for meo files"
 		         InstallerVersion="200"
 		         Compressed="yes"
 		/>
@@ -16,12 +16,12 @@
 		
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="ProgramFilesFolder">
-				<Directory Id="APPLICATIONROOTDIRECTORY" Name="My Application Name"/>
+				<Directory Id="APPLICATIONROOTDIRECTORY" Name="MeoMillser"/>
 			</Directory>
 		</Directory>
 		<DirectoryRef Id="APPLICATIONROOTDIRECTORY">
-			<Component Id="totoUtil.exe" Guid="5732D924-4E80-48FD-BB9C-1B5471270728">
-				<File Id="totoUtil.exe" Source="..\totoUtil\bin\Debug\totoUtil.exe" KeyPath="yes" Checksum="yes"/>
+			<Component Id="mouliUtil.exe" Guid="4e43a5e7-c6d3-4604-8339-22eabec9325e">
+				<File Id="mouliUtil.exe" Source="..\moulUtil\bin\Debug\moulUtil.exe" KeyPath="yes" Checksum="yes"/>
 			</Component>
 			
 			<Component Id="ecUtil.exe" Guid="0ff1dd95-9939-4003-87fc-4d361a2550ff">
@@ -30,63 +30,27 @@
 			<Component Id="conf_modele_mail_moulinette" Guid="a9d2acce-0bb3-420b-9823-9c79e10ba098">
 				<File Id="conf_modele_mail_moulinette" Source="w:\meo-moulinettes\conf\modele-mail.moulinette" KeyPath="yes"/>
 			</Component>
-			<Component Id="conf_modele_moulinette" Guid="a9d2acce-0bb3-420b-9823-9c79e10ba098">
+			<Component Id="conf_modele_moulinette" Guid="8d3379c9-d1ed-44b0-ba3b-7302ed813fa3">
 				<File Id="conf_modele_moulinette" Source="w:\meo-moulinettes\conf\modele.moulinette" KeyPath="yes"/>
 			</Component>
-		
+			<Component Id="bin_putty" Guid="97d025ca-b68e-4a2a-9c4f-474ef93d9062">
+				<File Id="bin_putty" Source="w:\meo-moulinettes\bin\putty.exe" KeyPath="yes"/>
+			</Component>
+			<Component Id="bin_pscp" Guid="483475c6-4d99-4ebc-b3e6-b8b04d2027bd">
+				<File Id="bin_pscp" Source="w:\meo-moulinettes\bin\pscp.exe" KeyPath="yes"/>
+			</Component>
+			<Component Id="bin_plink" Guid="6bfc7572-8ff2-40be-90b5-8d4b88c7af3b">
+				<File Id="bin_plink" Source="w:\meo-moulinettes\bin\plink.exe" KeyPath="yes"/>
+			</Component>
 		</DirectoryRef>
 		<Feature Id="MainApplication" Title="Main Application" Level="1">
-			<ComponentRef Id="totoUtil.exe" />
+			<ComponentRef Id="mouliUtil.exe" />
 			<ComponentRef Id="ecUtil.exe" />
 			<ComponentRef Id="conf_modele_mail_moulinette" />
 			<ComponentRef Id="conf_modele_moulinette" />
+			<ComponentRef Id="bin_putty" />
+			<ComponentRef Id="bin_pscp" />
+			<ComponentRef Id="bin_plink" />
 		</Feature>
-		
-		<!--
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="APPLICATIONROOTDIRECTORY" Name="My Application Name">
-					<Component Id="TotoUtilExe" Guid="5732D924-4E80-48FD-BB9C-1B5471270728" DiskId="1">
-						(!- <File Id="totoUtil.exe" Name="totoUtil.exe" Source="..\totoUtil\bin\Debug\totoUtil.exe" KeyPath="yes" />-)
-					</Component>
-				</Directory>
-			</Directory>
-		</Directory>
-	-->
 	</Product>
-	
-	
-	<!--
-
-<?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <Product Id="*" UpgradeCode="PUT-GUID-HERE" Version="1.0.0.0" Language="1033" Name="My Application Name" Manufacturer="My Manufacturer Name">
-        <Package InstallerVersion="300" Compressed="yes"/>
-        <Media Id="1" Cabinet="myapplication.cab" EmbedCab="yes" />
-
-        (!- Step 1: Define the directory structure -)
-        <Directory Id="TARGETDIR" Name="SourceDir">
-            <Directory Id="ProgramFilesFolder">
-                <Directory Id="APPLICATIONROOTDIRECTORY" Name="My Application Name"/>
-            </Directory>
-        </Directory>
-
-        (!- Step 2: Add files to your installer package -)
-        <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
-            <Component Id="myapplication.exe" Guid="PUT-GUID-HERE">
-                <File Id="myapplication.exe" Source="MySourceFiles\MyApplication.exe" KeyPath="yes" Checksum="yes"/>
-            </Component>
-            <Component Id="documentation.html" Guid="PUT-GUID-HERE">
-                <File Id="documentation.html" Source="MySourceFiles\documentation.html" KeyPath="yes"/>
-            </Component>
-        </DirectoryRef>
-
-        (!- Step 3: Tell WiX to install the files -)
-        <Feature Id="MainApplication" Title="Main Application" Level="1">
-            <ComponentRef Id="myapplication.exe" />
-            <ComponentRef Id="documentation.html" />
-        </Feature>
-    </Product>
-</Wix>
--->
 </Wix>
