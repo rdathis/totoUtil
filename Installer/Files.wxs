@@ -3,4 +3,5 @@
 	<Fragment>
 	<DirectoryRef Id="CibleDir"></DirectoryRef>
 	</Fragment>
+<!-- rem : no use ? -->
 </Wix>

@@ -32,7 +32,13 @@ namespace MoulUtil
 		}
 		public static void Main(string[] args)
 		{
-			basePath=Directory.GetCurrentDirectory();;
+			basePath=Directory.GetCurrentDirectory();
+			if(basePath.ToLower().EndsWith("\\bin") && !Directory.Exists("conf") &&  Directory.Exists("..\\conf")) {
+				
+				Directory.SetCurrentDirectory("..");
+				basePath=Directory.GetCurrentDirectory();
+				Console.WriteLine("directory changed to "+Directory.GetCurrentDirectory());
+			}
 			//configure le ilog -- http://lutecefalco.developpez.com/tutoriels/dotnet/log4net/introduction/
 			BasicConfigurator.Configure();
 			

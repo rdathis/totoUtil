@@ -21,7 +21,7 @@ namespace cmdUtils
 		private static string getPurgeArg(int nbAnnees)
 		{
 			DateTime date = DateTime.Now;
-			return (date.Year - nbAnnees)+"";
+			return (date.Year - nbAnnees)+"0101";
 		}
 
 		

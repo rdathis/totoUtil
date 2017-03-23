@@ -15,42 +15,130 @@
 		<Media Id="1" Cabinet="contents.cab" EmbedCab="yes" CompressionLevel="high" />
 		
 		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="DesktopFolder" Name="Desktop"/>
 			<Directory Id="ProgramFilesFolder">
-				<Directory Id="APPLICATIONROOTDIRECTORY" Name="MeoMillser"/>
+				<Directory Id="APPLICATIONROOTDIRECTORY" Name="MeoMillser">
+				</Directory>
 			</Directory>
 		</Directory>
 		<DirectoryRef Id="APPLICATIONROOTDIRECTORY">
-			<Component Id="mouliUtil.exe" Guid="4e43a5e7-c6d3-4604-8339-22eabec9325e">
-				<File Id="mouliUtil.exe" Source="..\moulUtil\bin\Debug\moulUtil.exe" KeyPath="yes" Checksum="yes"/>
+			<!-- see https://kirandhappuri.wordpress.com/2014/10/13/wix-creation-of-desktop-and-start-menu-shortcuts-using-wix/ -->
+			<Component Id="ApplicationShortcut" Guid="8abb53f7-a954-4428-9591-e63c8434301f">
+				<Shortcut Id="ApplicationStartMenuShortcut1"
+				          Name="MEO-MouliUtil"
+				          Description="traitement de reprise de donnees"
+				          Target="[#mouliUtil.exe]"
+				          Directory="DesktopFolder"
+				          WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+				<Shortcut Id="ApplicationStartMenuShortcut2"
+				          Name="MEO-EcUtil"
+				          Description="starter"
+				          Target="[#ecUtil.exe]"
+				          Directory="DesktopFolder"
+				          WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+				<Shortcut Id="ApplicationStartMenuShortcut3"
+				          Name="MEO-cmdUtil.exe"
+				          Description="utilitaire dev"
+				          Target="[#cmdUtil.exe]"
+				          Directory="DesktopFolder"
+				          WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+				
+				<RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+				<RegistryValue Root="HKCU" Key="Software\Microsoft\MeoMillser" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+			</Component>
+			<Component Id="doc" Guid="4307bd2a-6667-4d39-a7f2-c90c95d04cf3">
+				<File Id="doc" Source="..\docs\HOWTo-mouliUtil.pdf" KeyPath="yes"/>
 			</Component>
 			
-			<Component Id="ecUtil.exe" Guid="0ff1dd95-9939-4003-87fc-4d361a2550ff">
-				<File Id="ecUtil.exe" Source="..\ecUtil\bin\Debug\ecUtil.exe" KeyPath="yes"/>
-			</Component>
-			<Component Id="conf_modele_mail_moulinette" Guid="a9d2acce-0bb3-420b-9823-9c79e10ba098">
-				<File Id="conf_modele_mail_moulinette" Source="w:\meo-moulinettes\conf\modele-mail.moulinette" KeyPath="yes"/>
-			</Component>
-			<Component Id="conf_modele_moulinette" Guid="8d3379c9-d1ed-44b0-ba3b-7302ed813fa3">
-				<File Id="conf_modele_moulinette" Source="w:\meo-moulinettes\conf\modele.moulinette" KeyPath="yes"/>
-			</Component>
-			<Component Id="bin_putty" Guid="97d025ca-b68e-4a2a-9c4f-474ef93d9062">
-				<File Id="bin_putty" Source="w:\meo-moulinettes\bin\putty.exe" KeyPath="yes"/>
-			</Component>
-			<Component Id="bin_pscp" Guid="483475c6-4d99-4ebc-b3e6-b8b04d2027bd">
-				<File Id="bin_pscp" Source="w:\meo-moulinettes\bin\pscp.exe" KeyPath="yes"/>
-			</Component>
-			<Component Id="bin_plink" Guid="6bfc7572-8ff2-40be-90b5-8d4b88c7af3b">
-				<File Id="bin_plink" Source="w:\meo-moulinettes\bin\plink.exe" KeyPath="yes"/>
-			</Component>
+			<Directory Id="bin" Name="bin">
+				<Component Id="mouliUtil.exe" Guid="4e43a5e7-c6d3-4604-8339-22eabec9325e">
+					<File Id="mouliUtil.exe" Source="..\moulUtil\bin\Debug\moulUtil.exe" KeyPath="yes" Checksum="yes"/>
+				</Component>
+				<Component Id="ecUtil.exe" Guid="0ff1dd95-9939-4003-87fc-4d361a2550ff">
+					<File Id="ecUtil.exe" Source="..\ecUtil\bin\Debug\ecUtil.exe" KeyPath="yes"/>
+				</Component>
+				<Component Id="cmdUtil.exe" Guid="720e62b5-588d-481f-abaf-effe08ad53a0">
+					<File Id="cmdUtil.exe" Source="..\cmdUtils\bin\Debug\cmdUtils.exe" KeyPath="yes"/>
+				</Component>
+				
+				<!-- deps EXE -->
+				<Component Id="bin_putty" Guid="97d025ca-b68e-4a2a-9c4f-474ef93d9062">
+					<File Id="bin_putty" Source="w:\meo-moulinettes\bin\putty.exe" KeyPath="yes"/>
+				</Component>
+				<Component Id="bin_pscp" Guid="483475c6-4d99-4ebc-b3e6-b8b04d2027bd">
+					<File Id="bin_pscp" Source="w:\meo-moulinettes\bin\pscp.exe" KeyPath="yes"/>
+				</Component>
+				<Component Id="bin_plink" Guid="6bfc7572-8ff2-40be-90b5-8d4b88c7af3b">
+					<File Id="bin_plink" Source="w:\meo-moulinettes\bin\plink.exe" KeyPath="yes"/>
+				</Component>
+				<!-- DLLs-->
+				<Component Id="bin_zip_dll" Guid="dcbc1563-eb7e-4543-9483-a3e2f80c3ce1">
+					<File Id="bin_zip_dll" Source="..\Installer\libs\ICSharpCode.SharpZipLib.dll" KeyPath="yes"/>
+				</Component>
+				<Component Id="bin_log4net_dll" Guid="75761473-2b82-4bd6-bd3a-5f9a82e5c7c6">
+					<File Id="bin_log4net_dll" Source="..\Installer\libs\log4net.dll" KeyPath="yes"/>
+				</Component>
+				<Component Id="bin_mysql_data_dll" Guid="5c62f1aa-6602-44f2-9a13-410ce9e5411c">
+					<File Id="bin_mysql_data_dll" Source="..\Installer\libs\MySql.Data.dll" KeyPath="yes"/>
+				</Component>
+				<Component Id="bin_mysql_entity_data_dll" Guid="da6e30b6-976b-431e-a96b-a13c2ff9a2db">
+					<File Id="bin_mysql_entity_data_dll" Source="..\Installer\libs\MySql.Data.Entity.dll" KeyPath="yes"/>
+				</Component>
+				<Component Id="bin_mysql_entity_data_ef6_dll" Guid="610199cc-0517-494c-9b87-10e0d5a12568">
+					<File Id="bin_mysql_entity_data_ef6_dll" Source="..\Installer\libs\MySql.Data.Entity.EF6.dll" KeyPath="yes"/>
+				</Component>
+				<Component Id="bin_mysql_fabric_plugin_dll" Guid="03560f46-6d57-4238-95a1-54261e2f63ea">
+					<File Id="bin_mysql_fabric_plugin_dll" Source="..\Installer\libs\MySql.Fabric.Plugin.dll" KeyPath="yes"/>
+				</Component>
+				<Component Id="bin_mysql_web_dll" Guid="074ba86b-9215-4cbd-90e9-cb0eee3da3d4">
+					<File Id="bin_mysql_web_dll" Source="..\Installer\libs\MySql.Web.dll" KeyPath="yes"/>
+				</Component>
+				<Component Id="bin_ssh_dll" Guid="5a083850-bfb3-4d96-9c34-282b74d92567">
+					<File Id="bin_ssh_dll" Source="..\Installer\libs\Renci.SshNet.dll" KeyPath="yes"/>
+				</Component>
+				<!-- end of bin/ -->
+			</Directory>
+			
+			<!-- conf & models files -->
+			<Directory Id="conf" Name="conf">
+				<Component Id="conf_modele_mail_moulinette" Guid="a9d2acce-0bb3-420b-9823-9c79e10ba098">
+					<File Id="conf_modele_mail_moulinette" Source="w:\meo-moulinettes\conf\modele-mail.moulinette" KeyPath="yes"/>
+				</Component>
+				<Component Id="conf_modele_moulinette" Guid="8d3379c9-d1ed-44b0-ba3b-7302ed813fa3">
+					<File Id="conf_modele_moulinette" Source="w:\meo-moulinettes\conf\modele.moulinette" KeyPath="yes"/>
+				</Component>
+				<Component Id="conf_common_xml" Guid="e67c5554-c523-456e-a513-bdd8836defa1">
+					<File Id="conf_common_xml" Source="w:\meo-moulinettes\conf\common.xml" KeyPath="yes"/>
+				</Component>
+			</Directory>
+			<Directory Id="logs" Name="logs"></Directory>
+			<Directory Id="workspace" Name="workspace"></Directory>
+		
+		
+		
 		</DirectoryRef>
 		<Feature Id="MainApplication" Title="Main Application" Level="1">
 			<ComponentRef Id="mouliUtil.exe" />
+			<ComponentRef Id="cmdUtil.exe" />
 			<ComponentRef Id="ecUtil.exe" />
+			<ComponentRef Id="doc" />
 			<ComponentRef Id="conf_modele_mail_moulinette" />
 			<ComponentRef Id="conf_modele_moulinette" />
+			<ComponentRef Id="conf_common_xml" />
 			<ComponentRef Id="bin_putty" />
 			<ComponentRef Id="bin_pscp" />
 			<ComponentRef Id="bin_plink" />
+			
+			<ComponentRef Id="bin_zip_dll" />
+			<ComponentRef Id="bin_log4net_dll" />
+			<ComponentRef Id="bin_mysql_data_dll" />
+			<ComponentRef Id="bin_mysql_entity_data_dll" />
+			<ComponentRef Id="bin_mysql_entity_data_ef6_dll" />
+			<ComponentRef Id="bin_mysql_fabric_plugin_dll" />
+			<ComponentRef Id="bin_mysql_web_dll" />
+			<ComponentRef Id="bin_ssh_dll" />
+			<ComponentRef Id="ApplicationShortcut" />
+		
 		</Feature>
 	</Product>
 </Wix>
