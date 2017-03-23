@@ -78,6 +78,7 @@ namespace MoulUtil.Forms.utils
 		                                          TextBox rechMagIdBox, //
 		                                          TextBox magDescBox, //
 		                                          TextBox propositionBox,//
+		                                          String workingPath, //
 		                                          Button sqlBtn//
 		                                         ) {
 			
@@ -94,7 +95,9 @@ namespace MoulUtil.Forms.utils
 				String rep= "MID0000-TOTO-i0/";
 				propositionBox.Text = configDto.workingDir+rep;
 				mouliPrepaForm.CreateBtnClick(null, null);
-				createMock(rep);
+				createMock(workingPath+rep);
+				options = new MouliUtilOptions();
+				options.setMagId(rechMagIdBox.Text);
 				return options;
 			}
 			MyUtil myUtil = new MyUtil();

@@ -10,6 +10,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Net.Mime;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using cmdUtils.Objets;
 using MoulUtil.Forms;
@@ -82,6 +83,21 @@ namespace MoulUtil
 			//copier le resultat.zip dans le sousrep,
 			//generer un zip du rep tmp dans le sousrep. (comment le nommer ?)
 			cmdUtil.executeCommande("explorer", Path.GetFullPath(targetDir));
+			try {
+				if(options!=null) {
+					String subPath="MEO"+DateTime.Now.Year+"/";
+					String path=targetSvgPathBox.Text+"/"+subPath;
+					String fileName=new FileInfo(options.getarchiveName()).Name;
+					
+					Console.WriteLine("path:"+path);
+					Console.WriteLine("path:"+Path.GetFullPath(path));
+					Console.WriteLine("fileName:"+fileName);
+					File.Copy(options.getarchiveName(), Path.GetFullPath(path)+fileName, true);
+					
+				}
+			} catch(Exception exception) {
+				MessageBox.Show("Erreur de copie de vers "+Path.GetFullPath(targetSvgPathBox.Text)+"\n "+exception.Message);
+			}
 			//TODO:copy src files to target dir.
 		}
 		void RechMagIdBtnClick(object sender, EventArgs e)
@@ -90,7 +106,8 @@ namespace MoulUtil
 		}
 
 		void rechercheMagasin() {
-			options=mouliPrepaUtil.rechercheMagasin(rechMagIdBox, magDescBox, propositionBox, sqlBtn);
+			String workingPath=workspaceBaseBox.Text+workingDirBox.Text;
+			options=mouliPrepaUtil.rechercheMagasin(rechMagIdBox, magDescBox, propositionBox, workingPath, sqlBtn);
 			if(options!=null) {
 				calculeMoulinettePath();
 				String path=workspaceZoneBox.Text;
@@ -155,12 +172,12 @@ namespace MoulUtil
 		void RechMagIdBoxEnter(object sender, EventArgs e)
 		{
 			//marche seulement qd vide.
-			rechercheMagasin();
+			//rechercheMagasin();
 		}
 		void RechMagIdBoxValidated(object sender, EventArgs e)
 		{
 			//ne marche pas
-			rechercheMagasin();
+			//rechercheMagasin();
 		}
 		void RechMagIdBoxTextChanged(object sender, EventArgs e)
 		{
