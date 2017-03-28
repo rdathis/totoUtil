@@ -390,6 +390,7 @@ namespace MoulUtil
 			this.targetTreeView.Name = "targetTreeView";
 			this.targetTreeView.Size = new System.Drawing.Size(345, 365);
 			this.targetTreeView.TabIndex = 18;
+			this.targetTreeView.DoubleClick += new System.EventHandler(this.TargetTreeViewDoubleClick);
 			// 
 			// serveursContextMenu
 			// 

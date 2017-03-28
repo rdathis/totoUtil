@@ -83,21 +83,8 @@ namespace MoulUtil
 			//copier le resultat.zip dans le sousrep,
 			//generer un zip du rep tmp dans le sousrep. (comment le nommer ?)
 			cmdUtil.executeCommande("explorer", Path.GetFullPath(targetDir));
-			try {
-				if(options!=null) {
-					String subPath="MEO"+DateTime.Now.Year+"/";
-					String path=targetSvgPathBox.Text+"/"+subPath;
-					String fileName=new FileInfo(options.getarchiveName()).Name;
-					
-					Console.WriteLine("path:"+path);
-					Console.WriteLine("path:"+Path.GetFullPath(path));
-					Console.WriteLine("fileName:"+fileName);
-					File.Copy(options.getarchiveName(), Path.GetFullPath(path)+fileName, true);
-					
-				}
-			} catch(Exception exception) {
-				MessageBox.Show("Erreur de copie de vers "+Path.GetFullPath(targetSvgPathBox.Text)+"\n "+exception.Message);
-			}
+			mouliPrepaUtil.sauvegardeMoulinette(targetSvgPathBox.Text, options);
+
 			//TODO:copy src files to target dir.
 		}
 		void RechMagIdBtnClick(object sender, EventArgs e)
@@ -190,10 +177,42 @@ namespace MoulUtil
 				try {
 					rechercheMagasin();
 				} catch(Exception ex) {
+					Console.WriteLine(ex.Message);
 					//reportError(ex);
 				}
 			}
 
 		}
+		void TargetTreeViewDoubleClick(object sender, EventArgs e)
+		{
+			MeoInstance meoInstance = getSelectedInstance(targetTreeView);
+			if(meoInstance!=null) {
+				MeoServeur meoServeur = MeoServeur.findServeurByName(configDto.serveurs, meoInstance.serveur);
+				if(meoServeur!= null) {
+					String args=cmdUtil.buildPuttyArgs(meoServeur);
+					cmdUtil.executeCommandAsDetachedProcess(MouliConfig.puttyPath, args);
+				}
+			}
+		}
+		MeoInstance getSelectedInstance(TreeView tv)
+		{
+			TreeNode node = tv.SelectedNode;
+			int level=node.Level;
+			String text =node.Text;
+			String serverName=null;
+			MeoInstance instance=null;
+
+			
+			if(level==0) {
+				serverName=text;
+			} else if(level==1) {
+				instance=MeoInstance.findInstanceByInstanceName(configDto.instances, text);
+				if(instance!=null) {
+					serverName=instance.getServeur();
+				}
+			}
+			return instance;
+		}
+		
 	}
 }

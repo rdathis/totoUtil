@@ -370,7 +370,7 @@ namespace cmdUtils.Objets
 			return cmd;
 		}
 		public String calculeArchiveName(String sourceMoulinette) {
-			String archiveName = Path.GetFullPath(sourceMoulinette);	
+			String archiveName = Path.GetFullPath(sourceMoulinette);
 			while (archiveName.EndsWith("/")) {
 				archiveName=archiveName.Substring(0, archiveName.Length -1);
 			}
@@ -379,6 +379,26 @@ namespace cmdUtils.Objets
 			}
 			archiveName+=".zip";
 			return archiveName;
+		}
+		
+		public List<String> findFiles(String path, Boolean recursive, List<Regex> filters) {
+			List<String> retour=null;
+			
+			if(!Directory.Exists(path)) {
+				return retour;
+			}
+			retour = new List<String>();
+			String [] fichiers=Directory.GetFiles(path);
+			String [] reps = Directory.GetDirectories(path);
+			if(recursive) {
+				//write it
+			}
+			foreach(String fichier in fichiers) {
+				retour.Add(fichier);
+			}
+			
+			
+			return retour;
 		}
 	}
 }
