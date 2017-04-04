@@ -35,6 +35,7 @@ namespace EcUtil
 		private void InitializeComponent()
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.progressLabel = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.checkBox2 = new System.Windows.Forms.CheckBox();
 			this.copyDevePropChBox = new System.Windows.Forms.CheckBox();
@@ -46,13 +47,14 @@ namespace EcUtil
 			this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
 			this.newNameBox = new System.Windows.Forms.TextBox();
 			this.copyBtn = new System.Windows.Forms.Button();
-			this.progressLabel = new System.Windows.Forms.Label();
+			this.cmdTextBox = new System.Windows.Forms.TextBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.cmdTextBox);
 			this.groupBox1.Controls.Add(this.progressLabel);
 			this.groupBox1.Controls.Add(this.groupBox2);
 			this.groupBox1.Controls.Add(this.stayAliveCheckBox);
@@ -67,6 +69,13 @@ namespace EcUtil
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "...";
+			// 
+			// progressLabel
+			// 
+			this.progressLabel.Location = new System.Drawing.Point(19, 357);
+			this.progressLabel.Name = "progressLabel";
+			this.progressLabel.Size = new System.Drawing.Size(667, 29);
+			this.progressLabel.TabIndex = 10;
 			// 
 			// groupBox2
 			// 
@@ -147,6 +156,7 @@ namespace EcUtil
 			this.wkspacesLView.TabIndex = 2;
 			this.wkspacesLView.UseCompatibleStateImageBehavior = false;
 			this.wkspacesLView.View = System.Windows.Forms.View.List;
+			this.wkspacesLView.SelectedIndexChanged += new System.EventHandler(this.WkspacesLViewSelectedIndexChanged);
 			this.wkspacesLView.Click += new System.EventHandler(this.WkspacesLViewClick);
 			this.wkspacesLView.DoubleClick += new System.EventHandler(this.WkspacesLViewDoubleClick);
 			// 
@@ -172,12 +182,12 @@ namespace EcUtil
 			this.copyBtn.UseVisualStyleBackColor = true;
 			this.copyBtn.Click += new System.EventHandler(this.CopyBtnClick);
 			// 
-			// progressLabel
+			// cmdTextBox
 			// 
-			this.progressLabel.Location = new System.Drawing.Point(19, 357);
-			this.progressLabel.Name = "progressLabel";
-			this.progressLabel.Size = new System.Drawing.Size(667, 29);
-			this.progressLabel.TabIndex = 10;
+			this.cmdTextBox.Location = new System.Drawing.Point(24, 356);
+			this.cmdTextBox.Name = "cmdTextBox";
+			this.cmdTextBox.Size = new System.Drawing.Size(651, 20);
+			this.cmdTextBox.TabIndex = 11;
 			// 
 			// ECUtilMainForm
 			// 
@@ -194,6 +204,7 @@ namespace EcUtil
 			this.ResumeLayout(false);
 
 		}
+		private System.Windows.Forms.TextBox cmdTextBox;
 		private System.Windows.Forms.Label progressLabel;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.CheckBox copyDevePropChBox;

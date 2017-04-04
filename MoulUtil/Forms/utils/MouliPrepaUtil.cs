@@ -8,6 +8,7 @@ using System;
 using System.Drawing;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using cmdUtils.Objets;
 using System.Windows.Forms;
 namespace MoulUtil.Forms.utils
@@ -177,7 +178,7 @@ namespace MoulUtil.Forms.utils
 			return null;
 		}
 
-		public void sauvegardeMoulinette(string targetPath, MouliUtilOptions options)
+		public void sauvegardeMoulinette(String sourcePath, string targetPath, MouliUtilOptions options)
 		{
 			try {
 				if(options!=null) {
@@ -188,19 +189,32 @@ namespace MoulUtil.Forms.utils
 					Console.WriteLine("path:"+path);
 					Console.WriteLine("path:"+Path.GetFullPath(path));
 					Console.WriteLine("fileName:"+fileName);
-					File.Copy(options.getarchiveName(), Path.GetFullPath(path)+fileName, true);
+					if(File.Exists(options.getarchiveName())) {
+						File.Copy(options.getarchiveName(), Path.GetFullPath(path)+fileName, true);
+					}
+					
+					sourcePath = new DirectoryInfo(sourcePath).FullName;
+					MouliUtil mouliUtil = new MouliUtil();
+					List<String> toSaveFiles= mouliUtil.findFiles(sourcePath,  true, null, null);
+					Regex excludeRegex = new Regex("\\.(7z|rar|gz|gzip|zip)$");
+					toSaveFiles = mouliUtil.excludeFiles(toSaveFiles, excludeRegex);
+					ZipUtil zipUtil = new ZipUtil();
+					FileInfo fi =new FileInfo(options.getarchiveName());
+					
+					zipUtil.createSimpleArchive(9, Path.GetFullPath(path)+ "origine-"+fi.Name, toSaveFiles);
+					return;
 					
 					//creation zip sur cible, liste de fichiers a faire, en excluant *.zip, *.rar, *gz, *.7z
-//1 - faire la liste filtree
-//2 renseigner zip utiloptions.
+					//1 - faire la liste filtree
+					//2 renseigner zip utiloptions.
 //					ZipUtil zipUtil = new ZipUtil();
 //					ZipUtilOptions zipUtilOptions = new ZipUtilOptions();
 //					zipUtilOptions.setArchiveDir("");
 //					zipUtilOptions.setArchiveName("");
 //					zipUtilOptions.setSourceBaseDir("");
 //					zipUtilOptions.setSourceSelection(liste);
-//						
-//						
+//
+//
 //					zipUtil.createArchive(zipUtilOptions);
 					
 				}

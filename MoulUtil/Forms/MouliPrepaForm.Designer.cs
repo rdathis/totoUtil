@@ -98,9 +98,7 @@ namespace MoulUtil
 			this.rechMagIdBox.Name = "rechMagIdBox";
 			this.rechMagIdBox.Size = new System.Drawing.Size(108, 20);
 			this.rechMagIdBox.TabIndex = 0;
-			this.rechMagIdBox.Enter += new System.EventHandler(this.RechMagIdBoxEnter);
 			this.rechMagIdBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.RechMagIdBoxKeyUp);
-			this.rechMagIdBox.Validated += new System.EventHandler(this.RechMagIdBoxValidated);
 			// 
 			// sourceBaseBox
 			// 
@@ -391,6 +389,7 @@ namespace MoulUtil
 			this.targetTreeView.Size = new System.Drawing.Size(345, 365);
 			this.targetTreeView.TabIndex = 18;
 			this.targetTreeView.DoubleClick += new System.EventHandler(this.TargetTreeViewDoubleClick);
+			this.targetTreeView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TargetTreeViewMouseClick);
 			// 
 			// serveursContextMenu
 			// 
@@ -398,19 +397,21 @@ namespace MoulUtil
 			this.mysqlToolStripMenuItem,
 			this.puttyToolStripMenuItem});
 			this.serveursContextMenu.Name = "serveursContextMenu";
-			this.serveursContextMenu.Size = new System.Drawing.Size(102, 48);
+			this.serveursContextMenu.Size = new System.Drawing.Size(153, 70);
 			this.serveursContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ServeursContextMenuOpening);
+			
 			// 
 			// mysqlToolStripMenuItem
 			// 
 			this.mysqlToolStripMenuItem.Name = "mysqlToolStripMenuItem";
-			this.mysqlToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+			this.mysqlToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.mysqlToolStripMenuItem.Text = "mysql";
+			this.mysqlToolStripMenuItem.Click += new System.EventHandler(this.MysqlToolStripMenuItemClick);
 			// 
 			// puttyToolStripMenuItem
 			// 
 			this.puttyToolStripMenuItem.Name = "puttyToolStripMenuItem";
-			this.puttyToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+			this.puttyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.puttyToolStripMenuItem.Text = "putty";
 			this.puttyToolStripMenuItem.Click += new System.EventHandler(this.PuttyToolStripMenuItemClick);
 			// 

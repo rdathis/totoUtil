@@ -381,9 +381,8 @@ namespace cmdUtils.Objets
 			return archiveName;
 		}
 		
-		public List<String> findFiles(String path, Boolean recursive, List<Regex> filters) {
+		public List<String> findFiles(String path, Boolean recursive, Regex includeFilter, Regex excludeFilter) {
 			List<String> retour=null;
-			
 			if(!Directory.Exists(path)) {
 				return retour;
 			}
@@ -391,13 +390,28 @@ namespace cmdUtils.Objets
 			String [] fichiers=Directory.GetFiles(path);
 			String [] reps = Directory.GetDirectories(path);
 			if(recursive) {
-				//write it
+				foreach(String rep in reps) {
+					retour.AddRange(findFiles(rep, true, includeFilter, excludeFilter));
+				}
 			}
 			foreach(String fichier in fichiers) {
 				retour.Add(fichier);
 			}
 			
 			
+			return retour;
+		}
+
+		public List<string> excludeFiles(List<String> inLst, Regex   filterRegex)
+		{
+			List<String> retour=new List<String>();
+			foreach(String str in inLst) {
+				FileInfo fileInfo = new FileInfo(str);
+				
+				if( filterRegex!=null &&  !Regex.IsMatch(fileInfo.Name,filterRegex.ToString(),  RegexOptions.IgnoreCase)) {
+					retour.Add(fileInfo.FullName);
+				}
+			}
 			return retour;
 		}
 	}

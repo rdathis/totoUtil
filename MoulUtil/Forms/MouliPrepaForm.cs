@@ -78,12 +78,23 @@ namespace MoulUtil
 		}
 		void SauvegardeBtnClick(object sender, EventArgs e)
 		{
+			String sourceDir=workspaceBaseBox.Text+""+workspaceZoneBox.Text;
 			String targetDir = Path.GetFullPath(targetSvgPathBox.Text)+"\\" + targetNameBox.Text;
-			mouliUtil.createArbo(targetDir);
+			//mouliUtil.createArbo(targetDir);
 			//copier le resultat.zip dans le sousrep,
 			//generer un zip du rep tmp dans le sousrep. (comment le nommer ?)
-			cmdUtil.executeCommande("explorer", Path.GetFullPath(targetDir));
-			mouliPrepaUtil.sauvegardeMoulinette(targetSvgPathBox.Text, options);
+			sauvegardeBtn.Enabled=false;
+			statusStrip1.Text = "Préparation de la sauvegarde ...";
+			String tmpDir=Path.GetFullPath(targetDir).Replace('/', '\\');
+			tmpDir = new DirectoryInfo(tmpDir).Parent.FullName;
+			if(!Directory.Exists(tmpDir)) {
+				mouliUtil.safeCreateDirectory(tmpDir);
+			}
+			Console.WriteLine("->"+tmpDir);
+			cmdUtil.executeCommande("explorer", tmpDir);
+			mouliPrepaUtil.sauvegardeMoulinette(sourceDir, targetSvgPathBox.Text, options);
+			statusStrip1.Text = "sauvegarde terminée...";
+			sauvegardeBtn.Enabled=true;
 
 			//TODO:copy src files to target dir.
 		}
@@ -152,25 +163,9 @@ namespace MoulUtil
 		}
 		void PuttyToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			Console.WriteLine("putty asked");
-			//retrouver l'objet recu
-			// trouver le serveur, et faire un putty dedans
+			actionPutty(targetTreeView);
 		}
-		void RechMagIdBoxEnter(object sender, EventArgs e)
-		{
-			//marche seulement qd vide.
-			//rechercheMagasin();
-		}
-		void RechMagIdBoxValidated(object sender, EventArgs e)
-		{
-			//ne marche pas
-			//rechercheMagasin();
-		}
-		void RechMagIdBoxTextChanged(object sender, EventArgs e)
-		{
-			
 
-		}
 		void RechMagIdBoxKeyUp(object sender, KeyEventArgs e)
 		{
 			if (e.KeyValue.Equals(13)) {
@@ -185,14 +180,7 @@ namespace MoulUtil
 		}
 		void TargetTreeViewDoubleClick(object sender, EventArgs e)
 		{
-			MeoInstance meoInstance = getSelectedInstance(targetTreeView);
-			if(meoInstance!=null) {
-				MeoServeur meoServeur = MeoServeur.findServeurByName(configDto.serveurs, meoInstance.serveur);
-				if(meoServeur!= null) {
-					String args=cmdUtil.buildPuttyArgs(meoServeur);
-					cmdUtil.executeCommandAsDetachedProcess(MouliConfig.puttyPath, args);
-				}
-			}
+			actionPutty(targetTreeView);
 		}
 		MeoInstance getSelectedInstance(TreeView tv)
 		{
@@ -213,6 +201,37 @@ namespace MoulUtil
 			}
 			return instance;
 		}
+		void TargetTreeViewMouseClick(object sender, MouseEventArgs e)
+		{
+			
+			if(e.Button==System.Windows.Forms.MouseButtons.Right) {
+				serveursContextMenu.Show();
+			}
+		}
+
+		void MysqlToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			actionMysql(getSelectedInstance(targetTreeView));
+		}
 		
+		void actionMysql(MeoInstance meoInstance)
+		{
+			System.Diagnostics.Debug.Print("actionMysql()");
+			//todo
+		}
+
+		
+		void actionPutty(TreeView treeView)
+		{
+			System.Diagnostics.Debug.Print("actionPutty()");
+			MeoInstance meoInstance = getSelectedInstance(treeView);
+			if(meoInstance!=null) {
+				MeoServeur meoServeur = MeoServeur.findServeurByName(configDto.serveurs, meoInstance.serveur);
+				if(meoServeur!= null) {
+					String args=cmdUtil.buildPuttyArgs(meoServeur);
+					cmdUtil.executeCommandAsDetachedProcess(MouliConfig.puttyPath, args);
+				}
+			}
+		}
 	}
 }

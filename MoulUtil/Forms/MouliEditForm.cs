@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using cmdUtils.Objets;
+using cmdUtils.Objets.utils;
 namespace MoulUtil.Forms
 {
 	/// <summary>
@@ -30,6 +31,11 @@ namespace MoulUtil.Forms
 		private void populate(ConfigDto configDto) {
 			populateSql(configDto);
 			populateStrings(configDto);
+			populateWorkspacePath();
+		}
+		private void populateWorkspacePath() {
+			RegistryUtil registryUtil = new RegistryUtil();
+			workspaceBasePath.Text=registryUtil.getHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.mouliUtilPath);
 		}
 		// disable once ParameterHidesMember
 		private void populateSql(ConfigDto configDto) {
@@ -56,8 +62,12 @@ namespace MoulUtil.Forms
 		private void updateBusiness(ConfigDto configDto) {
 			updateBusinessSql(configDto);
 			updateBusinessStrings(configDto);
+			updateBusinessWorkspacePath();
 		}
-		
+		private void updateBusinessWorkspacePath() {
+			RegistryUtil registryUtil = new RegistryUtil();
+			registryUtil.setHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key, workspaceBasePath.Text);
+		}
 		// disable once ParameterHidesMember
 		private void updateBusinessSql(ConfigDto configDto) {
 			configDto.setSQL01(sql01.Text);

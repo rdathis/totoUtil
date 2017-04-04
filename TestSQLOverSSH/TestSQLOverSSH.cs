@@ -7,6 +7,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
+using System.Net.Mime;
+using System.Text.RegularExpressions;
 using MySql.Data.MySqlClient;
 using Renci.SshNet;
 using Renci.SshNet.Common;
@@ -20,6 +23,23 @@ namespace TestSQLOverSSH
 		{
 			Console.WriteLine("Hello World!");
 			
+			MouliUtil util=new MouliUtil();
+			List <String> strs= util.findFiles("W:/meo-moulinettes/workspace/MID2317-SARLOPTIK95-i-4/",true, null, null);
+			//strs.Clear();
+			strs.Add("tralala.zip");
+			strs.Add("tralala.7z");
+			strs.Add("tralala.pouet");
+				foreach(String str in strs) {
+				FileInfo fileInfo = new FileInfo(str);
+				String filterRegex="\\.(7z|rar|gz|gzip|zip)$";
+				if( !Regex.IsMatch(fileInfo.Name,filterRegex,  RegexOptions.IgnoreCase)) {
+					Console.WriteLine(fileInfo.FullName);
+				}
+				
+			}
+
+			               
+			return;
 			TestSQLOverSSH testSQLOverSSH= new TestSQLOverSSH();
 			testSQLOverSSH.test01();
 			

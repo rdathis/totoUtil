@@ -44,7 +44,7 @@
 				          WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
 				
 				<RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-				<RegistryValue Root="HKCU" Key="Software\Microsoft\MeoMillser" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+				<RegistryValue Root="HKCU" Key="Software\Rfx\MeoMillser" Name="path" Type="string" Value="[APPLICATIONROOTDIRECTORY]" KeyPath="yes"/>
 			</Component>
 			<Component Id="doc" Guid="4307bd2a-6667-4d39-a7f2-c90c95d04cf3">
 				<File Id="doc" Source="..\docs\HOWTo-mouliUtil.pdf" KeyPath="yes"/>

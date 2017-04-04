@@ -86,6 +86,7 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Objets\business\MoulinetteAction.cs" />
     <Compile Include="Objets\ConfigDto.cs" />
     <Compile Include="Objets\ConfigUtil.cs" />
     <Compile Include="Objets\ConvertisseurUtil.cs" />
@@ -101,7 +102,6 @@
     <Compile Include="Objets\MoulinettePurgeOptionType.cs" />
     <Compile Include="Objets\MouliConfig.cs" />
     <Compile Include="Objets\MouliJob.cs" />
-    <Compile Include="Objets\MoulinetteAction.cs" />
     <Compile Include="Objets\MoulinettePurgeOptionTypes.cs" />
     <Compile Include="Objets\MouliStatRecap.cs" />
     <Compile Include="Objets\MouliUtil.cs" />
@@ -117,6 +117,7 @@
     <Compile Include="Objets\RichTextBoxUtilcs.cs" />
     <Compile Include="Objets\SshUtil.cs" />
     <Compile Include="Objets\TreeViewUtil.cs" />
+    <Compile Include="Objets\utils\RegistryUtil.cs" />
     <Compile Include="Objets\YFiles.cs" />
     <Compile Include="Objets\ZipUtil.cs" />
     <Compile Include="Objets\ZipUtilOptions.cs" />
@@ -150,6 +151,8 @@
     <Folder Include="Controles" />
     <Folder Include="Forms" />
     <Folder Include="Objets" />
+    <Folder Include="Objets\business" />
+    <Folder Include="Objets\utils" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

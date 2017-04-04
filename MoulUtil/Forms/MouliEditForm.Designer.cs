@@ -71,6 +71,8 @@ namespace MoulUtil.Forms
 			this.instancesButton = new System.Windows.Forms.Button();
 			this.sqlButton = new System.Windows.Forms.Button();
 			this.paramButton = new System.Windows.Forms.Button();
+			this.label2 = new System.Windows.Forms.Label();
+			this.workspaceBasePath = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -373,11 +375,28 @@ namespace MoulUtil.Forms
 			this.paramButton.UseVisualStyleBackColor = true;
 			this.paramButton.Click += new System.EventHandler(this.ParamButtonClick);
 			// 
+			// label2
+			// 
+			this.label2.Location = new System.Drawing.Point(600, 8);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(129, 23);
+			this.label2.TabIndex = 39;
+			this.label2.Text = "workspace Base Path";
+			// 
+			// workspaceBasePath
+			// 
+			this.workspaceBasePath.Location = new System.Drawing.Point(735, 5);
+			this.workspaceBasePath.Name = "workspaceBasePath";
+			this.workspaceBasePath.Size = new System.Drawing.Size(148, 20);
+			this.workspaceBasePath.TabIndex = 40;
+			// 
 			// MouliEditForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(960, 721);
+			this.Controls.Add(this.workspaceBasePath);
+			this.Controls.Add(this.label2);
 			this.Controls.Add(this.paramButton);
 			this.Controls.Add(this.sqlButton);
 			this.Controls.Add(this.instancesButton);
@@ -421,6 +440,8 @@ namespace MoulUtil.Forms
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.TextBox workspaceBasePath;
+		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Button paramButton;
 		private System.Windows.Forms.Button sqlButton;
 		private System.Windows.Forms.Button instancesButton;

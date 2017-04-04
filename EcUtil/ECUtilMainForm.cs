@@ -43,6 +43,7 @@ namespace EcUtil
 		}
 
 		private void populate() {
+			cmdTextBox.ReadOnly=true;
 			workspacesBaseLabel.Text="m:/workspaces/";
 			ecPathLabel.Text="m:/eclipse-2016/eclipse.exe";
 			populateWorkspaces(workspacesBaseLabel.Text);
@@ -62,7 +63,7 @@ namespace EcUtil
 				String args = value;
 				args=" -data \""+args+"\"";
 				Debug.Print(" cmd : "+cmd +" args : "+args);
-				
+				majCmd(cmd + " "+args);
 				cmdUtils.executeCommandAsDetachedProcess(cmd, args);
 				if(!stayAliveCheckBox.Checked) {
 					Application.Exit();
@@ -165,6 +166,21 @@ namespace EcUtil
 			} else {
 				return false;
 			}
+		}
+		void WkspacesLViewSelectedIndexChanged(object sender, EventArgs e)
+		{
+			String value = getWorkspace();
+			if(value != null) {
+				String cmd=ecPathLabel.Text;
+				String args = value;
+				args=" -data \""+args+"\"";
+				Debug.Print(" cmd : "+cmd +" args : "+args);
+				majCmd(cmd + " "+args);
+				
+			}
+		}
+		private void majCmd(String cmd) {
+			cmdTextBox.Text = cmd.Replace("/", "\\");;
 		}
 	}
 }
