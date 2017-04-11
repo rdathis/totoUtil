@@ -35,7 +35,7 @@ namespace MoulUtil.Forms
 		}
 		private void populateWorkspacePath() {
 			RegistryUtil registryUtil = new RegistryUtil();
-			workspaceBasePath.Text=registryUtil.getHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.mouliUtilPath);
+			workspaceBasePath.Text=registryUtil.getHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key);
 		}
 		// disable once ParameterHidesMember
 		private void populateSql(ConfigDto configDto) {

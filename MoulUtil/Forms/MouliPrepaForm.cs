@@ -13,6 +13,8 @@ using System.Net.Mime;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using cmdUtils.Objets;
+using cmdUtils.Objets.utils;
+using cmdUtils.Objets.utils;
 using MoulUtil.Forms;
 using MoulUtil.Forms.utils;
 
@@ -32,12 +34,21 @@ namespace MoulUtil
 		private MouliUtil mouliUtil = null;
 		private MouliUtilOptions options = null;
 		protected CmdUtil cmdUtil = null;
+		private RegistryUtil registryUtil=null;
 		public MouliPrepaForm(ConfigDto configDto)
 		{
 			InitializeComponent();
+			registryUtil=new RegistryUtil();
+			String workspacePath=registryUtil.getHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key);
 			mouliPrepaUtil = new MouliPrepaUtil(this, configDto);
 			this.configDto = configDto;
-			this.workingDirBox.Text=configDto.getWorkingDir();
+			if(!String.IsNullOrEmpty( workspacePath)) {
+				workspacePath+= ""+configDto.getWorkingDir().Replace("\\", "/");
+			} else {
+				workspacePath=configDto.getWorkingDir();
+			}
+			
+			this.workingDirBox.Text=workspacePath;
 			mouliUtil = new MouliUtil();
 			cmdUtil=new CmdUtil();
 			new TreeViewUtil(configDto.instances,configDto.serveurs).populateTargets(targetTreeView);

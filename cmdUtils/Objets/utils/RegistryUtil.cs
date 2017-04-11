@@ -5,6 +5,7 @@
  * 
  */
 using System;
+using Microsoft.Win32;
 
 namespace cmdUtils.Objets.utils
 {
@@ -26,8 +27,8 @@ namespace cmdUtils.Objets.utils
 			key.Close();
 		}
 		public String getHKCUString(String subKey, String name) {
-			//try {..} outside
-			return (string)Microsoft.Win32.Registry.CurrentUser.GetValue(name);
+			RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(@mouliUtilPath);
+			return (string)registryKey.GetValue(key);
 		}
 	}
 }
