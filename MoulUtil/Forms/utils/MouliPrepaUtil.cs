@@ -5,6 +5,7 @@
  * 
  */
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Collections.Generic;
 using System.IO;
@@ -220,6 +221,11 @@ namespace MoulUtil.Forms.utils
 				}
 			} catch(Exception exception) {
 				MessageBox.Show("Erreur de copie de vers "+Path.GetFullPath(targetPath)+"\n "+exception.Message);
+			}
+		}
+		public void startBrowser(String url) {
+			if(url!=null) {
+				Process.Start("chrome", @url);
 			}
 		}
 	}

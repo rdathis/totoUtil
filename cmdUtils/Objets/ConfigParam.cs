@@ -14,16 +14,14 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public class ConfigParam {
 		public enum ParamNamesType	{
-			[XmlEnum("moulinetteSource")]
-			moulinetteSource,
-			[XmlEnum("INCONNU")]
-			INCONNU
+			[XmlEnum("moulinetteSource")] moulinetteSource,
+			[XmlEnum("history")] history,
+			[XmlEnum("INCONNU")] INCONNU
 		}
 		public enum ParamTypesType {
-			[XmlEnum("generic")]
-			generic,
-			[XmlEnum("chemin")]
-			chemin
+			[XmlEnum("generic")] generic,
+			[XmlEnum("chemin")] chemin,
+			[XmlEnum("url")] url
 		}
 		
 		[XmlAttribute]
@@ -32,6 +30,9 @@ namespace cmdUtils.Objets
 		public ParamTypesType type { get; set ;}
 		[XmlText]
 		public string Value { get; set; }
+		public ConfigParam() {
+			//just for xml serialization 
+		}
 		public ConfigParam(ParamNamesType nom, ParamTypesType type, String value) {
 			this.nom=nom;
 			this.type=type;

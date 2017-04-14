@@ -14,7 +14,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using cmdUtils.Objets;
 using cmdUtils.Objets.utils;
-using cmdUtils.Objets.utils;
 using MoulUtil.Forms;
 using MoulUtil.Forms.utils;
 
@@ -242,6 +241,15 @@ namespace MoulUtil
 					String args=cmdUtil.buildPuttyArgs(meoServeur);
 					cmdUtil.executeCommandAsDetachedProcess(MouliConfig.puttyPath, args);
 				}
+			}
+		}
+		void HistoryLabelClick(object sender, EventArgs e)
+		{
+			ConfigParam param = configDto.getConfigParamByName(ConfigParam.ParamNamesType.history);
+			if(param!=null) {
+				mouliPrepaUtil.startBrowser(param.Value);
+			} else {
+				//historyLabel.Enabled=false;
 			}
 		}
 	}

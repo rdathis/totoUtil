@@ -73,6 +73,7 @@ namespace MoulUtil
 			this.serveursContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.mysqlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.puttyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.historyLabel = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -397,29 +398,41 @@ namespace MoulUtil
 			this.mysqlToolStripMenuItem,
 			this.puttyToolStripMenuItem});
 			this.serveursContextMenu.Name = "serveursContextMenu";
-			this.serveursContextMenu.Size = new System.Drawing.Size(153, 70);
+			this.serveursContextMenu.Size = new System.Drawing.Size(102, 48);
 			this.serveursContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ServeursContextMenuOpening);
-			
 			// 
 			// mysqlToolStripMenuItem
 			// 
 			this.mysqlToolStripMenuItem.Name = "mysqlToolStripMenuItem";
-			this.mysqlToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.mysqlToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
 			this.mysqlToolStripMenuItem.Text = "mysql";
 			this.mysqlToolStripMenuItem.Click += new System.EventHandler(this.MysqlToolStripMenuItemClick);
 			// 
 			// puttyToolStripMenuItem
 			// 
 			this.puttyToolStripMenuItem.Name = "puttyToolStripMenuItem";
-			this.puttyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.puttyToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
 			this.puttyToolStripMenuItem.Text = "putty";
 			this.puttyToolStripMenuItem.Click += new System.EventHandler(this.PuttyToolStripMenuItemClick);
+			// 
+			// historyLabel
+			// 
+			this.historyLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+			this.historyLabel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+			this.historyLabel.Location = new System.Drawing.Point(128, 412);
+			this.historyLabel.Name = "historyLabel";
+			this.historyLabel.Size = new System.Drawing.Size(66, 25);
+			this.historyLabel.TabIndex = 19;
+			this.historyLabel.Text = "history";
+			this.historyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.historyLabel.Click += new System.EventHandler(this.HistoryLabelClick);
 			// 
 			// MouliPrepaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(681, 759);
+			this.Controls.Add(this.historyLabel);
 			this.Controls.Add(this.targetTreeView);
 			this.Controls.Add(this.configBtn);
 			this.Controls.Add(this.sqlBtn);
@@ -450,6 +463,7 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Label historyLabel;
 		private cmdUtils.Controles.NavigatorUserControl svgFinalNavigatorUserControl;
 		private cmdUtils.Controles.NavigatorUserControl svgBaseNavigatorUserControl;
 		private cmdUtils.Controles.NavigatorUserControl workspaceNavigatorUserControl;

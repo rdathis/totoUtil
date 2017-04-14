@@ -121,8 +121,8 @@ namespace MoulUtil.Forms
 		}
 		void ParamButtonClick(object sender, EventArgs e)
 		{
-//			configForm = new MouliParamEditorForm(configDto.configParams);
-//			configForm.Show();
+			configForm = new MouliParamEditorForm(configDto.configParams);
+			configForm.Show();
 			
 		}
 	}
