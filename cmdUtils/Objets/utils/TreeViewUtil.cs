@@ -6,6 +6,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace cmdUtils.Objets
@@ -28,6 +29,14 @@ namespace cmdUtils.Objets
 			if (serveurs != null) {
 				foreach (MeoServeur serveur in serveurs) {
 					TreeNode node = tv.Nodes.Add(serveur.getNom());
+					if(serveur.test) {
+						node.BackColor=Color.Orange;
+						node.ToolTipText = "Serveur de TEST";
+					} else {
+						node.BackColor=Color.DarkRed;
+						node.ForeColor = Color.Yellow;
+						node.ToolTipText = "Serveur de Prod";
+					}
 					completeInstances(node, serveur.getNom());
 					node.ExpandAll();
 				}

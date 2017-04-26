@@ -192,6 +192,17 @@ namespace MoulUtil
 		{
 			actionPutty(targetTreeView);
 		}
+		MeoServeur getSelectedServeur(TreeView tv) {
+			TreeNode node = tv.SelectedNode;
+			int level=node.Level;
+			String text =node.Text;
+			MeoServeur meoServeur =null;
+
+			if(level==0) {
+				meoServeur = MeoServeur.findServeurByName(configDto.serveurs, text);
+			}
+			return meoServeur;
+		}
 		MeoInstance getSelectedInstance(TreeView tv)
 		{
 			TreeNode node = tv.SelectedNode;
@@ -234,15 +245,19 @@ namespace MoulUtil
 		void actionPutty(TreeView treeView)
 		{
 			System.Diagnostics.Debug.Print("actionPutty()");
+			MeoServeur meoServeur= null;
 			MeoInstance meoInstance = getSelectedInstance(treeView);
 			if(meoInstance!=null) {
-				MeoServeur meoServeur = MeoServeur.findServeurByName(configDto.serveurs, meoInstance.serveur);
-				if(meoServeur!= null) {
-					String args=cmdUtil.buildPuttyArgs(meoServeur);
-					cmdUtil.executeCommandAsDetachedProcess(MouliConfig.puttyPath, args);
-				}
+				meoServeur = MeoServeur.findServeurByName(configDto.serveurs, meoInstance.serveur);
+			} else {
+				meoServeur = 	getSelectedServeur(treeView);
+			}
+			if(meoServeur!= null) {
+				String args=cmdUtil.buildPuttyArgs(meoServeur);
+				cmdUtil.executeCommandAsDetachedProcess(MouliConfig.puttyPath, args);
 			}
 		}
+		
 		void HistoryLabelClick(object sender, EventArgs e)
 		{
 			ConfigParam param = configDto.getConfigParamByName(ConfigParam.ParamNamesType.history);

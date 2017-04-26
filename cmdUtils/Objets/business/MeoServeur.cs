@@ -26,6 +26,8 @@ namespace cmdUtils.Objets
 		[XmlAttribute]
 		public String password;
 		
+		[XmlAttribute]
+		public Boolean test;
 		public MeoServeur() {
 			// empty for serialisator
 		}
