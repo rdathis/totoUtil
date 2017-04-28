@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
+using cmdUtils.Objets.business;
 
 namespace cmdUtils.Objets
 {
@@ -27,11 +28,6 @@ namespace cmdUtils.Objets
 		public String targetSvgPath;
 		public String databaseAdminUser;
 		public String databaseAdminPwd;
-		public String sql01;
-		public String sql02;
-		public String sql03;
-		public String sql04;
-		public String sql05;
 		public String databaseAdminName;
 		public String defaultPassword;
 		public String appPlink;
@@ -45,10 +41,32 @@ namespace cmdUtils.Objets
 		public List <MeoSql> getSqlCommands () {
 			return sqlcommands;
 		}
-		public MeoSql getSql(String nom) {
+		public MeoSql getSql(SqlCommandsType commande) {
+			foreach(MeoSql meoSql in sqlcommands) {
+				if(meoSql.nom.Equals(commande.ToString())) {
+					return meoSql;
+				}
+			}
 			return null;
 		}
-			public List<MeoServeur> getServeurs()
+		public void setSql(SqlCommandsType commande, String value) {
+			MeoSql meoSql = getSql(commande);
+			if(meoSql!=null) {
+				meoSql.Value=value;
+			}
+
+		}
+
+		public String getSqlCommand(SqlCommandsType commande) {
+			MeoSql meoSql = getSql(commande);
+			if(meoSql!=null) {
+				return meoSql.Value;
+			}
+			return null;
+		}
+		
+		
+		public List<MeoServeur> getServeurs()
 		{
 			return serveurs;
 		}
@@ -82,23 +100,6 @@ namespace cmdUtils.Objets
 		{
 			return databaseAdminPwd;
 		}
-		
-		public string getSQL01() {
-			return sql01;
-		}
-		public string getSQL02() {
-			return sql02;
-		}
-		public string getSQL03() {
-			return sql03;
-		}
-		public string getSQL04() {
-			return sql04;
-		}
-		public string getSQL05() {
-			return sql05;
-		}
-
 		public string getDatabaseAdminName()
 		{
 			return databaseAdminName;
@@ -110,22 +111,6 @@ namespace cmdUtils.Objets
 		}
 		public void setDatabaseAdminPwd(String value) {
 			databaseAdminPwd = value;
-		}
-		
-		public void setSQL01(String value) {
-			sql01 = value;
-		}
-		public void setSQL02(String value){
-			sql02 = value;
-		}
-		public void setSQL03(String value){
-			sql03 = value;
-		}
-		public void setSQL04(String value){
-			sql04 = value;
-		}
-		public void setSQL05(String value){
-			sql05 = value;
 		}
 		public void setDatabaseAdminName(String value){
 			databaseAdminName = value;
@@ -157,13 +142,13 @@ namespace cmdUtils.Objets
 		}
 
 		public ConfigParam getConfigParamByName(ConfigParam.ParamNamesType paramName) {
-				return getConfigParamByName(paramName.ToString());
+			return getConfigParamByName(paramName.ToString());
 		}
 		public ConfigParam getConfigParamByName(String nom) {
 			if(configParams!=null) {
 				foreach(ConfigParam configParam in configParams) {
 					
-					//dont work because serilization of enum 
+					//dont work because serilization of enum
 					if(configParam.nom.Equals(nom)) {
 						return configParam;
 					}
@@ -173,7 +158,7 @@ namespace cmdUtils.Objets
 						return configParam;
 					}
 				}
-			} 
+			}
 			return null;
 		}
 

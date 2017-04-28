@@ -16,11 +16,6 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public class MouliUtilOptions
 	{
-		public enum SQLCommands
-		{
-			getExtensionStock,
-			getExtensionClient
-		}
 
 		private const int anneesConservationStockSiPurge = 2;
 		private const int anneesConservationVisiteSiPurge = 10;
