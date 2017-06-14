@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Net.Mime;
 using System.Windows.Forms;
 using cmdUtils.Objets;
+using cmdUtils.Objets.business;
 namespace MoulUtil
 {
 	/// <summary>
@@ -72,10 +73,10 @@ namespace MoulUtil
 		private void populate() {
 			this.magasinIdBox.Text=magId;
 			this.magasinIdBox.Enabled=false;
-			statStockLabel.Tag = configDto.sql02;
-			statVisitesLabel.Tag=configDto.sql04;
-			purgeStockLabel.Tag=configDto.sql03;
-			purgeVisitesLabel.Tag=configDto.sql05;
+			statStockLabel.Tag = configDto.getSqlCommand(SqlCommandsType.getExtensionStock);
+			statVisitesLabel.Tag=configDto.getSqlCommand(SqlCommandsType.getExtensionClient);
+			purgeStockLabel.Tag=configDto.getSqlCommand(SqlCommandsType.doPurgeStock);
+			purgeVisitesLabel.Tag=configDto.getSqlCommand(SqlCommandsType.doPurgeClient);
 			
 			DateTime dt = DateTime.Now;
 			anneeStockPurgeBox.Text = "2001";

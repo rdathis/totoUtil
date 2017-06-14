@@ -110,6 +110,7 @@
     <Compile Include="Objets\utils\CmdUtil.cs" />
     <Compile Include="Objets\utils\ConfigUtil.cs" />
     <Compile Include="Objets\utils\ConvertisseurUtil.cs" />
+    <Compile Include="Objets\utils\CryptoUtil.cs" />
     <Compile Include="Objets\utils\FileCopyUtil.cs" />
     <Compile Include="Objets\utils\MeoSavUtil.cs" />
     <Compile Include="Objets\utils\MouliUtil.cs" />

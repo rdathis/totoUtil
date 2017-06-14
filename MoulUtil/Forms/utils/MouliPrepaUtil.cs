@@ -5,6 +5,7 @@
  * 
  */
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using cmdUtils.Objets;
 using System.Windows.Forms;
+using cmdUtils.Objets.business;
 namespace MoulUtil.Forms.utils
 {
 	public class MouliPrepaUtil
@@ -31,14 +33,14 @@ namespace MoulUtil.Forms.utils
 			try {
 				//demarrage du plink en arriere plan pour le tunnel SSH
 				ProcessUtil putil =new ProcessUtil();
-				plinkProcess= putil.startProcess(MouliConfig.plinkPath, configDto.appPlink, System.Diagnostics.ProcessWindowStyle.Normal);
+				plinkProcess= putil.startProcess(MouliConfig.plinkPath, configDto.getAppPlink(), System.Diagnostics.ProcessWindowStyle.Normal);
 				mouliPrepaForm.BackColor = Color.LightBlue;
 			} catch(Exception exs) {
 				Console.WriteLine ("erreur sur start de plink",exs);
 				plinkProcess=null;
 				mouliPrepaForm.BackColor = Color.Orange;
 			}
-			if(configDto.appPlink!=null) {
+			if(configDto.getAppPlink()!=null) {
 			}
 			return plinkProcess;
 		}
@@ -95,7 +97,7 @@ namespace MoulUtil.Forms.utils
 			if(rechMagIdBox.Text.Equals("0")) {
 				magDescBox.Text = "Fake Shop";
 				String rep= "MID0000-TOTO-i0/";
-				propositionBox.Text = configDto.workingDir+rep;
+				propositionBox.Text = configDto.getWorkingDir()+rep;
 				mouliPrepaForm.CreateBtnClick(null, null);
 				createMock(workingPath+rep);
 				options = new MouliUtilOptions();
@@ -105,7 +107,7 @@ namespace MoulUtil.Forms.utils
 			MyUtil myUtil = new MyUtil();
 			String user = configDto.getDatabaseAdminUser();
 			String pwd = configDto.getDatabaseAdminPwd();
-			String sql = configDto.getSQL01();
+			String sql = configDto.getSqlCommand(SqlCommandsType.getDescriptionMagasin);
 			String database = configDto.getDatabaseAdminName();
 			
 			const int port = 3615;
@@ -179,7 +181,7 @@ namespace MoulUtil.Forms.utils
 			return null;
 		}
 
-		public void sauvegardeMoulinette(String sourcePath, string targetPath, MouliUtilOptions options)
+		public void sauvegardeMoulinette(String sourcePath, string targetPath, MouliUtilOptions options, BackgroundWorker backgroundWorker)
 		{
 			try {
 				if(options!=null) {
@@ -196,13 +198,13 @@ namespace MoulUtil.Forms.utils
 					
 					sourcePath = new DirectoryInfo(sourcePath).FullName;
 					MouliUtil mouliUtil = new MouliUtil();
-					List<String> toSaveFiles= mouliUtil.findFiles(sourcePath,  true, null, null);
 					Regex excludeRegex = new Regex("\\.(7z|rar|gz|gzip|zip)$");
+					List<String> toSaveFiles= mouliUtil.findFiles(sourcePath,  true, null, excludeRegex);
 					toSaveFiles = mouliUtil.excludeFiles(toSaveFiles, excludeRegex);
 					ZipUtil zipUtil = new ZipUtil();
 					FileInfo fi =new FileInfo(options.getarchiveName());
 					
-					zipUtil.createSimpleArchive(9, Path.GetFullPath(path)+ "origine-"+fi.Name, toSaveFiles);
+					zipUtil.createSimpleArchive(9, Path.GetFullPath(path)+ "origine-"+fi.Name, toSaveFiles, backgroundWorker);
 					return;
 					
 					//creation zip sur cible, liste de fichiers a faire, en excluant *.zip, *.rar, *gz, *.7z

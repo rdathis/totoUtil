@@ -7,6 +7,7 @@
  * Pour changer ce modèle utiliser Outils | Options | Codage | Editer les en-têtes standards.
  */
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Net.Mime;
@@ -34,6 +35,8 @@ namespace MoulUtil
 		private MouliUtilOptions options = null;
 		protected CmdUtil cmdUtil = null;
 		private RegistryUtil registryUtil=null;
+		private MouliPrepaBackgroundWorkerUtil mouliPrepaBWUtil = new MouliPrepaBackgroundWorkerUtil();
+		private BackgroundWorker sauveMoulinetteBackgroundWorker=null;
 		public MouliPrepaForm(ConfigDto configDto)
 		{
 			InitializeComponent();
@@ -57,8 +60,21 @@ namespace MoulUtil
 			svgBaseNavigatorUserControl.setBox(targetSvgPathBox);
 			svgFinalNavigatorUserControl.setBoxes(targetSvgPathBox, targetNameBox);
 			
+			initBackgroundWorker();
 			rechMagIdBox.Focus();
 		}
+
+		public void initBackgroundWorker(){
+			initSauvegardeBackgroundWorker();
+		}
+		public void controleRegistre()
+		{
+			if(! registryUtil.existsHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key) ) {;
+				Console.WriteLine("Creation de la clef de registre");
+				registryUtil.setHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key, Directory.GetCurrentDirectory() + "\\");
+			}
+		}
+
 		void MouliPrepaLoad(object sender, EventArgs e)
 		{
 			plinkProcess= mouliPrepaUtil.startPlink(configDto);
@@ -102,7 +118,7 @@ namespace MoulUtil
 			}
 			Console.WriteLine("->"+tmpDir);
 			cmdUtil.executeCommande("explorer", tmpDir);
-			mouliPrepaUtil.sauvegardeMoulinette(sourceDir, targetSvgPathBox.Text, options);
+			mouliPrepaUtil.sauvegardeMoulinette(sourceDir, targetSvgPathBox.Text, options, sauveMoulinetteBackgroundWorker);
 			statusStrip1.Text = "sauvegarde terminée...";
 			sauvegardeBtn.Enabled=true;
 
@@ -114,7 +130,7 @@ namespace MoulUtil
 		}
 
 		void rechercheMagasin() {
-			String workingPath=workspaceBaseBox.Text+workingDirBox.Text;
+			String workingPath=workspaceBaseBox.Text;
 			options=mouliPrepaUtil.rechercheMagasin(rechMagIdBox, magDescBox, propositionBox, workingPath, sqlBtn);
 			if(options!=null) {
 				calculeMoulinettePath();
@@ -266,6 +282,14 @@ namespace MoulUtil
 			} else {
 				//historyLabel.Enabled=false;
 			}
+		}
+		private void initSauvegardeBackgroundWorker() {
+			sauveMoulinetteBackgroundWorker = new BackgroundWorker();
+			sauveMoulinetteBackgroundWorker.WorkerSupportsCancellation = true;
+			sauveMoulinetteBackgroundWorker.WorkerReportsProgress = true;
+			sauveMoulinetteBackgroundWorker.DoWork +=new DoWorkEventHandler(mouliPrepaBWUtil.sauvegardeBW_DoWork);
+			sauveMoulinetteBackgroundWorker.ProgressChanged += new ProgressChangedEventHandler(mouliPrepaBWUtil.sauvegardeBW_ProgressChanged);
+			sauveMoulinetteBackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(mouliPrepaBWUtil.sauvegardeBW_RunWorkerCompleted);
 		}
 	}
 }

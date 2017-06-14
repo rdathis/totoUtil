@@ -7,6 +7,7 @@
  * Pour changer ce modèle utiliser Outils | Options | Codage | Editer les en-têtes standards.
  */
 using System;
+using System.ComponentModel;
 using System.IO;
 
 namespace cmdUtils.Objets
@@ -16,7 +17,9 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public class ZipUtilOptions
 	{
-		public enum tauxCompression {nulle=0, petit=1, moyen=5, maxi=9};
+		public enum TauxCompression {
+			nulle=0, petit=1, moyen=5, maxi=9
+		};
 		
 		public delegate String renommeFichierZip(String fichierNom);
 			
@@ -27,6 +30,8 @@ namespace cmdUtils.Objets
 		//source
 		private string sourceBaseDir;
 		private string[] sourceSelection;
+		private TauxCompression tauxCompression=TauxCompression.moyen;
+		private BackgroundWorker backgroundWorker;
 		
 		private renommeFichierZip fonction=null;
 		//private string datamag;
@@ -86,5 +91,17 @@ namespace cmdUtils.Objets
 			return false;
 		}
 		
+		public TauxCompression getTauxCompression() {
+			return tauxCompression;
+		}
+		public void setTauxCompression(TauxCompression taux) {
+			tauxCompression=taux;
+		}
+		public BackgroundWorker getBackgroundWorker() {
+			return this.backgroundWorker;
+		}
+		public void setBackgroundWorker(BackgroundWorker backgroundWorker) {
+			this.backgroundWorker=backgroundWorker;
+		}
 	}
 }

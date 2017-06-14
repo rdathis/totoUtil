@@ -236,10 +236,11 @@ namespace cmdUtils.Objets
 			
 			// outputFile.WriteLine("MPATH=`dirname $0` ");
 			// outputFile.WriteLine("cd $MPATH && MPATH=$PWD");
-			outputFile.WriteLine("echo /bin/sh " + scriptMoulinetteFile + " -mail | at " + jobtime + " ");
+			outputFile.WriteLine("export jobtime='"+ jobtime + "'");
+			outputFile.WriteLine("echo /bin/sh " + scriptMoulinetteFile + " -mail | at $jobtime  ");
 			//
 			String mailTo=options.getDefaultEmail();
-			String mailCmd="mail -s \"planification moulinette + "+scriptMoulinetteFile+" ("+jobtime+")\" "+mailTo+" < " + scriptMoulinetteFile;
+			String mailCmd="mail -s \"planification moulinette + "+scriptMoulinetteFile+" ($jobtime)\" "+mailTo+" < " + scriptMoulinetteFile;
 			outputFile.WriteLine(mailCmd);
 			outputFile.Close();
 		}

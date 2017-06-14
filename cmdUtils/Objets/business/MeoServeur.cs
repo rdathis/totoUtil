@@ -28,6 +28,10 @@ namespace cmdUtils.Objets
 		
 		[XmlAttribute]
 		public Boolean test;
+		
+		[XmlAttribute]
+		public Boolean boboche;
+		
 		public MeoServeur() {
 			// empty for serialisator
 		}
@@ -55,6 +59,12 @@ namespace cmdUtils.Objets
 		}
 		public void setPassword(String value) {
 			password=value;
+		}
+		public void setBoboche(Boolean value) {
+			boboche=value;
+		}
+		public Boolean getBoboche() {
+			return boboche;
 		}
 		public static MeoServeur findServeurByName(List<MeoServeur> list, string serverName)
 		{

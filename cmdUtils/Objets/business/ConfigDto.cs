@@ -25,14 +25,6 @@ namespace cmdUtils.Objets
 		
 		public List<ConfigParam> configParams;
 		
-		public String targetSvgPath;
-		public String databaseAdminUser;
-		public String databaseAdminPwd;
-		public String databaseAdminName;
-		public String defaultPassword;
-		public String appPlink;
-		public String defaultEmail;
-		public String workingDir;
 		public ConfigDto()
 		{
 
@@ -85,62 +77,76 @@ namespace cmdUtils.Objets
 		}
 		public void setTargetSvgPath(String value)
 		{
-			targetSvgPath = value;
+			setConfigParamValueByName(ConfigParam.ParamNamesType.targetSvgPath, value);
 		}
 		public String getTargetSvgPath()
 		{
-			return targetSvgPath;
+			return getConfigParamValueByName(ConfigParam.ParamNamesType.targetSvgPath);
 		}
 
 		public string getDatabaseAdminUser()
 		{
-			return databaseAdminUser;
+			return getConfigParamValueByName(ConfigParam.ParamNamesType.databaseAdminUser);
 		}
 		public string getDatabaseAdminPwd()
 		{
-			return databaseAdminPwd;
+			return getConfigParamValueByName(ConfigParam.ParamNamesType.databaseAdminPwd);
 		}
 		public string getDatabaseAdminName()
 		{
-			return databaseAdminName;
+			return getConfigParamValueByName(ConfigParam.ParamNamesType.databaseAdminName);
 		}
 		//
 		public void setDatabaseAdminUser(String value)
 		{
-			databaseAdminUser = value;
+			setConfigParamValueByName(ConfigParam.ParamNamesType.databaseAdminUser, value);
 		}
 		public void setDatabaseAdminPwd(String value) {
-			databaseAdminPwd = value;
+			setConfigParamValueByName(ConfigParam.ParamNamesType.databaseAdminPwd, value);
 		}
 		public void setDatabaseAdminName(String value){
-			databaseAdminName = value;
+			setConfigParamValueByName(ConfigParam.ParamNamesType.databaseAdminName, value);
 		}
 		public String getDefaultPassword() {
-			return defaultPassword;
+			return getConfigParamValueByName(ConfigParam.ParamNamesType.defaultPassword);
 		}
 		public void setDefaultPassword(String value) {
-			defaultPassword=value;
+			setConfigParamValueByName(ConfigParam.ParamNamesType.defaultPassword, value);
 		}
 		public String getAppPlink() {
-			return appPlink;
+			return getConfigParamValueByName(ConfigParam.ParamNamesType.appPlink);
 		}
 		public void setAppPlink(String value) {
-			appPlink=value;
+			setConfigParamValueByName(ConfigParam.ParamNamesType.appPlink, value);
 		}
 		public void setDefaultEmail(String value) {
-			defaultEmail=value;
+			setConfigParamValueByName(ConfigParam.ParamNamesType.defaultEmail, value);
 		}
 		public String getDefaultEmail() {
-			return defaultEmail;
+			return getConfigParamValueByName(ConfigParam.ParamNamesType.defaultEmail);
 		}
 		public void setWorkingDir(String value) {
-			workingDir=value;
+			setConfigParamValueByName(ConfigParam.ParamNamesType.workingDir, value);
 		}
 		public String getWorkingDir() {
-			if(workingDir==null) workingDir="";
-			return workingDir;
+			return getConfigParamValueByName(ConfigParam.ParamNamesType.workingDir);
 		}
 
+		public String getConfigParamValueByName(ConfigParam.ParamNamesType paramName) {
+			String str="";
+			ConfigParam param =getConfigParamByName(paramName);
+			if(param!=null) {
+				str=param.Value;
+			}
+			return str;
+		}
+		public void setConfigParamValueByName(ConfigParam.ParamNamesType paramName, String value) {
+			ConfigParam param =getConfigParamByName(paramName);
+			if(param!=null) {
+				param.Value=value;;
+			}
+		}
+		
 		public ConfigParam getConfigParamByName(ConfigParam.ParamNamesType paramName) {
 			return getConfigParamByName(paramName.ToString());
 		}

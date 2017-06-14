@@ -40,11 +40,13 @@ namespace TestSQLOverSSH
 
 			               
 			return;
+			/*
 			TestSQLOverSSH testSQLOverSSH= new TestSQLOverSSH();
 			testSQLOverSSH.test01();
 			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
+			*/
 		}
 		public void test01() {
 			

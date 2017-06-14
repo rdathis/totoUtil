@@ -13,6 +13,7 @@ using System.IO;
 using Renci.SshNet;
 using cmdUtils;
 using cmdUtils.Objets;
+using cmdUtils.Objets.utils;
 using log4net;
 using log4net.Config;
 
@@ -30,6 +31,7 @@ namespace MoulUtil
 		private static void print(String s) {
 			System.Diagnostics.Debug.Print(s);
 		}
+
 		public static void Main(string[] args)
 		{
 			basePath=Directory.GetCurrentDirectory();
@@ -59,6 +61,7 @@ namespace MoulUtil
 				}
 			}
 			MouliPrepaForm formPrepa = new MouliPrepaForm(configDto);
+			formPrepa.controleRegistre();
 			formPrepa.setWorkspacePath(sourceMoulinette);
 			formPrepa.setTargetSvgPath(configDto.getTargetSvgPath());
 			formPrepa.ShowDialog();
@@ -282,7 +285,7 @@ namespace MoulUtil
 				}
 			}
 			
-			zipUtil.createSimpleArchive(ZipUtil.compressionStandard, job.getArchiveName() , liste);
+			zipUtil.createSimpleArchive(ZipUtil.compressionStandard, job.getArchiveName() , liste, job.getBackgroundWorker());
 			majProgression(99);
 			// Fin
 			Directory.SetCurrentDirectory (job.getOriginalDir());

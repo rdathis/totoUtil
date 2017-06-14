@@ -16,13 +16,28 @@ namespace cmdUtils.Objets
 		public enum ParamNamesType	{
 			[XmlEnum("moulinetteSource")] moulinetteSource,
 			[XmlEnum("history")] history,
+			
+			[XmlEnum("targetSvgPath")] targetSvgPath,
+			[XmlEnum("databaseAdminUser")] databaseAdminUser,
+			[XmlEnum("databaseAdminPwd")] databaseAdminPwd,
+			[XmlEnum("databaseAdminName")] databaseAdminName,
+			[XmlEnum("defaultPassword")] defaultPassword,
+			[XmlEnum("appPlink")] appPlink,
+			[XmlEnum("defaultEmail")] defaultEmail,
+			[XmlEnum("workingDir")] workingDir,
+			
+
 			[XmlEnum("INCONNU")] INCONNU
 		}
+		
 		public enum ParamTypesType {
 			[XmlEnum("generic")] generic,
 			[XmlEnum("chemin")] chemin,
+			[XmlEnum("password")] password,
 			[XmlEnum("url")] url
 		}
+		
+		
 		
 		[XmlAttribute]
 		public ParamNamesType nom { get; set ;}
@@ -30,6 +45,10 @@ namespace cmdUtils.Objets
 		public ParamTypesType type { get; set ;}
 		[XmlText]
 		public string Value { get; set; }
+		
+		[XmlAttribute]
+		public Boolean boboche { get; set; }
+		
 		public ConfigParam() {
 			//just for xml serialization 
 		}
@@ -37,6 +56,7 @@ namespace cmdUtils.Objets
 			this.nom=nom;
 			this.type=type;
 			this.Value=value;
+			this.boboche=false;
 		}
 	}
 }

@@ -26,6 +26,13 @@ namespace cmdUtils.Objets.utils
 			key.SetValue(name, value);
 			key.Close();
 		}
+		public bool existsHKCUString(String subKey, String name) {
+			RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(@mouliUtilPath);
+			if(registryKey==null) {
+				return false;
+			}
+			return registryKey.GetValue(key)!=null;
+		}
 		public String getHKCUString(String subKey, String name) {
 			RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(@mouliUtilPath);
 			return (string)registryKey.GetValue(key);

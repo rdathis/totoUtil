@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 using cmdUtils.Objets;
+using cmdUtils.Objets.business;
 using cmdUtils.Objets.utils;
 namespace MoulUtil.Forms
 {
@@ -39,11 +41,11 @@ namespace MoulUtil.Forms
 		}
 		// disable once ParameterHidesMember
 		private void populateSql(ConfigDto configDto) {
-			sql01.Text=configDto.getSQL01();
-			sql02.Text=configDto.getSQL02();
-			sql03.Text=configDto.getSQL03();
-			sql04.Text=configDto.getSQL04();
-			sql05.Text=configDto.getSQL05();
+			sql01.Text=configDto.getSqlCommand(SqlCommandsType.getDescriptionMagasin);
+			sql02.Text=configDto.getSqlCommand(SqlCommandsType.getExtensionStock);
+			sql03.Text=configDto.getSqlCommand(SqlCommandsType.doPurgeStock);
+			sql04.Text=configDto.getSqlCommand(SqlCommandsType.getExtensionClient);
+			sql05.Text=configDto.getSqlCommand(SqlCommandsType.doPurgeClient);
 			//sql06.Text=configDto.getSQL01;
 			
 		}
@@ -70,11 +72,11 @@ namespace MoulUtil.Forms
 		}
 		// disable once ParameterHidesMember
 		private void updateBusinessSql(ConfigDto configDto) {
-			configDto.setSQL01(sql01.Text);
-			configDto.setSQL02(sql02.Text);
-			configDto.setSQL03(sql03.Text);
-			configDto.setSQL04(sql04.Text);
-			configDto.setSQL05(sql05.Text);
+			configDto.setSql(SqlCommandsType.getDescriptionMagasin, sql01.Text);
+			configDto.setSql(SqlCommandsType.getExtensionStock, sql02.Text);
+			configDto.setSql(SqlCommandsType.doPurgeStock, sql03.Text);
+			configDto.setSql(SqlCommandsType.getExtensionClient, sql04.Text);
+			configDto.setSql(SqlCommandsType.doPurgeClient, sql05.Text);
 		}
 		
 		// disable once ParameterHidesMember

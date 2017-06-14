@@ -332,6 +332,7 @@ Unknown._w(https://server/instance/application/78957C736ADB5FD05DCBA3DDACFEFF8F.
 			script.AppendLine("# cd tomcat-instanceX/webapps/meo_instanceX/WEB-INF/deploy/"+path+"/symbolMaps/");
 			script.AppendLine("export lst='"+motLst+"' ;");
 			
+			script.AppendLine("grep \"'user.agent'\" *Map ;");
 			script.AppendLine("export fsource="+source+";");
 			script.Append("for mot in $lst ; do  (echo -n '*'$mot ' ' ; grep -w -e ^$mot $fsource) ; done;");
 			

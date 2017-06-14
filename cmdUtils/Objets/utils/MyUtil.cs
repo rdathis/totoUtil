@@ -39,7 +39,7 @@ namespace cmdUtils.Objets
 
 		public string buildConnectionStringFromInstance(MeoInstance instance, ConfigDto dto, int sqlPort)
 		{
-			String str=buildconnString(instance.nom, "127.0.0.1", dto.databaseAdminUser,dto.databaseAdminPwd, sqlPort );
+			String str=buildconnString(instance.nom, "127.0.0.1", dto.getDatabaseAdminUser(), dto.getDatabaseAdminPwd(), sqlPort );
 			return str;
 		}
 
