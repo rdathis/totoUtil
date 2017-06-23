@@ -181,7 +181,7 @@ namespace MoulUtil.Forms.utils
 			return null;
 		}
 
-		public void sauvegardeMoulinette(String sourcePath, string targetPath, MouliUtilOptions options, BackgroundWorker backgroundWorker)
+		public void sauvegardeMoulinette(String sourcePath, string targetPath, MouliUtilOptions options, MouliProgressWorker backgroundWorker)
 		{
 			try {
 				if(options!=null) {

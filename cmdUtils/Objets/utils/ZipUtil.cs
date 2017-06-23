@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
+using MoulUtil.Forms.utils;
+using cmdUtils.Objets.utils;
 namespace cmdUtils.Objets
 {
 	/// <summary>
@@ -87,7 +89,7 @@ namespace cmdUtils.Objets
 			
 		}
 		
-		public void createSimpleArchive(int compressionLevel,  string archiveName, List<String>fichiers, BackgroundWorker backgroundWorker)
+		public void createSimpleArchive(int compressionLevel,  string archiveName, List<String>fichiers, MouliProgressWorker backgroundWorker)
 		{
 			if ( archiveName.Length < 2 ) {
 				Console.WriteLine("Usage: CreateZipFile Path ZipFile");
@@ -96,6 +98,7 @@ namespace cmdUtils.Objets
 			if ((compressionLevel<compressionMinimum) || (compressionLevel > compressionMaximum) ) {
 				compressionLevel=compressionStandard;
 			}
+
 			Console.WriteLine(" Taux de compression : "+compressionLevel);
 			try
 			{
@@ -105,7 +108,11 @@ namespace cmdUtils.Objets
 					zip.SetLevel(compressionLevel);
 					
 					byte[] buffer = new byte[4096];
-					
+					int nb=0;
+					if(backgroundWorker!=null) {
+						backgroundWorker.setNbOperation(fichiers.Count);
+						                                
+					}
 					foreach (String fichier in fichiers) {
 						FileInfo file = new FileInfo(fichier);
 						
@@ -121,6 +128,9 @@ namespace cmdUtils.Objets
 								sourceBytes = fileStream.Read(buffer, 0, buffer.Length);
 								zip.Write(buffer, 0, sourceBytes);
 							} while ( sourceBytes > 0 );
+						}
+						if(backgroundWorker!=null) {
+							backgroundWorker.ReportProgress(nb++);
 						}
 					}
 					zip.Finish();

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 
 
 using System.ComponentModel;
+using MoulUtil.Forms.utils;
 using cmdUtils.Objets;
 namespace cmdUtils {
 
@@ -22,7 +23,7 @@ namespace cmdUtils {
 		private DateTime startDateTime;
 		private MouliUtilOptions options;
 		private String moulinettePath;
-		private BackgroundWorker backgroundWorker;
+		private MouliProgressWorker backgroundWorker;
 		public MouliJob(String archiveName, 
 		                String originalDir, 
 		                List<String> liste, 
@@ -60,10 +61,10 @@ namespace cmdUtils {
 		public String getMoulinettePath() {
 			return moulinettePath;
 		}
-		public void setBackgroundWorker(BackgroundWorker backgroundWorker) {
+		public void setBackgroundWorker(MouliProgressWorker backgroundWorker) {
 			this.backgroundWorker=backgroundWorker;
 		}
-		public BackgroundWorker getBackgroundWorker() {
+		public MouliProgressWorker getBackgroundWorker() {
 			return this.backgroundWorker;
 		}
 /*		

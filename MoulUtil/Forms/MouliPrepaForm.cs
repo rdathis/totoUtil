@@ -35,8 +35,6 @@ namespace MoulUtil
 		private MouliUtilOptions options = null;
 		protected CmdUtil cmdUtil = null;
 		private RegistryUtil registryUtil=null;
-		private MouliPrepaBackgroundWorkerUtil mouliPrepaBWUtil = new MouliPrepaBackgroundWorkerUtil();
-		private BackgroundWorker sauveMoulinetteBackgroundWorker=null;
 		public MouliPrepaForm(ConfigDto configDto)
 		{
 			InitializeComponent();
@@ -104,6 +102,7 @@ namespace MoulUtil
 		}
 		void SauvegardeBtnClick(object sender, EventArgs e)
 		{
+			
 			String sourceDir=workspaceBaseBox.Text+""+workspaceZoneBox.Text;
 			String targetDir = Path.GetFullPath(targetSvgPathBox.Text)+"\\" + targetNameBox.Text;
 			//mouliUtil.createArbo(targetDir);
@@ -118,9 +117,13 @@ namespace MoulUtil
 			}
 			Console.WriteLine("->"+tmpDir);
 			cmdUtil.executeCommande("explorer", tmpDir);
-			mouliPrepaUtil.sauvegardeMoulinette(sourceDir, targetSvgPathBox.Text, options, sauveMoulinetteBackgroundWorker);
-			statusStrip1.Text = "sauvegarde terminée...";
-			sauvegardeBtn.Enabled=true;
+			
+			SauvegardeBackgroundWorker sauveMoulinetteBackgroundWorker = initSauvegardeBackgroundWorker();;
+			sauveMoulinetteBackgroundWorker.prepare(mouliPrepaUtil, options, sourceDir, targetSvgPathBox.Text);
+			sauveMoulinetteBackgroundWorker.RunWorkerAsync();
+			//mouliPrepaUtil.sauvegardeMoulinette(sourceDir, targetSvgPathBox.Text, options, sauveMoulinetteBackgroundWorker);
+			//statusStrip1.Text = "sauvegarde terminée...";
+			//sauvegardeBtn.Enabled=true;
 
 			//TODO:copy src files to target dir.
 		}
@@ -283,13 +286,14 @@ namespace MoulUtil
 				//historyLabel.Enabled=false;
 			}
 		}
-		private void initSauvegardeBackgroundWorker() {
-			sauveMoulinetteBackgroundWorker = new BackgroundWorker();
-			sauveMoulinetteBackgroundWorker.WorkerSupportsCancellation = true;
-			sauveMoulinetteBackgroundWorker.WorkerReportsProgress = true;
-			sauveMoulinetteBackgroundWorker.DoWork +=new DoWorkEventHandler(mouliPrepaBWUtil.sauvegardeBW_DoWork);
-			sauveMoulinetteBackgroundWorker.ProgressChanged += new ProgressChangedEventHandler(mouliPrepaBWUtil.sauvegardeBW_ProgressChanged);
-			sauveMoulinetteBackgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(mouliPrepaBWUtil.sauvegardeBW_RunWorkerCompleted);
+		private SauvegardeBackgroundWorker initSauvegardeBackgroundWorker() {
+			SauvegardeBackgroundWorker worker = new SauvegardeBackgroundWorker(statusStrip1, sauvegardeBtn, sauvegardeProgressTextBox);
+			worker.WorkerSupportsCancellation = true;
+			worker.WorkerReportsProgress = true;
+			worker.DoWork +=new DoWorkEventHandler(worker.sauvegardeBW_DoWork);
+			worker.ProgressChanged += new ProgressChangedEventHandler(worker.sauvegardeBW_ProgressChanged);
+			worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker.sauvegardeBW_RunWorkerCompleted);
+			return worker;
 		}
 	}
 }

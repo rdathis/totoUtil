@@ -113,6 +113,7 @@
     <Compile Include="Objets\utils\CryptoUtil.cs" />
     <Compile Include="Objets\utils\FileCopyUtil.cs" />
     <Compile Include="Objets\utils\MeoSavUtil.cs" />
+    <Compile Include="Objets\utils\MouliProgressWorker.cs" />
     <Compile Include="Objets\utils\MouliUtil.cs" />
     <Compile Include="Objets\utils\MyUtil.cs" />
     <Compile Include="Objets\utils\ProcessUtil.cs" />

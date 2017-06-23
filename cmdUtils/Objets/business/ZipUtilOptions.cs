@@ -9,6 +9,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using MoulUtil.Forms.utils;
 
 namespace cmdUtils.Objets
 {
@@ -31,7 +32,7 @@ namespace cmdUtils.Objets
 		private string sourceBaseDir;
 		private string[] sourceSelection;
 		private TauxCompression tauxCompression=TauxCompression.moyen;
-		private BackgroundWorker backgroundWorker;
+		private MouliProgressWorker backgroundWorker;
 		
 		private renommeFichierZip fonction=null;
 		//private string datamag;
@@ -97,10 +98,10 @@ namespace cmdUtils.Objets
 		public void setTauxCompression(TauxCompression taux) {
 			tauxCompression=taux;
 		}
-		public BackgroundWorker getBackgroundWorker() {
+		public MouliProgressWorker getBackgroundWorker() {
 			return this.backgroundWorker;
 		}
-		public void setBackgroundWorker(BackgroundWorker backgroundWorker) {
+		public void setBackgroundWorker(MouliProgressWorker backgroundWorker) {
 			this.backgroundWorker=backgroundWorker;
 		}
 	}

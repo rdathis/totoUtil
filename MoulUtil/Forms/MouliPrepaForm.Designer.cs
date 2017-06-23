@@ -74,6 +74,7 @@ namespace MoulUtil
 			this.mysqlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.puttyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.historyLabel = new System.Windows.Forms.Label();
+			this.sauvegardeProgressTextBox = new System.Windows.Forms.TextBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -281,6 +282,7 @@ namespace MoulUtil
 			// 
 			// groupBox4
 			// 
+			this.groupBox4.Controls.Add(this.sauvegardeProgressTextBox);
 			this.groupBox4.Controls.Add(this.svgFinalNavigatorUserControl);
 			this.groupBox4.Controls.Add(this.svgBaseNavigatorUserControl);
 			this.groupBox4.Controls.Add(this.sauvegardeBtn);
@@ -289,7 +291,7 @@ namespace MoulUtil
 			this.groupBox4.Controls.Add(this.userControl12);
 			this.groupBox4.Location = new System.Drawing.Point(25, 320);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(644, 49);
+			this.groupBox4.Size = new System.Drawing.Size(644, 76);
 			this.groupBox4.TabIndex = 13;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Sauvegarde";
@@ -325,7 +327,7 @@ namespace MoulUtil
 			this.userControl12.BackColor = System.Drawing.Color.Red;
 			this.userControl12.Location = new System.Drawing.Point(312, 0);
 			this.userControl12.Name = "userControl12";
-			this.userControl12.Size = new System.Drawing.Size(332, 59);
+			this.userControl12.Size = new System.Drawing.Size(332, 43);
 			this.userControl12.TabIndex = 17;
 			// 
 			// statusStrip1
@@ -385,9 +387,9 @@ namespace MoulUtil
 			| System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.targetTreeView.ContextMenuStrip = this.serveursContextMenu;
-			this.targetTreeView.Location = new System.Drawing.Point(336, 369);
+			this.targetTreeView.Location = new System.Drawing.Point(336, 402);
 			this.targetTreeView.Name = "targetTreeView";
-			this.targetTreeView.Size = new System.Drawing.Size(345, 365);
+			this.targetTreeView.Size = new System.Drawing.Size(345, 332);
 			this.targetTreeView.TabIndex = 18;
 			this.targetTreeView.DoubleClick += new System.EventHandler(this.TargetTreeViewDoubleClick);
 			this.targetTreeView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TargetTreeViewMouseClick);
@@ -427,6 +429,16 @@ namespace MoulUtil
 			this.historyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.historyLabel.Click += new System.EventHandler(this.HistoryLabelClick);
 			// 
+			// sauvegardeProgressTextBox
+			// 
+			this.sauvegardeProgressTextBox.Location = new System.Drawing.Point(13, 51);
+			this.sauvegardeProgressTextBox.Multiline = true;
+			this.sauvegardeProgressTextBox.Name = "sauvegardeProgressTextBox";
+			this.sauvegardeProgressTextBox.ReadOnly = true;
+			this.sauvegardeProgressTextBox.Size = new System.Drawing.Size(622, 24);
+			this.sauvegardeProgressTextBox.TabIndex = 20;
+			this.sauvegardeProgressTextBox.Text = "sauvegarde Progress";
+			// 
 			// MouliPrepaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -463,6 +475,7 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.TextBox sauvegardeProgressTextBox;
 		private System.Windows.Forms.Label historyLabel;
 		private cmdUtils.Controles.NavigatorUserControl svgFinalNavigatorUserControl;
 		private cmdUtils.Controles.NavigatorUserControl svgBaseNavigatorUserControl;

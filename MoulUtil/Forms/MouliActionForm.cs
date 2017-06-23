@@ -99,6 +99,8 @@ namespace MoulUtil
 
 		void GoButtonClick(object sender, EventArgs e)
 		{
+			
+			
 			goButton.Enabled=false;
 			toolStripStatusLabel1.Text = "doing archive";
 			try {

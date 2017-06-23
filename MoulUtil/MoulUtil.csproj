@@ -90,8 +90,10 @@
     <Compile Include="Forms\MouliSQLForm.Designer.cs">
       <DependentUpon>MouliSQLForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\utils\CreateArchiveBackgroundWorker.cs" />
     <Compile Include="Forms\utils\MouliPrepaBackgroundWorkerUtil.cs" />
     <Compile Include="Forms\utils\MouliPrepaUtil.cs" />
+    <Compile Include="Forms\utils\SauvegardeBackgroundWorker.cs" />
     <Compile Include="MouliProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
