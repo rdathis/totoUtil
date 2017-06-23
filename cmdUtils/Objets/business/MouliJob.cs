@@ -24,6 +24,23 @@ namespace cmdUtils {
 		private MouliUtilOptions options;
 		private String moulinettePath;
 		private MouliProgressWorker backgroundWorker;
+		public delegate String FinishWorkerTask(String str);
+		private FinishWorkerTask finishTask=null;
+		public void setFinishTask(FinishWorkerTask fonction) {
+			this.finishTask=fonction;
+		}
+		public FinishWorkerTask getFinishTask() {
+			return this.finishTask;
+		}
+		public String invokeFinishTask(String arg) {
+			if (this.finishTask!=null) {
+				return this.finishTask.Invoke(arg);
+			} else {
+				return arg;
+			}
+		}
+
+		
 		public MouliJob(String archiveName, 
 		                String originalDir, 
 		                List<String> liste, 

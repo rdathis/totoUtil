@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+using MoulUtil.Forms.utils;
 using cmdUtils;
 using cmdUtils.Objets;
 
@@ -97,6 +98,9 @@ namespace MoulUtil
 		}
 
 
+		private void toto(String str) {
+			
+		}
 		void GoButtonClick(object sender, EventArgs e)
 		{
 			
@@ -108,13 +112,20 @@ namespace MoulUtil
 				job= MouliProgram.doTraitement(pathLabel.Text, options);
 				//job.setzzz(pathLabel.Text);
 				analyseJob(job, checkedListBox1);
-				
+				CreateArchiveBackgroundWorker worker = CreateArchiveBackgroundWorker.createWorker();
+				worker.prepare(job, progressTextBox, goButton, pscpLink);
+				job.setBackgroundWorker(worker);
+				worker.RunWorkerAsync();
+				//event MouliJob.FinishWorkerTask callback;
+				//job.setFinishTask(callback) ;
+				/*
 				MouliProgram.doArchive(job);
-				pscpLink.Text = "pscp ZIP" ;
+				
 				if(pscpLink.Tag!=null) {
 					pscpLink.Visible=true;
 				}
 				toolStripStatusLabel1.Text = "archive done";
+				*/
 			} catch(Exception ex) {
 				MessageBox.Show(" Exception : "+ex.Message +"\n"+ex.Source + "\n"+ex.StackTrace);
 			}

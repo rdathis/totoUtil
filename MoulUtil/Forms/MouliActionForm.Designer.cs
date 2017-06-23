@@ -68,6 +68,7 @@ namespace MoulUtil
 			this.irrisMagTBox = new System.Windows.Forms.TextBox();
 			this.purgeClientChkBox = new System.Windows.Forms.CheckBox();
 			this.purgeStockChkBox = new System.Windows.Forms.CheckBox();
+			this.progressTextBox = new System.Windows.Forms.TextBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -146,9 +147,9 @@ namespace MoulUtil
 			// puttyLink
 			// 
 			this.puttyLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.puttyLink.Location = new System.Drawing.Point(7, 319);
+			this.puttyLink.Location = new System.Drawing.Point(16, 297);
 			this.puttyLink.Name = "puttyLink";
-			this.puttyLink.Size = new System.Drawing.Size(84, 26);
+			this.puttyLink.Size = new System.Drawing.Size(84, 20);
 			this.puttyLink.TabIndex = 13;
 			this.puttyLink.TabStop = true;
 			this.puttyLink.Text = "putty";
@@ -158,9 +159,9 @@ namespace MoulUtil
 			// pscpLink
 			// 
 			this.pscpLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.pscpLink.Location = new System.Drawing.Point(97, 319);
+			this.pscpLink.Location = new System.Drawing.Point(106, 297);
 			this.pscpLink.Name = "pscpLink";
-			this.pscpLink.Size = new System.Drawing.Size(84, 26);
+			this.pscpLink.Size = new System.Drawing.Size(84, 20);
 			this.pscpLink.TabIndex = 14;
 			this.pscpLink.TabStop = true;
 			this.pscpLink.Text = "pscp";
@@ -351,11 +352,19 @@ namespace MoulUtil
 			this.purgeStockChkBox.Text = "purger Stock";
 			this.purgeStockChkBox.UseVisualStyleBackColor = true;
 			// 
+			// progressTextBox
+			// 
+			this.progressTextBox.Location = new System.Drawing.Point(6, 322);
+			this.progressTextBox.Name = "progressTextBox";
+			this.progressTextBox.Size = new System.Drawing.Size(586, 20);
+			this.progressTextBox.TabIndex = 28;
+			// 
 			// MouliActionForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(599, 430);
+			this.Controls.Add(this.progressTextBox);
 			this.Controls.Add(this.purgeStockChkBox);
 			this.Controls.Add(this.purgeClientChkBox);
 			this.Controls.Add(this.irrisMagTBox);
@@ -389,6 +398,7 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.TextBox progressTextBox;
 		private System.Windows.Forms.CheckBox purgeStockChkBox;
 		private System.Windows.Forms.CheckBox purgeClientChkBox;
 		private System.Windows.Forms.TextBox irrisMagTBox;
