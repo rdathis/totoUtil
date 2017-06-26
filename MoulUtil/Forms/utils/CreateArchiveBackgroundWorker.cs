@@ -18,48 +18,55 @@ namespace MoulUtil.Forms.utils
 	/// </summary>
 	public class CreateArchiveBackgroundWorker : MouliProgressWorker
 	{
-		private TextBox progressTextBox=null;
 		private MouliJob job=null;
-		private LinkLabel link=null;
-		private Button button=null;
 		public CreateArchiveBackgroundWorker()
 		{
 		}
-		public void prepare(MouliJob job, TextBox progressTextBox, Button button, LinkLabel link) {
+		public void prepare(MouliJob job) {
 			this.job=job;
-			//this.progressTextBox=progressTextBox;
-			//this.button=button;
-			this.link=link;
 		}
 		
 		public void creaArchiveBW_DoWork(object sender, DoWorkEventArgs e)
 		{
-			if(button!=null) {
-				button.Enabled=false;
-			}
-			
-			if (progressTextBox!=null) {
-				progressTextBox.Text = "Starting archive job";
-			}
-			//statusStrip.Text = "Starting sauvegarde ..."; // erreur si on y touche
-			//MouliProgressWorker worker = sender as MouliProgressWorker;
+			doStartWorker("Debut du travail "  + job.getArchiveName());
 			MouliProgram.doArchive(job);
-			//mouliPrepaUtil.sauvegardeMoulinette(sourceDir, targetDir, mouliUtilOptions, worker);
 			
 		}
 		public void creaArchiveBW_ProgressChanged(object sender, ProgressChangedEventArgs e)
 		{
-			if(progressTextBox==null) return;
+			//if(progressTextBox==null) return;
 			//
-			double prc=0;
-			if(getNbOperation()!=0) {
-				prc = e.ProgressPercentage / ((double)getNbOperation()) * 100;
-				prc = Math.Round(prc, 3) ;
-			}
-			this.progressTextBox.Text = (e.ProgressPercentage.ToString() +" / "+getNbOperation()+  " ("+prc+")%");
+//			if(false) {
+//				double prc=0;
+//				if(getNbOperation()!=0) {
+//					prc = e.ProgressPercentage / ((double)getNbOperation()) * 100;
+//					prc = Math.Round(prc, 3) ;
+//				}
+//				//this.progressTextBox.Text = (e.ProgressPercentage.ToString() +" / "+getNbOperation()+  " ("+prc+")%");
+//			}
+			doProgressWorker(e.ProgressPercentage);
+//			if(getProgressWorkerCallBack()!=null) {
+//				getProgressWorkerCallBack().Invoke(e.ProgressPercentage);
+//			}
 		}
 		public void creaArchiveBW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
 		{
+			if(getEndWorkerCallBack()!=null) {
+				String str="";
+				if ((e.Cancelled == true))
+				{
+					str = "Annulé !";
+				}
+
+				else if (e.Error != null) {
+					str = ("Error: " + e.Error.Message);
+				} else {
+					str =  " Fini";
+				}
+				
+				getEndWorkerCallBack().Invoke(str);
+			}
+			/*
 			if(this.progressTextBox!=null) {
 				if ((e.Cancelled == true))
 				{
@@ -80,7 +87,7 @@ namespace MoulUtil.Forms.utils
 			if(button!=null) {
 				button.Enabled=true;
 			}
-			
+			 */
 			
 		}
 

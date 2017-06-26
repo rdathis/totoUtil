@@ -66,7 +66,7 @@ namespace MoulUtil
 			new TreeViewUtil(instances, serveurs).populateTargets(targetTreeView);
 			
 			dateTimePicker.Value = new MouliUtil().calculeNextPlannedJob();
-		
+			
 			activeExtension(purgeClientChkBox, options.getExtensionClient());
 			activeExtension(purgeStockChkBox, options.getExtensionStock());
 		}
@@ -106,14 +106,47 @@ namespace MoulUtil
 			
 			
 			goButton.Enabled=false;
+			uploadButton.Enabled = false;
 			toolStripStatusLabel1.Text = "doing archive";
 			try {
 				options=updateMouliUtilOption(getSelectedInstance());
 				job= MouliProgram.doTraitement(pathLabel.Text, options);
 				//job.setzzz(pathLabel.Text);
 				analyseJob(job, checkedListBox1);
+				//progressTextBox.inv
 				CreateArchiveBackgroundWorker worker = CreateArchiveBackgroundWorker.createWorker();
-				worker.prepare(job, progressTextBox, goButton, pscpLink);
+				worker.prepare(job);
+				
+				MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = name => {
+					//Console.WriteLine("Notification received for: {0}", name);
+					//?? plantage: toolStripStatusLabel1.Text = name;
+					try {
+						progressTextBox.Text=" debut";
+						toolStripProgressBar1.Value=0;
+					} catch (Exception ex) {
+						Console.WriteLine("still exception here ..."+ex.Message);
+					}
+				};
+				MouliProgressWorker.ProgressWorkerCallBack progressWorkerCallBack = value =>  {
+					toolStripProgressBar1.Value =value; 
+					toolStripStatusLabel1.Text = "progression : "+(value)  + "%  - x / "+worker.getNbOperation();
+					progressTextBox.Text=toolStripStatusLabel1.Text ;
+				};
+				MouliProgressWorker.EndWorkerCallBack endWorkerCallBack = value => {
+					toolStripStatusLabel1.Text = "fini";
+					toolStripProgressBar1.Value=0;
+					goButton.Enabled=true;
+					uploadButton.Enabled = true;
+					if(pscpLink.Tag!=null) {
+						pscpLink.Visible=true;
+					}
+					
+				};
+				//
+				worker.setStartWorkerCallBack(startWorkerCallBack);
+				worker.setProgressWorkerCallBack(progressWorkerCallBack);
+				worker.setEndWorkerCallBack(endWorkerCallBack);
+				//
 				job.setBackgroundWorker(worker);
 				worker.RunWorkerAsync();
 				//event MouliJob.FinishWorkerTask callback;
@@ -125,7 +158,7 @@ namespace MoulUtil
 					pscpLink.Visible=true;
 				}
 				toolStripStatusLabel1.Text = "archive done";
-				*/
+				 */
 			} catch(Exception ex) {
 				MessageBox.Show(" Exception : "+ex.Message +"\n"+ex.Source + "\n"+ex.StackTrace);
 			}
@@ -188,7 +221,7 @@ namespace MoulUtil
 			String r="";
 			if(checkedListBox1.GetItemChecked(1)) {
 				r+="S";//S before C (201703:LH)
-			} 
+			}
 			if(checkedListBox1.GetItemChecked(0)) {
 				r+="C";
 			}
@@ -274,11 +307,11 @@ namespace MoulUtil
 				} else {
 					return MoulinettePurgeOptionTypes.PURGE_REFUSEE;
 				}
-					
+				
 			} else {
 				return MoulinettePurgeOptionTypes.CLIENT_POSSEDE_EXTENSION;
 			}
-			 
+			
 		}
 		MeoInstance getSelectedInstance()
 		{
