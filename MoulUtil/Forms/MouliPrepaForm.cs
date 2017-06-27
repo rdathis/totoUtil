@@ -58,13 +58,9 @@ namespace MoulUtil
 			svgBaseNavigatorUserControl.setBox(targetSvgPathBox);
 			svgFinalNavigatorUserControl.setBoxes(targetSvgPathBox, targetNameBox);
 			
-			initBackgroundWorker();
 			rechMagIdBox.Focus();
 		}
 
-		public void initBackgroundWorker(){
-			initSauvegardeBackgroundWorker();
-		}
 		public void controleRegistre()
 		{
 			if(! registryUtil.existsHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key) ) {;
@@ -118,9 +114,46 @@ namespace MoulUtil
 			Console.WriteLine("->"+tmpDir);
 			cmdUtil.executeCommande("explorer", tmpDir);
 			
-			SauvegardeBackgroundWorker sauveMoulinetteBackgroundWorker = initSauvegardeBackgroundWorker();;
-			sauveMoulinetteBackgroundWorker.prepare(mouliPrepaUtil, options, sourceDir, targetSvgPathBox.Text);
-			sauveMoulinetteBackgroundWorker.RunWorkerAsync();
+			SauvegardeBackgroundWorker worker = getSauvegardeBackgroundWorker();
+			
+			//statusStrip1, sauvegardeBtn, sauvegardeProgressTextBox
+			MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = name => {
+				//Console.WriteLine("Notification received for: {0}", name);
+				//?? plantage: toolStripStatusLabel1.Text = name;
+				try {
+					statusStrip1.Text = "begin";
+					sauvegardeBtn.Visible=false;
+					sauvegardeProgressTextBox.Text=" debut";
+					//toolStripProgressBar1.Value=0;
+				} catch (Exception ex) {
+					Console.WriteLine("still exception here ..."+ex.Message);
+				}
+			};
+			MouliProgressWorker.ProgressWorkerCallBack progressWorkerCallBack = value =>  {
+				//if(value<=100) sauvegardeProgressTextBox.Value =value;//bug
+				double prc=0;
+				if( worker.getNbOperation()!=0) {
+					prc = value / ((double)worker.getNbOperation()) * 100;
+					prc = Math.Round(prc, 3) ;
+				}
+				sauvegardeProgressTextBox.Text = (value +" / "+worker.getNbOperation()+  " ("+prc+")%");
+				statusStrip1.Text = "progression : "+(value)  + "%  - x / "+worker.getNbOperation();
+				sauvegardeProgressTextBox.Text=statusStrip1.Text ;
+			};
+			MouliProgressWorker.EndWorkerCallBack endWorkerCallBack = value => {
+				sauvegardeBtn.Visible=true;
+				//statusStrip1.Text = "fini";
+				sauvegardeProgressTextBox.Text = "fini";
+			};
+			//
+			worker.setStartWorkerCallBack(startWorkerCallBack);
+			worker.setProgressWorkerCallBack(progressWorkerCallBack);
+			worker.setEndWorkerCallBack(endWorkerCallBack);
+			
+			
+			
+			worker.prepare(mouliPrepaUtil, options, sourceDir, targetSvgPathBox.Text);
+			worker.RunWorkerAsync();
 			//mouliPrepaUtil.sauvegardeMoulinette(sourceDir, targetSvgPathBox.Text, options, sauveMoulinetteBackgroundWorker);
 			//statusStrip1.Text = "sauvegarde terminée...";
 			//sauvegardeBtn.Enabled=true;
@@ -286,8 +319,8 @@ namespace MoulUtil
 				//historyLabel.Enabled=false;
 			}
 		}
-		private SauvegardeBackgroundWorker initSauvegardeBackgroundWorker() {
-			SauvegardeBackgroundWorker worker = new SauvegardeBackgroundWorker(statusStrip1, sauvegardeBtn, sauvegardeProgressTextBox);
+		private SauvegardeBackgroundWorker getSauvegardeBackgroundWorker() {
+			SauvegardeBackgroundWorker worker = new SauvegardeBackgroundWorker();
 			worker.WorkerSupportsCancellation = true;
 			worker.WorkerReportsProgress = true;
 			worker.DoWork +=new DoWorkEventHandler(worker.sauvegardeBW_DoWork);

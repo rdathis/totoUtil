@@ -69,6 +69,7 @@ namespace MoulUtil
 			
 			activeExtension(purgeClientChkBox, options.getExtensionClient());
 			activeExtension(purgeStockChkBox, options.getExtensionStock());
+			progressTextBox.Visible=false;
 		}
 
 		void activeExtension(CheckBox chkBox, MoulinettePurgeOptionTypes moulinettePurgeOptionTypes)
@@ -107,6 +108,8 @@ namespace MoulUtil
 			
 			goButton.Enabled=false;
 			uploadButton.Enabled = false;
+			progressTextBox.Visible=true;
+			progressTextBox.Enabled=false;
 			toolStripStatusLabel1.Text = "doing archive";
 			try {
 				options=updateMouliUtilOption(getSelectedInstance());
