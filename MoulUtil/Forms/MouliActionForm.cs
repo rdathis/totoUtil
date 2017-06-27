@@ -128,7 +128,7 @@ namespace MoulUtil
 					}
 				};
 				MouliProgressWorker.ProgressWorkerCallBack progressWorkerCallBack = value =>  {
-					toolStripProgressBar1.Value =value; 
+					if(value<=100) toolStripProgressBar1.Value =value;//bug
 					toolStripStatusLabel1.Text = "progression : "+(value)  + "%  - x / "+worker.getNbOperation();
 					progressTextBox.Text=toolStripStatusLabel1.Text ;
 				};
@@ -140,7 +140,6 @@ namespace MoulUtil
 					if(pscpLink.Tag!=null) {
 						pscpLink.Visible=true;
 					}
-					
 				};
 				//
 				worker.setStartWorkerCallBack(startWorkerCallBack);
@@ -149,16 +148,7 @@ namespace MoulUtil
 				//
 				job.setBackgroundWorker(worker);
 				worker.RunWorkerAsync();
-				//event MouliJob.FinishWorkerTask callback;
-				//job.setFinishTask(callback) ;
-				/*
-				MouliProgram.doArchive(job);
-				
-				if(pscpLink.Tag!=null) {
-					pscpLink.Visible=true;
-				}
-				toolStripStatusLabel1.Text = "archive done";
-				 */
+
 			} catch(Exception ex) {
 				MessageBox.Show(" Exception : "+ex.Message +"\n"+ex.Source + "\n"+ex.StackTrace);
 			}

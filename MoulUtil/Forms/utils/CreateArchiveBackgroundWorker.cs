@@ -34,8 +34,6 @@ namespace MoulUtil.Forms.utils
 		}
 		public void creaArchiveBW_ProgressChanged(object sender, ProgressChangedEventArgs e)
 		{
-			//if(progressTextBox==null) return;
-			//
 //			if(false) {
 //				double prc=0;
 //				if(getNbOperation()!=0) {
@@ -45,9 +43,6 @@ namespace MoulUtil.Forms.utils
 //				//this.progressTextBox.Text = (e.ProgressPercentage.ToString() +" / "+getNbOperation()+  " ("+prc+")%");
 //			}
 			doProgressWorker(e.ProgressPercentage);
-//			if(getProgressWorkerCallBack()!=null) {
-//				getProgressWorkerCallBack().Invoke(e.ProgressPercentage);
-//			}
 		}
 		public void creaArchiveBW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
 		{
@@ -66,29 +61,6 @@ namespace MoulUtil.Forms.utils
 				
 				getEndWorkerCallBack().Invoke(str);
 			}
-			/*
-			if(this.progressTextBox!=null) {
-				if ((e.Cancelled == true))
-				{
-					this.progressTextBox.Text = "Annulé !";
-				}
-
-				else if (e.Error != null) {
-					this.progressTextBox.Text = ("Error: " + e.Error.Message);
-				} else {
-					this.progressTextBox.Text = this.progressTextBox.Text + " Fini";
-				}
-				//statusStrip.Text = this.tbProgress.Text;
-				//sauveButton.Enabled=true;
-			}
-			if(link!=null) {
-				link.Text = "pscp ZIP" ;
-			}
-			if(button!=null) {
-				button.Enabled=true;
-			}
-			 */
-			
 		}
 
 		public static CreateArchiveBackgroundWorker createWorker() {
