@@ -132,7 +132,7 @@ namespace MoulUtil
 				};
 				MouliProgressWorker.ProgressWorkerCallBack progressWorkerCallBack = value =>  {
 					if(value<=100) toolStripProgressBar1.Value =value;//bug
-					toolStripStatusLabel1.Text = "progression : "+(value)  + "%  - x / "+worker.getNbOperation();
+					toolStripStatusLabel1.Text = "progression moulinette : "+(value)  + "%  - x / "+worker.getNbOperation();
 					progressTextBox.Text=toolStripStatusLabel1.Text ;
 				};
 				MouliProgressWorker.EndWorkerCallBack endWorkerCallBack = value => {
@@ -347,6 +347,60 @@ namespace MoulUtil
 					MeoServeur server = (MeoServeur) label.Tag;
 					SshUtil sshUtil = new SshUtil();
 					try {
+						UploadArchiveBackgroundWorker worker = new UploadArchiveBackgroundWorker();
+						worker.prepare(server, "/database/transpo/", job.getArchiveName());
+						
+						MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = name => {
+							//Console.WriteLine("Notification received for: {0}", name);
+							//?? plantage: toolStripStatusLabel1.Text = name;
+							try {
+								//progressTextBox.Text=" debut";
+								toolStripProgressBar1.Value=0;
+							} catch (Exception ex) {
+								Console.WriteLine("still exception here ..."+ex.Message);
+								progressTextBox.Text=ex.Message;
+							}
+						};
+						MouliProgressWorker.ProgressWorkerCallBack progressWorkerCallBack = value =>  {
+							if(value<=100) toolStripProgressBar1.Value =value;//bug
+							toolStripStatusLabel1.Text = "progression upload : "+(value)  + "%  - x / "+worker.getNbOperation();
+							progressTextBox.Text=toolStripStatusLabel1.Text ;
+						};
+						MouliProgressWorker.EndWorkerCallBack endWorkerCallBack = value => {
+							toolStripProgressBar1.Value=0;
+							goButton.Enabled=true;
+							uploadButton.Enabled = true;
+							toolStripStatusLabel1.Text = "done, unzip...";
+
+							try {
+								sshUtil.unzipArchive(server, "/database/transpo/", job);
+								
+								MouliUtil mouliUtil = new MouliUtil();
+								
+								CmdUtil cmdUtil = new CmdUtil();
+								String cmd=mouliUtil.getUnzipCmd(server, "/database/transpo/", job);
+								String commandeFile = job.getMoulinettePath() +"install.file";
+								mouliUtil.writeInstallMoulinetteFile(cmd, commandeFile);
+								// plink -pw (password) -l (user) -m (command.file) server
+								cmd="-pw "+server.password+" -l "+server.utilisateur+" -m "+commandeFile+" "+server.adresse;
+								
+								cmdUtil.executeCommande(MouliConfig.plinkPath, cmd);
+								
+								toolStripStatusLabel1.Text="finished";
+							} catch (Exception ex) {
+								progressTextBox.Text="Exception : "+ex.Message;
+							}
+						};
+						//
+						worker.setStartWorkerCallBack(startWorkerCallBack);
+						worker.setProgressWorkerCallBack(progressWorkerCallBack);
+						worker.setEndWorkerCallBack(endWorkerCallBack);
+						
+						
+						worker.RunWorkerAsync();
+						
+						
+						/*
 						sshUtil.uploadArchive(server, "/database/transpo/", job.getArchiveName());
 						toolStripStatusLabel1.Text = "done, unzip...";
 						sshUtil.unzipArchive(server, "/database/transpo/", job);
@@ -363,6 +417,7 @@ namespace MoulUtil
 						cmdUtil.executeCommande(MouliConfig.plinkPath, cmd);
 						
 						toolStripStatusLabel1.Text="finished";
+						 */
 					} catch(Exception ex) {
 						MessageBox.Show("Erreur envoi data : "+ex.Message + "\n"+ex.Source + "\n" +ex.StackTrace);
 					}

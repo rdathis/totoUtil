@@ -94,6 +94,7 @@
     <Compile Include="Forms\utils\MouliPrepaBackgroundWorkerUtil.cs" />
     <Compile Include="Forms\utils\MouliPrepaUtil.cs" />
     <Compile Include="Forms\utils\SauvegardeBackgroundWorker.cs" />
+    <Compile Include="Forms\utils\UploadArchiveBackgroundWorker.cs" />
     <Compile Include="MouliProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1593,7 +1593,6 @@ namespace cmdUtils
 		private System.Windows.Forms.Label label25;
 		private System.Windows.Forms.Label label24;
 		private System.Windows.Forms.Button editConfig;
-		private System.Windows.Forms.RichTextBox richTextBox3;
 		private System.Windows.Forms.RichTextBox moulRichTexBox;
 		private System.Windows.Forms.Button moulCreaRepBtn;
 		private System.Windows.Forms.TextBox moulDateTextBox;

@@ -99,9 +99,10 @@ namespace MoulUtil.Forms.utils
 				String rep= "MID0000-TOTO-i0/";
 				propositionBox.Text = configDto.getWorkingDir()+rep;
 				mouliPrepaForm.CreateBtnClick(null, null);
-				createMock(workingPath+rep);
+				createMock(workingPath+propositionBox.Text);
 				options = new MouliUtilOptions();
 				options.setMagId(rechMagIdBox.Text);
+				options.setInstanceName("meo_demo");
 				return options;
 			}
 			MyUtil myUtil = new MyUtil();

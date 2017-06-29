@@ -27,6 +27,9 @@ namespace MoulUtil.Forms.utils
 		public MouliProgressWorker()
 		{
 		}
+		public void ReportProgress(long done, long total) {
+			ReportProgress((int)(done / ((double)total) * 100));
+		}
 		//
 		public void setNbOperation(int nb) {
 			this.nbOperation=nb;

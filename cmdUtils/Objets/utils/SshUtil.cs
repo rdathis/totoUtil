@@ -11,9 +11,9 @@ namespace cmdUtils.Objets {
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
-	using System.Windows.Forms;
 	using Renci.SshNet;
-	using Renci.SshNet.Security;
+	using Renci.SshNet.Common;
+	using MoulUtil.Forms.utils;
 	public class SshUtil {
 		
 		public SshUtil() {
@@ -26,10 +26,22 @@ namespace cmdUtils.Objets {
 			return connectionInfo;
 		}
 		
-		public void uploadArchive(MeoServeur server, string target, string archive)
-		{
+		public void uploadArchive(MeoServeur server, string target, string archive) {
+			uploadArchive(server, target, archive, null);
+		}
+		public void uploadArchive(MeoServeur server, string target, string archive, MouliProgressWorker worker) 		{
 			ScpClient client = new ScpClient(getConnectionInfo(server));
 			client.Connect();
+			client.Uploading+=delegate(object sender, ScpUploadEventArgs e)
+			{
+				Console.WriteLine ("uploaded : "+e.Uploaded+ " "+e.Filename + " " +e.Size);
+				if(worker!=null) {
+					worker.ReportProgress (e.Uploaded, e.Size);
+				}
+				
+			};
+			
+			
 			FileInfo info =new FileInfo(archive);
 			client.Upload(info, target + info.Name);
 			client.Disconnect();
@@ -114,7 +126,7 @@ namespace cmdUtils.Objets {
 			}
 			return client;
 		}
-		*/
+		 */
 
 	}
 }
