@@ -27,13 +27,15 @@ namespace MoulUtil.Forms.utils
 			this.configDto=configDto;
 		}
 
-		public System.Diagnostics.Process startPlink(ConfigDto configDto)
+		public System.Diagnostics.Process startPlink(ConfigDto configDto, TextBox textbox)
 		{
 			System.Diagnostics.Process plinkProcess=null;
 			try {
 				//demarrage du plink en arriere plan pour le tunnel SSH
 				ProcessUtil putil =new ProcessUtil();
 				plinkProcess= putil.startProcess(MouliConfig.plinkPath, configDto.getAppPlink(), System.Diagnostics.ProcessWindowStyle.Normal);
+
+				textbox.Visible=true;
 				mouliPrepaForm.BackColor = Color.LightBlue;
 			} catch(Exception exs) {
 				Console.WriteLine ("erreur sur start de plink",exs);

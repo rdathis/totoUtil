@@ -38,6 +38,7 @@ namespace MoulUtil
 		public MouliPrepaForm(ConfigDto configDto)
 		{
 			InitializeComponent();
+			this.rechMagIdBox.Visible=false;
 			registryUtil=new RegistryUtil();
 			String workspacePath=registryUtil.getHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key);
 			mouliPrepaUtil = new MouliPrepaUtil(this, configDto);
@@ -71,7 +72,7 @@ namespace MoulUtil
 
 		void MouliPrepaLoad(object sender, EventArgs e)
 		{
-			plinkProcess= mouliPrepaUtil.startPlink(configDto);
+			plinkProcess= mouliPrepaUtil.startPlink(configDto, rechMagIdBox);
 		}
 		void WorkspaceBoxTextChanged(object sender, EventArgs e)
 		{

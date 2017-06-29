@@ -104,8 +104,6 @@ namespace MoulUtil
 		}
 		void GoButtonClick(object sender, EventArgs e)
 		{
-			
-			
 			goButton.Enabled=false;
 			uploadButton.Enabled = false;
 			progressTextBox.Visible=true;
@@ -114,9 +112,7 @@ namespace MoulUtil
 			try {
 				options=updateMouliUtilOption(getSelectedInstance());
 				job= MouliProgram.doTraitement(pathLabel.Text, options);
-				//job.setzzz(pathLabel.Text);
 				analyseJob(job, checkedListBox1);
-				//progressTextBox.inv
 				CreateArchiveBackgroundWorker worker = CreateArchiveBackgroundWorker.createWorker();
 				worker.prepare(job);
 				
@@ -175,7 +171,6 @@ namespace MoulUtil
 		}
 		void ExitButtonClick(object sender, EventArgs e)
 		{
-			//Application.Exit();
 			Hide();
 		}
 		void TargetTreeViewAfterSelect(object sender, TreeViewEventArgs e)
