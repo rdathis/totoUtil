@@ -19,17 +19,19 @@ namespace MoulUtil.Forms.utils
 	public class CreateArchiveBackgroundWorker : MouliProgressWorker
 	{
 		private MouliJob job=null;
+		private MouliActionUtil mouliActionUtil=null;
 		public CreateArchiveBackgroundWorker()
 		{
 		}
-		public void prepare(MouliJob job) {
+		public void prepare(MouliJob job, MouliActionUtil mouliActionUtil) {
 			this.job=job;
+			this.mouliActionUtil=mouliActionUtil;
 		}
 		
 		public void creaArchiveBW_DoWork(object sender, DoWorkEventArgs e)
 		{
 			doStartWorker("Debut du travail "  + job.getArchiveName());
-			MouliProgram.doArchive(job);
+			mouliActionUtil.doArchive(job);
 			
 		}
 		public void creaArchiveBW_ProgressChanged(object sender, ProgressChangedEventArgs e)

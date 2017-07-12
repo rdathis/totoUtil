@@ -7,22 +7,28 @@
 using System;
 using System.Collections.Generic;
 using Renci.SshNet;
+using MoulUtil.Forms.utils;
 using cmdUtils.Objets;
 
 namespace cmdUtils {
 
 	public class RechercheMagasinUtil {
-		const String mouliUtilConfigPath="w:/meo-moulinettes/";
+		//const String mouliUtilConfigPath="w:/meo-moulinettes/";
 		const String dbName="administration";
 		private ConfigUtil configUtil = new ConfigUtil();
 		private ConfigDto configDto=null;
 		
-		private SshClient doConnection(MeoServeur serveur, int localPort, int forwardPort) {
+		public SshClient doConnection(MeoServeur serveur, int localPort, int forwardPort, MouliProgressWorker worker) {
 			List<KeyValuePair<int, int>>portsList = new List<KeyValuePair<int, int>>();
 			
 			portsList.Add(new KeyValuePair<int, int>(localPort, forwardPort));
 			SshUtil sshUtil =new SshUtil();
-			return sshUtil.getClientWithForwardedPorts(serveur, portsList);
+			SshClient sshClient = sshUtil.getClientWithForwardedPorts(serveur, portsList);
+			if(worker!=null) {
+				worker.ReportProgress(1, 1);
+				
+			}
+			return sshClient;
 			/*
 			SshClient client=null;
 			PasswordConnectionInfo connectionInfo = new PasswordConnectionInfo(serverAddress, login, password);
@@ -36,7 +42,7 @@ namespace cmdUtils {
 		}
 		private ConfigDto getConfig() {
 			
-			configDto= configUtil.readConfigXml(mouliUtilConfigPath );
+			configDto= configUtil.readConfigXml("." );
 			return configDto;
 		}
 		public String  getAdminServeur(ref SshClient client, int hiddenPort, int visiblePort) {

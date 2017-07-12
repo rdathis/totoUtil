@@ -24,7 +24,8 @@ namespace cmdUtils.Objets
 		public List <MeoSql> sqlcommands;
 		
 		public List<ConfigParam> configParams;
-		
+	
+		public String basePath { get; set ;}
 		public ConfigDto()
 		{
 

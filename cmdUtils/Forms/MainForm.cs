@@ -604,19 +604,7 @@ namespace cmdUtils
 		}
 		void mouliUtilToolStripButtonClick(object sender, EventArgs e)
 		{
-			const string path="w:/meo-moulinettes/";
-			const string cmd="bin/mouliutil.bat";
-			ProcessUtil util = new ProcessUtil();
-			Process process = new Process();
-			process.StartInfo.FileName = path+cmd;
-			process.StartInfo.RedirectStandardInput = true;
-			process.StartInfo.RedirectStandardOutput = true;
-			process.StartInfo.CreateNoWindow = false;
-			process.StartInfo.UseShellExecute = false;
-			process.StartInfo.WorkingDirectory = path;
-			process.Start();
-			
-			//util.startProcess(path+cmd, "", ProcessWindowStyle.Normal);
+			//to be destroyed			
 		}
 		void RichTextBox2TextChanged(object sender, EventArgs e)
 		{

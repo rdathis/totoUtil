@@ -13,3 +13,7 @@ C:\renaud\totoUtil\TestUtil\bin\Debug\TestUtil.pdb
 C:\renaud\totoUtil\TestUtil\obj\Debug\TestUtil.csprojResolveAssemblyReference.cache
 C:\renaud\totoUtil\TestUtil\obj\Debug\TestUtil.exe
 C:\renaud\totoUtil\TestUtil\obj\Debug\TestUtil.pdb
+M:\github\totoUtil\TestUtil\bin\Debug\MySql.Data.dll
+M:\github\totoUtil\TestUtil\bin\Debug\MySql.Data.Entity.dll
+M:\github\totoUtil\TestUtil\bin\Debug\MySql.Data.Entity.EF6.dll
+M:\github\totoUtil\TestUtil\bin\Debug\MySql.Fabric.Plugin.dll

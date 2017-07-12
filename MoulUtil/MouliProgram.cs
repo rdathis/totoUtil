@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 
 using System.IO;
+using MoulUtil.Forms.utils;
 using Renci.SshNet;
 using cmdUtils;
 using cmdUtils.Objets;
@@ -22,10 +23,10 @@ namespace MoulUtil
 
 	class MouliProgram
 	{
-		private static MouliActionForm form =null;
-		private static int progression=0;
-		private static DateTime startDateTime;
-		private static String basePath;
+		//private static MouliActionForm form =null;
+		//private static int progression=0;
+		//private static DateTime startDateTime;
+		//private static String basePath;
 		static log4net.ILog ILOG = LogManager.GetLogger("mouliUtil");
 
 		private static void print(String s) {
@@ -34,11 +35,11 @@ namespace MoulUtil
 
 		public static void Main(string[] args)
 		{
-			basePath=Directory.GetCurrentDirectory();
-			if(basePath.ToLower().EndsWith("\\bin") && !Directory.Exists("conf") &&  Directory.Exists("..\\conf")) {
+			String tmpBasePath=Directory.GetCurrentDirectory();
+			if(tmpBasePath.ToLower().EndsWith("\\bin") && !Directory.Exists("conf") &&  Directory.Exists("..\\conf")) {
 				
 				Directory.SetCurrentDirectory("..");
-				basePath=Directory.GetCurrentDirectory();
+				tmpBasePath=Directory.GetCurrentDirectory();
 				Console.WriteLine("directory changed to "+Directory.GetCurrentDirectory());
 			}
 			//configure le ilog -- http://lutecefalco.developpez.com/tutoriels/dotnet/log4net/introduction/
@@ -46,6 +47,7 @@ namespace MoulUtil
 			
 			ConfigUtil configUtil = new ConfigUtil();
 			ConfigDto configDto = configUtil.getConfig();
+			configDto.basePath=tmpBasePath;
 			
 			Console.WriteLine("Moulinette util - ");
 			Console.WriteLine(" Args ("+args.Length+")");
@@ -71,62 +73,10 @@ namespace MoulUtil
 
 		
 
-		static void majProgression() {
-			majProgression(++progression);
-		}
-		private static void majProgression(int value) {
-			progression=value;
-			if(form!=null) {
-				form.updateProgression(progression);
-			}
-		}
-
-		static string calculMagId(string sourceMoulinette)
-		{
-			String retour="9999";
-			if (sourceMoulinette.StartsWith("MID")) {
-				retour=sourceMoulinette. Substring(3, sourceMoulinette.Length - 3);
-				if (retour.IndexOf("-") > 0 ) {
-					retour=retour.Substring(0, retour.IndexOf("-"));
-				}
-			}
-			return retour;
-		}
-
-		private static String getJournalFilePath() {
-			return "logs/journal.log";
-		}
-		private static String getDetails(MouliUtilOptions options) {
-			String s="";
-			s+=" MagId:"+options.getMagId();
-			s+=" instance:"+options.getInstanceName();
-			s+=" Lots:"+options.getLots() ;
-			s+=" joint:"+options.getIsJoint();
-			if(options.getOrd01()!=null) {
-				s+=" ord01:"+(options.getOrd01().Count > 0);
-			}
-			return s;
-		}
-		private static void toJournal (String sourceMoulinette, MouliUtilOptions options) {
-			
-			MouliUtil mouliUtil = new MouliUtil();
-			mouliUtil.safeCreateDirectory("logs/");
-			
-			StreamWriter outputFile = new StreamWriter(getJournalFilePath(), true);
-			try {
-				outputFile.NewLine = "\n";
-				outputFile.WriteLine(DateTime.Now+ " prepa moulinette : "+sourceMoulinette + " "+getDetails(options));
-			} catch (Exception e) {
-				Console.WriteLine(e);
-			} finally {
-				outputFile.Close();
-			}
-			
-			
-		}
-		public static MouliJob doTraitement(String sourceMoulinette, MouliUtilOptions options) {
-			Directory.SetCurrentDirectory(basePath);
-			toJournal(sourceMoulinette, options);
+/*
+		public static MouliJob doTraitement(String sourceMoulinette, MouliUtilOptions options, ConfigDto configDto) {
+			Directory.SetCurrentDirectory(configDto.basePath);
+			MouliActionUtil.toJournal(sourceMoulinette, options);
 			
 			majProgression(0);
 			sourceMoulinette = sourceMoulinette.Trim();
@@ -136,7 +86,7 @@ namespace MoulUtil
 			
 			
 			
-			startDateTime = DateTime.Now;
+			DateTime startDateTime = DateTime.Now;
 			MouliUtil mouliUtil = new MouliUtil();
 			
 			if(options.getarchiveName()==null) {
@@ -179,6 +129,7 @@ namespace MoulUtil
 			String [] selectionJ=null;
 			
 			MouliStatRecap statsRecap = new MouliStatRecap() ;
+			// disable once ConvertToConstant.Local
 			Boolean toLowerCase = true;
 			
 			selectionJ = new string[1];
@@ -192,7 +143,7 @@ namespace MoulUtil
 			options.setOrd01(mouliUtil.checkIsOrd01( mouliUtil.getData() + mouliUtil.getOrd01()));
 			options.setDoc01(mouliUtil.checkIsDoc01(mouliUtil.getData() + mouliUtil.getDoc01()));
 			
-			mouliUtil.writeMoulinetteFile(basePath+"/conf/modele.moulinette", "",scriptMoulinetteFile, options);
+			mouliUtil.writeMoulinetteFile(configDto.basePath+"/conf/modele.moulinette", "",scriptMoulinetteFile, options);
 			
 			mouliUtil.writeJobFile(scriptJobMoulinetteFile, scriptMoulinetteFile, options);
 
@@ -262,58 +213,27 @@ namespace MoulUtil
 			MouliJob job = new MouliJob(archiveName, originalDir, liste, statsRecap, startDateTime, options, sourceMoulinette);
 			return job;
 		}
+	*/
 
-		public static void doArchive(MouliJob job)
-		{
-			ZipUtil zipUtil = new ZipUtil();
-			
-			List<String> liste = job.getListe();
-			if (job.getOptions()!=null) {
-				List <String> doc01 = job.getOptions().getDoc01();
-				List <String> ord01 = job.getOptions().getOrd01();
-				//
-				if (doc01!=null) {
-					for( int i=0;i< doc01.Count ; i++) {
-						liste.Add(doc01[i]);
-					}
-				}
-				//
-				if (ord01!=null) {
-					for( int i=0;i< ord01.Count ; i++) {
-						liste.Add(ord01[i]);
-					}
-				}
-			}
-			
-			zipUtil.createSimpleArchive(ZipUtil.compressionStandard, job.getArchiveName() , liste, job.getBackgroundWorker());
-			majProgression(99);
-			// Fin
-			Directory.SetCurrentDirectory (job.getOriginalDir());
-			Console.WriteLine("fin archive "+job.getArchiveName());
-			printRecap(job.getStatRecap());
-		}
+		
+		/*
 		static void printEnd()
 		{
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
 		}
-
+		*/
+		/*
 		private static void printHelp() {
 			Console.WriteLine(" Outil compression moulinette -- ");
 		}
-
+		*/
+		/*
 		static void printChrono(TimeSpan ts)
 		{
 			Console.WriteLine("Temps écoulé : "+string.Format("{0}", Math.Round(ts.TotalSeconds, 3).ToString())+" secondes" );
 			Console.WriteLine("Temps écoulé : "+string.Format("{0}", Math.Round(ts.TotalMinutes, 3).ToString())+" minutes" );
 		}
-		static void printRecap( MouliStatRecap statRecap)
-		{
-			foreach(String s in statRecap.notFoundList) {
-				Console.WriteLine("Absent : "+s);
-			}
-			Console.WriteLine(" PDF : trouvés : "+statRecap.foundFiles+"  -- NON TROUVES : "+statRecap.notFoundList.Count);
-			Console.WriteLine(" fichiers  présents : ("+statRecap.datamag+"/) : "+statRecap.mag01FilesTotal+"  (Joint/) : "+statRecap.jointDocsTotal);
-		}
+		*/
 	}
 }

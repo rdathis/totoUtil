@@ -367,7 +367,7 @@ namespace cmdUtils.Objets
 			
 			
 			cmd+=" && cd " +newdir +" && unzip -o "+target+info.Name;
-			// cd /database/transpo/bidule && mkdir pouet && cd pouet && unzip ../pouet.zip
+			// cd /data/trans/bidule && mkdir pouet && cd pouet && unzip ../pouet.zip
 			return cmd;
 		}
 		public String calculeArchiveName(String sourceMoulinette) {

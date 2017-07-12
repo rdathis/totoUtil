@@ -16,7 +16,7 @@ using cmdUtils.Objets;
 namespace MoulUtil
 {
 	/// <summary>
-	/// Screen to pilot the work
+	/// Form to pilot the work
 	/// </summary>
 	public partial class MouliActionForm : Form
 	{
@@ -26,6 +26,7 @@ namespace MoulUtil
 		private ConfigDto configDto;
 		private String magId=null;
 		private MouliUtilOptions options=null;
+		private MouliActionUtil mouliActionUtil ;
 
 		public MouliActionForm(MouliUtilOptions options, ConfigDto configDto, string path)
 		{
@@ -37,11 +38,16 @@ namespace MoulUtil
 			setPath(path);
 			setMagId(options.getMagId());
 			setMagasinIrris("01");
-			
 			prepare();
-			setMeoInstance(options.getInstanceName());
+			MeoInstance instance = MeoInstance.findInstanceByInstanceName(configDto.getInstances(),options.getInstanceName());
+			if(instance!=null && instance.getServeur()!=null) {
+				MeoServeur serveur = MeoServeur.findServeurByName(configDto.getServeurs(), instance.getServeur());
+				if(serveur!=null) {
+					cibleLabel.Text = options.getInstanceName() +" ("+ serveur.getNom() + " "+serveur.getAdresse()+")";
+				}
+			}
 		}
-
+		
 		// disable once ParameterHidesMember
 		void setConfigDto(ConfigDto configDto)	{
 			this.configDto=configDto;
@@ -62,14 +68,17 @@ namespace MoulUtil
 		public void prepare() {
 			puttyLink.Visible=false;
 			pscpLink.Visible=false;
-			targetTreeView.Enabled = false;
-			new TreeViewUtil(instances, serveurs).populateTargets(targetTreeView);
+			//targetTreeView.Enabled = false;
+			//new TreeViewUtil(instances, serveurs).populateTargets(targetTreeView);
 			
 			dateTimePicker.Value = new MouliUtil().calculeNextPlannedJob();
 			
 			activeExtension(purgeClientChkBox, options.getExtensionClient());
 			activeExtension(purgeStockChkBox, options.getExtensionStock());
+			installBtn.Enabled=false;
 			progressTextBox.Visible=false;
+			emailTextbox.Text=configDto.getDefaultEmail();
+			mouliActionUtil = new MouliActionUtil(this);
 		}
 
 		void activeExtension(CheckBox chkBox, MoulinettePurgeOptionTypes moulinettePurgeOptionTypes)
@@ -81,7 +90,11 @@ namespace MoulUtil
 			chkBox.Enabled=value;
 			chkBox.Checked=value;
 			
+			//mis en suspens, suite deux retards extensions
+			chkBox.Checked=false;
+			
 		}
+		/*
 		// disable once ParameterHidesMember
 		void analyseJob(MouliJob job, CheckedListBox box)
 		{
@@ -97,24 +110,48 @@ namespace MoulUtil
 				}
 			}
 		}
-
-
-		private void toto(String str) {
-			
+		 */
+		// disable once ParameterHidesMember
+		void analyseJob(MouliJob job)
+		{
+			if (job!=null) {
+				MouliStatRecap recap = job.getStatRecap();
+				if (recap!=null) {
+					//[0]client [1]stock [2]joint [3]ord01
+					optionCCheckBox.Checked = (recap.mag01FilesTotal> 0);
+					optionSCheckBox.Checked = optionCCheckBox.Checked ;
+					optionJCheckBox.Checked = (recap.jointDocsTotal > 0);
+					optionDCheckBox.Checked = (recap.ord01DocsTotal> 0);
+					//box.SetItemChecked(0, (recap.mag01FilesTotal> 0));
+					//box.SetItemChecked(1, box.GetItemChecked(0));
+					//box.SetItemChecked(2,(recap.jointDocsTotal > 0));
+					//box.SetItemChecked(3,(recap.ord01DocsTotal> 0));
+					// box.SetItemChecked(4,(recap.doc01DocsTotal> 0));
+				}
+			}
 		}
+		void completeOptions()
+		{
+			configDto.setDefaultEmail(emailTextbox.Text);
+			options=updateMouliUtilOption(MeoInstance.findInstanceByInstanceName(configDto.getInstances(), options.getInstanceName()));
+		}
+
 		void GoButtonClick(object sender, EventArgs e)
 		{
+			
 			goButton.Enabled=false;
 			uploadButton.Enabled = false;
 			progressTextBox.Visible=true;
 			progressTextBox.Enabled=false;
 			toolStripStatusLabel1.Text = "doing archive";
 			try {
-				options=updateMouliUtilOption(getSelectedInstance());
-				job= MouliProgram.doTraitement(pathLabel.Text, options);
-				analyseJob(job, checkedListBox1);
+				completeOptions();
+				//job= MouliProgram.doTraitement(pathLabel.Text, options, configDto);
+				job=mouliActionUtil.doTraitement(pathLabel.Text, options, configDto);
+				
+				analyseJob(job);
 				CreateArchiveBackgroundWorker worker = CreateArchiveBackgroundWorker.createWorker();
-				worker.prepare(job);
+				worker.prepare(job, mouliActionUtil);
 				
 				MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = name => {
 					//Console.WriteLine("Notification received for: {0}", name);
@@ -154,25 +191,22 @@ namespace MoulUtil
 			goButton.Enabled=true;
 		}
 
-		public void updateProgression(int progression)
-		{
+		public void updateProgression(int progression)	{
 			//progressBar1.Value=progression;
 			// progressBar1.Refresh();
 			toolStripProgressBar1.Value=progression;
-			
-			
 		}
-		public void setPath(string sourceMoulinette)
-		{
+		public void setPath(string sourceMoulinette)	{
 			pathLabel.Text=sourceMoulinette;
 			pathTextBox.Text=sourceMoulinette;
 			pathTextBox.Enabled=false;
-			
 		}
 		void ExitButtonClick(object sender, EventArgs e)
 		{
 			Hide();
 		}
+		
+		/*
 		void TargetTreeViewAfterSelect(object sender, TreeViewEventArgs e)
 		{
 			TreeView tv = (TreeView) sender;
@@ -192,9 +226,8 @@ namespace MoulUtil
 					pscpLink.Tag=serveur;
 					puttyLink.Visible=true;
 					
-					
 					targetLabel.Text = "-> "+serverName+ "/"+instanceName;
-					targetLabel.Text+=getRecapWork();
+					targetLabel.Text+=calculateLots();
 					targetLabel.BackColor=Color.Beige;
 					targetLabel.ForeColor=Color.Red;
 					
@@ -204,23 +237,8 @@ namespace MoulUtil
 				}
 			}
 		}
-		//UGLY CODE
-		String getRecapWork() {
-			String r="";
-			if(checkedListBox1.GetItemChecked(1)) {
-				r+="S";//S before C (201703:LH)
-			}
-			if(checkedListBox1.GetItemChecked(0)) {
-				r+="C";
-			}
-			if(checkedListBox1.GetItemChecked(2)) {
-				r+="J";
-			}
-			if(checkedListBox1.GetItemChecked(2)) {
-				r+="D";
-			}
-			return r;
-		}
+		 */
+
 		void PuttyLinkLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			
@@ -239,7 +257,7 @@ namespace MoulUtil
 				LinkLabel label = (LinkLabel) sender;
 				if (label.Tag!=null) {
 					MeoServeur server = (MeoServeur) label.Tag;
-					String args=util.buildPscpArgs(server, job);
+					String args=util.buildPscpArgs(server, job, configDto);
 					util.executeCommande(MouliConfig.pscpPath, args);
 				}
 			}
@@ -252,19 +270,44 @@ namespace MoulUtil
 		private string calculateLots()
 		{
 			String retour="";
-			CheckedListBox  box = checkedListBox1;
-			if(box.GetItemChecked(0)) {
+			// purges
+			if(optionS1CheckBox.Checked) {
+				retour+="S1";
+			}
+			if(optionSCheckBox.Checked) {
+				retour+="S";
+			}
+			//
+			if(optionC1CheckBox.Checked) {
+				retour+="C1";
+			}
+			if(optionCCheckBox.Checked) {
 				retour+="C";
 			}
+			//
+			if(optionDCheckBox.Checked) {
+				retour+="D";
+			}
+			if(optionJCheckBox.Checked) {
+				retour+="J";
+			}
+
+			
+
+			/*
+			CheckedListBox  box = checkedListBox1;
 			if(box.GetItemChecked(1)) {
-				retour+="S";
+				retour+="S";//S before C
+			}
+			if(box.GetItemChecked(0)) {
+				retour+="C";
 			}
 			if(box.GetItemChecked(2)) {
 				retour+="J";
 			}
 			if(box.GetItemChecked(3)) {
 				retour+="D";
-			}
+			}*/
 			return retour;
 
 		}
@@ -301,11 +344,13 @@ namespace MoulUtil
 			}
 			
 		}
+		/*
 		MeoInstance getSelectedInstance()
 		{
 			return getSelectedInstance(targetTreeView);
 		}
-		
+		 */
+		/*
 		MeoInstance getSelectedInstance(TreeView tv)
 		{
 			TreeNode node = tv.SelectedNode;
@@ -325,6 +370,7 @@ namespace MoulUtil
 			}
 			return instance;
 		}
+		 */
 		void CmdLabelClick(object sender, System.EventArgs e)
 		{
 			CmdUtil util = new CmdUtil();
@@ -343,7 +389,8 @@ namespace MoulUtil
 					SshUtil sshUtil = new SshUtil();
 					try {
 						UploadArchiveBackgroundWorker worker = new UploadArchiveBackgroundWorker();
-						worker.prepare(server, "/database/transpo/", job.getArchiveName());
+						String targetPath = configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.databasePath);
+						worker.prepare(server, targetPath, job.getArchiveName());
 						
 						MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = name => {
 							//Console.WriteLine("Notification received for: {0}", name);
@@ -368,12 +415,14 @@ namespace MoulUtil
 							toolStripStatusLabel1.Text = "done, unzip...";
 
 							try {
-								sshUtil.unzipArchive(server, "/database/transpo/", job);
+								String serverTargetPath=configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.databasePath);
+								sshUtil.unzipArchive(server, serverTargetPath, job);
 								
 								MouliUtil mouliUtil = new MouliUtil();
 								
 								CmdUtil cmdUtil = new CmdUtil();
-								String cmd=mouliUtil.getUnzipCmd(server, "/database/transpo/", job);
+								
+								String cmd=mouliUtil.getUnzipCmd(server, serverTargetPath, job);
 								String commandeFile = job.getMoulinettePath() +"install.file";
 								mouliUtil.writeInstallMoulinetteFile(cmd, commandeFile);
 								// plink -pw (password) -l (user) -m (command.file) server
@@ -382,6 +431,7 @@ namespace MoulUtil
 								cmdUtil.executeCommande(MouliConfig.plinkPath, cmd);
 								
 								toolStripStatusLabel1.Text="finished";
+								installBtn.Enabled=true;
 							} catch (Exception ex) {
 								progressTextBox.Text="Exception : "+ex.Message;
 							}
@@ -390,29 +440,8 @@ namespace MoulUtil
 						worker.setStartWorkerCallBack(startWorkerCallBack);
 						worker.setProgressWorkerCallBack(progressWorkerCallBack);
 						worker.setEndWorkerCallBack(endWorkerCallBack);
-						
-						
+						//
 						worker.RunWorkerAsync();
-						
-						
-						/*
-						sshUtil.uploadArchive(server, "/database/transpo/", job.getArchiveName());
-						toolStripStatusLabel1.Text = "done, unzip...";
-						sshUtil.unzipArchive(server, "/database/transpo/", job);
-						
-						MouliUtil mouliUtil = new MouliUtil();
-						
-						CmdUtil cmdUtil = new CmdUtil();
-						String cmd=mouliUtil.getUnzipCmd(server, "/database/transpo/", job);
-						String commandeFile = job.getMoulinettePath() +"install.file";
-						mouliUtil.writeInstallMoulinetteFile(cmd, commandeFile);
-						// plink -pw (password) -l (user) -m (command.file) server
-						cmd="-pw "+server.password+" -l "+server.utilisateur+" -m "+commandeFile+" "+server.adresse;
-						
-						cmdUtil.executeCommande(MouliConfig.plinkPath, cmd);
-						
-						toolStripStatusLabel1.Text="finished";
-						 */
 					} catch(Exception ex) {
 						MessageBox.Show("Erreur envoi data : "+ex.Message + "\n"+ex.Source + "\n" +ex.StackTrace);
 					}
@@ -428,10 +457,11 @@ namespace MoulUtil
 			magIdTextBox.Enabled=false;
 		}
 
+		/*
 		void setMeoInstance(string instanceName)
 		{
 			MeoInstance instance = MeoInstance.findInstanceByInstanceName(instances, instanceName);
-			TreeView tv = targetTreeView;
+//			TreeView tv = targetTreeView;
 			if(instance!=null) {
 				foreach (TreeNode serveurNode in tv.Nodes) {
 					foreach(TreeNode instanceNode in serveurNode.Nodes) {
@@ -444,6 +474,8 @@ namespace MoulUtil
 				}
 			}
 		}
+		 */
+		/*
 		void CheckedListBox1ItemCheck(object sender, ItemCheckEventArgs e)
 		{
 			if(!CheckState.Checked.Equals(e.NewValue)) {
@@ -467,6 +499,92 @@ namespace MoulUtil
 		void TargetTreeViewDoubleClick(object sender, EventArgs e)
 		{
 			targetTreeView.Enabled = true;
+		}
+		 */
+		void InstallBtnClick(object sender, EventArgs e) {
+			//
+			SshUtil sshUtil = new SshUtil();
+			LinkLabel label = pscpLink;
+			if (label.Tag!=null && job!=null) {
+				MeoServeur server = (MeoServeur) label.Tag;
+				try {
+					String serverTargetPath=configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.databasePath);
+					sshUtil.installJob(server, serverTargetPath, job);
+				} catch(Exception exception) {
+					MessageBox.Show("Erreur envoi data : "+exception.Message + "\n"+exception.Source + "\n" +exception.StackTrace);
+				}
+			}
+		}
+		void OptionCC1heckBoxCheckedChanged(object sender, EventArgs e)
+		{
+			if(optionCCheckBox.Checked) {
+				optionC1CheckBox.Checked=false;
+			}
+		}
+		void OptionCCheckBoxCheckedChanged(object sender, EventArgs e)
+		{
+			if(optionC1CheckBox.Checked) {
+				optionCCheckBox.Checked=false;
+			}
+		}
+		void OptionSCheckBoxCheckedChanged(object sender, EventArgs e)
+		{
+			if(optionS1CheckBox.Checked) {
+				optionSCheckBox.Checked=false;
+			}
+		}
+		void OptionS1CheckBoxCheckedChanged(object sender, EventArgs e)
+		{
+			if(optionSCheckBox.Checked) {
+				optionS1CheckBox.Checked=false;
+			}
+		}
+		void OptionJCheckBoxCheckedChanged(object sender, EventArgs e)
+		{
+			if(optionDCheckBox.Checked) {
+				optionJCheckBox.Checked=false;
+			}
+		}
+		void OptionDCheckBoxCheckedChanged(object sender, EventArgs e)
+		{
+			if(optionJCheckBox.Checked) {
+				optionDCheckBox.Checked=false;
+			}
+		}
+		void VisuJobLabelClick(object sender, EventArgs e)
+		{
+			completeOptions();
+			prepareVisu(visuJobLabel, "Job");
+		}
+		void VisuScriptLabelClick(object sender, EventArgs e)
+		{
+			completeOptions();
+			prepareVisu(visuJobLabel, "Script");
+		}
+
+		void prepareVisu(Label label, String contenu)
+		{
+			if(!1.Equals(label.Tag)) {
+				label.Tag=1;
+				label.BackColor=Color.AntiqueWhite;
+				visuRichTexBox.Tag="j";
+				doVisu(contenu);
+				
+			} else {
+				label.BackColor=Color.LightGray;
+				label.Tag=0;
+				visuRichTexBox.Tag=null;
+			}
+		}
+		void doVisu(string str)
+		{
+			visuRichTexBox.Text = str+" to complete";
+			//visuRichTexBox.Enabled=false;
+			visuRichTexBox.Visible=!visuRichTexBox.Visible;
+			visuRichTexBox.Top=20;
+			visuRichTexBox.Left=10;
+			visuRichTexBox.Width=550;
+			visuRichTexBox.Height=320;
 		}
 	}
 }

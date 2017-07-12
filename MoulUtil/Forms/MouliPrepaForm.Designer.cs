@@ -139,7 +139,7 @@ namespace MoulUtil
 			this.workspaceBaseBox.Name = "workspaceBaseBox";
 			this.workspaceBaseBox.Size = new System.Drawing.Size(292, 20);
 			this.workspaceBaseBox.TabIndex = 6;
-			this.workspaceBaseBox.Text = "W:/meo-moulinettes/";
+			this.workspaceBaseBox.Text = "?";
 			// 
 			// workspaceZoneBox
 			// 

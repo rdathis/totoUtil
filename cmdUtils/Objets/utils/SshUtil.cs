@@ -63,6 +63,23 @@ namespace cmdUtils.Objets {
 			client.Disconnect();
 			return liste;
 		}
+		public  List <String> installJob(MeoServeur server, string target, MouliJob job)
+		{
+			List <String> liste =new List<string>();
+			SshClient client = new SshClient(getConnectionInfo(server));
+			client.Connect();
+			String newdir=target + job.getMoulinettePath();
+			
+			//
+			FileInfo info =new FileInfo(job.getArchiveName());
+			String jobName = info.Name;
+			jobName = jobName.Substring(0, jobName.Length - 4) + ".job.sh";
+			liste.Add(client.RunCommand("cd "+newdir +" && sh "+target+jobName).Result);
+			//
+			
+			client.Disconnect();
+			return liste;
+		}
 		
 		public SshClient getClientWithForwardedPorts(MeoServeur serveur, List<KeyValuePair<int, int>>portsList )
 		{
@@ -79,7 +96,7 @@ namespace cmdUtils.Objets {
 					Console.WriteLine(" Ajout forward : (distant) :"+distant);
 					//ForwardedPort port = new ForwardedPortRemote(serveur.getAdresse(), (uint) distant, "127.0.0.1", (uint) local);
 					//
-					ForwardedPort port = new ForwardedPortLocal("127.0.0.1", (uint) distant, "127.0.0.1", (uint) local);
+					ForwardedPort port = new ForwardedPortLocal("127.0.0.1", (uint) local, "127.0.0.1", (uint) distant);
 					client.AddForwardedPort(port);
 					port.Start();
 				}
@@ -89,7 +106,7 @@ namespace cmdUtils.Objets {
 
 				//client.Disconnect();
 			} else {
-				Console.WriteLine("Client cannot be reached...");
+				Console.WriteLine("Client "+serveur.adresse+" cannot be reached...");
 			}
 			return client;
 		}

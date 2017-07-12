@@ -389,7 +389,7 @@ Unknown._w(https://server/instance/application/78957C736ADB5FD05DCBA3DDACFEFF8F.
 			return (" -pw "+server.getPassword() +" "+server.getUtilisateur()+"@"+server.getAdresse());
 		}
 
-		public string buildPscpArgs(MeoServeur server, MouliJob job)
+		public string buildPscpArgs(MeoServeur server, MouliJob job, ConfigDto configDto)
 		{
 			String retour="";
 			if (!String.IsNullOrEmpty(server.getPassword())) {
@@ -399,7 +399,8 @@ Unknown._w(https://server/instance/application/78957C736ADB5FD05DCBA3DDACFEFF8F.
 			if (!String.IsNullOrEmpty(server.getUtilisateur())) {
 				retour+=" "+server.getUtilisateur()+"@"+server.getAdresse();
 			}
-			retour+=":/database/transpo/";
+			String serverTargetPath=configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.databasePath);
+			retour+=":"+serverTargetPath;
 			return (retour);
 		}
 		public Process executeCommandAsDetachedProcess(string command, string args)

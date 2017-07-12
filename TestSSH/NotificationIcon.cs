@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 using Renci.SshNet;
 
 
@@ -76,36 +77,79 @@ namespace TestSSH
 			Application.Exit();
 		}
 		
+		private void truc2() {
+			
+			//ssh
+			String serverAdress="serveur";
+			String hostName="login";
+			String Password="password";
+			String databaseadres="127.0.0.1";
+			//db
+			String dbdatabase="dbname";
+			String dbpassword="dbpassword";
+			String dbusername="dblogin";
+			//
+			
+			
+			int localport=3615;
+			
+			PasswordConnectionInfo connectionInfo = new PasswordConnectionInfo(serverAdress, hostName, Password);
+			connectionInfo.Timeout = TimeSpan.FromSeconds(30);
+			client = new SshClient( connectionInfo);
+			client.Connect();
+			ForwardedPortLocal portFwld = new ForwardedPortLocal ("127.0.0.1", Convert.ToUInt32(localport), databaseadres, Convert.ToUInt32(3306));
+			client.AddForwardedPort(portFwld);
+			Debug.Print("starting client");
+			portFwld.Start();
+			
+			String connectionString = "Server = 127.0.0.1; Database = " + dbdatabase + "; Password = " + dbpassword + "; UID = " + dbusername + "; Port = " + localport.ToString() + ";";
+
+			Debug.Print("starting db");
+			MySqlConnection cnx = new MySqlConnection();
+			cnx.ConnectionString = connectionString;
+			cnx.Open();
+			String sql = "select (3*5) AS FIFTEEN ; ";
+			Debug.Print("starting sql :"+sql);
+			
+			MySqlCommand command = new MySqlCommand(sql, cnx);
+
+
+			MySqlDataReader data = command.ExecuteReader();
+			while(data.Read()) {
+				
+				//result.Add(convertit(data, fieldIndex));
+
+				Debug.Print("data:("+data.GetFieldType(0)+")" + data.GetValue(0) +" "+ data.FieldCount);
+			}
+			cnx.Close();
+			
+			Debug.Print("disco client");
+			client.Disconnect();
+			Console.WriteLine("finish");
+			
+			// Where localport = 22 and hostport = 3306
+			
+		}
 		private void IconDoubleClick(object sender, EventArgs e)
 		{
 			//MessageBox.Show("The icon was double clicked");
 			doConnection();
 		}
+		
+
 		#endregion
 		
-
 		private void doConnection() {
-			truc2();
+			try {
+				truc2();
+			} catch(Exception ex) {
+				Console.WriteLine("Erreur surveneu : "+ex.Message);
+			}
+			if(client!=null && client.IsConnected) {
+				client.Disconnect();
+			}
 			return;
 
-		}
-		
-		private void truc2() {
-			String serverAdress="server";
-			String hostName="user";
-			String Password="password";
-			String databaseadres="127.0.0.1";
-			PasswordConnectionInfo connectionInfo = new PasswordConnectionInfo(serverAdress, hostName, Password);
-			connectionInfo.Timeout = TimeSpan.FromSeconds(30);
-			client = new SshClient( connectionInfo);
-			client.Connect();
-			ForwardedPortLocal portFwld = new ForwardedPortLocal ("127.0.0.1", Convert.ToUInt32(13306), databaseadres, Convert.ToUInt32(3306));
-			client.AddForwardedPort(portFwld);
-			portFwld.Start();
-			//String connectionstring = "Server = 127.0.0.1; Database = " + Database + "; Password = " + Password + "; UID = " + Username + "; Port = " + localport.ToString() + ";";
-
-			// Where localport = 22 and hostport = 3306
-			
 		}
 	}
 }

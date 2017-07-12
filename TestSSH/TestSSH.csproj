@@ -34,6 +34,21 @@
     <Reference Include="Microsoft.CSharp">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\cmdUtils\libs\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity">
+      <HintPath>..\cmdUtils\libs\MySql.Data.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6">
+      <HintPath>..\cmdUtils\libs\MySql.Data.Entity.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Fabric.Plugin">
+      <HintPath>..\cmdUtils\libs\MySql.Fabric.Plugin.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Web">
+      <HintPath>..\cmdUtils\libs\MySql.Web.dll</HintPath>
+    </Reference>
     <Reference Include="Renci.SshNet">
       <HintPath>W:\GitStuff\SSH.NET\src\Renci.SshNet\bin\Debug\Renci.SshNet.dll</HintPath>
     </Reference>

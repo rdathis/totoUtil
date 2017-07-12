@@ -6,6 +6,8 @@
  */
 using System;
 using System.ComponentModel;
+using System.Windows.Forms;
+using Renci.SshNet;
 
 namespace MoulUtil.Forms.utils
 {
@@ -17,6 +19,7 @@ namespace MoulUtil.Forms.utils
 		public delegate void StartWorkerCallBack(String str);
 		public delegate void ProgressWorkerCallBack(int value);
 		public delegate void EndWorkerCallBack(String str);
+		public delegate void EndWorkerSshClientCallBack(String str, SshClient sshClient, TextBox textbox);
 		
 		private int nbOperation=-1;
 		private int doneOperation=0;
@@ -24,6 +27,7 @@ namespace MoulUtil.Forms.utils
 		private StartWorkerCallBack startWorkerCallBack=null;
 		private ProgressWorkerCallBack progressWorkerCallBack=null;
 		private EndWorkerCallBack endWorkerCallBack=null;
+		private EndWorkerSshClientCallBack endWorkerSshClientCallBack=null;
 		public MouliProgressWorker()
 		{
 		}
@@ -72,6 +76,13 @@ namespace MoulUtil.Forms.utils
 		public EndWorkerCallBack getEndWorkerCallBack() {
 			return this.endWorkerCallBack;
 		}
+		public void setEndWorkerSshClientCallBack(EndWorkerSshClientCallBack cb) {
+			this.endWorkerSshClientCallBack=cb;
+		}
+		public EndWorkerSshClientCallBack getEndWorkerSshClientCallBack() {
+			return this.endWorkerSshClientCallBack;
+		}
+
 		//
 		public void doStartWorker(String str) {
 			if(startWorkerCallBack!=null) {
@@ -88,6 +99,11 @@ namespace MoulUtil.Forms.utils
 		public void doEndWorker(String str) {
 			if(endWorkerCallBack!=null) {
 				endWorkerCallBack.Invoke(str);
+			}
+		}
+		public void doEndWorkerSshClientCallBack(String str, SshClient sshclient, TextBox textbox) {
+			if(endWorkerSshClientCallBack!=null) {
+				endWorkerSshClientCallBack.Invoke(str, sshclient, textbox);
 			}
 		}
 		

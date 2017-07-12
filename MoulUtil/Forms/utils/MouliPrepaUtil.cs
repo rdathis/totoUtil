@@ -100,11 +100,12 @@ namespace MoulUtil.Forms.utils
 				magDescBox.Text = "Fake Shop";
 				String rep= "MID0000-TOTO-i0/";
 				propositionBox.Text = configDto.getWorkingDir()+rep;
+				propositionBox.Text =rep;
 				mouliPrepaForm.CreateBtnClick(null, null);
 				createMock(workingPath+propositionBox.Text);
 				options = new MouliUtilOptions();
 				options.setMagId(rechMagIdBox.Text);
-				options.setInstanceName("meo_demo");
+				options.setInstanceName("meo_test");
 				return options;
 			}
 			MyUtil myUtil = new MyUtil();
@@ -113,7 +114,8 @@ namespace MoulUtil.Forms.utils
 			String sql = configDto.getSqlCommand(SqlCommandsType.getDescriptionMagasin);
 			String database = configDto.getDatabaseAdminName();
 			
-			const int port = 3615;
+			String tmpStr = configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.databaseTunneling);
+			int port = int.Parse(tmpStr.Substring(0, tmpStr.IndexOf(":", StringComparison.Ordinal)));
 			const string connectedBySSH = "connected by SSH \r\n";
 			String s = connectedBySSH;
 			String proposition = "";

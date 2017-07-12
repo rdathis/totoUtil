@@ -14,7 +14,6 @@ namespace MoulUtil
 		/// Designer variable used to keep track of non-visual components.
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
-		
 		/// <summary>
 		/// Disposes resources used by the form.
 		/// </summary>
@@ -28,7 +27,7 @@ namespace MoulUtil
 			}
 			base.Dispose(disposing);
 		}
-		
+
 		/// <summary>
 		/// This method is required for Windows Forms designer support.
 		/// Do not change the method contents inside the source code editor. The Forms designer might
@@ -41,8 +40,6 @@ namespace MoulUtil
 			this.pathLabel = new System.Windows.Forms.Label();
 			this.uploadButton = new System.Windows.Forms.Button();
 			this.progressBar1 = new System.Windows.Forms.ProgressBar();
-			this.targetTreeView = new System.Windows.Forms.TreeView();
-			this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
 			this.puttyLink = new System.Windows.Forms.LinkLabel();
 			this.pscpLink = new System.Windows.Forms.LinkLabel();
 			this.exitButton = new System.Windows.Forms.Button();
@@ -63,12 +60,24 @@ namespace MoulUtil
 			this.magIdTextBox = new System.Windows.Forms.TextBox();
 			this.pathTextBox = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
-			this.targetLabel = new System.Windows.Forms.Label();
 			this.magIrrisLabel = new System.Windows.Forms.Label();
 			this.irrisMagTBox = new System.Windows.Forms.TextBox();
 			this.purgeClientChkBox = new System.Windows.Forms.CheckBox();
 			this.purgeStockChkBox = new System.Windows.Forms.CheckBox();
 			this.progressTextBox = new System.Windows.Forms.TextBox();
+			this.installBtn = new System.Windows.Forms.Button();
+			this.optionCCheckBox = new System.Windows.Forms.CheckBox();
+			this.optionSCheckBox = new System.Windows.Forms.CheckBox();
+			this.optionJCheckBox = new System.Windows.Forms.CheckBox();
+			this.optionS1CheckBox = new System.Windows.Forms.CheckBox();
+			this.optionC1CheckBox = new System.Windows.Forms.CheckBox();
+			this.optionDCheckBox = new System.Windows.Forms.CheckBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.emailTextbox = new System.Windows.Forms.TextBox();
+			this.visuJobLabel = new System.Windows.Forms.Label();
+			this.visuScriptLabel = new System.Windows.Forms.Label();
+			this.visuRichTexBox = new System.Windows.Forms.RichTextBox();
+			this.cibleLabel = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -113,36 +122,12 @@ namespace MoulUtil
 			// 
 			// progressBar1
 			// 
-			this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			                                                                 | System.Windows.Forms.AnchorStyles.Right)));
 			this.progressBar1.Location = new System.Drawing.Point(6, 348);
 			this.progressBar1.Name = "progressBar1";
-			this.progressBar1.Size = new System.Drawing.Size(586, 23);
+			this.progressBar1.Size = new System.Drawing.Size(713, 23);
 			this.progressBar1.TabIndex = 10;
-			// 
-			// targetTreeView
-			// 
-			this.targetTreeView.Location = new System.Drawing.Point(13, 118);
-			this.targetTreeView.Name = "targetTreeView";
-			this.targetTreeView.Size = new System.Drawing.Size(568, 161);
-			this.targetTreeView.TabIndex = 11;
-			this.targetTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TargetTreeViewAfterSelect);
-			this.targetTreeView.DoubleClick += new System.EventHandler(this.TargetTreeViewDoubleClick);
-			// 
-			// checkedListBox1
-			// 
-			this.checkedListBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.checkedListBox1.FormattingEnabled = true;
-			this.checkedListBox1.Items.AddRange(new object[] {
-			"clients (C)",
-			"stock (S)",
-			"Joint/ (J)",
-			"ord01+doc01 (D)/"});
-			this.checkedListBox1.Location = new System.Drawing.Point(460, 27);
-			this.checkedListBox1.Name = "checkedListBox1";
-			this.checkedListBox1.Size = new System.Drawing.Size(121, 79);
-			this.checkedListBox1.TabIndex = 12;
-			this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.CheckedListBox1ItemCheck);
 			// 
 			// puttyLink
 			// 
@@ -170,7 +155,7 @@ namespace MoulUtil
 			// exitButton
 			// 
 			this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.exitButton.Location = new System.Drawing.Point(438, 377);
+			this.exitButton.Location = new System.Drawing.Point(565, 377);
 			this.exitButton.Name = "exitButton";
 			this.exitButton.Size = new System.Drawing.Size(75, 23);
 			this.exitButton.TabIndex = 1;
@@ -183,7 +168,7 @@ namespace MoulUtil
 			this.launchCmdLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.launchCmdLabel.BackColor = System.Drawing.Color.Black;
 			this.launchCmdLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			this.launchCmdLabel.Location = new System.Drawing.Point(537, 378);
+			this.launchCmdLabel.Location = new System.Drawing.Point(664, 378);
 			this.launchCmdLabel.Name = "launchCmdLabel";
 			this.launchCmdLabel.Size = new System.Drawing.Size(44, 25);
 			this.launchCmdLabel.TabIndex = 15;
@@ -194,21 +179,21 @@ namespace MoulUtil
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.raccoursToolStripMenuItem,
-			this.programmesToolStripMenuItem});
+			                               	this.raccoursToolStripMenuItem,
+			                               	this.programmesToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(599, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(726, 24);
 			this.menuStrip1.TabIndex = 17;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
 			// raccoursToolStripMenuItem
 			// 
 			this.raccoursToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.echangesmeomoulinettesToolStripMenuItem,
-			this.wmeomoulinettesToolStripMenuItem,
-			this.echangesutilisateursToolStripMenuItem,
-			this.echangeftpmeoToolStripMenuItem});
+			                                                      	this.echangesmeomoulinettesToolStripMenuItem,
+			                                                      	this.wmeomoulinettesToolStripMenuItem,
+			                                                      	this.echangesutilisateursToolStripMenuItem,
+			                                                      	this.echangeftpmeoToolStripMenuItem});
 			this.raccoursToolStripMenuItem.Name = "raccoursToolStripMenuItem";
 			this.raccoursToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
 			this.raccoursToolStripMenuItem.Text = "Raccourcis";
@@ -223,7 +208,7 @@ namespace MoulUtil
 			// 
 			this.wmeomoulinettesToolStripMenuItem.Name = "wmeomoulinettesToolStripMenuItem";
 			this.wmeomoulinettesToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.wmeomoulinettesToolStripMenuItem.Text = "w:/meo-moulinettes";
+			this.wmeomoulinettesToolStripMenuItem.Text = "?";
 			// 
 			// echangesutilisateursToolStripMenuItem
 			// 
@@ -240,8 +225,8 @@ namespace MoulUtil
 			// programmesToolStripMenuItem
 			// 
 			this.programmesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.puttiesToolStripMenuItem,
-			this.cmdToolStripMenuItem});
+			                                                        	this.puttiesToolStripMenuItem,
+			                                                        	this.cmdToolStripMenuItem});
 			this.programmesToolStripMenuItem.Name = "programmesToolStripMenuItem";
 			this.programmesToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
 			this.programmesToolStripMenuItem.Text = "programmes";
@@ -261,11 +246,11 @@ namespace MoulUtil
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolStripStatusLabel1,
-			this.toolStripProgressBar1});
+			                                 	this.toolStripStatusLabel1,
+			                                 	this.toolStripProgressBar1});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 408);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(599, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(726, 22);
 			this.statusStrip1.TabIndex = 18;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -310,14 +295,6 @@ namespace MoulUtil
 			this.label2.TabIndex = 21;
 			this.label2.Text = "path";
 			// 
-			// targetLabel
-			// 
-			this.targetLabel.Location = new System.Drawing.Point(236, 99);
-			this.targetLabel.Name = "targetLabel";
-			this.targetLabel.Size = new System.Drawing.Size(218, 16);
-			this.targetLabel.TabIndex = 23;
-			this.targetLabel.Text = "Destination";
-			// 
 			// magIrrisLabel
 			// 
 			this.magIrrisLabel.Location = new System.Drawing.Point(37, 46);
@@ -359,17 +336,150 @@ namespace MoulUtil
 			this.progressTextBox.Size = new System.Drawing.Size(586, 20);
 			this.progressTextBox.TabIndex = 28;
 			// 
+			// installBtn
+			// 
+			this.installBtn.Location = new System.Drawing.Point(187, 377);
+			this.installBtn.Name = "installBtn";
+			this.installBtn.Size = new System.Drawing.Size(92, 23);
+			this.installBtn.TabIndex = 29;
+			this.installBtn.Text = "&Install Job";
+			this.installBtn.UseVisualStyleBackColor = true;
+			this.installBtn.Click += new System.EventHandler(this.InstallBtnClick);
+			// 
+			// optionCCheckBox
+			// 
+			this.optionCCheckBox.Location = new System.Drawing.Point(23, 116);
+			this.optionCCheckBox.Name = "optionCCheckBox";
+			this.optionCCheckBox.Size = new System.Drawing.Size(131, 17);
+			this.optionCCheckBox.TabIndex = 30;
+			this.optionCCheckBox.Text = "C - Clients";
+			this.optionCCheckBox.UseVisualStyleBackColor = true;
+			this.optionCCheckBox.CheckedChanged += new System.EventHandler(this.OptionCCheckBoxCheckedChanged);
+			// 
+			// optionSCheckBox
+			// 
+			this.optionSCheckBox.Location = new System.Drawing.Point(23, 134);
+			this.optionSCheckBox.Name = "optionSCheckBox";
+			this.optionSCheckBox.Size = new System.Drawing.Size(131, 17);
+			this.optionSCheckBox.TabIndex = 31;
+			this.optionSCheckBox.Text = "S - Stock";
+			this.optionSCheckBox.UseVisualStyleBackColor = true;
+			this.optionSCheckBox.CheckedChanged += new System.EventHandler(this.OptionSCheckBoxCheckedChanged);
+			// 
+			// optionJCheckBox
+			// 
+			this.optionJCheckBox.Location = new System.Drawing.Point(23, 154);
+			this.optionJCheckBox.Name = "optionJCheckBox";
+			this.optionJCheckBox.Size = new System.Drawing.Size(131, 17);
+			this.optionJCheckBox.TabIndex = 32;
+			this.optionJCheckBox.Text = "J - Joints";
+			this.optionJCheckBox.UseVisualStyleBackColor = true;
+			this.optionJCheckBox.CheckedChanged += new System.EventHandler(this.OptionJCheckBoxCheckedChanged);
+			// 
+			// optionS1CheckBox
+			// 
+			this.optionS1CheckBox.ForeColor = System.Drawing.Color.Red;
+			this.optionS1CheckBox.Location = new System.Drawing.Point(23, 220);
+			this.optionS1CheckBox.Name = "optionS1CheckBox";
+			this.optionS1CheckBox.Size = new System.Drawing.Size(148, 25);
+			this.optionS1CheckBox.TabIndex = 35;
+			this.optionS1CheckBox.Text = "S1 - annulation M. Stock";
+			this.optionS1CheckBox.UseVisualStyleBackColor = true;
+			this.optionS1CheckBox.CheckedChanged += new System.EventHandler(this.OptionS1CheckBoxCheckedChanged);
+			// 
+			// optionC1CheckBox
+			// 
+			this.optionC1CheckBox.ForeColor = System.Drawing.Color.Red;
+			this.optionC1CheckBox.Location = new System.Drawing.Point(23, 200);
+			this.optionC1CheckBox.Name = "optionC1CheckBox";
+			this.optionC1CheckBox.Size = new System.Drawing.Size(162, 24);
+			this.optionC1CheckBox.TabIndex = 34;
+			this.optionC1CheckBox.Text = "C1 - annulation M. Clients";
+			this.optionC1CheckBox.UseVisualStyleBackColor = true;
+			this.optionC1CheckBox.CheckedChanged += new System.EventHandler(this.OptionCC1heckBoxCheckedChanged);
+			// 
+			// optionDCheckBox
+			// 
+			this.optionDCheckBox.Location = new System.Drawing.Point(24, 177);
+			this.optionDCheckBox.Name = "optionDCheckBox";
+			this.optionDCheckBox.Size = new System.Drawing.Size(131, 17);
+			this.optionDCheckBox.TabIndex = 33;
+			this.optionDCheckBox.Text = "D - Docs irris";
+			this.optionDCheckBox.UseVisualStyleBackColor = true;
+			this.optionDCheckBox.CheckedChanged += new System.EventHandler(this.OptionDCheckBoxCheckedChanged);
+			// 
+			// label1
+			// 
+			this.label1.Location = new System.Drawing.Point(171, 295);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(66, 21);
+			this.label1.TabIndex = 36;
+			this.label1.Text = "email";
+			// 
+			// emailTextbox
+			// 
+			this.emailTextbox.Location = new System.Drawing.Point(200, 295);
+			this.emailTextbox.Name = "emailTextbox";
+			this.emailTextbox.Size = new System.Drawing.Size(392, 20);
+			this.emailTextbox.TabIndex = 37;
+			// 
+			// visuJobLabel
+			// 
+			this.visuJobLabel.Location = new System.Drawing.Point(614, 276);
+			this.visuJobLabel.Name = "visuJobLabel";
+			this.visuJobLabel.Size = new System.Drawing.Size(104, 21);
+			this.visuJobLabel.TabIndex = 38;
+			this.visuJobLabel.Text = "visu Job";
+			this.visuJobLabel.Click += new System.EventHandler(this.VisuJobLabelClick);
+			// 
+			// visuScriptLabel
+			// 
+			this.visuScriptLabel.Location = new System.Drawing.Point(614, 295);
+			this.visuScriptLabel.Name = "visuScriptLabel";
+			this.visuScriptLabel.Size = new System.Drawing.Size(104, 21);
+			this.visuScriptLabel.TabIndex = 39;
+			this.visuScriptLabel.Text = "visu Script";
+			this.visuScriptLabel.Click += new System.EventHandler(this.VisuScriptLabelClick);
+			// 
+			// visuRichTexBox
+			// 
+			this.visuRichTexBox.Location = new System.Drawing.Point(608, 177);
+			this.visuRichTexBox.Name = "visuRichTexBox";
+			this.visuRichTexBox.Size = new System.Drawing.Size(100, 96);
+			this.visuRichTexBox.TabIndex = 40;
+			this.visuRichTexBox.Text = "";
+			this.visuRichTexBox.Visible = false;
+			// 
+			// cibleLabel
+			// 
+			this.cibleLabel.Location = new System.Drawing.Point(195, 102);
+			this.cibleLabel.Name = "cibleLabel";
+			this.cibleLabel.Size = new System.Drawing.Size(259, 22);
+			this.cibleLabel.TabIndex = 41;
+			// 
 			// MouliActionForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(599, 430);
+			this.ClientSize = new System.Drawing.Size(726, 430);
+			this.Controls.Add(this.cibleLabel);
+			this.Controls.Add(this.visuRichTexBox);
+			this.Controls.Add(this.visuScriptLabel);
+			this.Controls.Add(this.visuJobLabel);
+			this.Controls.Add(this.emailTextbox);
+			this.Controls.Add(this.label1);
+			this.Controls.Add(this.optionS1CheckBox);
+			this.Controls.Add(this.optionC1CheckBox);
+			this.Controls.Add(this.optionDCheckBox);
+			this.Controls.Add(this.optionJCheckBox);
+			this.Controls.Add(this.optionSCheckBox);
+			this.Controls.Add(this.optionCCheckBox);
+			this.Controls.Add(this.installBtn);
 			this.Controls.Add(this.progressTextBox);
 			this.Controls.Add(this.purgeStockChkBox);
 			this.Controls.Add(this.purgeClientChkBox);
 			this.Controls.Add(this.irrisMagTBox);
 			this.Controls.Add(this.magIrrisLabel);
-			this.Controls.Add(this.targetLabel);
 			this.Controls.Add(this.pathTextBox);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.magIdTextBox);
@@ -379,8 +489,6 @@ namespace MoulUtil
 			this.Controls.Add(this.launchCmdLabel);
 			this.Controls.Add(this.pscpLink);
 			this.Controls.Add(this.puttyLink);
-			this.Controls.Add(this.checkedListBox1);
-			this.Controls.Add(this.targetTreeView);
 			this.Controls.Add(this.progressBar1);
 			this.Controls.Add(this.uploadButton);
 			this.Controls.Add(this.pathLabel);
@@ -398,39 +506,52 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
-		private System.Windows.Forms.TextBox progressTextBox;
-		private System.Windows.Forms.CheckBox purgeStockChkBox;
-		private System.Windows.Forms.CheckBox purgeClientChkBox;
-		private System.Windows.Forms.TextBox irrisMagTBox;
-		private System.Windows.Forms.Label magIrrisLabel;
-		private System.Windows.Forms.Label targetLabel;
-		private System.Windows.Forms.TextBox pathTextBox;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label path;
-		private System.Windows.Forms.TextBox magIdTextBox;
-		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+		private System.Windows.Forms.TextBox irrisMagTBox;
+		private System.Windows.Forms.CheckBox purgeClientChkBox;
+		private System.Windows.Forms.CheckBox purgeStockChkBox;
+		private System.Windows.Forms.CheckBox optionSCheckBox;
+		private System.Windows.Forms.CheckBox optionS1CheckBox;
+		private System.Windows.Forms.Button installBtn;
 		private System.Windows.Forms.ToolStripMenuItem programmesToolStripMenuItem;
+		private System.Windows.Forms.Label cibleLabel;
 		private System.Windows.Forms.ToolStripMenuItem puttiesToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem cmdToolStripMenuItem;
-		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStripMenuItem echangesmeomoulinettesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem cmdToolStripMenuItem;
+		private System.Windows.Forms.TextBox emailTextbox;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.StatusStrip statusStrip1;
+		private System.Windows.Forms.TextBox magIdTextBox;
 		private System.Windows.Forms.ToolStripMenuItem wmeomoulinettesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem echangesutilisateursToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem echangeftpmeoToolStripMenuItem;
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem raccoursToolStripMenuItem;
 		private System.Windows.Forms.LinkLabel pscpLink;
+		private System.Windows.Forms.Label path;
+		private System.Windows.Forms.Label magIrrisLabel;
+		private System.Windows.Forms.TextBox progressTextBox;
+		private System.Windows.Forms.CheckBox optionC1CheckBox;
+		private System.Windows.Forms.CheckBox optionDCheckBox;
 
 		private System.Windows.Forms.LinkLabel puttyLink;
-		private System.Windows.Forms.CheckedListBox checkedListBox1;
 		private System.Windows.Forms.ProgressBar progressBar1;
-		private System.Windows.Forms.TreeView targetTreeView;
 		private System.Windows.Forms.Button uploadButton;
 		private System.Windows.Forms.Label pathLabel;
 		private System.Windows.Forms.DateTimePicker dateTimePicker;
 		private System.Windows.Forms.Button exitButton;
 		private System.Windows.Forms.Button goButton;
 		private System.Windows.Forms.Label launchCmdLabel;
+		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+		private System.Windows.Forms.TextBox pathTextBox;
+		private System.Windows.Forms.CheckBox optionCCheckBox;
+		private System.Windows.Forms.CheckBox optionJCheckBox;
+		private System.Windows.Forms.RichTextBox visuRichTexBox;
+		private System.Windows.Forms.Label label1;
+		
+		private System.Windows.Forms.Label visuJobLabel;
+		private System.Windows.Forms.Label visuScriptLabel;
 	}
 }
+
