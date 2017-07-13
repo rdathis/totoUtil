@@ -34,6 +34,9 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>W:\GitStuff\SharpZipLib\bin\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\MoulUtil\bin\Debug\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>

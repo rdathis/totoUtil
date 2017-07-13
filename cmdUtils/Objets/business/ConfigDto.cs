@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
+using log4net;
 using cmdUtils.Objets.business;
 
 namespace cmdUtils.Objets

@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using log4net;
+using log4net.Config;
 
 namespace TestUtil
 {
@@ -18,16 +20,16 @@ namespace TestUtil
 	/// </summary>
 	public partial class MainForm : Form
 	{
+		static log4net.ILog LOGGER = LogManager.GetLogger("testUtil");
 		public MainForm()
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
+			BasicConfigurator.Configure();
+			System.Diagnostics.Debug.Print("starting");
+			LOGGER.Info("info");
+			LOGGER.Debug("debug");
+			LOGGER.Warn("warn");
+			LOGGER.Error("error");
 		}
 	}
 }

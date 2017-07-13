@@ -18,35 +18,88 @@ namespace MoulUtil.Forms.utils
 	public class MouliActionUtil
 	{
 		private MouliActionForm form;
-		private static int progression=0;
+		private int progression=0;
+		private MouliUtil mouliUtil = null;
+		//private const String scriptModele  + "/conf/modele.moulinette"
 		
 		public MouliActionUtil(MouliActionForm form)
 		{
 			this.form = form;
+			mouliUtil = new MouliUtil();
 		}
-		public MouliJob doTraitement(String sourceMoulinette, MouliUtilOptions options, ConfigDto configDto)
-		{
-			Directory.SetCurrentDirectory(configDto.basePath);
-			toJournal(sourceMoulinette, options);
+		
+		public String getJobContent(String sourceMoulinette, MouliUtilOptions options, ConfigDto configDto) {
+			prepareTraitement(sourceMoulinette, options, configDto);
+			return mouliUtil.listStringToString(mouliUtil.genereJob(options.getJobFileName(), options.getScriptFileName(), options));
 			
-			majProgression(0);
+		}
+		public String getScriptContent(String sourceMoulinette, MouliUtilOptions options, ConfigDto configDto) {
+			prepareTraitement(sourceMoulinette, options, configDto);
+			String modele = new StreamReader(configDto.basePath + "/conf/modele.moulinette").ReadToEnd();
+			return mouliUtil.listStringToString(mouliUtil.genereScript(modele, options.getScriptFileName(), options));
+			
+		}
+		public void prepareTraitement(String sourceMoulinette, MouliUtilOptions options, ConfigDto configDto) {
 			sourceMoulinette = sourceMoulinette.Trim();
 			if (((!sourceMoulinette.EndsWith("\\")) && (!sourceMoulinette.EndsWith("/")))) {
 				sourceMoulinette += "/";
 			}
-			
-			
-			
-			DateTime startDateTime = DateTime.Now;
-			MouliUtil mouliUtil = new MouliUtil();
-			
 			if (options.getarchiveName() == null) {
 				options.setArchiveName(mouliUtil.calculeArchiveName(sourceMoulinette));
 			}
+			mouliUtil.setMagasinIrris(options.getNumeroMagasinIrris());
+			{
+				String left = "";
+				String tmpname = sourceMoulinette.Replace("\\", "/");
+				while (tmpname.EndsWith("/")) {
+					tmpname = tmpname.Substring(0, tmpname.Length - 1);
+				}
+				int i = tmpname.LastIndexOf("/");
+				if (i > 0) {
+					left = tmpname.Substring(0, i + 1);
+					tmpname = tmpname.Substring(i).Replace("/", "");
+				}
+				
+				String scriptMoulinetteFile = tmpname + ".moulinette.sh";
+				String scriptJobMoulinetteFile = tmpname + ".job.sh";
+				options.setJobFileName(scriptJobMoulinetteFile);
+				options.setScriptFileName(scriptMoulinetteFile);
+				
+				if ((options != null) && (options.getMagId() == null)) {
+					options.setMagId(calculMagId(sourceMoulinette));
+				}
+				
+				options.setOrd01(mouliUtil.checkIsOrd01(mouliUtil.getData() + mouliUtil.getOrd01()));
+				options.setDoc01(mouliUtil.checkIsDoc01(mouliUtil.getData() + mouliUtil.getDoc01()));
+			}
+			
+		}
+		public MouliJob doTraitement(String sourceMoulinette, MouliUtilOptions options, ConfigDto configDto)
+		{
+			prepareTraitement(sourceMoulinette, options, configDto);
+			//
+			Directory.SetCurrentDirectory(configDto.basePath);
+			toJournal(sourceMoulinette, options);
+			
+			majProgression(0);
+			/*
+			sourceMoulinette = sourceMoulinette.Trim();
+			if (((!sourceMoulinette.EndsWith("\\")) && (!sourceMoulinette.EndsWith("/")))) {
+				sourceMoulinette += "/";
+			}
+			 */
+			
+			DateTime startDateTime = DateTime.Now;
+			
+			/*
+			if (options.getarchiveName() == null) {
+				options.setArchiveName(mouliUtil.calculeArchiveName(sourceMoulinette));
+			}
+			 */
 			String archiveName = options.getarchiveName();
 			
 			
-			mouliUtil.setMagasinIrris(options.getNumeroMagasinIrris());
+			//mouliUtil.setMagasinIrris(options.getNumeroMagasinIrris());
 			ZipUtil zipUtil = new ZipUtil();
 			//String archiveName = Path.GetFullPath(sourceMoulinette);
 			//String dataPath=archiveName;
@@ -57,19 +110,19 @@ namespace MoulUtil.Forms.utils
 			majProgression(5);
 			
 			
-			String left = "";
-			String tmpname = sourceMoulinette.Replace("\\", "/");
-			while (tmpname.EndsWith("/")) {
-				tmpname = tmpname.Substring(0, tmpname.Length - 1);
-			}
-			int i = tmpname.LastIndexOf("/");
-			if (i > 0) {
-				left = tmpname.Substring(0, i + 1);
-				tmpname = tmpname.Substring(i).Replace("/", "");
-			}
-			
-			String scriptMoulinetteFile = tmpname + ".moulinette.sh";
-			String scriptJobMoulinetteFile = tmpname + ".job.sh";
+//			String left = "";
+//			String tmpname = sourceMoulinette.Replace("\\", "/");
+//			while (tmpname.EndsWith("/")) {
+//				tmpname = tmpname.Substring(0, tmpname.Length - 1);
+//			}
+//			int i = tmpname.LastIndexOf("/");
+//			if (i > 0) {
+//				left = tmpname.Substring(0, i + 1);
+//				tmpname = tmpname.Substring(i).Replace("/", "");
+//			}
+//
+//			String scriptMoulinetteFile = tmpname + ".moulinette.sh";
+//			String scriptJobMoulinetteFile = tmpname + ".job.sh";
 			//String scriptInstallFile=tmpname+"install.file";
 			
 			//archiveName+=".zip";
@@ -87,12 +140,10 @@ namespace MoulUtil.Forms.utils
 			
 			String path = mouliUtil.getData() + mouliUtil.getMag01();
 			List <String> selectionYfiles = new List<string>();
-			if ((options != null) && (options.getMagId() == null)) {
-				options.setMagId(calculMagId(sourceMoulinette));
-			}
 			
-			options.setOrd01(mouliUtil.checkIsOrd01(mouliUtil.getData() + mouliUtil.getOrd01()));
-			options.setDoc01(mouliUtil.checkIsDoc01(mouliUtil.getData() + mouliUtil.getDoc01()));
+
+			String scriptMoulinetteFile= options.getScriptFileName();
+			String scriptJobMoulinetteFile = options.getJobFileName();
 			
 			mouliUtil.writeMoulinetteFile(configDto.basePath + "/conf/modele.moulinette", "", scriptMoulinetteFile, options);
 			
@@ -165,7 +216,7 @@ namespace MoulUtil.Forms.utils
 			return job;
 		}
 		
-		void majProgression() {
+		private void majProgression() {
 			majProgression(++progression);
 		}
 		private void majProgression(int value) {
@@ -175,7 +226,7 @@ namespace MoulUtil.Forms.utils
 			}
 		}
 
-		string calculMagId(string sourceMoulinette)
+		private string calculMagId(string sourceMoulinette)
 		{
 			String retour="9999";
 			if (sourceMoulinette.StartsWith("MID")) {
@@ -252,6 +303,6 @@ namespace MoulUtil.Forms.utils
 			}
 			Console.WriteLine(" PDF : trouvés : "+statRecap.foundFiles+"  -- NON TROUVES : "+statRecap.notFoundList.Count);
 			Console.WriteLine(" fichiers  présents : ("+statRecap.datamag+"/) : "+statRecap.mag01FilesTotal+"  (Joint/) : "+statRecap.jointDocsTotal);
-		}		
+		}
 	}
 }

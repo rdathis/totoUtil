@@ -17,3 +17,9 @@ M:\github\totoUtil\TestUtil\bin\Debug\MySql.Data.dll
 M:\github\totoUtil\TestUtil\bin\Debug\MySql.Data.Entity.dll
 M:\github\totoUtil\TestUtil\bin\Debug\MySql.Data.Entity.EF6.dll
 M:\github\totoUtil\TestUtil\bin\Debug\MySql.Fabric.Plugin.dll
+M:\github\totoUtil\TestUtil\bin\Debug\TestUtil.exe.config
+M:\github\totoUtil\TestUtil\bin\Debug\log4net.dll
+M:\github\totoUtil\TestUtil\bin\Debug\slf4net.dll
+M:\github\totoUtil\TestUtil\bin\Debug\slf4net.log4net.dll
+M:\github\totoUtil\TestUtil\bin\Debug\log4net.xml
+M:\github\totoUtil\TestUtil\bin\Debug\slf4net.xml

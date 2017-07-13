@@ -43,7 +43,10 @@ namespace MoulUtil
 			if(instance!=null && instance.getServeur()!=null) {
 				MeoServeur serveur = MeoServeur.findServeurByName(configDto.getServeurs(), instance.getServeur());
 				if(serveur!=null) {
+					pscpLink.Tag=serveur;
 					cibleLabel.Text = options.getInstanceName() +" ("+ serveur.getNom() + " "+serveur.getAdresse()+")";
+					cibleLabel.BackColor = Color.AntiqueWhite;
+					cibleLabel.ForeColor = Color.Red;
 				}
 			}
 		}
@@ -68,9 +71,6 @@ namespace MoulUtil
 		public void prepare() {
 			puttyLink.Visible=false;
 			pscpLink.Visible=false;
-			//targetTreeView.Enabled = false;
-			//new TreeViewUtil(instances, serveurs).populateTargets(targetTreeView);
-			
 			dateTimePicker.Value = new MouliUtil().calculeNextPlannedJob();
 			
 			activeExtension(purgeClientChkBox, options.getExtensionClient());
@@ -94,23 +94,7 @@ namespace MoulUtil
 			chkBox.Checked=false;
 			
 		}
-		/*
-		// disable once ParameterHidesMember
-		void analyseJob(MouliJob job, CheckedListBox box)
-		{
-			if (job!=null) {
-				MouliStatRecap recap = job.getStatRecap();
-				if (recap!=null) {
-					//[0]client [1]stock [2]joint [3]ord01
-					box.SetItemChecked(0, (recap.mag01FilesTotal> 0));
-					box.SetItemChecked(1, box.GetItemChecked(0));
-					box.SetItemChecked(2,(recap.jointDocsTotal > 0));
-					box.SetItemChecked(3,(recap.ord01DocsTotal> 0));
-					// box.SetItemChecked(4,(recap.doc01DocsTotal> 0));
-				}
-			}
-		}
-		 */
+	
 		// disable once ParameterHidesMember
 		void analyseJob(MouliJob job)
 		{
@@ -122,11 +106,6 @@ namespace MoulUtil
 					optionSCheckBox.Checked = optionCCheckBox.Checked ;
 					optionJCheckBox.Checked = (recap.jointDocsTotal > 0);
 					optionDCheckBox.Checked = (recap.ord01DocsTotal> 0);
-					//box.SetItemChecked(0, (recap.mag01FilesTotal> 0));
-					//box.SetItemChecked(1, box.GetItemChecked(0));
-					//box.SetItemChecked(2,(recap.jointDocsTotal > 0));
-					//box.SetItemChecked(3,(recap.ord01DocsTotal> 0));
-					// box.SetItemChecked(4,(recap.doc01DocsTotal> 0));
 				}
 			}
 		}
@@ -146,7 +125,6 @@ namespace MoulUtil
 			toolStripStatusLabel1.Text = "doing archive";
 			try {
 				completeOptions();
-				//job= MouliProgram.doTraitement(pathLabel.Text, options, configDto);
 				job=mouliActionUtil.doTraitement(pathLabel.Text, options, configDto);
 				
 				analyseJob(job);
@@ -154,7 +132,6 @@ namespace MoulUtil
 				worker.prepare(job, mouliActionUtil);
 				
 				MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = name => {
-					//Console.WriteLine("Notification received for: {0}", name);
 					//?? plantage: toolStripStatusLabel1.Text = name;
 					try {
 						progressTextBox.Text=" debut";
@@ -206,42 +183,8 @@ namespace MoulUtil
 			Hide();
 		}
 		
-		/*
-		void TargetTreeViewAfterSelect(object sender, TreeViewEventArgs e)
-		{
-			TreeView tv = (TreeView) sender;
-			String serverName=null;
-			MeoInstance instance = getSelectedInstance(tv);
-			String instanceName="";
-			if(instance!=null) {
-				serverName=instance.getServeur();
-				instanceName=instance.getNom();
-			}
-			
-			if (serverName!=null) {
-				MeoServeur serveur = MeoServeur.findServeurByName(serveurs, serverName);
-				if (serveur!=null) {
-					puttyLink.Text=("putty "+serverName);
-					puttyLink.Tag=serveur;
-					pscpLink.Tag=serveur;
-					puttyLink.Visible=true;
-					
-					targetLabel.Text = "-> "+serverName+ "/"+instanceName;
-					targetLabel.Text+=calculateLots();
-					targetLabel.BackColor=Color.Beige;
-					targetLabel.ForeColor=Color.Red;
-					
-					if (job!=null) {
-						pscpLink.Visible=true;
-					}
-				}
-			}
-		}
-		 */
-
 		void PuttyLinkLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			
 			CmdUtil util = new CmdUtil();
 			LinkLabel label = (LinkLabel) sender;
 			if (label.Tag!=null) {
@@ -292,22 +235,6 @@ namespace MoulUtil
 				retour+="J";
 			}
 
-			
-
-			/*
-			CheckedListBox  box = checkedListBox1;
-			if(box.GetItemChecked(1)) {
-				retour+="S";//S before C
-			}
-			if(box.GetItemChecked(0)) {
-				retour+="C";
-			}
-			if(box.GetItemChecked(2)) {
-				retour+="J";
-			}
-			if(box.GetItemChecked(3)) {
-				retour+="D";
-			}*/
 			return retour;
 
 		}
@@ -344,33 +271,6 @@ namespace MoulUtil
 			}
 			
 		}
-		/*
-		MeoInstance getSelectedInstance()
-		{
-			return getSelectedInstance(targetTreeView);
-		}
-		 */
-		/*
-		MeoInstance getSelectedInstance(TreeView tv)
-		{
-			TreeNode node = tv.SelectedNode;
-			int level=node.Level;
-			String text =node.Text;
-			String serverName=null;
-			MeoInstance instance=null;
-
-			
-			if(level==0) {
-				serverName=text;
-			} else if(level==1) {
-				instance=MeoInstance.findInstanceByInstanceName(instances, text);
-				if(instance!=null) {
-					serverName=instance.getServeur();
-				}
-			}
-			return instance;
-		}
-		 */
 		void CmdLabelClick(object sender, System.EventArgs e)
 		{
 			CmdUtil util = new CmdUtil();
@@ -457,50 +357,6 @@ namespace MoulUtil
 			magIdTextBox.Enabled=false;
 		}
 
-		/*
-		void setMeoInstance(string instanceName)
-		{
-			MeoInstance instance = MeoInstance.findInstanceByInstanceName(instances, instanceName);
-//			TreeView tv = targetTreeView;
-			if(instance!=null) {
-				foreach (TreeNode serveurNode in tv.Nodes) {
-					foreach(TreeNode instanceNode in serveurNode.Nodes) {
-						System.Diagnostics.Debug.Print("dbg:" + instanceNode.Text + "/"+instance.getNom());
-						if(instanceNode.Text == instance.getNom()) {
-							tv.SelectedNode=instanceNode;
-							return; // pas break, car 2 foreach()
-						}
-					}
-				}
-			}
-		}
-		 */
-		/*
-		void CheckedListBox1ItemCheck(object sender, ItemCheckEventArgs e)
-		{
-			if(!CheckState.Checked.Equals(e.NewValue)) {
-				return;
-			}
-			int newidx=e.Index;
-			int oldIdx=0;
-			if(newidx==2) {
-				oldIdx=3;
-			} else if(newidx==3) {
-				oldIdx=2;
-			} else {
-				return;
-			}
-			bool newv=checkedListBox1.GetItemChecked(newidx);
-			bool oldv=checkedListBox1.GetItemChecked(oldIdx);
-			if(checkedListBox1.GetItemChecked(oldIdx)) {
-				checkedListBox1.SetItemChecked(oldIdx, false);
-			}
-		}
-		void TargetTreeViewDoubleClick(object sender, EventArgs e)
-		{
-			targetTreeView.Enabled = true;
-		}
-		 */
 		void InstallBtnClick(object sender, EventArgs e) {
 			//
 			SshUtil sshUtil = new SshUtil();
@@ -554,12 +410,12 @@ namespace MoulUtil
 		void VisuJobLabelClick(object sender, EventArgs e)
 		{
 			completeOptions();
-			prepareVisu(visuJobLabel, "Job");
+			prepareVisu(visuJobLabel, mouliActionUtil.getJobContent(pathLabel.Text, options, configDto));
 		}
 		void VisuScriptLabelClick(object sender, EventArgs e)
 		{
 			completeOptions();
-			prepareVisu(visuJobLabel, "Script");
+			prepareVisu(visuScriptLabel, mouliActionUtil.getScriptContent(pathLabel.Text, options, configDto));
 		}
 
 		void prepareVisu(Label label, String contenu)
@@ -578,13 +434,14 @@ namespace MoulUtil
 		}
 		void doVisu(string str)
 		{
-			visuRichTexBox.Text = str+" to complete";
+			visuRichTexBox.Text = str;
 			//visuRichTexBox.Enabled=false;
 			visuRichTexBox.Visible=!visuRichTexBox.Visible;
 			visuRichTexBox.Top=20;
 			visuRichTexBox.Left=10;
 			visuRichTexBox.Width=550;
 			visuRichTexBox.Height=320;
+			visuRichTexBox.BringToFront();
 		}
 	}
 }

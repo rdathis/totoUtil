@@ -23,7 +23,7 @@ namespace cmdUtils.Objets
 		public MouliUtil()
 		{
 		}
-		private String m01="01";
+		private String m01 = "01";
 
 		private void doCallback(Action<String> callback, String message)
 		{
@@ -34,7 +34,7 @@ namespace cmdUtils.Objets
 
 		public void setMagasinIrris(string str)
 		{
-			m01=str;
+			m01 = str;
 		}
 
 
@@ -51,15 +51,15 @@ namespace cmdUtils.Objets
 		}
 		public String getMag01()
 		{
-			return formatPath("mag"+m01+"/");
+			return formatPath("mag" + m01 + "/");
 		}
 		public String getOrd01()
 		{
-			return formatPath("ord"+m01+"/");
+			return formatPath("ord" + m01 + "/");
 		}
 		public String getDoc01()
 		{
-			return formatPath("doc"+m01+"/");
+			return formatPath("doc" + m01 + "/");
 		}
 		public String getJoint()
 		{
@@ -159,7 +159,7 @@ namespace cmdUtils.Objets
 			for (int i = 0; i < tmp.Length; i++) {
 				Console.WriteLine(" i :" + i);
 				String ligne = tmp[i];
-				if(!options.isCommentaire(ligne)) {
+				if (!options.isCommentaire(ligne)) {
 					ligne = ligne.Replace("\n", "");
 					ligne = ligne.Replace("\r", "");
 					ligne = MouliUtilOptionsTraductor.traduitScript(options, ligne);
@@ -172,7 +172,7 @@ namespace cmdUtils.Objets
 		public int analyseTopOrdoFixe(List<string> liste, string file, List<string> notFoundList)
 		{
 			int foundFiles = 0;
-			String path = "data/mag"+m01+"/Joint/";
+			String path = "data/mag" + m01 + "/Joint/";
 			if (Directory.Exists(path) && (File.Exists(file))) {
 				MyUtil myUtil = new MyUtil();
 				String[] lignes = myUtil.readScript(file).Split('\n');
@@ -210,7 +210,15 @@ namespace cmdUtils.Objets
 			}
 			return foundFiles;
 		}
-		private List<String> genereScript(String scriptSource, String scriptCible, MouliUtilOptions options)
+		public String listStringToString(List<String> liste)
+		{
+			String retour = "";
+			foreach (String str in liste) {
+				retour += str + "\n";
+			}
+			return retour;
+		}
+		public List<String> genereScript(String scriptSource, String scriptCible, MouliUtilOptions options)
 		{
 			return(parseMoulinetteScript(scriptSource, options));
 		}
@@ -225,23 +233,44 @@ namespace cmdUtils.Objets
 			}
 			outputFile.Close();
 		}
+		
+		public List<String> genereJob(string scriptJobFile, string scriptMoulinetteFile, MouliUtilOptions options)
+		{
+			String jobtime = formatDateJob(options.getDateJob());
+			List <String> liste = new List<string>();
+			liste.Add("## job file automatique, pour planifier la maj");
+			
+			liste.Add("export jobtime='" + jobtime + "'");
+			liste.Add("echo /bin/sh " + scriptMoulinetteFile + " -mail | at $jobtime  ");
+			//
+			String mailTo = options.getDefaultEmail();
+			String mailCmd = "mail -s \"planification moulinette + " + scriptMoulinetteFile + " ($jobtime)\" " + mailTo + " < " + scriptMoulinetteFile;
+			liste.Add(mailCmd);			
+			
+			return liste;
+		}
 		public void writeJobFile(string scriptJobFile, string scriptMoulinetteFile, MouliUtilOptions options)
 		{
-			
-			String jobtime=formatDateJob(options.getDateJob());
-			StreamWriter outputFile = new StreamWriter(scriptJobFile);
+			 StreamWriter outputFile = new StreamWriter(scriptJobFile);
 			outputFile.NewLine = "\n";
+			List<String> liste = genereJob(scriptJobFile, scriptMoulinetteFile, options);
+			foreach (String ligne in liste) {
+				outputFile.WriteLine(ligne);
+			}
+			
+			/*
 			//
 			outputFile.WriteLine("## job file automatique, pour planifier la maj");
 			
 			// outputFile.WriteLine("MPATH=`dirname $0` ");
 			// outputFile.WriteLine("cd $MPATH && MPATH=$PWD");
-			outputFile.WriteLine("export jobtime='"+ jobtime + "'");
+			outputFile.WriteLine("export jobtime='" + jobtime + "'");
 			outputFile.WriteLine("echo /bin/sh " + scriptMoulinetteFile + " -mail | at $jobtime  ");
+			*/
 			//
-			String mailTo=options.getDefaultEmail();
-			String mailCmd="mail -s \"planification moulinette + "+scriptMoulinetteFile+" ($jobtime)\" "+mailTo+" < " + scriptMoulinetteFile;
-			outputFile.WriteLine(mailCmd);
+			//String mailTo = options.getDefaultEmail();
+			//String mailCmd = "mail -s \"planification moulinette + " + scriptMoulinetteFile + " ($jobtime)\" " + mailTo + " < " + scriptMoulinetteFile;
+			//outputFile.WriteLine(mailCmd);
 			outputFile.Close();
 		}
 
@@ -327,8 +356,8 @@ namespace cmdUtils.Objets
 		
 		public void createArbo(String path)
 		{
-			if(!path.EndsWith("/")) {
-				path+="/";
+			if (!path.EndsWith("/")) {
+				path += "/";
 			}
 			safeCreateDirectory(path + "/");
 			safeCreateDirectory(path + getData());
@@ -359,43 +388,45 @@ namespace cmdUtils.Objets
 		public string getUnzipCmd(MeoServeur server, string target, MouliJob job)
 		{
 			
-			FileInfo info =new FileInfo(job.getArchiveName());
-			String tmp=info.Name;
-			tmp=tmp.Substring(0, tmp.Length -4);
-			String newdir=target + tmp;
-			String cmd="mkdir "+newdir;
+			FileInfo info = new FileInfo(job.getArchiveName());
+			String tmp = info.Name;
+			tmp = tmp.Substring(0, tmp.Length - 4);
+			String newdir = target + tmp;
+			String cmd = "mkdir " + newdir;
 			
 			
-			cmd+=" && cd " +newdir +" && unzip -o "+target+info.Name;
+			cmd += " && cd " + newdir + " && unzip -o " + target + info.Name;
 			// cd /data/trans/bidule && mkdir pouet && cd pouet && unzip ../pouet.zip
 			return cmd;
 		}
-		public String calculeArchiveName(String sourceMoulinette) {
+		public String calculeArchiveName(String sourceMoulinette)
+		{
 			String archiveName = Path.GetFullPath(sourceMoulinette);
 			while (archiveName.EndsWith("/")) {
-				archiveName=archiveName.Substring(0, archiveName.Length -1);
+				archiveName = archiveName.Substring(0, archiveName.Length - 1);
 			}
 			while (archiveName.EndsWith("\\")) {
-				archiveName=archiveName.Substring(0, archiveName.Length -1);
+				archiveName = archiveName.Substring(0, archiveName.Length - 1);
 			}
-			archiveName+=".zip";
+			archiveName += ".zip";
 			return archiveName;
 		}
 		
-		public List<String> findFiles(String path, Boolean recursive, Regex includeFilter, Regex excludeFilter) {
-			List<String> retour=null;
-			if(!Directory.Exists(path)) {
+		public List<String> findFiles(String path, Boolean recursive, Regex includeFilter, Regex excludeFilter)
+		{
+			List<String> retour = null;
+			if (!Directory.Exists(path)) {
 				return retour;
 			}
 			retour = new List<String>();
-			String [] fichiers=Directory.GetFiles(path);
-			String [] reps = Directory.GetDirectories(path);
-			if(recursive) {
-				foreach(String rep in reps) {
+			String[] fichiers = Directory.GetFiles(path);
+			String[] reps = Directory.GetDirectories(path);
+			if (recursive) {
+				foreach (String rep in reps) {
 					retour.AddRange(findFiles(rep, true, includeFilter, excludeFilter));
 				}
 			}
-			foreach(String fichier in fichiers) {
+			foreach (String fichier in fichiers) {
 				retour.Add(fichier);
 			}
 			
@@ -405,11 +436,11 @@ namespace cmdUtils.Objets
 
 		public List<string> excludeFiles(List<String> inLst, Regex   filterRegex)
 		{
-			List<String> retour=new List<String>();
-			foreach(String str in inLst) {
+			List<String> retour = new List<String>();
+			foreach (String str in inLst) {
 				FileInfo fileInfo = new FileInfo(str);
 				
-				if( filterRegex!=null &&  !Regex.IsMatch(fileInfo.Name,filterRegex.ToString(),  RegexOptions.IgnoreCase)) {
+				if (filterRegex != null && !Regex.IsMatch(fileInfo.Name, filterRegex.ToString(), RegexOptions.IgnoreCase)) {
 					retour.Add(fileInfo.FullName);
 				}
 			}
