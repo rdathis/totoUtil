@@ -209,7 +209,7 @@ namespace MoulUtil.Forms.utils
 			}
 			statsRecap.mag01FilesTotal = Directory.GetFiles(dataMag).Length;
 			
-			mouliUtil = null;
+			mouliUtil = new MouliUtil();
 			zipUtil = null;
 			majProgression(50);
 			MouliJob job = new MouliJob(archiveName, originalDir, liste, statsRecap, startDateTime, options, sourceMoulinette);

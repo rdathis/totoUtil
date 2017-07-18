@@ -45,8 +45,8 @@ namespace cmdUtils.Objets
 			fs.Close();
 			
 		}
-		public String getConfigFilePath()
-		{
+		
+		public String getConfigFilePath() {
 			//rem:faux
 			Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 			String path = config.FilePath;
@@ -69,6 +69,12 @@ namespace cmdUtils.Objets
 				Directory.CreateDirectory(file.Directory+savePath);
 			}
 			File.Copy(config, newFileName);
+		}
+		public String getLoggerConfigFilePath() {
+			String str=""+MouliConfig.commonLoggingConfigFile;
+			
+			str = Directory.GetCurrentDirectory() + @"/"+MouliConfig.commonLoggingConfigFile;
+			return (str);
 		}
 		public ConfigDto getConfig()
 		{

@@ -27,13 +27,25 @@ namespace MoulUtil.Forms.utils
 			this.configDto=configDto;
 		}
 
+		//inutilise, conserve pour usage futur eventuel
 		public System.Diagnostics.Process startPlink(ConfigDto configDto, TextBox textbox)
 		{
+			MeoInstance adminInstance= MeoInstance.findInstanceByInstanceName(configDto.instances, "administration");
+			if(adminInstance==null) {
+				return null;
+			}
+			MeoServeur server = MeoServeur.findServeurByName(configDto.serveurs, adminInstance.serveur);
+			if(adminInstance==null) {
+				return null;
+			}
+			String databaseTunneling = configDto.getConfigParamByName("databaseTunneling").Value;
+			String tmpTunneling = databaseTunneling.Replace(":", ":127.0.0.1:");
+			String plinkArgs =" -ssh -batch -pw "+server.password + " -L " + tmpTunneling + " " +server.utilisateur+"@"+server.adresse;
 			System.Diagnostics.Process plinkProcess=null;
 			try {
 				//demarrage du plink en arriere plan pour le tunnel SSH
 				ProcessUtil putil =new ProcessUtil();
-				plinkProcess= putil.startProcess(MouliConfig.plinkPath, configDto.getAppPlink(), System.Diagnostics.ProcessWindowStyle.Normal);
+				plinkProcess= putil.startProcess(MouliConfig.plinkPath, plinkArgs, System.Diagnostics.ProcessWindowStyle.Normal);
 
 				textbox.Visible=true;
 				mouliPrepaForm.BackColor = Color.LightBlue;
@@ -41,8 +53,6 @@ namespace MoulUtil.Forms.utils
 				Console.WriteLine ("erreur sur start de plink",exs);
 				plinkProcess=null;
 				mouliPrepaForm.BackColor = Color.Orange;
-			}
-			if(configDto.getAppPlink()!=null) {
 			}
 			return plinkProcess;
 		}

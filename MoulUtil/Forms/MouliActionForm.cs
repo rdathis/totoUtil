@@ -326,9 +326,9 @@ namespace MoulUtil
 								String commandeFile = job.getMoulinettePath() +"install.file";
 								mouliUtil.writeInstallMoulinetteFile(cmd, commandeFile);
 								// plink -pw (password) -l (user) -m (command.file) server
-								cmd="-pw "+server.password+" -l "+server.utilisateur+" -m "+commandeFile+" "+server.adresse;
+								//cmd="-pw "+server.password+" -l "+server.utilisateur+" -m "+commandeFile+" "+server.adresse;
 								
-								cmdUtil.executeCommande(MouliConfig.plinkPath, cmd);
+								//cmdUtil.executeCommande(MouliConfig.plinkPath, cmd);
 								
 								toolStripStatusLabel1.Text="finished";
 								installBtn.Enabled=true;

@@ -55,20 +55,20 @@ namespace MoulUtil
 				return;
 			}
 			detailmagasinBox.Text = "I:" +instance.nom + " - S :" +meoServeur.adresse + " D:"+instance.nom;
-			startPlink(meoServeur);
+			//startPlink(meoServeur);
 			//plink a faire.
 		}
 
-		void startPlink(MeoServeur meoServeur)
-		{
-			String args = " -ssh -batch -pw "+meoServeur.password+" -L "+sqlPort+":127.0.0.1:3306 "+meoServeur.getUtilisateur()+"@"+meoServeur.adresse;
-
-			ProcessUtil putil =new ProcessUtil();
-			plinkProcess = putil.startProcess(MouliConfig.plinkPath, args, System.Diagnostics.ProcessWindowStyle.Normal);
-			this.BackColor = Color.LightBlue;
-			statStockLabel.Visible=true;
-			statVisitesLabel.Visible=true;
-		}
+//		void startPlink(MeoServeur meoServeur)
+//		{
+//			String args = " -ssh -batch -pw "+meoServeur.password+" -L "+sqlPort+":127.0.0.1:3306 "+meoServeur.getUtilisateur()+"@"+meoServeur.adresse;
+//
+//			ProcessUtil putil =new ProcessUtil();
+//			plinkProcess = putil.startProcess(MouliConfig.plinkPath, args, System.Diagnostics.ProcessWindowStyle.Normal);
+//			this.BackColor = Color.LightBlue;
+//			statStockLabel.Visible=true;
+//			statVisitesLabel.Visible=true;
+//		}
 
 		private void populate() {
 			this.magasinIdBox.Text=magId;

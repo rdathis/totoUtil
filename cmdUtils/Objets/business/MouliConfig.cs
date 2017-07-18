@@ -16,6 +16,7 @@ namespace cmdUtils.Objets {
 		// public const String serversConfigFile="conf/serveurs.xml";
 		//public const String instancesConfigFile="conf/instances.xml";
 		public const String commonConfigFile="conf/common.xml";
+		public const String commonLoggingConfigFile="conf/logger.config";
 		
 		public const String puttyPath="bin/putty.exe";
 		public const String pscpPath="bin/pscp.exe";

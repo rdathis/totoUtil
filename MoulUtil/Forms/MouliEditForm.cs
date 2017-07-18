@@ -57,7 +57,7 @@ namespace MoulUtil.Forms
 			databaseAdminNameBox.Text=configDto.getDatabaseAdminName();
 			defaultPasswordBox.Text=configDto.getDefaultPassword();
 			defaultEmailBox.Text=configDto.getDefaultEmail();
-			appPlinkBox.Text=configDto.getAppPlink();
+			//appPlinkBox.Text=configDto.getAppPlink();
 			workingDirBox.Text=configDto.getWorkingDir();
 		}
 		// disable once ParameterHidesMember

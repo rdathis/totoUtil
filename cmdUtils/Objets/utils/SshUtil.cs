@@ -7,57 +7,69 @@
  * Pour changer ce modèle utiliser Outils | Options | Codage | Editer les en-têtes standards.
  */
 
-namespace cmdUtils.Objets {
+namespace cmdUtils.Objets
+{
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
+	using System.Net;
 	using Renci.SshNet;
 	using Renci.SshNet.Common;
 	using MoulUtil.Forms.utils;
-	public class SshUtil {
+	public class SshUtil
+	{
 		
-		public SshUtil() {
+		public SshUtil()
+		{
 			//empty
 		}
-		private ConnectionInfo getConnectionInfo(MeoServeur server) {
-			ConnectionInfo  connectionInfo = new ConnectionInfo(
-				server.getAdresse(), server.getUtilisateur(),
-				new PasswordAuthenticationMethod(server.getUtilisateur(), server.getPassword()));
+		private ConnectionInfo getConnectionInfo(MeoServeur server)
+		{
+			String user = server.getUtilisateur();
+			String adresse = server.getAdresse();
+			IPHostEntry entry = Dns.GetHostEntry(server.getAdresse());
+			if(entry.AddressList.Length >0) {
+				adresse = entry.AddressList[0].ToString();
+			}
+			//rem:fonctionnel, mais temps idem
+			String password = server.getPassword();
+			ConnectionInfo connectionInfo = new ConnectionInfo(adresse, user, new PasswordAuthenticationMethod(user, password));
 			return connectionInfo;
 		}
 		
-		public void uploadArchive(MeoServeur server, string target, string archive) {
+		public void uploadArchive(MeoServeur server, string target, string archive)
+		{
 			uploadArchive(server, target, archive, null);
 		}
-		public void uploadArchive(MeoServeur server, string target, string archive, MouliProgressWorker worker) 		{
+		public void uploadArchive(MeoServeur server, string target, string archive, MouliProgressWorker worker)
+		{
 			ScpClient client = new ScpClient(getConnectionInfo(server));
 			client.Connect();
-			client.Uploading+=delegate(object sender, ScpUploadEventArgs e)
-			{
-				Console.WriteLine ("uploaded : "+e.Uploaded+ " "+e.Filename + " " +e.Size);
-				if(worker!=null) {
-					worker.ReportProgress (e.Uploaded, e.Size);
+			client.Uploading += delegate(object sender, ScpUploadEventArgs e) {
+				Console.WriteLine("uploaded : " + e.Uploaded + " " + e.Filename + " " + e.Size);
+				if (worker != null) {
+					worker.ReportProgress(e.Uploaded, e.Size);
 				}
 				
 			};
 			
 			
-			FileInfo info =new FileInfo(archive);
+			FileInfo info = new FileInfo(archive);
 			client.Upload(info, target + info.Name);
 			client.Disconnect();
 		}
 		public  List <String> unzipArchive(MeoServeur server, string target, MouliJob job)
 		{
-			List <String> liste =new List<string>();
+			List <String> liste = new List<string>();
 			SshClient client = new SshClient(getConnectionInfo(server));
 			client.Connect();
-			String newdir=target + job.getMoulinettePath();
+			String newdir = target + job.getMoulinettePath();
 			
 			//
-			liste.Add(client.RunCommand("mkdir "+newdir).Result);
+			liste.Add(client.RunCommand("mkdir " + newdir).Result);
 			
-			FileInfo info =new FileInfo(job.getArchiveName());
-			liste.Add(client.RunCommand("cd "+newdir +" && unzip -o "+target+info.Name).Result);
+			FileInfo info = new FileInfo(job.getArchiveName());
+			liste.Add(client.RunCommand("cd " + newdir + " && unzip -o " + target + info.Name).Result);
 			//
 			
 			client.Disconnect();
@@ -65,38 +77,36 @@ namespace cmdUtils.Objets {
 		}
 		public  List <String> installJob(MeoServeur server, string target, MouliJob job)
 		{
-			List <String> liste =new List<string>();
+			List <String> liste = new List<string>();
 			SshClient client = new SshClient(getConnectionInfo(server));
 			client.Connect();
-			String newdir=target + job.getMoulinettePath();
+			String newdir = target + job.getMoulinettePath();
 			
 			//
-			FileInfo info =new FileInfo(job.getArchiveName());
+			FileInfo info = new FileInfo(job.getArchiveName());
 			String jobName = info.Name;
 			jobName = jobName.Substring(0, jobName.Length - 4) + ".job.sh";
-			liste.Add(client.RunCommand("cd "+newdir +" && sh "+target+jobName).Result);
+			liste.Add(client.RunCommand("cd " + newdir + " && sh " + target + jobName).Result);
 			//
 			
 			client.Disconnect();
 			return liste;
 		}
 		
-		public SshClient getClientWithForwardedPorts(MeoServeur serveur, List<KeyValuePair<int, int>>portsList )
+		public SshClient getClientWithForwardedPorts(MeoServeur serveur, List<KeyValuePair<int, int>>portsList)
 		{
-			SshClient client = null;
-			
-			client=	new SshClient(serveur.adresse, serveur.utilisateur, serveur.password); // establishing ssh connection to server where MySql is hosted
+			SshClient client = new SshClient(getConnectionInfo(serveur));
 			client.Connect();
 			if (client.IsConnected) {
 				
-				foreach(KeyValuePair<int, int> forwardedPort  in portsList) {
-					int local=forwardedPort.Key;
-					int distant=forwardedPort.Value;
-					Console.WriteLine(" Ajout forward : (local) :"+local);
-					Console.WriteLine(" Ajout forward : (distant) :"+distant);
+				foreach (KeyValuePair<int, int> forwardedPort  in portsList) {
+					int local = forwardedPort.Key;
+					int distant = forwardedPort.Value;
+					Console.WriteLine(" Ajout forward : (local) :" + local);
+					Console.WriteLine(" Ajout forward : (distant) :" + distant);
 					//ForwardedPort port = new ForwardedPortRemote(serveur.getAdresse(), (uint) distant, "127.0.0.1", (uint) local);
 					//
-					ForwardedPort port = new ForwardedPortLocal("127.0.0.1", (uint) local, "127.0.0.1", (uint) distant);
+					ForwardedPort port = new ForwardedPortLocal("127.0.0.1", (uint)local, "127.0.0.1", (uint)distant);
 					client.AddForwardedPort(port);
 					port.Start();
 				}
@@ -106,7 +116,7 @@ namespace cmdUtils.Objets {
 
 				//client.Disconnect();
 			} else {
-				Console.WriteLine("Client "+serveur.adresse+" cannot be reached...");
+				Console.WriteLine("Client " + serveur.adresse + " cannot be reached...");
 			}
 			return client;
 		}

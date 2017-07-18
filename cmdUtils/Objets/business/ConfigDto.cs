@@ -115,9 +115,9 @@ namespace cmdUtils.Objets
 		public void setDefaultPassword(String value) {
 			setConfigParamValueByName(ConfigParam.ParamNamesType.defaultPassword, value);
 		}
-		public String getAppPlink() {
-			return getConfigParamValueByName(ConfigParam.ParamNamesType.appPlink);
-		}
+//		public String getAppPlink() {
+//			return getConfigParamValueByName(ConfigParam.ParamNamesType.appPlink);
+//		}
 		public void setAppPlink(String value) {
 			setConfigParamValueByName(ConfigParam.ParamNamesType.appPlink, value);
 		}

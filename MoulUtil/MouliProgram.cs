@@ -25,12 +25,9 @@ namespace MoulUtil
 	class MouliProgram
 	{
 		// disable once FieldCanBeMadeReadOnly.Local
-		static log4net.ILog ILOG = LogManager.GetLogger("mouliUtil");
+		static log4net.ILog LOGGER = LogManager.GetLogger("mouliProgram");
 
-		private static void print(String s) {
-			System.Diagnostics.Debug.Print(s);
-		}
-
+		// disable StringEndsWithIsCultureSpecific
 		public static void Main(string[] args)
 		{
 			String tmpBasePath=Directory.GetCurrentDirectory();
@@ -41,32 +38,42 @@ namespace MoulUtil
 				Console.WriteLine("directory changed to "+Directory.GetCurrentDirectory());
 			}
 			//configure le ilog -- http://lutecefalco.developpez.com/tutoriels/dotnet/log4net/introduction/
-			BasicConfigurator.Configure();
 			
 			ConfigUtil configUtil = new ConfigUtil();
+			if(File.Exists(configUtil.getLoggerConfigFilePath())) {
+				XmlConfigurator.Configure(new Uri(configUtil.getLoggerConfigFilePath()));
+				LOGGER.Debug("config file : "+configUtil.getLoggerConfigFilePath());
+			} else {
+				Console.WriteLine("Erreur fichier log absent : "+configUtil.getLoggerConfigFilePath());
+			}
+			
+			
 			ConfigDto configDto = configUtil.getConfig();
 			configDto.basePath=tmpBasePath;
 			
-			Console.WriteLine("Moulinette util - ");
-			Console.WriteLine(" Args ("+args.Length+")");
+			LOGGER.Info("Moulinette util - ");
+			LOGGER.Info(" Args ("+args.Length+")");
 			for(int i=0;i<args.Length;i++) {
-				Console.WriteLine(" arg["+i+"] = '"+args[i]+"'");
+				LOGGER.Info(" arg["+i+"] = '"+args[i]+"'");
 			}
 
 			String sourceMoulinette="";
 			if (args.Length> 0) {
 				sourceMoulinette = args[0].Trim();
-				if (((!sourceMoulinette.EndsWith("\\")) && (!sourceMoulinette.EndsWith("/")))) {
+
+				if (((!sourceMoulinette.EndsWith(@"\\")) && (!sourceMoulinette.EndsWith("/")))) {
 					sourceMoulinette+="/";
 				}
 			}
-			MouliPrepaForm formPrepa = new MouliPrepaForm(configDto, ILOG);
+			
+			LOGGER.Debug("opening prepa form ");
+			MouliPrepaForm formPrepa = new MouliPrepaForm(configDto, LOGGER);
 			formPrepa.controleRegistre();
 			formPrepa.setWorkspacePath(sourceMoulinette);
 			formPrepa.setTargetSvgPath(configDto.getTargetSvgPath());
 			formPrepa.ShowDialog();
 			
-			ILOG.Info("Debut moulinette - chemin '"+sourceMoulinette+"'");
+			//LOGGER.Info("Debut moulinette - chemin '"+sourceMoulinette+"'");
 		}
 	}
 }
