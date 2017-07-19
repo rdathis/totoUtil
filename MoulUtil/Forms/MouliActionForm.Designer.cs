@@ -78,6 +78,7 @@ namespace MoulUtil
 			this.visuScriptLabel = new System.Windows.Forms.Label();
 			this.visuRichTexBox = new System.Windows.Forms.RichTextBox();
 			this.cibleLabel = new System.Windows.Forms.Label();
+			this.analyseLabel = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -122,8 +123,8 @@ namespace MoulUtil
 			// 
 			// progressBar1
 			// 
-			this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-			                                                                 | System.Windows.Forms.AnchorStyles.Right)));
+			this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.progressBar1.Location = new System.Drawing.Point(6, 348);
 			this.progressBar1.Name = "progressBar1";
 			this.progressBar1.Size = new System.Drawing.Size(713, 23);
@@ -179,8 +180,8 @@ namespace MoulUtil
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			                               	this.raccoursToolStripMenuItem,
-			                               	this.programmesToolStripMenuItem});
+			this.raccoursToolStripMenuItem,
+			this.programmesToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(726, 24);
@@ -190,10 +191,10 @@ namespace MoulUtil
 			// raccoursToolStripMenuItem
 			// 
 			this.raccoursToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			                                                      	this.echangesmeomoulinettesToolStripMenuItem,
-			                                                      	this.wmeomoulinettesToolStripMenuItem,
-			                                                      	this.echangesutilisateursToolStripMenuItem,
-			                                                      	this.echangeftpmeoToolStripMenuItem});
+			this.echangesmeomoulinettesToolStripMenuItem,
+			this.wmeomoulinettesToolStripMenuItem,
+			this.echangesutilisateursToolStripMenuItem,
+			this.echangeftpmeoToolStripMenuItem});
 			this.raccoursToolStripMenuItem.Name = "raccoursToolStripMenuItem";
 			this.raccoursToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
 			this.raccoursToolStripMenuItem.Text = "Raccourcis";
@@ -225,8 +226,8 @@ namespace MoulUtil
 			// programmesToolStripMenuItem
 			// 
 			this.programmesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			                                                        	this.puttiesToolStripMenuItem,
-			                                                        	this.cmdToolStripMenuItem});
+			this.puttiesToolStripMenuItem,
+			this.cmdToolStripMenuItem});
 			this.programmesToolStripMenuItem.Name = "programmesToolStripMenuItem";
 			this.programmesToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
 			this.programmesToolStripMenuItem.Text = "programmes";
@@ -246,8 +247,8 @@ namespace MoulUtil
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			                                 	this.toolStripStatusLabel1,
-			                                 	this.toolStripProgressBar1});
+			this.toolStripStatusLabel1,
+			this.toolStripProgressBar1});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 408);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(726, 22);
@@ -348,7 +349,7 @@ namespace MoulUtil
 			// 
 			// optionCCheckBox
 			// 
-			this.optionCCheckBox.Location = new System.Drawing.Point(23, 116);
+			this.optionCCheckBox.Location = new System.Drawing.Point(24, 132);
 			this.optionCCheckBox.Name = "optionCCheckBox";
 			this.optionCCheckBox.Size = new System.Drawing.Size(131, 17);
 			this.optionCCheckBox.TabIndex = 30;
@@ -358,7 +359,7 @@ namespace MoulUtil
 			// 
 			// optionSCheckBox
 			// 
-			this.optionSCheckBox.Location = new System.Drawing.Point(23, 134);
+			this.optionSCheckBox.Location = new System.Drawing.Point(24, 150);
 			this.optionSCheckBox.Name = "optionSCheckBox";
 			this.optionSCheckBox.Size = new System.Drawing.Size(131, 17);
 			this.optionSCheckBox.TabIndex = 31;
@@ -368,7 +369,7 @@ namespace MoulUtil
 			// 
 			// optionJCheckBox
 			// 
-			this.optionJCheckBox.Location = new System.Drawing.Point(23, 154);
+			this.optionJCheckBox.Location = new System.Drawing.Point(24, 170);
 			this.optionJCheckBox.Name = "optionJCheckBox";
 			this.optionJCheckBox.Size = new System.Drawing.Size(131, 17);
 			this.optionJCheckBox.TabIndex = 32;
@@ -379,7 +380,7 @@ namespace MoulUtil
 			// optionS1CheckBox
 			// 
 			this.optionS1CheckBox.ForeColor = System.Drawing.Color.Red;
-			this.optionS1CheckBox.Location = new System.Drawing.Point(23, 220);
+			this.optionS1CheckBox.Location = new System.Drawing.Point(24, 236);
 			this.optionS1CheckBox.Name = "optionS1CheckBox";
 			this.optionS1CheckBox.Size = new System.Drawing.Size(148, 25);
 			this.optionS1CheckBox.TabIndex = 35;
@@ -390,7 +391,7 @@ namespace MoulUtil
 			// optionC1CheckBox
 			// 
 			this.optionC1CheckBox.ForeColor = System.Drawing.Color.Red;
-			this.optionC1CheckBox.Location = new System.Drawing.Point(23, 200);
+			this.optionC1CheckBox.Location = new System.Drawing.Point(24, 216);
 			this.optionC1CheckBox.Name = "optionC1CheckBox";
 			this.optionC1CheckBox.Size = new System.Drawing.Size(162, 24);
 			this.optionC1CheckBox.TabIndex = 34;
@@ -400,7 +401,7 @@ namespace MoulUtil
 			// 
 			// optionDCheckBox
 			// 
-			this.optionDCheckBox.Location = new System.Drawing.Point(24, 177);
+			this.optionDCheckBox.Location = new System.Drawing.Point(25, 193);
 			this.optionDCheckBox.Name = "optionDCheckBox";
 			this.optionDCheckBox.Size = new System.Drawing.Size(131, 17);
 			this.optionDCheckBox.TabIndex = 33;
@@ -457,11 +458,25 @@ namespace MoulUtil
 			this.cibleLabel.Size = new System.Drawing.Size(259, 22);
 			this.cibleLabel.TabIndex = 41;
 			// 
+			// analyseLabel
+			// 
+			this.analyseLabel.BackColor = System.Drawing.Color.SeaShell;
+			this.analyseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.analyseLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			this.analyseLabel.Location = new System.Drawing.Point(20, 104);
+			this.analyseLabel.Name = "analyseLabel";
+			this.analyseLabel.Size = new System.Drawing.Size(151, 28);
+			this.analyseLabel.TabIndex = 42;
+			this.analyseLabel.Text = "Analyse";
+			this.analyseLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.analyseLabel.Click += new System.EventHandler(this.AnalyseLabelClick);
+			// 
 			// MouliActionForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(726, 430);
+			this.Controls.Add(this.analyseLabel);
 			this.Controls.Add(this.cibleLabel);
 			this.Controls.Add(this.visuRichTexBox);
 			this.Controls.Add(this.visuScriptLabel);
@@ -506,6 +521,7 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Label analyseLabel;
 
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
 		private System.Windows.Forms.TextBox irrisMagTBox;

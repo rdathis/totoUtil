@@ -40,6 +40,8 @@ namespace cmdUtils.Objets
 		private String scriptFileName;
 		private String jobContent;
 		private String scriptContent;
+		private String workspacePath;
+		private String workingPath;
 		public MouliUtilOptions()
 		{
 			//
@@ -202,5 +204,18 @@ namespace cmdUtils.Objets
 		public String getScriptContent() {
 			return scriptContent;
 		}
+		public void setWorkspacePath(String value) {
+			workspacePath=value;
+		}
+		public String getWorkspacePath() {
+			return workspacePath;
+		}
+		public void setWorkingPath(String value) {
+			workingPath=value;
+		}
+		public String getWorkingPath() {
+			return workingPath;
+		}
+		
 	}
 }

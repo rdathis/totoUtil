@@ -47,6 +47,8 @@ namespace MoulUtil
 					cibleLabel.Text = options.getInstanceName() +" ("+ serveur.getNom() + " "+serveur.getAdresse()+")";
 					cibleLabel.BackColor = Color.AntiqueWhite;
 					cibleLabel.ForeColor = Color.Red;
+					puttyLink.Tag=serveur;
+					puttyLink.Visible=true;
 				}
 			}
 		}
@@ -94,7 +96,7 @@ namespace MoulUtil
 			chkBox.Checked=false;
 			
 		}
-	
+		
 		// disable once ParameterHidesMember
 		void analyseJob(MouliJob job)
 		{
@@ -125,9 +127,10 @@ namespace MoulUtil
 			toolStripStatusLabel1.Text = "doing archive";
 			try {
 				completeOptions();
-				job=mouliActionUtil.doTraitement(pathLabel.Text, options, configDto);
 				
-				analyseJob(job);
+				//job=mouliActionUtil.doAnalyse(pathLabel.Text, options, configDto);
+				//analyseJob(job);
+				
 				CreateArchiveBackgroundWorker worker = CreateArchiveBackgroundWorker.createWorker();
 				worker.prepare(job, mouliActionUtil);
 				
@@ -240,6 +243,8 @@ namespace MoulUtil
 		}
 		MouliUtilOptions updateMouliUtilOption(MeoInstance instance)
 		{
+			String workingPath=options.getWorkingPath();
+			String workspacePath=options.getWorkspacePath();
 			options = new MouliUtilOptions();
 			options.setInstanceCommande(instance.getMeocli());
 			options.setInstanceName(instance.getNom());
@@ -254,6 +259,9 @@ namespace MoulUtil
 			
 			options.setExtensionClient(calculExtension(purgeClientChkBox));
 			options.setExtensionStock(calculExtension(purgeStockChkBox));
+			//
+			options.setWorkingPath(workingPath);
+			options.setWorkspacePath(workspacePath);
 			return options;
 		}
 
@@ -442,6 +450,12 @@ namespace MoulUtil
 			visuRichTexBox.Width=550;
 			visuRichTexBox.Height=320;
 			visuRichTexBox.BringToFront();
+		}
+		void AnalyseLabelClick(object sender, EventArgs e)
+		{
+			completeOptions();
+			job=mouliActionUtil.doAnalyse(pathLabel.Text, options, configDto);
+			analyseJob(job);
 		}
 	}
 }

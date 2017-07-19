@@ -72,7 +72,6 @@ namespace cmdUtils.Objets
 		}
 		public String getLoggerConfigFilePath() {
 			String str=""+MouliConfig.commonLoggingConfigFile;
-			
 			str = Directory.GetCurrentDirectory() + @"/"+MouliConfig.commonLoggingConfigFile;
 			return (str);
 		}

@@ -47,8 +47,8 @@ namespace MoulUtil.Forms
 			this.label3 = new System.Windows.Forms.Label();
 			this.defaultPasswordBox = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
-			this.appPlinkBox = new System.Windows.Forms.TextBox();
-			this.appPlink = new System.Windows.Forms.Label();
+			this.dispoBox = new System.Windows.Forms.TextBox();
+			this.dispo = new System.Windows.Forms.Label();
 			this.databaseAdminUserBox = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
 			this.workingDirBox = new System.Windows.Forms.TextBox();
@@ -180,20 +180,22 @@ namespace MoulUtil.Forms
 			this.label5.TabIndex = 13;
 			this.label5.Text = "defaultPassword";
 			// 
-			// appPlinkBox
+			// dispoBox
 			// 
-			this.appPlinkBox.Location = new System.Drawing.Point(582, 75);
-			this.appPlinkBox.Name = "appPlinkBox";
-			this.appPlinkBox.Size = new System.Drawing.Size(322, 20);
-			this.appPlinkBox.TabIndex = 12;
+			this.dispoBox.Location = new System.Drawing.Point(582, 75);
+			this.dispoBox.Name = "dispoBox";
+			this.dispoBox.Size = new System.Drawing.Size(322, 20);
+			this.dispoBox.TabIndex = 12;
 			// 
-			// appPlink
+			// dispo
 			// 
-			this.appPlink.Location = new System.Drawing.Point(457, 81);
-			this.appPlink.Name = "appPlink";
-			this.appPlink.Size = new System.Drawing.Size(119, 17);
-			this.appPlink.TabIndex = 11;
-			this.appPlink.Text = "appPlink";
+			this.dispo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			this.dispo.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.dispo.Location = new System.Drawing.Point(457, 81);
+			this.dispo.Name = "dispo";
+			this.dispo.Size = new System.Drawing.Size(119, 17);
+			this.dispo.TabIndex = 11;
+			this.dispo.Text = "dispo";
 			// 
 			// databaseAdminUserBox
 			// 
@@ -423,8 +425,8 @@ namespace MoulUtil.Forms
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.defaultPasswordBox);
 			this.Controls.Add(this.label5);
-			this.Controls.Add(this.appPlinkBox);
-			this.Controls.Add(this.appPlink);
+			this.Controls.Add(this.dispoBox);
+			this.Controls.Add(this.dispo);
 			this.Controls.Add(this.databaseAdminPwdBox);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.defaultEmailBox);
@@ -458,8 +460,8 @@ namespace MoulUtil.Forms
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.TextBox defaultPasswordBox;
 		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.TextBox appPlinkBox;
-		private System.Windows.Forms.Label appPlink;
+		private System.Windows.Forms.TextBox dispoBox;
+		private System.Windows.Forms.Label dispo;
 		private System.Windows.Forms.TextBox databaseAdminUserBox;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.TextBox workingDirBox;

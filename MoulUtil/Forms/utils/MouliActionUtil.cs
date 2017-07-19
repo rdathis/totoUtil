@@ -74,59 +74,25 @@ namespace MoulUtil.Forms.utils
 			}
 			
 		}
-		public MouliJob doTraitement(String sourceMoulinette, MouliUtilOptions options, ConfigDto configDto)
+		public MouliJob doAnalyse(String sourceMoulinette, MouliUtilOptions options, ConfigDto configDto)
 		{
+			
+			//ici il faut faire un change dir workspace/repertoire avant
+				
 			prepareTraitement(sourceMoulinette, options, configDto);
 			//
-			Directory.SetCurrentDirectory(configDto.basePath);
+			Directory.SetCurrentDirectory(options.getWorkspacePath());
 			toJournal(sourceMoulinette, options);
 			
 			majProgression(0);
-			/*
-			sourceMoulinette = sourceMoulinette.Trim();
-			if (((!sourceMoulinette.EndsWith("\\")) && (!sourceMoulinette.EndsWith("/")))) {
-				sourceMoulinette += "/";
-			}
-			 */
-			
 			DateTime startDateTime = DateTime.Now;
-			
-			/*
-			if (options.getarchiveName() == null) {
-				options.setArchiveName(mouliUtil.calculeArchiveName(sourceMoulinette));
-			}
-			 */
 			String archiveName = options.getarchiveName();
-			
-			
-			//mouliUtil.setMagasinIrris(options.getNumeroMagasinIrris());
 			ZipUtil zipUtil = new ZipUtil();
-			//String archiveName = Path.GetFullPath(sourceMoulinette);
-			//String dataPath=archiveName;
 			
 			String originalDir = Directory.GetCurrentDirectory();
 			Directory.SetCurrentDirectory(sourceMoulinette);
 			
 			majProgression(5);
-			
-			
-//			String left = "";
-//			String tmpname = sourceMoulinette.Replace("\\", "/");
-//			while (tmpname.EndsWith("/")) {
-//				tmpname = tmpname.Substring(0, tmpname.Length - 1);
-//			}
-//			int i = tmpname.LastIndexOf("/");
-//			if (i > 0) {
-//				left = tmpname.Substring(0, i + 1);
-//				tmpname = tmpname.Substring(i).Replace("/", "");
-//			}
-//
-//			String scriptMoulinetteFile = tmpname + ".moulinette.sh";
-//			String scriptJobMoulinetteFile = tmpname + ".job.sh";
-			//String scriptInstallFile=tmpname+"install.file";
-			
-			//archiveName+=".zip";
-			
 			
 			List <FileInfo> fichiers = new List<FileInfo>();
 			String[] selectionY = null;
@@ -142,20 +108,15 @@ namespace MoulUtil.Forms.utils
 			List <String> selectionYfiles = new List<string>();
 			
 
-			String scriptMoulinetteFile= options.getScriptFileName();
-			String scriptJobMoulinetteFile = options.getJobFileName();
-			
-			mouliUtil.writeMoulinetteFile(configDto.basePath + "/conf/modele.moulinette", "", scriptMoulinetteFile, options);
-			
-			mouliUtil.writeJobFile(scriptJobMoulinetteFile, scriptMoulinetteFile, options);
 
+			String basePath=options.getWorkspacePath()+options.getWorkingPath();
 			// Collecte des fichiers presents
 			foreach (YFiles yfile in Enum.GetValues(typeof(YFiles))) {
 				String file = yfile.ToString();
 				if (toLowerCase) {
 					file = file.ToLower();
 				}
-				if (mouliUtil.checkIfFileExists("", mouliUtil.getData(), mouliUtil.getMag01(), file, ".d")) {
+				if (mouliUtil.checkIfFileExists(basePath, mouliUtil.getData(), mouliUtil.getMag01(), file, ".d")) {
 					file += ".d";
 					selectionYfiles.Add(mouliUtil.getData() + mouliUtil.getMag01() + file);
 					Console.WriteLine(" Add : " + file);
@@ -163,7 +124,7 @@ namespace MoulUtil.Forms.utils
 				majProgression();
 			}
 			if (mouliUtil.checkOrdoFixe(mouliUtil.getData())) {
-				String file = JFiles.ordo_top_fixe.ToString() + ".txt";
+				String file = JFiles.ordo_top_fixe + ".txt";
 				if (toLowerCase) {
 					file = file.ToLower();
 				}
@@ -172,6 +133,13 @@ namespace MoulUtil.Forms.utils
 				selectionJ[0] = file;
 				
 			}
+			
+			String scriptMoulinetteFile= options.getScriptFileName();
+			String scriptJobMoulinetteFile = options.getJobFileName();
+			
+			mouliUtil.writeMoulinetteFile(configDto.basePath + "/conf/modele.moulinette", "", scriptMoulinetteFile, options);
+			
+			mouliUtil.writeJobFile(scriptJobMoulinetteFile, scriptMoulinetteFile, options);
 			
 			String dataMag = (mouliUtil.getData() + mouliUtil.getMag01());
 			Console.WriteLine("Complete archive .." + dataMag);
@@ -269,6 +237,9 @@ namespace MoulUtil.Forms.utils
 		}
 		public void doArchive(MouliJob job)
 		{
+			Directory.SetCurrentDirectory (job.getOriginalDir());
+			Directory.SetCurrentDirectory (job.getMoulinettePath());
+			
 			ZipUtil zipUtil = new ZipUtil();
 			
 			List<String> liste = job.getListe();

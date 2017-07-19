@@ -76,12 +76,12 @@ namespace MoulUtil.Forms.utils
 			MouliUtil mouliUtil = new MouliUtil();
 			String dataPath=mouliUtil.getData();
 			String magPath=mouliUtil.getMag01();
-			String extension = "d";
+			String extension = ".d";
 			
 			foreach (YFiles yfile in Enum.GetValues(typeof(YFiles))) {
 				Boolean value = mouliUtil.checkIfFileExists(path, dataPath, magPath, yfile.ToString(), extension);
 				if(!value) {
-					String file=path+dataPath+magPath+ yfile.ToString().ToLower() +"."+extension;
+					String file=path+dataPath+magPath+ yfile.ToString().ToLower() +extension;
 					StreamWriter outputFile = new StreamWriter(file);
 					outputFile.WriteLine("## MOCK : "+yfile);
 					outputFile.Close();
@@ -116,6 +116,8 @@ namespace MoulUtil.Forms.utils
 				options = new MouliUtilOptions();
 				options.setMagId(rechMagIdBox.Text);
 				options.setInstanceName("meo_test");
+				options.setWorkspacePath(workingPath);
+				options.setWorkingPath(rep);
 				return options;
 			}
 			MyUtil myUtil = new MyUtil();
@@ -142,15 +144,21 @@ namespace MoulUtil.Forms.utils
 					proposition =  normaliseNom(ligne[0].Value.ToString());
 
 					
+					options = new MouliUtilOptions();
+					
 					MeoInstance magInstance=convertitInstance(ligne[2].Value.ToString());
 					if(magInstance!=null) {
 						proposition+="-"+magInstance.getCode();;
 					}
+					proposition = "MID" + rechMagIdBox.Text.Trim() + "-" + proposition + "/";
+					options.setWorkingPath(proposition);
 					//magasinUrl=ligne[2].Value.ToString();
-					proposition = configDto.getWorkingDir()+ "MID" + rechMagIdBox.Text.Trim() + "-" + proposition + "/";
+					proposition = configDto.getWorkingDir()+ proposition;
 					
 					
-					options = new MouliUtilOptions();
+					
+					
+					options.setWorkspacePath(workingPath);
 					if(magInstance!=null) {
 						options.setInstanceName(magInstance.getNom());
 						options.setInstanceCommande(magInstance.getMeocli());

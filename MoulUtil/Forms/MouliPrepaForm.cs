@@ -31,12 +31,12 @@ namespace MoulUtil
 		private ConfigDto configDto;
 		private MouliSQLForm sqlForm;
 		private MouliUtil mouliUtil = null;
-		private MouliUtilOptions options = null;
+		private MouliUtilOptions mouliUtilOptions = null;
 		protected CmdUtil cmdUtil = null;
 		private RegistryUtil registryUtil = null;
 		private SshClient sshClientAdmin = null;
-		private ConnectServerBackgroundWorker connectWorker=null;
-		private log4net.ILog ILOG ;
+		private ConnectServerBackgroundWorker connectWorker = null;
+		private log4net.ILog ILOG;
 		
 		public MouliPrepaForm(ConfigDto configDto, log4net.ILog ILOG)
 		{
@@ -44,7 +44,7 @@ namespace MoulUtil
 			
 			timer = new System.Timers.Timer();
 			timer.Interval = 1000;
-			timer.Elapsed+=new ElapsedEventHandler(OnTimedEvent);
+			timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
 			
 			
 			this.rechMagIdBox.Enabled = true;
@@ -52,7 +52,7 @@ namespace MoulUtil
 			String workspacePath = registryUtil.getHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key);
 			mouliPrepaUtil = new MouliPrepaUtil(this, configDto);
 			this.configDto = configDto;
-			this.ILOG=ILOG;
+			this.ILOG = ILOG;
 			if (!String.IsNullOrEmpty(workspacePath)) {
 				workspacePath += "" + configDto.getWorkingDir().Replace("\\", "/");
 			} else {
@@ -60,7 +60,7 @@ namespace MoulUtil
 			}
 			
 			this.workingDirBox.Text = workspacePath;
-			this.workspaceBaseBox.Text=workspacePath;
+			this.workspaceBaseBox.Text = workspacePath;
 			mouliUtil = new MouliUtil();
 			cmdUtil = new CmdUtil();
 			new TreeViewUtil(configDto.instances, configDto.serveurs).populateTargets(targetTreeView);
@@ -146,10 +146,19 @@ namespace MoulUtil
 		}
 		void PrepareBtnClick(object sender, EventArgs e)
 		{
-			if (options == null)
+			if (mouliUtilOptions == null) {
 				return;
+			}
 			if (workspaceBaseBox.Text.Length > 0 && workspaceZoneBox.Text.Length > 0) {
-				MouliActionForm form = new MouliActionForm(options, configDto, workspaceZoneBox.Text);
+//
+				mouliUtilOptions.setWorkspacePath(workspaceBaseBox.Text);
+				String path = workspaceZoneBox.Text;
+				if (path.StartsWith("workspace/", StringComparison.Ordinal)) {
+					path = path.Replace("workspace/", "");
+				}
+				mouliUtilOptions.setWorkingPath(path);
+//
+				MouliActionForm form = new MouliActionForm(mouliUtilOptions, configDto, workspaceZoneBox.Text);
 				form.ShowDialog();
 			} else {
 				workspaceBaseBox.Focus();
@@ -168,8 +177,8 @@ namespace MoulUtil
 		{
 			
 			//vire le 'workspace'
-			if(!Directory.Exists(workspaceBaseBox.Text)) {
-				MessageBox.Show("Répertoire absent : "+workspaceBaseBox.Text);
+			if (!Directory.Exists(workspaceBaseBox.Text)) {
+				MessageBox.Show("Répertoire absent : " + workspaceBaseBox.Text);
 				return;
 			}
 			String tmpDir = new DirectoryInfo(workspaceBaseBox.Text).Parent.FullName;
@@ -223,7 +232,7 @@ namespace MoulUtil
 			worker.setProgressWorkerCallBack(progressWorkerCallBack);
 			worker.setEndWorkerCallBack(endWorkerCallBack);
 			//
-			worker.prepare(mouliPrepaUtil, options, sourceDir, targetSvgPathBox.Text);
+			worker.prepare(mouliPrepaUtil, mouliUtilOptions, sourceDir, targetSvgPathBox.Text);
 			worker.RunWorkerAsync();
 
 			//TODO:copy src files to target dir.
@@ -235,17 +244,19 @@ namespace MoulUtil
 
 		void rechercheMagasin()
 		{
-			if (sshClientAdmin == null || !sshClientAdmin.IsConnected) {
+			
+			if ((rechMagIdBox.Text != "0") && (sshClientAdmin == null || !sshClientAdmin.IsConnected)) {
 				magDescBox.Text = "La liaison ssh est fermée.";
 				return;
 			}
 			String workingPath = workspaceBaseBox.Text;
-			options = mouliPrepaUtil.rechercheMagasin(rechMagIdBox, magDescBox, propositionBox, workingPath, sqlBtn);
-			if (options != null) {
+			
+			mouliUtilOptions = mouliPrepaUtil.rechercheMagasin(rechMagIdBox, magDescBox, propositionBox, workingPath, sqlBtn);
+			if (mouliUtilOptions != null) {
 				calculeMoulinettePath();
 				String path = workspaceZoneBox.Text;
-				options.setArchiveName(mouliUtil.calculeArchiveName(path));
-				Console.WriteLine("name: " + options.getarchiveName());
+				mouliUtilOptions.setArchiveName(mouliUtil.calculeArchiveName(path));
+				Console.WriteLine("name: " + mouliUtilOptions.getarchiveName());
 			}
 
 		}
@@ -255,7 +266,9 @@ namespace MoulUtil
 			String proposition = propositionBox.Text;
 			if (proposition.Length > 0) {
 				mouliUtil.createArbo(proposition);
-				cmdUtil.executeCommande("explorer", Path.GetFullPath(proposition));
+				if (sender != null) {// cause mag zero
+					cmdUtil.executeCommande("explorer", Path.GetFullPath(proposition));
+				}
 			}
 		}
 		void CopyBtnClick(object sender, EventArgs e)
@@ -283,7 +296,7 @@ namespace MoulUtil
 		}
 		void SqlBtnClick(object sender, EventArgs e)
 		{
-			sqlForm = new MouliSQLForm(this.rechMagIdBox.Text, options);
+			sqlForm = new MouliSQLForm(this.rechMagIdBox.Text, mouliUtilOptions);
 			//form.ShowDialog();
 			sqlForm.Show();
 		}
@@ -408,10 +421,10 @@ namespace MoulUtil
 		{
 			//brancher ici le travail du timer pour les backgroundWorker
 			//Console.WriteLine("Hello World!");
-			if(connectWorker!=null && !connectWorker.IsBusy) {
+			if (connectWorker != null && !connectWorker.IsBusy) {
 				magDescBox.Text = "connected";
 				statusStrip1.Text = "connected";
-				timer.Enabled=false;
+				timer.Enabled = false;
 			}
 		}
 	}

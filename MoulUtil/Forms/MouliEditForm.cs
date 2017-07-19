@@ -87,7 +87,7 @@ namespace MoulUtil.Forms
 			configDto.setDatabaseAdminName(databaseAdminNameBox.Text);
 			configDto.setDefaultPassword(defaultPasswordBox.Text);
 			configDto.setDefaultEmail(defaultEmailBox.Text);
-			configDto.setAppPlink(appPlinkBox.Text);
+			configDto.setAppPlink(dispoBox.Text);
 			configDto.setWorkingDir(workingDirBox.Text);
 		}
 		void SaveBtnClick(object sender, EventArgs e)
