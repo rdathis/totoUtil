@@ -153,7 +153,7 @@ namespace MoulUtil.Forms.utils
 					proposition = "MID" + rechMagIdBox.Text.Trim() + "-" + proposition + "/";
 					options.setWorkingPath(proposition);
 					//magasinUrl=ligne[2].Value.ToString();
-					proposition = configDto.getWorkingDir()+ proposition;
+					//proposition = configDto.getWorkingDir()+ proposition;
 					
 					
 					

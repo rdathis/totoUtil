@@ -6,6 +6,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Renci.SshNet;
 using MoulUtil.Forms.utils;
 using cmdUtils.Objets;
@@ -41,8 +42,10 @@ namespace cmdUtils {
 			 */
 		}
 		private ConfigDto getConfig() {
-			
+		
+				
 			configDto= configUtil.readConfigXml("." );
+			configDto.setProgramPath(Directory.GetCurrentDirectory());
 			return configDto;
 		}
 		public String  getAdminServeur(ref SshClient client, int hiddenPort, int visiblePort) {

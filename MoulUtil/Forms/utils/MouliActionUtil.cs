@@ -20,11 +20,13 @@ namespace MoulUtil.Forms.utils
 		private MouliActionForm form;
 		private int progression=0;
 		private MouliUtil mouliUtil = null;
+		private ConfigDto configDto=null;
 		//private const String scriptModele  + "/conf/modele.moulinette"
 		
-		public MouliActionUtil(MouliActionForm form)
+		public MouliActionUtil(MouliActionForm form, ConfigDto configDto)
 		{
 			this.form = form;
+			this.configDto=configDto;
 			mouliUtil = new MouliUtil();
 		}
 		
@@ -68,17 +70,13 @@ namespace MoulUtil.Forms.utils
 				if ((options != null) && (options.getMagId() == null)) {
 					options.setMagId(calculMagId(sourceMoulinette));
 				}
-				
-				options.setOrd01(mouliUtil.checkIsOrd01(mouliUtil.getData() + mouliUtil.getOrd01()));
-				options.setDoc01(mouliUtil.checkIsDoc01(mouliUtil.getData() + mouliUtil.getDoc01()));
 			}
-			
 		}
 		public MouliJob doAnalyse(String sourceMoulinette, MouliUtilOptions options, ConfigDto configDto)
 		{
 			
 			//ici il faut faire un change dir workspace/repertoire avant
-				
+			
 			prepareTraitement(sourceMoulinette, options, configDto);
 			//
 			Directory.SetCurrentDirectory(options.getWorkspacePath());
@@ -92,22 +90,35 @@ namespace MoulUtil.Forms.utils
 			String originalDir = Directory.GetCurrentDirectory();
 			Directory.SetCurrentDirectory(sourceMoulinette);
 			
-			majProgression(5);
-			
-			List <FileInfo> fichiers = new List<FileInfo>();
+	
+			MouliStatRecap statsRecap = new MouliStatRecap();
+			List<String> liste = populateListe(false, options, statsRecap);
+			mouliUtil = new MouliUtil();
+			zipUtil = null;
+			majProgression(50);
+			MouliJob job = new MouliJob(archiveName, originalDir, liste, statsRecap, startDateTime, options, sourceMoulinette);
+			return job;
+		}
+		
+		private void majProgression() {
+			majProgression(++progression);
+		}
+		private void majProgression(int value) {
+			progression=value;
+//			if(form!=null) {
+//				form.updateProgression(progression);
+//			}
+		}
+
+		private List<String> populateListe(Boolean filtre, MouliUtilOptions options,  MouliStatRecap statsRecap, Boolean toLowerCase = true) {
 			String[] selectionY = null;
 			String[] selectionJ = null;
 			
-			MouliStatRecap statsRecap = new MouliStatRecap();
-			// disable once ConvertToConstant.Local
-			Boolean toLowerCase = true;
-			
+			List<String> liste = new List<String>();
 			selectionJ = new string[1];
 			
 			String path = mouliUtil.getData() + mouliUtil.getMag01();
 			List <String> selectionYfiles = new List<string>();
-			
-
 
 			String basePath=options.getWorkspacePath()+options.getWorkingPath();
 			// Collecte des fichiers presents
@@ -117,9 +128,20 @@ namespace MoulUtil.Forms.utils
 					file = file.ToLower();
 				}
 				if (mouliUtil.checkIfFileExists(basePath, mouliUtil.getData(), mouliUtil.getMag01(), file, ".d")) {
+					statsRecap.mag01FilesTotal++;
 					file += ".d";
-					selectionYfiles.Add(mouliUtil.getData() + mouliUtil.getMag01() + file);
-					Console.WriteLine(" Add : " + file);
+					if(YFiles.YCLIENTS==yfile) {
+						statsRecap.mag01ClientTotal++;
+						
+					}
+					if(YFiles.YSTOCAT==yfile ||YFiles.YSTOCK==yfile) {
+						statsRecap.mag01StockTotal++;
+					}
+
+					if(filtreFichiers(filtre, options, yfile)) {
+						selectionYfiles.Add(mouliUtil.getData() + mouliUtil.getMag01() + file);
+						Console.WriteLine(" Add : " + file);
+					}
 				}
 				majProgression();
 			}
@@ -131,7 +153,6 @@ namespace MoulUtil.Forms.utils
 				path += mouliUtil.getJoint();
 				Console.WriteLine("ordo_top_fixe :" + path + file);
 				selectionJ[0] = file;
-				
 			}
 			
 			String scriptMoulinetteFile= options.getScriptFileName();
@@ -150,9 +171,8 @@ namespace MoulUtil.Forms.utils
 			//script moulinette
 			majProgression();
 			
-			Console.WriteLine(" list<Fichiers> : " + fichiers.Count);
-			Console.WriteLine(" Creation archive : " + archiveName);
-			List<String> liste = new List<string>();
+			//Console.WriteLine(" list<Fichiers> : " + fichiers.Count);
+			//Console.WriteLine(" Creation archive : " + archiveName);
 
 			for (int z = 0; z < selectionY.Length; z++) {
 				liste.Add(selectionY[z]);
@@ -165,35 +185,51 @@ namespace MoulUtil.Forms.utils
 			// maj stats
 			statsRecap.datamag = dataMag;
 			statsRecap.foundFiles = mouliUtil.analyseTopOrdoFixe(liste, dataMag + JFiles.ordo_top_fixe + ".txt", statsRecap.notFoundList);
-			if (Directory.Exists(dataMag + "Joint/")) {
-				
-				for (int z = 0; z < selectionJ.Length; z++) {
-					if (File.Exists(dataMag + mouliUtil.getJoint() + selectionJ[z])) {
-						liste.Add(dataMag + mouliUtil.getJoint() + selectionJ[z]);
+			if (filtreFichier(filtre, options.doJoint)) {
+				if (Directory.Exists(dataMag + "Joint/")) {
+					
+					for (int z = 0; z < selectionJ.Length; z++) {
+						if (File.Exists(dataMag + mouliUtil.getJoint() + selectionJ[z])) {
+							liste.Add(dataMag + mouliUtil.getJoint() + selectionJ[z]);
+						}
 					}
+					
+					statsRecap.jointDocsTotal = Directory.GetFiles(dataMag + "Joint/").Length;
 				}
-				
-				statsRecap.jointDocsTotal = Directory.GetFiles(dataMag + "Joint/").Length;
 			}
-			statsRecap.mag01FilesTotal = Directory.GetFiles(dataMag).Length;
 			
-			mouliUtil = new MouliUtil();
-			zipUtil = null;
-			majProgression(50);
-			MouliJob job = new MouliJob(archiveName, originalDir, liste, statsRecap, startDateTime, options, sourceMoulinette);
-			return job;
-		}
-		
-		private void majProgression() {
-			majProgression(++progression);
-		}
-		private void majProgression(int value) {
-			progression=value;
-			if(form!=null) {
-				form.updateProgression(progression);
+			if(filtreFichier(filtre, options.doDoc01)) {
+				options.setOrd01(mouliUtil.checkIsOrd01(mouliUtil.getData() + mouliUtil.getOrd01()));
+				options.setDoc01(mouliUtil.checkIsDoc01(mouliUtil.getData() + mouliUtil.getDoc01()));
+				statsRecap.doc01DocsTotal = options.getOrd01().Count +options.getDoc01().Count ;
+			} else {
+				options.setOrd01(new List<String>());
+				options.setDoc01(new List<String>());
 			}
+			
+			return liste;
 		}
 
+		private bool filtreFichiers(bool filtre, MouliUtilOptions options, YFiles yfile)
+		{
+			if(filtre) {
+				return (((isStock(yfile) && options.doStock))|| (isClient(yfile) && options.doClient));
+			}
+			return true;
+		}
+
+
+		private Boolean isStock(YFiles yfile) {
+			return (YFiles.YFORMULE==yfile || YFiles.YFOURNI==yfile || YFiles.YMARQUE==yfile || YFiles.YSTOCAT==yfile || YFiles.YSTOCK==yfile) ;
+		}
+		private Boolean isClient(YFiles yfile) {
+			return !isStock(yfile); //shortcut.
+		}
+		private bool filtreFichier(bool filtre, bool isNecessary)
+		{
+			return ((filtre && isNecessary) || filtre==false);
+		}
+		
 		private string calculMagId(string sourceMoulinette)
 		{
 			String retour="9999";
@@ -240,9 +276,18 @@ namespace MoulUtil.Forms.utils
 			Directory.SetCurrentDirectory (job.getOriginalDir());
 			Directory.SetCurrentDirectory (job.getMoulinettePath());
 			
+			job.setStart(DateTime.Now);
+			//ici:on doit recalculer suivant les choix
+//			job.getOptions().get
+//			job.setListe(calculeListe());
+			//MouliJob job = new MouliJob(archiveName, originalDir, liste, statsRecap, startDateTime, options, sourceMoulinette);
+			
+			
 			ZipUtil zipUtil = new ZipUtil();
 			
-			List<String> liste = job.getListe();
+			//List<String> liste = job.getListe();
+			MouliStatRecap statsRecap = new MouliStatRecap();
+			List<String> liste = populateListe(true, job.getOptions(), statsRecap);
 			if (job.getOptions()!=null) {
 				List <String> doc01 = job.getOptions().getDoc01();
 				List <String> ord01 = job.getOptions().getOrd01();
@@ -263,7 +308,7 @@ namespace MoulUtil.Forms.utils
 			zipUtil.createSimpleArchive(ZipUtil.compressionStandard, job.getArchiveName() , liste, job.getBackgroundWorker());
 			//majProgression(99);
 			// Fin
-			Directory.SetCurrentDirectory (job.getOriginalDir());
+			Directory.SetCurrentDirectory (configDto.getProgramPath());
 			Console.WriteLine("fin archive "+job.getArchiveName());
 			printRecap(job.getStatRecap());
 		}

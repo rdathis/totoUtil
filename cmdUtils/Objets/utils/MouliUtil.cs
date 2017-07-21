@@ -245,32 +245,18 @@ namespace cmdUtils.Objets
 			//
 			String mailTo = options.getDefaultEmail();
 			String mailCmd = "mail -s \"planification moulinette + " + scriptMoulinetteFile + " ($jobtime)\" " + mailTo + " < " + scriptMoulinetteFile;
-			liste.Add(mailCmd);			
+			liste.Add(mailCmd);
 			
 			return liste;
 		}
 		public void writeJobFile(string scriptJobFile, string scriptMoulinetteFile, MouliUtilOptions options)
 		{
-			 StreamWriter outputFile = new StreamWriter(scriptJobFile);
+			StreamWriter outputFile = new StreamWriter(scriptJobFile);
 			outputFile.NewLine = "\n";
 			List<String> liste = genereJob(scriptJobFile, scriptMoulinetteFile, options);
 			foreach (String ligne in liste) {
 				outputFile.WriteLine(ligne);
 			}
-			
-			/*
-			//
-			outputFile.WriteLine("## job file automatique, pour planifier la maj");
-			
-			// outputFile.WriteLine("MPATH=`dirname $0` ");
-			// outputFile.WriteLine("cd $MPATH && MPATH=$PWD");
-			outputFile.WriteLine("export jobtime='" + jobtime + "'");
-			outputFile.WriteLine("echo /bin/sh " + scriptMoulinetteFile + " -mail | at $jobtime  ");
-			*/
-			//
-			//String mailTo = options.getDefaultEmail();
-			//String mailCmd = "mail -s \"planification moulinette + " + scriptMoulinetteFile + " ($jobtime)\" " + mailTo + " < " + scriptMoulinetteFile;
-			//outputFile.WriteLine(mailCmd);
 			outputFile.Close();
 		}
 
@@ -321,7 +307,7 @@ namespace cmdUtils.Objets
 		}
 		public List<String> giveFiles(String path, Regex selectionPattern, Regex exclusionPattern)
 		{
-			List <String > liste = null;
+			List <String > liste = new List<String>();
 			
 			if (Directory.Exists(path)) {
 				liste = new List<string>();
@@ -429,8 +415,6 @@ namespace cmdUtils.Objets
 			foreach (String fichier in fichiers) {
 				retour.Add(fichier);
 			}
-			
-			
 			return retour;
 		}
 

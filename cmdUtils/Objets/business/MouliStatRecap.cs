@@ -14,6 +14,8 @@ namespace cmdUtils.Objets {
 	public class MouliStatRecap {
 		public int foundFiles=0;
 		public List<String> notFoundList=new List<string>();
+		public int mag01StockTotal=0;
+		public int mag01ClientTotal=0;
 		public int mag01FilesTotal=0;
 		public int jointDocsTotal=0;
 		public int ord01DocsTotal;

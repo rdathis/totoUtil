@@ -7,6 +7,7 @@
  * Pour changer ce modèle utiliser Outils | Options | Codage | Editer les en-têtes standards.
  */
 using System;
+using cmdUtils.Objets;
 
 namespace cmdUtils.Objets
 {
@@ -37,5 +38,6 @@ namespace cmdUtils.Objets
 		YREMISE,
 		YOPHTAL,
 		YDOCUMENT
+			
 	}
 }

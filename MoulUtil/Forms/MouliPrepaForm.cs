@@ -234,8 +234,6 @@ namespace MoulUtil
 			//
 			worker.prepare(mouliPrepaUtil, mouliUtilOptions, sourceDir, targetSvgPathBox.Text);
 			worker.RunWorkerAsync();
-
-			//TODO:copy src files to target dir.
 		}
 		void RechMagIdBtnClick(object sender, EventArgs e)
 		{
@@ -263,7 +261,7 @@ namespace MoulUtil
 
 		public void CreateBtnClick(object sender, EventArgs e)
 		{
-			String proposition = propositionBox.Text;
+			String proposition = workingDirBox.Text+propositionBox.Text;
 			if (proposition.Length > 0) {
 				mouliUtil.createArbo(proposition);
 				if (sender != null) {// cause mag zero

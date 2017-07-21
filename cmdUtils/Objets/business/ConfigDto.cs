@@ -16,6 +16,8 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public partial class ConfigDto
 	{
+		// !! no //[XmlAttribute], volatile
+		private String programPath =null;
 		//[XmlAttribute]
 		public List<MeoServeur> serveurs;
 		//[XmlAttribute]
@@ -26,6 +28,12 @@ namespace cmdUtils.Objets
 		
 		public List<ConfigParam> configParams;
 	
+		public void setProgramPath(String value) {
+			programPath=value;
+		}
+		public String getProgramPath() {
+			return programPath;
+		}
 		public String basePath { get; set ;}
 		public ConfigDto()
 		{

@@ -42,6 +42,12 @@ namespace cmdUtils.Objets
 		private String scriptContent;
 		private String workspacePath;
 		private String workingPath;
+		public Boolean doClient=false;
+		public Boolean doStock=false;
+		public Boolean doDoc01=false;
+		public Boolean doJoint=false;
+		public Boolean doAnnulationClient=false;
+		public Boolean doAnnulationStock=false;
 		public MouliUtilOptions()
 		{
 			//
@@ -56,7 +62,7 @@ namespace cmdUtils.Objets
 		}
 		public String getLots()
 		{
-			return lots;
+			return calculateLots();
 		}
 		public List<String>  getDoc01()
 		{
@@ -173,48 +179,91 @@ namespace cmdUtils.Objets
 		{
 			return (anneesConservationVisiteSiPurge);
 		}
-		public String getarchiveName() {
+		public String getarchiveName()
+		{
 			return archiveName;
 		}
-		public void setArchiveName(String value) {
-			archiveName=value;
+		public void setArchiveName(String value)
+		{
+			archiveName = value;
 		}
 		
-		public void setJobFileName(String value) {
-			jobFileName=value;
+		public void setJobFileName(String value)
+		{
+			jobFileName = value;
 		}
-		public String getJobFileName() {
+		public String getJobFileName()
+		{
 			return jobFileName;
 		}
-		public void setScriptFileName(String value) {
-			scriptFileName=value;
+		public void setScriptFileName(String value)
+		{
+			scriptFileName = value;
 		}
-		public String getScriptFileName() {
+		public String getScriptFileName()
+		{
 			return scriptFileName;
 		}
-		public void setJobContent(String value) {
-			jobContent=value;
+		public void setJobContent(String value)
+		{
+			jobContent = value;
 		}
-		public String getJobContent() {
+		public String getJobContent()
+		{
 			return jobContent;
 		}
-		public void setScriptContent(String value) {
-			scriptContent=value;
+		public void setScriptContent(String value)
+		{
+			scriptContent = value;
 		}
-		public String getScriptContent() {
+		public String getScriptContent()
+		{
 			return scriptContent;
 		}
-		public void setWorkspacePath(String value) {
-			workspacePath=value;
+		public void setWorkspacePath(String value)
+		{
+			workspacePath = value;
 		}
-		public String getWorkspacePath() {
+		public String getWorkspacePath()
+		{
 			return workspacePath;
 		}
-		public void setWorkingPath(String value) {
-			workingPath=value;
+		public void setWorkingPath(String value)
+		{
+			workingPath = value;
 		}
-		public String getWorkingPath() {
+		public String getWorkingPath()
+		{
 			return workingPath;
+		}
+
+		public String calculateLots()
+		{
+			String retour = "";
+			// purges
+			if (doAnnulationStock) {
+				retour += "S1";
+			}
+			if (doStock) {
+				retour += "S";
+			}
+			//
+			if (doAnnulationClient) {
+				retour += "C1";
+			}
+			if (doClient) {
+				retour += "C";
+			}
+			//
+			if (doDoc01) {
+				retour += "D";
+			}
+			if (doJoint) {
+				retour += "J";
+			}
+
+			return retour;
+
 		}
 		
 	}

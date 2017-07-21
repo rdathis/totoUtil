@@ -34,6 +34,9 @@ namespace cmdUtils.Objets
 			FileStream fileStream = new FileStream(path+MouliConfig.commonConfigFile, FileMode.Open);
 			ConfigDto dto = (ConfigDto)serializer.Deserialize(fileStream);
 			fileStream.Close();
+			//
+			dto.setProgramPath(Directory.GetCurrentDirectory());
+			//
 			return dto;
 		}
 		private void writeXml(ConfigDto dto)
@@ -81,6 +84,7 @@ namespace cmdUtils.Objets
 			
 			// testWriteXml(dto);
 			ConfigDto dto = readConfigXml();
+			
 			
 			return dto;
 		}
