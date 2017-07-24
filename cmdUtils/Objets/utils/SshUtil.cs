@@ -27,10 +27,19 @@ namespace cmdUtils.Objets
 		{
 			String user = server.getUtilisateur();
 			String adresse = server.getAdresse();
-			IPHostEntry entry = Dns.GetHostEntry(server.getAdresse());
-			if(entry.AddressList.Length >0) {
-				adresse = entry.AddressList[0].ToString();
-			}
+			
+			
+			//la resolution locale ne sert a rien
+//			IPAddress ipAdress = null;
+//			if(!IPAddress.TryParse(adresse, out ipAdress)) {
+//				adresse=ipAdress.ToString();
+//			}
+			
+			//if(adresse.StartsWith-----
+			//IPHostEntry entry = Dns.GetHostEntry(adresse);
+//			if(entry.AddressList.Length >0) {
+//				adresse = entry.AddressList[0].ToString();
+//			}
 			//rem:fonctionnel, mais temps idem
 			String password = server.getPassword();
 			ConnectionInfo connectionInfo = new ConnectionInfo(adresse, user, new PasswordAuthenticationMethod(user, password));

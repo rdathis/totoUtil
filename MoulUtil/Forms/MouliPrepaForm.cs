@@ -253,7 +253,7 @@ namespace MoulUtil
 			if (mouliUtilOptions != null) {
 				calculeMoulinettePath();
 				String path = workspaceZoneBox.Text;
-				mouliUtilOptions.setArchiveName(mouliUtil.calculeArchiveName(path));
+				mouliUtilOptions.setArchiveName(mouliUtil.calculeArchiveName(workingPath+path));
 				Console.WriteLine("name: " + mouliUtilOptions.getarchiveName());
 			}
 
