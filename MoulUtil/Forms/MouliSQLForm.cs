@@ -23,12 +23,11 @@ namespace MoulUtil
 		private MeoInstance instance = null;
 		private MyUtil myUtil=null;
 		private MeoServeur meoServeur =null;
-		//private	const int sqlPort=5000;
 		private int sqlPort=-1;
-		//private System.Diagnostics.Process plinkProcess = null;
 		private MouliUtilOptions options = null;
 		private ConnectServerBackgroundWorker connectWorker = new ConnectServerBackgroundWorker();
-		static log4net.ILog LOGGER = LogManager.GetLogger("mouliProgram");
+		private SshClient sshClient=null;
+		private static log4net.ILog LOGGER = LogManager.GetLogger("mouliProgram");
 		
 		public MouliSQLForm(String magId, MouliUtilOptions options) {
 			
@@ -62,7 +61,6 @@ namespace MoulUtil
 			
 			//String serverName = configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.
 			LOGGER.Info("avant go");
-			SshClient sshClient=null;
 			connectWorker.prepare(sshClient, meoServeur, leftPort, rightPort, null);
 			
 			MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = str => {
@@ -102,8 +100,6 @@ namespace MoulUtil
 			connectWorker.setStartWorkerCallBack(startWorkerCallBack);
 			connectWorker.setEndWorkerSshClientCallBack(endWorkerCallBack);
 			connectWorker.RunWorkerAsync();
-			//timer.Enabled=true;
-			//sshClientAdmin = mouliPrepaUtil.startSSHClientAdmin(configDto, rechMagIdBox);
 			
 		}
 		private void testServeur() {
@@ -165,7 +161,6 @@ namespace MoulUtil
 		private void populateGrid(String sql, String annee) {
 			sql=prepareSQL(sql, magId, annee);
 			sqlCalculeBox.Text=sql;
-			//String connectionString = myUtil.buildconnString(instance.getNom(), "127.0.0.1", meoServeur.getUtilisateur(), meoServeur.getPassword(), sqlPort);
 			String connectionString = myUtil.buildConnectionStringFromInstance(instance, configDto, sqlPort);
 			dataGridView1.DataSource= myUtil.buildDataSource(connectionString, sql);
 			dataGridView1.Refresh();
@@ -188,17 +183,13 @@ namespace MoulUtil
 		}
 		void MouliSQLFormFormClosing(object sender, FormClosingEventArgs e)
 		{
-//			if(plinkProcess!=null) {
-//				plinkProcess.Close();
-//			}
-
+			if(sshClient!=null && sshClient.IsConnected) {
+				sshClient.Disconnect();
+			}
 		}
 		void TotauxLabelClick(object sender, EventArgs e)
 		{
 			populateGrid(totauxLabel.Tag.ToString(), anneeVisitePurgeBox.Text);
-			//purgeVisitesLabel.Visible=true;
-			
-			//getUtilisation
 		}
 	}
 }
