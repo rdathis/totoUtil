@@ -277,17 +277,12 @@ namespace MoulUtil.Forms.utils
 			Directory.SetCurrentDirectory (job.getMoulinettePath());
 			
 			job.setStart(DateTime.Now);
-			//ici:on doit recalculer suivant les choix
-//			job.getOptions().get
-//			job.setListe(calculeListe());
-			//MouliJob job = new MouliJob(archiveName, originalDir, liste, statsRecap, startDateTime, options, sourceMoulinette);
 			
-			
-			ZipUtil zipUtil = new ZipUtil();
-			
-			//List<String> liste = job.getListe();
 			MouliStatRecap statsRecap = new MouliStatRecap();
+			
+			//Actualisation de la liste des fichier, en fonction des options.  
 			List<String> liste = populateListe(true, job.getOptions(), statsRecap);
+			//			
 			if (job.getOptions()!=null) {
 				List <String> doc01 = job.getOptions().getDoc01();
 				List <String> ord01 = job.getOptions().getOrd01();
@@ -304,7 +299,7 @@ namespace MoulUtil.Forms.utils
 					}
 				}
 			}
-			
+			ZipUtil zipUtil = new ZipUtil();
 			zipUtil.createSimpleArchive(ZipUtil.compressionStandard, job.getArchiveName() , liste, job.getBackgroundWorker());
 			//majProgression(99);
 			// Fin
