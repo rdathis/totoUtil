@@ -90,7 +90,10 @@ namespace MoulUtil
 		private void doConnectAdmin(Boolean check)
 		{
 			if (check) {
-				String tunnelStr = configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.databaseTunneling);
+				MeoInstance adminInstance = MeoInstance.findInstanceByInstanceName(configDto.instances, "administration");
+				MeoServeur meoServeur = MeoServeur.findServeurByName(configDto.serveurs, adminInstance.serveur);
+				
+				String tunnelStr = meoServeur.getTunnel();
 				int leftPort = int.Parse(tunnelStr.Substring(0, tunnelStr.IndexOf(":", StringComparison.Ordinal)));
 				int rightPort = int.Parse(tunnelStr.Substring(tunnelStr.IndexOf(":", StringComparison.Ordinal) + 1));
 				
@@ -98,8 +101,6 @@ namespace MoulUtil
 				connectWorker = new ConnectServerBackgroundWorker();
 				
 				//String serverName = configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.
-				MeoInstance adminInstance = MeoInstance.findInstanceByInstanceName(configDto.instances, "administration");
-				MeoServeur meoServeur = MeoServeur.findServeurByName(configDto.serveurs, adminInstance.serveur);
 				ILOG.Info("avant go");
 				connectWorker.prepare(sshClientAdmin, meoServeur, leftPort, rightPort, rechMagIdBox);
 				
@@ -119,13 +120,16 @@ namespace MoulUtil
 						Console.WriteLine("Exception message :" + message);
 						statusStrip1.Text = "SSH : Exception message :" + message;
 					} else {
+						//
 						Console.WriteLine("connected on server");
 						ILOG.Info("connected");
 						sshClientAdmin = sshClient;
+						//rechercheMagasin();
 						magDescBox.Text = "connected";
 						//textbox.Enabled=true;
 						//textbox.Focus();
 						statusStrip1.Text = "connected";
+						
 						//rechMagIdBox.Enabled=true;
 						//rechMagIdBox.Focus();
 					}
@@ -248,8 +252,10 @@ namespace MoulUtil
 				return;
 			}
 			String workingPath = workspaceBaseBox.Text;
+			MeoInstance adminInstance = MeoInstance.findInstanceByInstanceName(configDto.instances, "administration");
+			MeoServeur adminServeur = MeoServeur.findServeurByName(configDto.serveurs, adminInstance.serveur);
 			
-			mouliUtilOptions = mouliPrepaUtil.rechercheMagasin(rechMagIdBox, magDescBox, propositionBox, workingPath, sqlBtn);
+			mouliUtilOptions = mouliPrepaUtil.rechercheMagasin(adminServeur, rechMagIdBox, magDescBox, propositionBox, workingPath, sqlBtn);
 			if (mouliUtilOptions != null) {
 				calculeMoulinettePath();
 				String path = workspaceZoneBox.Text;

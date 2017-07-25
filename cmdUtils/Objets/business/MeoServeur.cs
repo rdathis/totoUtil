@@ -32,6 +32,13 @@ namespace cmdUtils.Objets
 		[XmlAttribute]
 		public Boolean boboche;
 		
+		[XmlAttribute]
+		public String tunnel;
+
+		[XmlAttribute]
+		public String transpo;
+
+		
 		public MeoServeur() {
 			// empty for serialisator
 		}
@@ -65,6 +72,18 @@ namespace cmdUtils.Objets
 		}
 		public Boolean getBoboche() {
 			return boboche;
+		}
+		public void setTunnel(String value) {
+			this.tunnel=value;
+		}
+		public String getTunnel() {
+			return this.tunnel;
+		}
+		public void setTranspo(String value) {
+			this.transpo=value;
+		}
+		public String getTranspo() {
+			return this.transpo;
 		}
 		public static MeoServeur findServeurByName(List<MeoServeur> list, string serverName)
 		{

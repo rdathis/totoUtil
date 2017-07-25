@@ -311,7 +311,7 @@ namespace MoulUtil
 					SshUtil sshUtil = new SshUtil();
 					try {
 						UploadArchiveBackgroundWorker worker = new UploadArchiveBackgroundWorker();
-						String targetPath = configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.databasePath);
+						String targetPath = server.getTranspo();
 						worker.prepare(server, targetPath, job.getArchiveName());
 						
 						MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = name => {
@@ -338,7 +338,7 @@ namespace MoulUtil
 							toolStripStatusLabel1.Text = "done, unzip...";
 
 							try {
-								String serverTargetPath = configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.databasePath);
+								String serverTargetPath = server.getTranspo();
 								sshUtil.unzipArchive(server, serverTargetPath, job);
 								
 								MouliUtil mouliUtil = new MouliUtil();
@@ -388,7 +388,7 @@ namespace MoulUtil
 			if (label.Tag != null && job != null) {
 				MeoServeur server = (MeoServeur)label.Tag;
 				try {
-					String serverTargetPath = configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.databasePath);
+					String serverTargetPath = server.getTranspo();
 					sshUtil.installJob(server, serverTargetPath, job);
 				} catch (Exception exception) {
 					MessageBox.Show("Erreur envoi data : " + exception.Message + "\n" + exception.Source + "\n" + exception.StackTrace);

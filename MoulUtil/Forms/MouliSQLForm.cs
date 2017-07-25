@@ -5,11 +5,12 @@
  * 
  */
 using System;
-using System.Drawing;
-using System.Net.Mime;
 using System.Windows.Forms;
+using MoulUtil.Forms.utils;
+using Renci.SshNet;
 using cmdUtils.Objets;
 using cmdUtils.Objets.business;
+using log4net;
 namespace MoulUtil
 {
 	/// <summary>
@@ -22,12 +23,15 @@ namespace MoulUtil
 		private MeoInstance instance = null;
 		private MyUtil myUtil=null;
 		private MeoServeur meoServeur =null;
-		private	const int sqlPort=5000;
-		private System.Diagnostics.Process plinkProcess = null;
+		//private	const int sqlPort=5000;
+		private int sqlPort=-1;
+		//private System.Diagnostics.Process plinkProcess = null;
 		private MouliUtilOptions options = null;
+		private ConnectServerBackgroundWorker connectWorker = new ConnectServerBackgroundWorker();
+		static log4net.ILog LOGGER = LogManager.GetLogger("mouliProgram");
 		
 		public MouliSQLForm(String magId, MouliUtilOptions options) {
-		                    
+			
 			InitializeComponent();
 			this.magId=magId;
 			this.options=options;
@@ -39,40 +43,86 @@ namespace MoulUtil
 			myUtil=new MyUtil();
 			if(instance!=null) {
 				meoServeur = MeoServeur.findServeurByName(configDto.serveurs, instance.serveur);
+				
+				prepareConnection();
 			}
 			purgeStockLabel.Visible=false;
 			purgeVisitesLabel.Visible=false;
 			testServeur();
 			populate();
 		}
+		private void prepareConnection() {
+			String tunnelStr = meoServeur.getTunnel();
+			int leftPort = int.Parse(tunnelStr.Substring(0, tunnelStr.IndexOf(":", StringComparison.Ordinal)));
+			int rightPort = int.Parse(tunnelStr.Substring(tunnelStr.IndexOf(":", StringComparison.Ordinal) + 1));
+			sqlPort=leftPort;
+			
+			LOGGER.Info("avant bw");
+			
+			
+			//String serverName = configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.
+			LOGGER.Info("avant go");
+			SshClient sshClient=null;
+			connectWorker.prepare(sshClient, meoServeur, leftPort, rightPort, null);
+			
+			MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = str => {
+				Console.WriteLine("Notification received for: {0}", str);
+				//?? plantage: toolStripStatusLabel1.Text = name;
+				try {
+					//statusStrip1.Text = "connecting to " + meoServeur.nom + " by ssh (" + tunnelStr + ")...";
+					detailmagasinBox.Text ="connecting to " + meoServeur.nom + " by ssh (" + tunnelStr + ")...";
+				} catch (Exception ex) {
+					Console.WriteLine("still exception here ..." + ex.Message);
+				}
+			};
+			//
+
+			MouliProgressWorker.EndWorkerSshClientCallBack endWorkerCallBack = (message, tmpSshClient, textbox) => {
+				if (tmpSshClient == null) {
+					Console.WriteLine("Exception message :" + message);
+					detailmagasinBox.Text = "SSH : Exception message :" + message;
+				} else {
+					Console.WriteLine("connected on server");
+					LOGGER.Info("connected");
+					sshClient = tmpSshClient;
+					try {
+						TotauxLabelClick(null, null);
+					} catch(Exception ex) {
+						LOGGER.Error(ex);
+						
+					}
+					try {
+						detailmagasinBox.Text = "connected";
+					} catch(Exception ex) {
+						LOGGER.Error(ex);
+					}
+				}
+			};
+
+			connectWorker.setStartWorkerCallBack(startWorkerCallBack);
+			connectWorker.setEndWorkerSshClientCallBack(endWorkerCallBack);
+			connectWorker.RunWorkerAsync();
+			//timer.Enabled=true;
+			//sshClientAdmin = mouliPrepaUtil.startSSHClientAdmin(configDto, rechMagIdBox);
+			
+		}
 		private void testServeur() {
+			Boolean visible = (meoServeur!=null);
+			purgeStockLabel.Visible=visible;
+			purgeVisitesLabel.Visible=visible;
+			statStockLabel.Visible=visible;
+			statVisitesLabel.Visible=visible;
+			
 			if (meoServeur==null) {
 				detailmagasinBox.Text= "erreur, serveur non retrouvé";
-				purgeStockLabel.Visible=false;
-				purgeVisitesLabel.Visible=false;
-				statStockLabel.Visible=false;
-				statVisitesLabel.Visible=false;
 				return;
 			}
 			detailmagasinBox.Text = "I:" +instance.nom + " - S :" +meoServeur.adresse + " D:"+instance.nom;
-			//startPlink(meoServeur);
-			//plink a faire.
 		}
-
-//		void startPlink(MeoServeur meoServeur)
-//		{
-//			String args = " -ssh -batch -pw "+meoServeur.password+" -L "+sqlPort+":127.0.0.1:3306 "+meoServeur.getUtilisateur()+"@"+meoServeur.adresse;
-//
-//			ProcessUtil putil =new ProcessUtil();
-//			plinkProcess = putil.startProcess(MouliConfig.plinkPath, args, System.Diagnostics.ProcessWindowStyle.Normal);
-//			this.BackColor = Color.LightBlue;
-//			statStockLabel.Visible=true;
-//			statVisitesLabel.Visible=true;
-//		}
-
 		private void populate() {
 			this.magasinIdBox.Text=magId;
 			this.magasinIdBox.Enabled=false;
+			totauxLabel.Tag=configDto.getSqlCommand(SqlCommandsType.getUtilisation);
 			statStockLabel.Tag = configDto.getSqlCommand(SqlCommandsType.getExtensionStock);
 			statVisitesLabel.Tag=configDto.getSqlCommand(SqlCommandsType.getExtensionClient);
 			purgeStockLabel.Tag=configDto.getSqlCommand(SqlCommandsType.doPurgeStock);
@@ -115,6 +165,7 @@ namespace MoulUtil
 		private void populateGrid(String sql, String annee) {
 			sql=prepareSQL(sql, magId, annee);
 			sqlCalculeBox.Text=sql;
+			//String connectionString = myUtil.buildconnString(instance.getNom(), "127.0.0.1", meoServeur.getUtilisateur(), meoServeur.getPassword(), sqlPort);
 			String connectionString = myUtil.buildConnectionStringFromInstance(instance, configDto, sqlPort);
 			dataGridView1.DataSource= myUtil.buildDataSource(connectionString, sql);
 			dataGridView1.Refresh();
@@ -137,10 +188,17 @@ namespace MoulUtil
 		}
 		void MouliSQLFormFormClosing(object sender, FormClosingEventArgs e)
 		{
-			if(plinkProcess!=null) {
-				plinkProcess.Close();
-			}
+//			if(plinkProcess!=null) {
+//				plinkProcess.Close();
+//			}
 
+		}
+		void TotauxLabelClick(object sender, EventArgs e)
+		{
+			populateGrid(totauxLabel.Tag.ToString(), anneeVisitePurgeBox.Text);
+			//purgeVisitesLabel.Visible=true;
+			
+			//getUtilisation
 		}
 	}
 }

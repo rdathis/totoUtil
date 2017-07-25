@@ -4,6 +4,7 @@
  * Heure: 14:42:23
  * 
 */
+using MoulUtil.Forms.utils;
 namespace MoulUtil
 {
 	partial class MouliSQLForm
@@ -50,6 +51,7 @@ namespace MoulUtil
 			this.visiteLimiteBox = new System.Windows.Forms.TextBox();
 			this.stockLimiteBox = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
+			this.totauxLabel = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -195,11 +197,25 @@ namespace MoulUtil
 			this.label2.TabIndex = 16;
 			this.label2.Text = "Limites";
 			// 
+			// totauxLabel
+			// 
+			this.totauxLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+			this.totauxLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.totauxLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.totauxLabel.Location = new System.Drawing.Point(35, 55);
+			this.totauxLabel.Name = "totauxLabel";
+			this.totauxLabel.Size = new System.Drawing.Size(101, 25);
+			this.totauxLabel.TabIndex = 17;
+			this.totauxLabel.Text = "Totaux";
+			this.totauxLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.totauxLabel.Click += new System.EventHandler(this.TotauxLabelClick);
+			// 
 			// MouliSQLForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(886, 608);
+			this.Controls.Add(this.totauxLabel);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.visiteLimiteBox);
 			this.Controls.Add(this.stockLimiteBox);
@@ -224,6 +240,7 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Label totauxLabel;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TextBox visiteLimiteBox;
 		private System.Windows.Forms.TextBox stockLimiteBox;

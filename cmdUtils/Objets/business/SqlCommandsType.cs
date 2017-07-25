@@ -17,6 +17,7 @@ namespace cmdUtils.Objets.business
 			getExtensionClient,
 			getDescriptionMagasin,
 			doPurgeStock,
-			doPurgeClient
+			doPurgeClient,
+			getUtilisation
 		}
 }

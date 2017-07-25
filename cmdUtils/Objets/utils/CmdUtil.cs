@@ -399,7 +399,7 @@ Unknown._w(https://server/instance/application/78957C736ADB5FD05DCBA3DDACFEFF8F.
 			if (!String.IsNullOrEmpty(server.getUtilisateur())) {
 				retour+=" "+server.getUtilisateur()+"@"+server.getAdresse();
 			}
-			String serverTargetPath=configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.databasePath);
+			String serverTargetPath=server.getTranspo();
 			retour+=":"+serverTargetPath;
 			return (retour);
 		}

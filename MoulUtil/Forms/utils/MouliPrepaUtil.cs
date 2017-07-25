@@ -40,9 +40,9 @@ namespace MoulUtil.Forms.utils
 			if(adminInstance==null) {
 				return null;
 			}
-			String databaseTunneling = configDto.getConfigParamByName("databaseTunneling").Value;
-			String tmpTunneling = databaseTunneling.Replace(":", ":127.0.0.1:");
-			String plinkArgs =" -ssh -batch -pw "+server.password + " -L " + tmpTunneling + " " +server.utilisateur+"@"+server.adresse;
+			String databaseTunnel = server.getTunnel();;
+			String tmpTunnel = databaseTunnel.Replace(":", ":127.0.0.1:");
+			String plinkArgs =" -ssh -batch -pw "+server.password + " -L " + tmpTunnel + " " +server.utilisateur+"@"+server.adresse;
 			System.Diagnostics.Process plinkProcess=null;
 			try {
 				//demarrage du plink en arriere plan pour le tunnel SSH
@@ -113,6 +113,7 @@ namespace MoulUtil.Forms.utils
 		}
 
 		public MouliUtilOptions  rechercheMagasin( //
+		                                          MeoServeur adminServer, //
 		                                          TextBox rechMagIdBox, //
 		                                          TextBox magDescBox, //
 		                                          TextBox propositionBox,//
@@ -148,7 +149,7 @@ namespace MoulUtil.Forms.utils
 			String sql = configDto.getSqlCommand(SqlCommandsType.getDescriptionMagasin);
 			String database = configDto.getDatabaseAdminName();
 			
-			String tmpStr = configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.databaseTunneling);
+			String tmpStr = adminServer.getTunnel();
 			int port = int.Parse(tmpStr.Substring(0, tmpStr.IndexOf(":", StringComparison.Ordinal)));
 			const string connectedBySSH = "connected by SSH \r\n";
 			String s = connectedBySSH;
