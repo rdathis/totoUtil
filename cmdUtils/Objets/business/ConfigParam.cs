@@ -25,6 +25,7 @@ namespace cmdUtils.Objets
 			[XmlEnum("appPlink")] appPlink,
 			[XmlEnum("defaultEmail")] defaultEmail,
 			[XmlEnum("workingDir")] workingDir,
+			[XmlEnum("emails")] emails,
 			//[XmlEnum("databasePath")] databasePath,
 			//[XmlEnum("databaseTunneling")] databaseTunneling,
 			//

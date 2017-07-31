@@ -27,6 +27,7 @@ namespace MoulUtil
 		private String magId = null;
 		private MouliUtilOptions options = null;
 		private MouliActionUtil mouliActionUtil;
+		private RichTextBoxUtil richTextBoxUtil=new RichTextBoxUtil();
 
 		public MouliActionForm(MouliUtilOptions options, ConfigDto configDto, string path)
 		{
@@ -87,6 +88,18 @@ namespace MoulUtil
 			progressTextBox.Visible = false;
 			emailTextbox.Text = configDto.getDefaultEmail();
 			mouliActionUtil = new MouliActionUtil(this, configDto);
+			String propositions = configDto.getConfigParamByName(ConfigParam.ParamNamesType.emails).Value;
+			if(propositions!=null) {
+				propositionMailsListBox.Items.Clear();
+				String [] tablo=propositions.Split(',');
+				propositionMailsListBox.Items.Add(emailTextbox.Text);
+				if(tablo!=null) {
+					for(int i=0;i<tablo.Length;i++) {
+						propositionMailsListBox.Items.Add(tablo[i]);
+					}
+				}
+			}
+			
 		}
 
 		void activeExtension(CheckBox chkBox, MoulinettePurgeOptionTypes moulinettePurgeOptionTypes)
@@ -220,7 +233,6 @@ namespace MoulUtil
 
 		private void calculateLots(MouliUtilOptions mouliUtilOptions)
 		{
-			//String retour = "";
 			// purges
 			mouliUtilOptions.doAnnulationStock = optionS1CheckBox.Checked;
 			mouliUtilOptions.doAnnulationClient = optionC1CheckBox.Checked;
@@ -229,37 +241,9 @@ namespace MoulUtil
 			mouliUtilOptions.doClient = optionCCheckBox.Checked;
 			mouliUtilOptions.doDoc01 = optionDCheckBox.Checked;
 			mouliUtilOptions.doJoint = optionJCheckBox.Checked;
-			/*
-			if(optionS1CheckBox.Checked) {
-				retour+="S1";
-			}
-			if(optionSCheckBox.Checked) {
-				retour+="S";
-			}
-			//
-			if(optionC1CheckBox.Checked) {
-				retour+="C1";
-			}
-			if(optionCCheckBox.Checked) {
-				retour+="C";
-			}
-			//
-			if(optionDCheckBox.Checked) {
-				retour+="D";
-			}
-			if(optionJCheckBox.Checked) {
-				retour+="J";
-			}
-			
-			return retour;
-			*/
-
 		}
 		MouliUtilOptions updateMouliUtilOption(MeoInstance instance)
 		{
-			//String workingPath = options.getWorkingPath();
-			//String workspacePath = options.getWorkspacePath();
-			//options = new MouliUtilOptions();
 			options.setInstanceCommande(instance.getMeocli());
 			options.setInstanceName(instance.getNom());
 			
@@ -273,9 +257,6 @@ namespace MoulUtil
 			
 			options.setExtensionClient(calculExtension(purgeClientChkBox));
 			options.setExtensionStock(calculExtension(purgeStockChkBox));
-			//
-			//options.setWorkingPath(workingPath);
-			//options.setWorkspacePath(workspacePath);
 			return options;
 		}
 
@@ -348,11 +329,6 @@ namespace MoulUtil
 								String cmd = mouliUtil.getUnzipCmd(server, serverTargetPath, job);
 								String commandeFile = job.getMoulinettePath() + "install.file";
 								mouliUtil.writeInstallMoulinetteFile(cmd, commandeFile);
-								// plink -pw (password) -l (user) -m (command.file) server
-								//cmd="-pw "+server.password+" -l "+server.utilisateur+" -m "+commandeFile+" "+server.adresse;
-								
-								//cmdUtil.executeCommande(MouliConfig.plinkPath, cmd);
-								
 								toolStripStatusLabel1.Text = "finished";
 								installBtn.Enabled = true;
 							} catch (Exception ex) {
@@ -458,7 +434,19 @@ namespace MoulUtil
 		}
 		void doVisu(string str)
 		{
-			visuRichTexBox.Text = str;
+			//visuRichTexBox.Text = str;
+			visuRichTexBox.Clear();
+			string[] tablo = str.Split('\n');
+			for(int i=0;i<tablo.Length;i++) {
+				String ligne = tablo[i]+"\n";
+				Color color=Color.DarkBlue;
+				if (ligne.StartsWith("#", StringComparison.Ordinal)) {
+					color = Color.DarkGreen;
+				}
+				richTextBoxUtil.dcolorit(visuRichTexBox, ligne, color);
+			}
+			
+			
 			//visuRichTexBox.Enabled=false;
 			visuRichTexBox.Visible = !visuRichTexBox.Visible;
 			visuRichTexBox.Top = 20;
@@ -472,6 +460,12 @@ namespace MoulUtil
 			completeOptions();
 			job = mouliActionUtil.doAnalyse(pathLabel.Text, options, configDto);
 			analyseJob(job);
+		}
+		void PropositionMailsListBoxDoubleClick(object sender, EventArgs e)
+		{
+			if(propositionMailsListBox.SelectedItem!=null) {
+				emailTextbox.Text = propositionMailsListBox.SelectedItem.ToString();
+			}
 		}
 	}
 }

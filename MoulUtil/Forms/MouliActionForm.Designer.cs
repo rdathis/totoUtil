@@ -79,6 +79,7 @@ namespace MoulUtil
 			this.visuRichTexBox = new System.Windows.Forms.RichTextBox();
 			this.cibleLabel = new System.Windows.Forms.Label();
 			this.analyseLabel = new System.Windows.Forms.Label();
+			this.propositionMailsListBox = new System.Windows.Forms.ListBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -471,11 +472,21 @@ namespace MoulUtil
 			this.analyseLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.analyseLabel.Click += new System.EventHandler(this.AnalyseLabelClick);
 			// 
+			// propositionMailsListBox
+			// 
+			this.propositionMailsListBox.FormattingEnabled = true;
+			this.propositionMailsListBox.Location = new System.Drawing.Point(200, 246);
+			this.propositionMailsListBox.Name = "propositionMailsListBox";
+			this.propositionMailsListBox.Size = new System.Drawing.Size(391, 43);
+			this.propositionMailsListBox.TabIndex = 43;
+			this.propositionMailsListBox.DoubleClick += new System.EventHandler(this.PropositionMailsListBoxDoubleClick);
+			// 
 			// MouliActionForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(726, 430);
+			this.Controls.Add(this.propositionMailsListBox);
 			this.Controls.Add(this.analyseLabel);
 			this.Controls.Add(this.cibleLabel);
 			this.Controls.Add(this.visuRichTexBox);
@@ -521,6 +532,7 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.ListBox propositionMailsListBox;
 		private System.Windows.Forms.Label analyseLabel;
 
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;

@@ -405,7 +405,6 @@ Unknown._w(https://server/instance/application/78957C736ADB5FD05DCBA3DDACFEFF8F.
 		}
 		public Process executeCommandAsDetachedProcess(string command, string args)
 		{
-			//int ExitCode;
 			ProcessStartInfo ProcessInfo;
 			Process process;
 

@@ -27,22 +27,21 @@ namespace MoulUtil
 		private MouliUtilOptions options = null;
 		private ConnectServerBackgroundWorker connectWorker = new ConnectServerBackgroundWorker();
 		private SshClient sshClient=null;
-		private static log4net.ILog LOGGER = LogManager.GetLogger("mouliProgram");
+		private log4net.ILog ILOG;
 		
-		public MouliSQLForm(String magId, MouliUtilOptions options) {
-			
+		public MouliSQLForm(log4net.ILog ILOG, String magId, MouliUtilOptions options) {
 			InitializeComponent();
+			this.ILOG=ILOG;
 			this.magId=magId;
 			this.options=options;
-			
+			//
 			ConfigUtil configUtil= new ConfigUtil();
 			configDto = configUtil.getConfig();
-			
+			//
 			this.instance=MeoInstance.findInstanceByInstanceName(configDto.instances, options.getInstanceName());
 			myUtil=new MyUtil();
 			if(instance!=null) {
 				meoServeur = MeoServeur.findServeurByName(configDto.serveurs, instance.serveur);
-				
 				prepareConnection();
 			}
 			purgeStockLabel.Visible=false;
@@ -56,43 +55,37 @@ namespace MoulUtil
 			int rightPort = int.Parse(tunnelStr.Substring(tunnelStr.IndexOf(":", StringComparison.Ordinal) + 1));
 			sqlPort=leftPort;
 			
-			LOGGER.Info("avant bw");
-			
-			
-			//String serverName = configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.
-			LOGGER.Info("avant go");
+			ILOG.Info("preparation connectBW");
 			connectWorker.prepare(sshClient, meoServeur, leftPort, rightPort, null);
 			
 			MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = str => {
-				Console.WriteLine("Notification received for: {0}", str);
+				ILOG.InfoFormat("Notification received for: {0}", str);
 				//?? plantage: toolStripStatusLabel1.Text = name;
 				try {
 					//statusStrip1.Text = "connecting to " + meoServeur.nom + " by ssh (" + tunnelStr + ")...";
 					detailmagasinBox.Text ="connecting to " + meoServeur.nom + " by ssh (" + tunnelStr + ")...";
 				} catch (Exception ex) {
-					Console.WriteLine("still exception here ..." + ex.Message);
+					ILOG.Error("still exception here ..." + ex.Message);
 				}
 			};
 			//
 
 			MouliProgressWorker.EndWorkerSshClientCallBack endWorkerCallBack = (message, tmpSshClient, textbox) => {
 				if (tmpSshClient == null) {
-					Console.WriteLine("Exception message :" + message);
+					ILOG.Error("Exception message :" + message);
 					detailmagasinBox.Text = "SSH : Exception message :" + message;
 				} else {
-					Console.WriteLine("connected on server");
-					LOGGER.Info("connected");
+					ILOG.Info("connected");
 					sshClient = tmpSshClient;
 					try {
 						TotauxLabelClick(null, null);
 					} catch(Exception ex) {
-						LOGGER.Error(ex);
-						
+						ILOG.Error(ex);
 					}
 					try {
 						detailmagasinBox.Text = "connected";
 					} catch(Exception ex) {
-						LOGGER.Error(ex);
+						ILOG.Error(ex);
 					}
 				}
 			};
@@ -100,7 +93,6 @@ namespace MoulUtil
 			connectWorker.setStartWorkerCallBack(startWorkerCallBack);
 			connectWorker.setEndWorkerSshClientCallBack(endWorkerCallBack);
 			connectWorker.RunWorkerAsync();
-			
 		}
 		private void testServeur() {
 			Boolean visible = (meoServeur!=null);

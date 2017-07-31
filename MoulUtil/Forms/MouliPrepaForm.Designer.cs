@@ -60,6 +60,7 @@ namespace MoulUtil
 			this.targetNameBox = new System.Windows.Forms.TextBox();
 			this.targetSvgPathBox = new System.Windows.Forms.TextBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.sauvegardeProgressTextBox = new System.Windows.Forms.TextBox();
 			this.svgFinalNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
 			this.svgBaseNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
 			this.sauvegardeBtn = new System.Windows.Forms.Button();
@@ -74,7 +75,7 @@ namespace MoulUtil
 			this.mysqlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.puttyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.historyLabel = new System.Windows.Forms.Label();
-			this.sauvegardeProgressTextBox = new System.Windows.Forms.TextBox();
+			this.connectTimer = new System.Windows.Forms.Timer(this.components);
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -296,6 +297,16 @@ namespace MoulUtil
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Sauvegarde";
 			// 
+			// sauvegardeProgressTextBox
+			// 
+			this.sauvegardeProgressTextBox.Location = new System.Drawing.Point(13, 51);
+			this.sauvegardeProgressTextBox.Multiline = true;
+			this.sauvegardeProgressTextBox.Name = "sauvegardeProgressTextBox";
+			this.sauvegardeProgressTextBox.ReadOnly = true;
+			this.sauvegardeProgressTextBox.Size = new System.Drawing.Size(622, 24);
+			this.sauvegardeProgressTextBox.TabIndex = 20;
+			this.sauvegardeProgressTextBox.Text = "sauvegarde Progress";
+			// 
 			// svgFinalNavigatorUserControl
 			// 
 			this.svgFinalNavigatorUserControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
@@ -429,16 +440,6 @@ namespace MoulUtil
 			this.historyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.historyLabel.Click += new System.EventHandler(this.HistoryLabelClick);
 			// 
-			// sauvegardeProgressTextBox
-			// 
-			this.sauvegardeProgressTextBox.Location = new System.Drawing.Point(13, 51);
-			this.sauvegardeProgressTextBox.Multiline = true;
-			this.sauvegardeProgressTextBox.Name = "sauvegardeProgressTextBox";
-			this.sauvegardeProgressTextBox.ReadOnly = true;
-			this.sauvegardeProgressTextBox.Size = new System.Drawing.Size(622, 24);
-			this.sauvegardeProgressTextBox.TabIndex = 20;
-			this.sauvegardeProgressTextBox.Text = "sauvegarde Progress";
-			// 
 			// MouliPrepaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -475,6 +476,7 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Timer connectTimer;
 		private System.Windows.Forms.TextBox sauvegardeProgressTextBox;
 		private System.Windows.Forms.Label historyLabel;
 		private cmdUtils.Controles.NavigatorUserControl svgFinalNavigatorUserControl;

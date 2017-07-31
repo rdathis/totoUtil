@@ -13,10 +13,13 @@ namespace cmdUtils.Objets
 	/// <summary>
 	/// Description of RichTextBoxUtilcs.
 	/// </summary>
-	public class RichTextBoxUtilcs
+	public class RichTextBoxUtil
 	{
-		public RichTextBoxUtilcs()
+		public RichTextBoxUtil()
 		{
+		}
+		public void dcolorit(System.Windows.Forms.RichTextBox rtb, String str, System.Drawing.Color color) {
+			RichTextBoxUtil.colorit(rtb, str, color);
 		}
 		public static void colorit(System.Windows.Forms.RichTextBox rtb, String str, System.Drawing.Color color)
 		{
@@ -25,6 +28,5 @@ namespace cmdUtils.Objets
 			rtb.Select(lg, str.Length);
 			rtb.SelectionColor = color;
 		}
-
 	}
 }

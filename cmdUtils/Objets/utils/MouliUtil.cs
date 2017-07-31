@@ -90,9 +90,9 @@ namespace cmdUtils.Objets
 				Boolean value = checkIfFileExists(path, dataPath, magPath, yfile.ToString(), extension);
 				String str = yfile.ToString() + "\n";
 				if (value) {
-					RichTextBoxUtilcs.colorit(rtb, str, Color.Green);
+					RichTextBoxUtil.colorit(rtb, str, Color.Green);
 				} else {
-					RichTextBoxUtilcs.colorit(rtb, str, Color.Red);
+					RichTextBoxUtil.colorit(rtb, str, Color.Red);
 				}
 			}
 
@@ -103,9 +103,9 @@ namespace cmdUtils.Objets
 				Boolean value = checkIfFileExists(path, dataPath, magPath, jfile.ToString(), extension);
 				String str = jfile.ToString() + "\n";
 				if (value) {
-					RichTextBoxUtilcs.colorit(rtb, str, Color.Green);
+					RichTextBoxUtil.colorit(rtb, str, Color.Green);
 				} else {
-					RichTextBoxUtilcs.colorit(rtb, str, Color.Red);
+					RichTextBoxUtil.colorit(rtb, str, Color.Red);
 				}
 			}
 
