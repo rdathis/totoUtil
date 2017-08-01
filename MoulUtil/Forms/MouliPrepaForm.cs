@@ -9,7 +9,6 @@
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Timers;
 using System.Windows.Forms;
 using Renci.SshNet;
 using cmdUtils.Objets;
@@ -25,7 +24,6 @@ namespace MoulUtil
 	/// </summary>
 	public partial class MouliPrepaForm : Form
 	{
-		//private System.Timers.Timer connectTimer = new System.Timers.Timer();
 		private MouliPrepaUtil mouliPrepaUtil;
 		private System.Diagnostics.Process plinkProcess;
 		private ConfigDto configDto;
@@ -37,9 +35,11 @@ namespace MoulUtil
 		private SshClient sshClientAdmin = null;
 		private ConnectServerBackgroundWorker connectWorker = null;
 		private log4net.ILog ILOG;
+		//Pour le timer
 		private String statusMessage=null;
 		private String infoMessage=null;
 		private String sauvegardeProgressMessage=null;
+		private Double sauvegardeProgressValue=-1;
 		
 		
 		public MouliPrepaForm(ConfigDto configDto, log4net.ILog ILOG)
@@ -51,12 +51,11 @@ namespace MoulUtil
 			
 			rechMagIdBox.Focus();
 		}
+
 		private void prepare() {
 			this.rechMagIdBtn.Enabled = false;
-			connectTimer.Interval=500;
-			connectTimer.Tick += new EventHandler(TimerEventProcessor);
-			connectTimer.Start();
-			//			
+			prepareTimer();
+			//
 			registryUtil = new RegistryUtil();
 			String workspacePath = registryUtil.getHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key);
 			mouliPrepaUtil = new MouliPrepaUtil(this, configDto);
@@ -65,6 +64,7 @@ namespace MoulUtil
 			} else {
 				workspacePath = configDto.getWorkingDir();
 			}
+			workspacePath=workspacePath.Replace("\\", "/");
 			
 			this.workingDirBox.Text = workspacePath;
 			this.workspaceBaseBox.Text = workspacePath;
@@ -75,9 +75,14 @@ namespace MoulUtil
 			zonePrepaNavigatorUserControl.setBox(workspaceBaseBox);
 			workspaceNavigatorUserControl.setBoxes(workspaceBaseBox, workspaceZoneBox);
 			svgBaseNavigatorUserControl.setBox(targetSvgPathBox);
-			svgFinalNavigatorUserControl.setBoxes(targetSvgPathBox, targetNameBox);			
+			svgFinalNavigatorUserControl.setBoxes(targetSvgPathBox, targetNameBox);
 		}
-
+		void prepareTimer()
+		{
+			connectTimer.Interval=500;
+			connectTimer.Tick += new EventHandler(TimerEventProcessor);
+			connectTimer.Start();
+		}
 		public void controleRegistre()
 		{
 			if (!registryUtil.existsHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key)) {
@@ -86,7 +91,6 @@ namespace MoulUtil
 				registryUtil.setHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key, Directory.GetCurrentDirectory() + "\\");
 			}
 		}
-
 		void MouliPrepaLoad(object sender, EventArgs e)
 		{
 			doConnectAdmin(true);
@@ -104,13 +108,11 @@ namespace MoulUtil
 				ILOG.Info("avant bw");
 				connectWorker = new ConnectServerBackgroundWorker();
 				
-				//String serverName = configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.
 				ILOG.Info("avant go");
 				connectWorker.prepare(sshClientAdmin, meoServeur, leftPort, rightPort, rechMagIdBox);
 				
 				MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = str => {
-					Console.WriteLine("Notification received for: {0}", str);
-					//?? plantage: toolStripStatusLabel1.Text = name;
+					ILOG.InfoFormat("Notification received for: {0}", str);
 					try {
 						statusMessage = "connecting to " + meoServeur.nom + " by ssh (" + tunnelStr + ")...";
 					} catch (Exception ex) {
@@ -129,23 +131,14 @@ namespace MoulUtil
 						Console.WriteLine("connected on server");
 						ILOG.Info("connected");
 						sshClientAdmin = sshClient;
-						//rechercheMagasin();
-						infoMessage = "connected";
-						//textbox.Enabled=true;
-						//textbox.Focus();
-						statusMessage = "connected";
-						
-						//rechMagIdBox.Enabled=true;
-						//rechMagIdBox.Focus();
+						statusMessage = "connected at "+meoServeur.nom +":/"+adminInstance.nom;
+						infoMessage= "connected";
 					}
 				};
 
-				//connectTimer.Enabled =true;
 				connectWorker.setStartWorkerCallBack(startWorkerCallBack);
 				connectWorker.setEndWorkerSshClientCallBack(endWorkerCallBack);
 				connectWorker.RunWorkerAsync();
-				//timer.Enabled=true;
-				//sshClientAdmin = mouliPrepaUtil.startSSHClientAdmin(configDto, rechMagIdBox);
 			} else {
 				plinkProcess = mouliPrepaUtil.startPlink(configDto, rechMagIdBox);
 			}
@@ -168,7 +161,7 @@ namespace MoulUtil
 				}
 				mouliUtilOptions.setWorkingPath(path);
 				if(!Directory.Exists(workspaceBaseBox.Text + path)) {
-					toolTipLable.Text = ("chemin absent : '"+workspaceBaseBox.Text + path+"'");
+					toolTipLabel.Text = ("chemin absent : '"+workspaceBaseBox.Text + path+"'");
 					return;
 				}
 //
@@ -200,17 +193,14 @@ namespace MoulUtil
 			String sourceDir = tmpDir + "/" + workspaceZoneBox.Text;
 			String targetDir = Path.GetFullPath(targetSvgPathBox.Text) + "\\" + targetNameBox.Text;
 			if(!Directory.Exists(sourceDir)) {
-				toolTipLable.Text = ("chemin absent : '"+sourceDir+"'");
+				toolTipLabel.Text = ("chemin absent : '"+sourceDir+"'");
 				return;
 			}
 			if(!Directory.Exists(targetSvgPathBox.Text)) {
-				toolTipLable.Text = ("chemin absent : '"+targetSvgPathBox.Text+"'");
+				toolTipLabel.Text = ("chemin absent : '"+targetSvgPathBox.Text+"'");
 				return;
 			}
 			
-			//mouliUtil.createArbo(targetDir);
-			//copier le resultat.zip dans le sousrep,
-			//generer un zip du rep tmp dans le sousrep. (comment le nommer ?)
 			sauvegardeBtn.Enabled = false;
 			statusMessage = "Préparation de la sauvegarde ...";
 			tmpDir = Path.GetFullPath(targetDir).Replace('/', '\\');
@@ -218,19 +208,17 @@ namespace MoulUtil
 			if (!Directory.Exists(tmpDir)) {
 				mouliUtil.safeCreateDirectory(tmpDir);
 			}
-			Console.WriteLine("->" + tmpDir);
+			ILOG.Info("->" + tmpDir);
 			cmdUtil.executeCommande("explorer", tmpDir);
 			
 			SauvegardeBackgroundWorker worker = getSauvegardeBackgroundWorker();
 			
 			MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = name => {
-				//Console.WriteLine("Notification received for: {0}", name);
-				//?? plantage: toolStripStatusLabel1.Text = name;
 				try {
 					statusMessage = "begin";
-					sauvegardeBtn.Visible = false;
 					sauvegardeProgressMessage = " debut";
-					//toolStripProgressBar1.Value=0;
+					sauvegardeBtn.Visible = false;
+					sauvegardeProgressValue=-1;
 				} catch (Exception ex) {
 					Console.WriteLine("still exception here ..." + ex.Message);
 				}
@@ -242,12 +230,14 @@ namespace MoulUtil
 					prc = value / ((double)worker.getNbOperation()) * 100;
 					prc = Math.Round(prc, 3);
 				}
+				sauvegardeProgressValue = prc;
 				sauvegardeProgressMessage = (value + " / " + worker.getNbOperation() + " (" + prc + ")%");
 				statusMessage = "progression : " + (value) + "%  - x / " + worker.getNbOperation();
 				sauvegardeProgressMessage = statusMessage;
 			};
 			MouliProgressWorker.EndWorkerCallBack endWorkerCallBack = value => {
 				sauvegardeBtn.Enabled = true;
+				sauvegardeProgressValue=-1;
 				sauvegardeProgressMessage= "sauvegarde finie";
 			};
 			//
@@ -265,7 +255,6 @@ namespace MoulUtil
 
 		void rechercheMagasin()
 		{
-			
 			if ((rechMagIdBox.Text != "0") && (sshClientAdmin == null || !sshClientAdmin.IsConnected)) {
 				infoMessage = "La liaison ssh est fermée.";
 				return;
@@ -281,7 +270,6 @@ namespace MoulUtil
 				mouliUtilOptions.setArchiveName(mouliUtil.calculeArchiveName(workingPath+path));
 				Console.WriteLine("name: " + mouliUtilOptions.getarchiveName());
 			}
-
 		}
 
 		public void CreateBtnClick(object sender, EventArgs e)
@@ -299,7 +287,6 @@ namespace MoulUtil
 			calculeMoulinettePath();
 		}
 		
-		///TODO:move in MPUtil
 		private String calculeMoulinettePath()
 		{
 			String str = propositionBox.Text.Trim();
@@ -320,7 +307,6 @@ namespace MoulUtil
 		void SqlBtnClick(object sender, EventArgs e)
 		{
 			sqlForm = new MouliSQLForm(ILOG, this.rechMagIdBox.Text, mouliUtilOptions);
-			//form.ShowDialog();
 			sqlForm.Show();
 		}
 		void ConfigBtnClick(object sender, EventArgs e)
@@ -344,8 +330,7 @@ namespace MoulUtil
 				try {
 					rechercheMagasin();
 				} catch (Exception ex) {
-					Console.WriteLine(ex.Message);
-					//reportError(ex);
+					ILOG.Error(ex);
 				}
 			}
 
@@ -400,14 +385,14 @@ namespace MoulUtil
 		
 		void actionMysql(MeoInstance meoInstance)
 		{
-			System.Diagnostics.Debug.Print("actionMysql()");
+			ILOG.Debug("actionMysql()");
 			//todo
 		}
 
 		
 		void actionPutty(TreeView treeView)
 		{
-			System.Diagnostics.Debug.Print("actionPutty()");
+			ILOG.Debug("actionPutty()");
 			MeoServeur meoServeur = null;
 			MeoInstance meoInstance = getSelectedInstance(treeView);
 			if (meoInstance != null) {
@@ -426,8 +411,6 @@ namespace MoulUtil
 			ConfigParam param = configDto.getConfigParamByName(ConfigParam.ParamNamesType.history);
 			if (param != null) {
 				mouliPrepaUtil.startBrowser(param.Value);
-			} else {
-				//historyLabel.Enabled=false;
 			}
 		}
 		private SauvegardeBackgroundWorker getSauvegardeBackgroundWorker()
@@ -441,8 +424,6 @@ namespace MoulUtil
 			return worker;
 		}
 		private void TimerEventProcessor(Object myObject, EventArgs myEventArgs) {
-			
-			//connectTimer.Stop();
 			try {
 				if(infoMessage!=null) {
 					magDescBox.Text = infoMessage;
@@ -452,16 +433,20 @@ namespace MoulUtil
 				}
 				if(statusMessage!=null) {
 					statusStrip1.Text=statusMessage;
+					toolTipLabel.Text = statusMessage;
 					statusMessage=null;
 				}
 				if(sauvegardeProgressMessage!=null) {
 					sauvegardeProgressTextBox.Text= sauvegardeProgressMessage;
 					sauvegardeProgressMessage=null;
 				}
+				if(sauvegardeProgressValue>=0) {
+					toolStripProgressBar.Value = (int) sauvegardeProgressValue;
+					sauvegardeProgressValue=-1;
+				}
 			} catch (Exception exception) {
 				ILOG.Error(exception);
 			}
 		}
-
 	}
 }

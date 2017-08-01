@@ -35,6 +35,7 @@ namespace MoulUtil
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.goButton = new System.Windows.Forms.Button();
 			this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
 			this.pathLabel = new System.Windows.Forms.Label();
@@ -80,6 +81,7 @@ namespace MoulUtil
 			this.cibleLabel = new System.Windows.Forms.Label();
 			this.analyseLabel = new System.Windows.Forms.Label();
 			this.propositionMailsListBox = new System.Windows.Forms.ListBox();
+			this.formTimer = new System.Windows.Forms.Timer(this.components);
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -532,6 +534,7 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Timer formTimer;
 		private System.Windows.Forms.ListBox propositionMailsListBox;
 		private System.Windows.Forms.Label analyseLabel;
 

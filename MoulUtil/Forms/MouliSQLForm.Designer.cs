@@ -35,6 +35,7 @@ namespace MoulUtil
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.label1 = new System.Windows.Forms.Label();
 			this.magasinIdBox = new System.Windows.Forms.TextBox();
 			this.statStockLabel = new System.Windows.Forms.Label();
@@ -52,6 +53,7 @@ namespace MoulUtil
 			this.stockLimiteBox = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.totauxLabel = new System.Windows.Forms.Label();
+			this.formTimer = new System.Windows.Forms.Timer(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -240,6 +242,7 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Timer formTimer;
 		private System.Windows.Forms.Label totauxLabel;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TextBox visiteLimiteBox;

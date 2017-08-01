@@ -66,7 +66,7 @@ namespace MoulUtil
 			this.sauvegardeBtn = new System.Windows.Forms.Button();
 			this.userControl12 = new cmdUtils.TotoRectangle();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.toolTipLable = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolTipLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.copyBtn = new System.Windows.Forms.Button();
 			this.sqlBtn = new System.Windows.Forms.Button();
 			this.configBtn = new System.Windows.Forms.Button();
@@ -76,6 +76,7 @@ namespace MoulUtil
 			this.puttyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.historyLabel = new System.Windows.Forms.Label();
 			this.connectTimer = new System.Windows.Forms.Timer(this.components);
+			this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -344,18 +345,19 @@ namespace MoulUtil
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolTipLable});
+			this.toolTipLabel,
+			this.toolStripProgressBar});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 737);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(681, 22);
 			this.statusStrip1.TabIndex = 14;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
-			// toolTipLable
+			// toolTipLabel
 			// 
-			this.toolTipLable.Name = "toolTipLable";
-			this.toolTipLable.Size = new System.Drawing.Size(29, 17);
-			this.toolTipLable.Text = "info:";
+			this.toolTipLabel.Name = "toolTipLabel";
+			this.toolTipLabel.Size = new System.Drawing.Size(29, 17);
+			this.toolTipLabel.Text = "info:";
 			// 
 			// copyBtn
 			// 
@@ -440,6 +442,11 @@ namespace MoulUtil
 			this.historyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.historyLabel.Click += new System.EventHandler(this.HistoryLabelClick);
 			// 
+			// toolStripProgressBar
+			// 
+			this.toolStripProgressBar.Name = "toolStripProgressBar";
+			this.toolStripProgressBar.Size = new System.Drawing.Size(100, 16);
+			// 
 			// MouliPrepaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -476,6 +483,7 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
 		private System.Windows.Forms.Timer connectTimer;
 		private System.Windows.Forms.TextBox sauvegardeProgressTextBox;
 		private System.Windows.Forms.Label historyLabel;
@@ -501,7 +509,7 @@ namespace MoulUtil
 			private System.Windows.Forms.Button sauvegardeBtn;
 			private System.Windows.Forms.Button prepareBtn;
 			private System.Windows.Forms.StatusStrip statusStrip1;
-			private System.Windows.Forms.ToolStripStatusLabel toolTipLable;
+			private System.Windows.Forms.ToolStripStatusLabel toolTipLabel;
 			private System.Windows.Forms.TextBox targetNameBox;
 			private System.Windows.Forms.TextBox targetSvgPathBox;
 			private System.Windows.Forms.GroupBox groupBox4;

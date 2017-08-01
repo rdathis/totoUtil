@@ -28,12 +28,16 @@ namespace MoulUtil
 		private ConnectServerBackgroundWorker connectWorker = new ConnectServerBackgroundWorker();
 		private SshClient sshClient=null;
 		private log4net.ILog ILOG;
+		private String detailMessage=null;
+		private Boolean doTotaux=false;
 		
 		public MouliSQLForm(log4net.ILog ILOG, String magId, MouliUtilOptions options) {
 			InitializeComponent();
 			this.ILOG=ILOG;
 			this.magId=magId;
 			this.options=options;
+			//
+			prepareTimer();
 			//
 			ConfigUtil configUtil= new ConfigUtil();
 			configDto = configUtil.getConfig();
@@ -49,6 +53,12 @@ namespace MoulUtil
 			testServeur();
 			populate();
 		}
+		void prepareTimer()
+		{
+			formTimer.Interval=500;
+			formTimer.Tick += new EventHandler(TimerEventProcessor);
+			formTimer.Start();
+		}
 		private void prepareConnection() {
 			String tunnelStr = meoServeur.getTunnel();
 			int leftPort = int.Parse(tunnelStr.Substring(0, tunnelStr.IndexOf(":", StringComparison.Ordinal)));
@@ -62,8 +72,7 @@ namespace MoulUtil
 				ILOG.InfoFormat("Notification received for: {0}", str);
 				//?? plantage: toolStripStatusLabel1.Text = name;
 				try {
-					//statusStrip1.Text = "connecting to " + meoServeur.nom + " by ssh (" + tunnelStr + ")...";
-					detailmagasinBox.Text ="connecting to " + meoServeur.nom + " by ssh (" + tunnelStr + ")...";
+					detailMessage="connecting to " + meoServeur.nom + " by ssh (" + tunnelStr + ")...";
 				} catch (Exception ex) {
 					ILOG.Error("still exception here ..." + ex.Message);
 				}
@@ -73,20 +82,12 @@ namespace MoulUtil
 			MouliProgressWorker.EndWorkerSshClientCallBack endWorkerCallBack = (message, tmpSshClient, textbox) => {
 				if (tmpSshClient == null) {
 					ILOG.Error("Exception message :" + message);
-					detailmagasinBox.Text = "SSH : Exception message :" + message;
+					detailMessage = "SSH : Exception message :" + message;
 				} else {
 					ILOG.Info("connected");
 					sshClient = tmpSshClient;
-					try {
-						TotauxLabelClick(null, null);
-					} catch(Exception ex) {
-						ILOG.Error(ex);
-					}
-					try {
-						detailmagasinBox.Text = "connected";
-					} catch(Exception ex) {
-						ILOG.Error(ex);
-					}
+					doTotaux=true;
+					detailMessage= "connected";
 				}
 			};
 
@@ -102,10 +103,10 @@ namespace MoulUtil
 			statVisitesLabel.Visible=visible;
 			
 			if (meoServeur==null) {
-				detailmagasinBox.Text= "erreur, serveur non retrouvé";
+				detailMessage= "erreur, serveur non retrouvé";
 				return;
 			}
-			detailmagasinBox.Text = "I:" +instance.nom + " - S :" +meoServeur.adresse + " D:"+instance.nom;
+			detailMessage = "I:" +instance.nom + " - S :" +meoServeur.adresse + " D:"+instance.nom;
 		}
 		private void populate() {
 			this.magasinIdBox.Text=magId;
@@ -182,6 +183,22 @@ namespace MoulUtil
 		void TotauxLabelClick(object sender, EventArgs e)
 		{
 			populateGrid(totauxLabel.Tag.ToString(), anneeVisitePurgeBox.Text);
+		}
+		private void TimerEventProcessor(Object myObject, EventArgs myEventArgs) {
+			try {
+				if(detailMessage!=null) {
+					detailmagasinBox.Text  = detailMessage;
+					detailMessage=null;
+					//rechMagIdBtn.Enabled=true;
+				}
+				if(doTotaux) {
+					doTotaux=false;
+					TotauxLabelClick(null, null);
+				}
+
+			} catch (Exception exception) {
+				ILOG.Error(exception);
+			}
 		}
 	}
 }
