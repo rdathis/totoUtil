@@ -1,0 +1,11 @@
+C:\renaud\totoUtil\testLogger\bin\Debug\testLogger.exe.config
+C:\renaud\totoUtil\testLogger\bin\Debug\testLogger.exe
+C:\renaud\totoUtil\testLogger\bin\Debug\testLogger.pdb
+C:\renaud\totoUtil\testLogger\bin\Debug\log4net.dll
+C:\renaud\totoUtil\testLogger\bin\Debug\slf4net.dll
+C:\renaud\totoUtil\testLogger\bin\Debug\slf4net.log4net.dll
+C:\renaud\totoUtil\testLogger\bin\Debug\log4net.xml
+C:\renaud\totoUtil\testLogger\bin\Debug\slf4net.xml
+C:\renaud\totoUtil\testLogger\obj\Debug\testLogger.csprojResolveAssemblyReference.cache
+C:\renaud\totoUtil\testLogger\obj\Debug\testLogger.exe
+C:\renaud\totoUtil\testLogger\obj\Debug\testLogger.pdb

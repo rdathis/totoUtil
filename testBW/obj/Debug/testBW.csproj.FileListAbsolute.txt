@@ -1,0 +1,8 @@
+C:\renaud\totoUtil\testBW\bin\Debug\testBW.exe.config
+C:\renaud\totoUtil\testBW\bin\Debug\testBW.exe
+C:\renaud\totoUtil\testBW\bin\Debug\testBW.pdb
+C:\renaud\totoUtil\testBW\obj\Debug\testBW.csprojResolveAssemblyReference.cache
+C:\renaud\totoUtil\testBW\obj\Debug\testBW.MainForm.resources
+C:\renaud\totoUtil\testBW\obj\Debug\testBW.csproj.GenerateResource.Cache
+C:\renaud\totoUtil\testBW\obj\Debug\testBW.exe
+C:\renaud\totoUtil\testBW\obj\Debug\testBW.pdb

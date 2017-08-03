@@ -1,0 +1,2 @@
+obj\\Debug\Files.wixobj
+obj\\Debug\TotoSetup.wixobj

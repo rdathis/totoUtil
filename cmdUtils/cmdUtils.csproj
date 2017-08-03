@@ -103,6 +103,8 @@
     <Compile Include="Objets\business\MouliUtilOptions.cs" />
     <Compile Include="Objets\business\MouliUtilOptionsTraductor.cs" />
     <Compile Include="Objets\business\SqlCommandsType.cs" />
+    <Compile Include="Objets\business\StatMoulReader.cs" />
+    <Compile Include="Objets\business\StatMoulRecap.cs" />
     <Compile Include="Objets\business\ZipUtilOptions.cs" />
     <Compile Include="Objets\Horloge.cs" />
     <Compile Include="ConfElement.cs" />
