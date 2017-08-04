@@ -14,7 +14,4 @@ M:\github\totoUtil\TestEditorUtil\bin\Debug\MySql.Data.dll
 M:\github\totoUtil\TestEditorUtil\bin\Debug\Renci.SshNet.dll
 M:\github\totoUtil\TestEditorUtil\bin\Debug\ICSharpCode.SharpZipLib.dll
 M:\github\totoUtil\TestEditorUtil\bin\Debug\cmdUtils.pdb
-M:\github\totoUtil\TestEditorUtil\bin\Debug\Renci.SshNet.pdb
-M:\github\totoUtil\TestEditorUtil\bin\Debug\Renci.SshNet.xml
-M:\github\totoUtil\TestEditorUtil\bin\Debug\ICSharpCode.SharpZipLib.pdb
-M:\github\totoUtil\TestEditorUtil\bin\Debug\ICSharpCode.SharpZipLib.xml
+M:\github\totoUtil\TestEditorUtil\bin\Debug\log4net.dll

@@ -14,7 +14,7 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public class ConfigParam {
 		public enum ParamNamesType	{
-			//[XmlEnum("moulinetteSource")] moulinetteSource,
+			[XmlEnum("moulinetteSource")] moulinetteSource,
 			[XmlEnum("history")] history,
 			
 			[XmlEnum("targetSvgPath")] targetSvgPath,

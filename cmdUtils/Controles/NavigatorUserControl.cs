@@ -18,6 +18,7 @@ namespace cmdUtils.Controles
 	{
 		private TextBox box1=null;
 		private TextBox box2=null;
+		private ComboBox box3=null;
 		public NavigatorUserControl()
 		{
 			InitializeComponent();
@@ -36,10 +37,19 @@ namespace cmdUtils.Controles
 					path+=box2.Text.Trim();
 				}
 			}
+			if(box3!=null) {
+				if (Directory.Exists(path+box3.Text.Trim())) {
+					path+=box3.Text.Trim();
+				}
+			}
+			
 			return path.Replace("/", "\\");;
 		}
 		public void setBox(TextBox box) {
 			this.box1=box;
+		}
+		public void setBox(ComboBox box) {
+			this.box3=box;
 		}
 		public void setBoxes(TextBox box1, TextBox box2) {
 			this.box1=box1;

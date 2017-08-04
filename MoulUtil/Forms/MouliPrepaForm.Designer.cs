@@ -39,7 +39,6 @@ namespace MoulUtil
 			this.components = new System.ComponentModel.Container();
 			this.rechMagIdBtn = new System.Windows.Forms.Button();
 			this.rechMagIdBox = new System.Windows.Forms.TextBox();
-			this.sourceBaseBox = new System.Windows.Forms.TextBox();
 			this.sourceFilterBox = new System.Windows.Forms.TextBox();
 			this.magDescBox = new System.Windows.Forms.TextBox();
 			this.sourceListBox = new System.Windows.Forms.ListBox();
@@ -51,6 +50,8 @@ namespace MoulUtil
 			this.createBtn = new System.Windows.Forms.Button();
 			this.propositionBox = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.sourceNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
+			this.sourceBaseComboBox = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.workspaceNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
 			this.navigatorUserControl2 = new cmdUtils.Controles.NavigatorUserControl();
@@ -67,6 +68,7 @@ namespace MoulUtil
 			this.userControl12 = new cmdUtils.TotoRectangle();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolTipLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
 			this.copyBtn = new System.Windows.Forms.Button();
 			this.sqlBtn = new System.Windows.Forms.Button();
 			this.configBtn = new System.Windows.Forms.Button();
@@ -76,7 +78,6 @@ namespace MoulUtil
 			this.puttyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.historyLabel = new System.Windows.Forms.Label();
 			this.connectTimer = new System.Windows.Forms.Timer(this.components);
-			this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -104,18 +105,11 @@ namespace MoulUtil
 			this.rechMagIdBox.TabIndex = 0;
 			this.rechMagIdBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.RechMagIdBoxKeyUp);
 			// 
-			// sourceBaseBox
-			// 
-			this.sourceBaseBox.Location = new System.Drawing.Point(13, 12);
-			this.sourceBaseBox.Name = "sourceBaseBox";
-			this.sourceBaseBox.Size = new System.Drawing.Size(292, 20);
-			this.sourceBaseBox.TabIndex = 2;
-			// 
 			// sourceFilterBox
 			// 
-			this.sourceFilterBox.Location = new System.Drawing.Point(312, 12);
+			this.sourceFilterBox.Location = new System.Drawing.Point(398, 12);
 			this.sourceFilterBox.Name = "sourceFilterBox";
-			this.sourceFilterBox.Size = new System.Drawing.Size(325, 20);
+			this.sourceFilterBox.Size = new System.Drawing.Size(239, 20);
 			this.sourceFilterBox.TabIndex = 3;
 			// 
 			// magDescBox
@@ -128,7 +122,6 @@ namespace MoulUtil
 			// 
 			// sourceListBox
 			// 
-			this.sourceListBox.Enabled = false;
 			this.sourceListBox.FormattingEnabled = true;
 			this.sourceListBox.Location = new System.Drawing.Point(37, 149);
 			this.sourceListBox.Name = "sourceListBox";
@@ -169,6 +162,7 @@ namespace MoulUtil
 			// 
 			// workingDirBox
 			// 
+			this.workingDirBox.AccessibleDescription = "AAA";
 			this.workingDirBox.Location = new System.Drawing.Point(103, 19);
 			this.workingDirBox.Name = "workingDirBox";
 			this.workingDirBox.Size = new System.Drawing.Size(179, 20);
@@ -201,7 +195,8 @@ namespace MoulUtil
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.sourceBaseBox);
+			this.groupBox2.Controls.Add(this.sourceNavigatorUserControl);
+			this.groupBox2.Controls.Add(this.sourceBaseComboBox);
 			this.groupBox2.Controls.Add(this.sourceFilterBox);
 			this.groupBox2.Location = new System.Drawing.Point(24, 111);
 			this.groupBox2.Name = "groupBox2";
@@ -209,6 +204,22 @@ namespace MoulUtil
 			this.groupBox2.TabIndex = 9;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "source";
+			// 
+			// sourceNavigatorUserControl
+			// 
+			this.sourceNavigatorUserControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			this.sourceNavigatorUserControl.Location = new System.Drawing.Point(312, 9);
+			this.sourceNavigatorUserControl.Name = "sourceNavigatorUserControl";
+			this.sourceNavigatorUserControl.Size = new System.Drawing.Size(80, 24);
+			this.sourceNavigatorUserControl.TabIndex = 21;
+			// 
+			// sourceBaseComboBox
+			// 
+			this.sourceBaseComboBox.FormattingEnabled = true;
+			this.sourceBaseComboBox.Location = new System.Drawing.Point(9, 12);
+			this.sourceBaseComboBox.Name = "sourceBaseComboBox";
+			this.sourceBaseComboBox.Size = new System.Drawing.Size(297, 21);
+			this.sourceBaseComboBox.TabIndex = 4;
 			// 
 			// groupBox3
 			// 
@@ -359,6 +370,11 @@ namespace MoulUtil
 			this.toolTipLabel.Size = new System.Drawing.Size(29, 17);
 			this.toolTipLabel.Text = "info:";
 			// 
+			// toolStripProgressBar
+			// 
+			this.toolStripProgressBar.Name = "toolStripProgressBar";
+			this.toolStripProgressBar.Size = new System.Drawing.Size(100, 16);
+			// 
 			// copyBtn
 			// 
 			this.copyBtn.BackColor = System.Drawing.Color.Red;
@@ -442,11 +458,6 @@ namespace MoulUtil
 			this.historyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.historyLabel.Click += new System.EventHandler(this.HistoryLabelClick);
 			// 
-			// toolStripProgressBar
-			// 
-			this.toolStripProgressBar.Name = "toolStripProgressBar";
-			this.toolStripProgressBar.Size = new System.Drawing.Size(100, 16);
-			// 
 			// MouliPrepaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -483,6 +494,8 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private cmdUtils.Controles.NavigatorUserControl sourceNavigatorUserControl;
+		private System.Windows.Forms.ComboBox sourceBaseComboBox;
 		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
 		private System.Windows.Forms.Timer connectTimer;
 		private System.Windows.Forms.TextBox sauvegardeProgressTextBox;
@@ -521,7 +534,6 @@ namespace MoulUtil
 			private System.Windows.Forms.ListBox sourceListBox;
 			private System.Windows.Forms.Button rechMagIdBtn;
 			private System.Windows.Forms.TextBox rechMagIdBox;
-			private System.Windows.Forms.TextBox sourceBaseBox;
 			private System.Windows.Forms.TextBox sourceFilterBox;
 			private System.Windows.Forms.TextBox magDescBox;
 		}

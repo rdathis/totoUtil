@@ -76,7 +76,22 @@ namespace MoulUtil
 			workspaceNavigatorUserControl.setBoxes(workspaceBaseBox, workspaceZoneBox);
 			svgBaseNavigatorUserControl.setBox(targetSvgPathBox);
 			svgFinalNavigatorUserControl.setBoxes(targetSvgPathBox, targetNameBox);
+			sourceNavigatorUserControl.setBox(sourceBaseComboBox);
+			populateSourceBox(configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.moulinetteSource));
+			
+			ToolTip t = new ToolTip();
+			t.SetToolTip(workingDirBox, "test tooltip");
 		}
+
+		void populateSourceBox(string str)
+		{
+			sourceBaseComboBox.Items.Clear();
+			string[] tablo=str.Split('|');
+			for(int i=0;i<tablo.Length;i++) {
+				sourceBaseComboBox.Items.Add(tablo[i]);
+			}
+		}
+
 		void prepareTimer()
 		{
 			connectTimer.Interval=500;
