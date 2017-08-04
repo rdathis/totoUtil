@@ -35,25 +35,19 @@
       <HintPath>..\packages\log4net.2.0.0\lib\net40-client\log4net.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data">
-      <HintPath>..\cmdUtils\libs\MySql.Data.dll</HintPath>
+      <HintPath>..\Installer\libs\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity">
-      <HintPath>..\cmdUtils\libs\MySql.Data.Entity.dll</HintPath>
+      <HintPath>..\Installer\libs\MySql.Data.Entity.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6">
-      <HintPath>..\cmdUtils\libs\MySql.Data.Entity.EF6.dll</HintPath>
+      <HintPath>..\Installer\libs\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Fabric.Plugin">
-      <HintPath>..\cmdUtils\libs\MySql.Fabric.Plugin.dll</HintPath>
+      <HintPath>..\Installer\libs\MySql.Fabric.Plugin.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Web">
-      <HintPath>..\cmdUtils\libs\MySql.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="slf4net">
-      <HintPath>..\packages\slf4net.0.1.14.1\lib\net35\slf4net.dll</HintPath>
-    </Reference>
-    <Reference Include="slf4net.log4net">
-      <HintPath>..\packages\slf4net.log4net.0.1.32.1\lib\net35\slf4net.log4net.dll</HintPath>
+      <HintPath>..\Installer\libs\MySql.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">

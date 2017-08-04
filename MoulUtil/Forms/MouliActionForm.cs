@@ -28,8 +28,18 @@ namespace MoulUtil
 		private MouliUtilOptions options = null;
 		private MouliActionUtil mouliActionUtil;
 		private RichTextBoxUtil richTextBoxUtil=new RichTextBoxUtil();
+		// disable FieldCanBeMadeReadOnly.Local
+		private log4net.ILog LOGGER=null;
+		//
+		//just for timer + bgworker
+		private String progressBoxText=null;
+		private String toolStripStatusLabelText=null;
+		private int toolStripProgressBarValue=-1;
+		private Boolean finalFlag=false;
+		private Boolean installBtnEnabled=false;
+		private Boolean finalUploadFlag=false;
 
-		public MouliActionForm(MouliUtilOptions options, ConfigDto configDto, string path)
+		public MouliActionForm(MouliUtilOptions options, ConfigDto configDto, log4net.ILog  LOGGER, string path)
 		{
 			InitializeComponent();
 			this.options = options;
@@ -39,6 +49,7 @@ namespace MoulUtil
 			setPath(path);
 			setMagId(options.getMagId());
 			setMagasinIrris("01");
+			this.LOGGER=LOGGER;
 			prepare();
 			MeoInstance instance = MeoInstance.findInstanceByInstanceName(configDto.getInstances(), options.getInstanceName());
 			if (instance != null && instance.getServeur() != null) {
@@ -54,6 +65,13 @@ namespace MoulUtil
 			}
 			//fait l'analyse
 			AnalyseLabelClick(null, null);
+		}
+		
+		void prepareTimer()
+		{
+			formTimer.Interval=500;
+			formTimer.Tick += new EventHandler(TimerEventProcessor);
+			formTimer.Start();
 		}
 		
 		// disable once ParameterHidesMember
@@ -80,14 +98,15 @@ namespace MoulUtil
 		{
 			puttyLink.Visible = false;
 			pscpLink.Visible = false;
-			dateTimePicker.Value = new MouliUtil().calculeNextPlannedJob();
+			dateTimePicker.Value = new MouliUtil(LOGGER).calculeNextPlannedJob();
+			prepareTimer();
 			
 			activeExtension(purgeClientChkBox, options.getExtensionClient());
 			activeExtension(purgeStockChkBox, options.getExtensionStock());
 			installBtn.Enabled = false;
 			progressTextBox.Visible = false;
 			emailTextbox.Text = configDto.getDefaultEmail();
-			mouliActionUtil = new MouliActionUtil(this, configDto);
+			mouliActionUtil = new MouliActionUtil(this, configDto, LOGGER);
 			String propositions = configDto.getConfigParamByName(ConfigParam.ParamNamesType.emails).Value;
 			if(propositions!=null) {
 				propositionMailsListBox.Items.Clear();
@@ -142,36 +161,32 @@ namespace MoulUtil
 			uploadButton.Enabled = false;
 			progressTextBox.Visible = true;
 			progressTextBox.Enabled = false;
-			toolStripStatusLabel1.Text = "doing archive";
+			toolStripStatusLabelText = "doing archive";
 			try {
 				completeOptions();
 				CreateArchiveBackgroundWorker worker = CreateArchiveBackgroundWorker.createWorker();
 				worker.prepare(job, mouliActionUtil);
 				
 				MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = name => {
-					//?? plantage: toolStripStatusLabel1.Text = name;
+					toolStripStatusLabelText = name;
 					try {
-						progressTextBox.Text = " debut";
-						toolStripProgressBar1.Value = 0;
+						progressBoxText = " debut";
+						toolStripProgressBarValue = 0;
 					} catch (Exception ex) {
-						Console.WriteLine("still exception here ..." + ex.Message);
+						LOGGER.Error("still exception here ..." + ex.Message);
 					}
 				};
 				MouliProgressWorker.ProgressWorkerCallBack progressWorkerCallBack = value => {
 					if (value <= 100) {
-						toolStripProgressBar1.Value = value;//bug
+						toolStripProgressBarValue = value;//bug
 					}
-					toolStripStatusLabel1.Text = "progression moulinette : " + (value) + "%  - x / " + worker.getNbOperation();
-					progressTextBox.Text = toolStripStatusLabel1.Text;
+					toolStripStatusLabelText = "progression moulinette : " + (value) + "%  - x / " + worker.getNbOperation();
+					progressBoxText = toolStripStatusLabelText;
 				};
 				MouliProgressWorker.EndWorkerCallBack endWorkerCallBack = value => {
-					toolStripStatusLabel1.Text = "fini";
-					toolStripProgressBar1.Value = 0;
-					goButton.Enabled = true;
-					uploadButton.Enabled = true;
-					if (pscpLink.Tag != null) {
-						pscpLink.Visible = true;
-					}
+					toolStripStatusLabelText = "fini";
+					toolStripProgressBarValue = 0;
+					finalFlag=true;
 				};
 				//
 				worker.setStartWorkerCallBack(startWorkerCallBack);
@@ -191,7 +206,7 @@ namespace MoulUtil
 		{
 			//progressBar1.Value=progression;
 			// progressBar1.Refresh();
-			toolStripProgressBar1.Value = progression;
+			toolStripProgressBarValue = progression;
 		}
 		public void setPath(string sourceMoulinette)
 		{
@@ -296,43 +311,41 @@ namespace MoulUtil
 						worker.prepare(server, targetPath, job.getArchiveName());
 						
 						MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = name => {
-							//Console.WriteLine("Notification received for: {0}", name);
-							//?? plantage: toolStripStatusLabel1.Text = name;
+							this.toolStripStatusLabelText=name;
 							try {
-								//progressTextBox.Text=" debut";
-								toolStripProgressBar1.Value = 0;
+								progressBoxText=" debut";
+								toolStripProgressBarValue = 0;
 							} catch (Exception ex) {
-								Console.WriteLine("still exception here ..." + ex.Message);
-								progressTextBox.Text = ex.Message;
+								LOGGER.Error("still exception here ..." + ex.Message);
+								progressBoxText = ex.Message;
 							}
 						};
 						MouliProgressWorker.ProgressWorkerCallBack progressWorkerCallBack = value => {
-							if (value <= 100)
-								toolStripProgressBar1.Value = value;//bug
-							toolStripStatusLabel1.Text = "progression upload : " + (value) + "%  - x / " + worker.getNbOperation();
-							progressTextBox.Text = toolStripStatusLabel1.Text;
+							if (value <= 100) {
+								toolStripProgressBarValue = value;//bug
+							}
+							toolStripStatusLabelText= "progression upload : " + (value) + "%  - x / " + worker.getNbOperation();
+							progressBoxText = toolStripStatusLabelText;
 						};
 						MouliProgressWorker.EndWorkerCallBack endWorkerCallBack = value => {
-							toolStripProgressBar1.Value = 0;
-							goButton.Enabled = true;
-							uploadButton.Enabled = true;
-							toolStripStatusLabel1.Text = "done, unzip...";
+							finalUploadFlag=true;
 
 							try {
 								String serverTargetPath = server.getTranspo();
 								sshUtil.unzipArchive(server, serverTargetPath, job);
 								
-								MouliUtil mouliUtil = new MouliUtil();
+								MouliUtil mouliUtil = new MouliUtil(LOGGER);
 								
 								CmdUtil cmdUtil = new CmdUtil();
 								
 								String cmd = mouliUtil.getUnzipCmd(server, serverTargetPath, job);
-								String commandeFile = job.getMoulinettePath() + "install.file";
+								String commandeFile = job.getOriginalDir()+"/"+ job.getMoulinettePath() + "install.file";
 								mouliUtil.writeInstallMoulinetteFile(cmd, commandeFile);
-								toolStripStatusLabel1.Text = "finished";
-								installBtn.Enabled = true;
+								this.toolStripStatusLabelText= "finished";
+								installBtnEnabled=true;
 							} catch (Exception ex) {
-								progressTextBox.Text = "Exception : " + ex.Message;
+								progressBoxText = "Exception : " + ex.Message;
+								LOGGER.Error(ex);
 							}
 						};
 						//
@@ -342,6 +355,7 @@ namespace MoulUtil
 						//
 						worker.RunWorkerAsync();
 					} catch (Exception ex) {
+						LOGGER.Error(ex);
 						MessageBox.Show("Erreur envoi data : " + ex.Message + "\n" + ex.Source + "\n" + ex.StackTrace);
 					}
 				}
@@ -467,5 +481,44 @@ namespace MoulUtil
 				emailTextbox.Text = propositionMailsListBox.SelectedItem.ToString();
 			}
 		}
+		private void TimerEventProcessor(Object myObject, EventArgs myEventArgs) {
+			
+			try {
+				if(progressBoxText!=null) {
+					progressTextBox.Text  = progressBoxText;
+					progressBoxText=null;
+				}
+				if(toolStripStatusLabelText!=null) {
+					toolStripStatusLabel1.Text =toolStripStatusLabelText;
+					toolStripStatusLabelText=null;
+				}
+				if(toolStripProgressBarValue>=0) {
+					toolStripProgressBar1.Value=toolStripProgressBarValue;
+					toolStripProgressBarValue=-1;
+				}
+				if(finalFlag) {
+					finalFlag=false;
+					goButton.Enabled = true;
+					uploadButton.Enabled = true;
+					if (pscpLink.Tag != null) {
+						pscpLink.Visible = true;
+					}
+				}
+				if(installBtnEnabled) {
+					installBtn.Enabled = true;
+					installBtnEnabled=false;
+				}
+				if(finalUploadFlag) {
+					toolStripProgressBarValue = 0;
+					goButton.Enabled = true;
+					uploadButton.Enabled = true;
+					toolStripStatusLabelText = "done, unzip...";
+				}
+
+			} catch (Exception exception) {
+				LOGGER.Error(exception);
+			}
+		}
+		
 	}
 }

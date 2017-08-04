@@ -19,7 +19,7 @@ namespace EcUtil
 	/// </summary>
 	public partial class ECUtilMainForm : Form
 	{
-		MouliUtil mouliUtil = new MouliUtil();
+		//MouliUtil mouliUtil = new MouliUtil();
 		CmdUtil cmdUtils = new CmdUtil();
 		List<String> files = new List<string>();
 		List<String> directories = new List<string>();

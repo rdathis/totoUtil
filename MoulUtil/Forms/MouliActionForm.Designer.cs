@@ -40,7 +40,6 @@ namespace MoulUtil
 			this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
 			this.pathLabel = new System.Windows.Forms.Label();
 			this.uploadButton = new System.Windows.Forms.Button();
-			this.progressBar1 = new System.Windows.Forms.ProgressBar();
 			this.puttyLink = new System.Windows.Forms.LinkLabel();
 			this.pscpLink = new System.Windows.Forms.LinkLabel();
 			this.exitButton = new System.Windows.Forms.Button();
@@ -82,6 +81,7 @@ namespace MoulUtil
 			this.analyseLabel = new System.Windows.Forms.Label();
 			this.propositionMailsListBox = new System.Windows.Forms.ListBox();
 			this.formTimer = new System.Windows.Forms.Timer(this.components);
+			this.progressBar1 = new System.Windows.Forms.ProgressBar();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -123,15 +123,6 @@ namespace MoulUtil
 			this.uploadButton.Text = "upload";
 			this.uploadButton.UseVisualStyleBackColor = true;
 			this.uploadButton.Click += new System.EventHandler(this.UploadButtonClick);
-			// 
-			// progressBar1
-			// 
-			this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.progressBar1.Location = new System.Drawing.Point(6, 348);
-			this.progressBar1.Name = "progressBar1";
-			this.progressBar1.Size = new System.Drawing.Size(713, 23);
-			this.progressBar1.TabIndex = 10;
 			// 
 			// puttyLink
 			// 
@@ -335,6 +326,8 @@ namespace MoulUtil
 			// 
 			// progressTextBox
 			// 
+			this.progressTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.progressTextBox.Location = new System.Drawing.Point(6, 322);
 			this.progressTextBox.Name = "progressTextBox";
 			this.progressTextBox.Size = new System.Drawing.Size(586, 20);
@@ -483,11 +476,19 @@ namespace MoulUtil
 			this.propositionMailsListBox.TabIndex = 43;
 			this.propositionMailsListBox.DoubleClick += new System.EventHandler(this.PropositionMailsListBoxDoubleClick);
 			// 
+			// progressBar1
+			// 
+			this.progressBar1.Location = new System.Drawing.Point(6, 348);
+			this.progressBar1.Name = "progressBar1";
+			this.progressBar1.Size = new System.Drawing.Size(585, 23);
+			this.progressBar1.TabIndex = 44;
+			// 
 			// MouliActionForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(726, 430);
+			this.Controls.Add(this.progressBar1);
 			this.Controls.Add(this.propositionMailsListBox);
 			this.Controls.Add(this.analyseLabel);
 			this.Controls.Add(this.cibleLabel);
@@ -517,7 +518,6 @@ namespace MoulUtil
 			this.Controls.Add(this.launchCmdLabel);
 			this.Controls.Add(this.pscpLink);
 			this.Controls.Add(this.puttyLink);
-			this.Controls.Add(this.progressBar1);
 			this.Controls.Add(this.uploadButton);
 			this.Controls.Add(this.pathLabel);
 			this.Controls.Add(this.dateTimePicker);

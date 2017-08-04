@@ -22,12 +22,14 @@ namespace MoulUtil.Forms.utils
 		private MouliUtil mouliUtil = null;
 		private ConfigDto configDto=null;
 		//private const String scriptModele  + "/conf/modele.moulinette"
+		private log4net.ILog  LOGGER=null;
 		
-		public MouliActionUtil(MouliActionForm form, ConfigDto configDto)
+		public MouliActionUtil(MouliActionForm form, ConfigDto configDto, log4net.ILog  LOGGER)
 		{
 			this.form = form;
 			this.configDto=configDto;
-			mouliUtil = new MouliUtil();
+			this.LOGGER=LOGGER;
+			mouliUtil = new MouliUtil(LOGGER);
 		}
 		
 		public String getJobContent(String sourceMoulinette, MouliUtilOptions options, ConfigDto configDto) {
@@ -80,12 +82,12 @@ namespace MoulUtil.Forms.utils
 			prepareTraitement(sourceMoulinette, options, configDto);
 			//
 			Directory.SetCurrentDirectory(options.getWorkspacePath());
-			toJournal(sourceMoulinette, options);
+			toJournal(sourceMoulinette, options, LOGGER);
 			
 			majProgression(0);
 			DateTime startDateTime = DateTime.Now;
 			String archiveName = options.getarchiveName();
-			ZipUtil zipUtil = new ZipUtil();
+			ZipUtil zipUtil = new ZipUtil(LOGGER);
 			
 			String originalDir = Directory.GetCurrentDirectory();
 			Directory.SetCurrentDirectory(sourceMoulinette);
@@ -93,7 +95,7 @@ namespace MoulUtil.Forms.utils
 	
 			MouliStatRecap statsRecap = new MouliStatRecap();
 			List<String> liste = populateListe(false, options, statsRecap);
-			mouliUtil = new MouliUtil();
+			mouliUtil = new MouliUtil(LOGGER);
 			zipUtil = null;
 			majProgression(50);
 			MouliJob job = new MouliJob(archiveName, originalDir, liste, statsRecap, startDateTime, options, sourceMoulinette);
@@ -242,8 +244,8 @@ namespace MoulUtil.Forms.utils
 			return retour;
 		}
 		
-		public static void toJournal (String sourceMoulinette, MouliUtilOptions options) {
-			MouliUtil mouliUtil = new MouliUtil();
+		public static void toJournal (String sourceMoulinette, MouliUtilOptions options, log4net.ILog  LOGGER) {
+			MouliUtil mouliUtil = new MouliUtil(LOGGER);
 			mouliUtil.safeCreateDirectory("logs/");
 			
 			StreamWriter outputFile = new StreamWriter(getJournalFilePath(), true);
@@ -299,7 +301,7 @@ namespace MoulUtil.Forms.utils
 					}
 				}
 			}
-			ZipUtil zipUtil = new ZipUtil();
+			ZipUtil zipUtil = new ZipUtil(LOGGER);
 			zipUtil.createSimpleArchive(ZipUtil.compressionStandard, job.getArchiveName() , liste, job.getBackgroundWorker());
 			//majProgression(99);
 			// Fin

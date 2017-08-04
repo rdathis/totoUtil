@@ -34,7 +34,7 @@ namespace MoulUtil
 		private RegistryUtil registryUtil = null;
 		private SshClient sshClientAdmin = null;
 		private ConnectServerBackgroundWorker connectWorker = null;
-		private log4net.ILog ILOG;
+		private readonly log4net.ILog  LOGGER;
 		//Pour le timer
 		private String statusMessage=null;
 		private String infoMessage=null;
@@ -42,11 +42,11 @@ namespace MoulUtil
 		private Double sauvegardeProgressValue=-1;
 		
 		
-		public MouliPrepaForm(ConfigDto configDto, log4net.ILog ILOG)
+		public MouliPrepaForm(ConfigDto configDto, log4net.ILog  LOGGER)
 		{
 			InitializeComponent();
 			this.configDto = configDto;
-			this.ILOG = ILOG;
+			this.LOGGER = LOGGER;
 			prepare();
 			
 			rechMagIdBox.Focus();
@@ -58,7 +58,7 @@ namespace MoulUtil
 			//
 			registryUtil = new RegistryUtil();
 			String workspacePath = registryUtil.getHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key);
-			mouliPrepaUtil = new MouliPrepaUtil(this, configDto);
+			mouliPrepaUtil = new MouliPrepaUtil(this, configDto, LOGGER);
 			if (!String.IsNullOrEmpty(workspacePath)) {
 				workspacePath += "" + configDto.getWorkingDir().Replace("\\", "/");
 			} else {
@@ -68,7 +68,7 @@ namespace MoulUtil
 			
 			this.workingDirBox.Text = workspacePath;
 			this.workspaceBaseBox.Text = workspacePath;
-			mouliUtil = new MouliUtil();
+			mouliUtil = new MouliUtil(LOGGER);
 			cmdUtil = new CmdUtil();
 			new TreeViewUtil(configDto.instances, configDto.serveurs).populateTargets(targetTreeView);
 			//
@@ -105,18 +105,18 @@ namespace MoulUtil
 				int leftPort = int.Parse(tunnelStr.Substring(0, tunnelStr.IndexOf(":", StringComparison.Ordinal)));
 				int rightPort = int.Parse(tunnelStr.Substring(tunnelStr.IndexOf(":", StringComparison.Ordinal) + 1));
 				
-				ILOG.Info("avant bw");
+				LOGGER.Info("avant bw");
 				connectWorker = new ConnectServerBackgroundWorker();
 				
-				ILOG.Info("avant go");
+				LOGGER.Info("avant go");
 				connectWorker.prepare(sshClientAdmin, meoServeur, leftPort, rightPort, rechMagIdBox);
 				
 				MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = str => {
-					ILOG.InfoFormat("Notification received for: {0}", str);
+					LOGGER.InfoFormat("Notification received for: {0}", str);
 					try {
 						statusMessage = "connecting to " + meoServeur.nom + " by ssh (" + tunnelStr + ")...";
 					} catch (Exception ex) {
-						ILOG.Error("still exception here ..." + ex.Message);
+						LOGGER.Error("still exception here ..." + ex.Message);
 					}
 				};
 				//
@@ -129,7 +129,7 @@ namespace MoulUtil
 					} else {
 						//
 						Console.WriteLine("connected on server");
-						ILOG.Info("connected");
+						LOGGER.Info("connected");
 						sshClientAdmin = sshClient;
 						statusMessage = "connected at "+meoServeur.nom +":/"+adminInstance.nom;
 						infoMessage= "connected";
@@ -165,7 +165,7 @@ namespace MoulUtil
 					return;
 				}
 //
-				MouliActionForm form = new MouliActionForm(mouliUtilOptions, configDto, workspaceZoneBox.Text);
+				MouliActionForm form = new MouliActionForm(mouliUtilOptions, configDto, LOGGER, workspaceZoneBox.Text);
 				form.ShowDialog();
 			} else {
 				workspaceBaseBox.Focus();
@@ -189,7 +189,8 @@ namespace MoulUtil
 				return;
 			}
 			
-			String tmpDir = new DirectoryInfo(workspaceBaseBox.Text).Parent.FullName;
+			//? String tmpDir = new DirectoryInfo(workspaceBaseBox.Text).Parent.FullName;
+			String tmpDir = new DirectoryInfo(workspaceBaseBox.Text).FullName;
 			String sourceDir = tmpDir + "/" + workspaceZoneBox.Text;
 			String targetDir = Path.GetFullPath(targetSvgPathBox.Text) + "\\" + targetNameBox.Text;
 			if(!Directory.Exists(sourceDir)) {
@@ -208,7 +209,7 @@ namespace MoulUtil
 			if (!Directory.Exists(tmpDir)) {
 				mouliUtil.safeCreateDirectory(tmpDir);
 			}
-			ILOG.Info("->" + tmpDir);
+			LOGGER.Info("->" + tmpDir);
 			cmdUtil.executeCommande("explorer", tmpDir);
 			
 			SauvegardeBackgroundWorker worker = getSauvegardeBackgroundWorker();
@@ -306,7 +307,7 @@ namespace MoulUtil
 		}
 		void SqlBtnClick(object sender, EventArgs e)
 		{
-			sqlForm = new MouliSQLForm(ILOG, this.rechMagIdBox.Text, mouliUtilOptions);
+			sqlForm = new MouliSQLForm(LOGGER, this.rechMagIdBox.Text, mouliUtilOptions);
 			sqlForm.Show();
 		}
 		void ConfigBtnClick(object sender, EventArgs e)
@@ -330,7 +331,7 @@ namespace MoulUtil
 				try {
 					rechercheMagasin();
 				} catch (Exception ex) {
-					ILOG.Error(ex);
+					LOGGER.Error(ex);
 				}
 			}
 
@@ -385,14 +386,14 @@ namespace MoulUtil
 		
 		void actionMysql(MeoInstance meoInstance)
 		{
-			ILOG.Debug("actionMysql()");
+			LOGGER.Debug("actionMysql()");
 			//todo
 		}
 
 		
 		void actionPutty(TreeView treeView)
 		{
-			ILOG.Debug("actionPutty()");
+			LOGGER.Debug("actionPutty()");
 			MeoServeur meoServeur = null;
 			MeoInstance meoInstance = getSelectedInstance(treeView);
 			if (meoInstance != null) {
@@ -445,7 +446,7 @@ namespace MoulUtil
 					sauvegardeProgressValue=-1;
 				}
 			} catch (Exception exception) {
-				ILOG.Error(exception);
+				LOGGER.Error(exception);
 			}
 		}
 	}

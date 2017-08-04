@@ -49,13 +49,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
-      <HintPath>W:\projets\log4net\bin\net\4.0\release\log4net.dll</HintPath>
+      <HintPath>..\Installer\libs\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="Renci.SshNet">
-      <HintPath>W:\GitStuff\SSH.NET\src\Renci.SshNet\bin\Debug\Renci.SshNet.dll</HintPath>
+      <HintPath>..\Installer\libs\Renci.SshNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">

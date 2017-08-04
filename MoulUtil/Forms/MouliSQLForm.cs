@@ -10,7 +10,6 @@ using MoulUtil.Forms.utils;
 using Renci.SshNet;
 using cmdUtils.Objets;
 using cmdUtils.Objets.business;
-using log4net;
 namespace MoulUtil
 {
 	/// <summary>
@@ -27,11 +26,11 @@ namespace MoulUtil
 		private MouliUtilOptions options = null;
 		private ConnectServerBackgroundWorker connectWorker = new ConnectServerBackgroundWorker();
 		private SshClient sshClient=null;
-		private log4net.ILog ILOG;
+		private log4net.ILog  ILOG;
 		private String detailMessage=null;
 		private Boolean doTotaux=false;
 		
-		public MouliSQLForm(log4net.ILog ILOG, String magId, MouliUtilOptions options) {
+		public MouliSQLForm(log4net.ILog  ILOG, String magId, MouliUtilOptions options) {
 			InitializeComponent();
 			this.ILOG=ILOG;
 			this.magId=magId;

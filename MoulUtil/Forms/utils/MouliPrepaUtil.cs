@@ -23,7 +23,8 @@ namespace MoulUtil.Forms.utils
 		private MouliPrepaForm mouliPrepaForm;
 		// disable once FieldCanBeMadeReadOnly.Local
 		private ConfigDto configDto=null;
-		public MouliPrepaUtil(MouliPrepaForm mouliPrepaForm, ConfigDto configDto)
+		private log4net.ILog  LOGGER=null;
+		public MouliPrepaUtil(MouliPrepaForm mouliPrepaForm, ConfigDto configDto, log4net.ILog  LOGGER)
 		{
 			this.mouliPrepaForm=mouliPrepaForm;
 			this.configDto=configDto;
@@ -52,7 +53,7 @@ namespace MoulUtil.Forms.utils
 				textbox.Visible=true;
 				mouliPrepaForm.BackColor = Color.LightBlue;
 			} catch(Exception exs) {
-				Console.WriteLine ("erreur sur start de plink",exs);
+				LOGGER.Info ("erreur sur start de plink",exs);
 				plinkProcess=null;
 				mouliPrepaForm.BackColor = Color.Orange;
 			}
@@ -87,7 +88,7 @@ namespace MoulUtil.Forms.utils
 		{
 			String str=configDto.getWorkingDir();
 			if((str!=null) && (str.Length>0)) {
-				MouliUtil mouliUtil = new MouliUtil();
+				MouliUtil mouliUtil = new MouliUtil(LOGGER);
 				mouliUtil.safeCreateDirectory( configDto.getWorkingDir());
 			}
 		}
@@ -95,7 +96,7 @@ namespace MoulUtil.Forms.utils
 		private void createMock(string path)
 		{
 			
-			MouliUtil mouliUtil = new MouliUtil();
+			MouliUtil mouliUtil = new MouliUtil(LOGGER);
 			String dataPath=mouliUtil.getData();
 			String magPath=mouliUtil.getMag01();
 			String extension = ".d";
@@ -209,7 +210,9 @@ namespace MoulUtil.Forms.utils
 				propositionBox.Text = proposition;
 				sqlBtn.Enabled=true;
 			} catch (Exception ex) {
+				LOGGER.Error(ex);
 				magDescBox.Text = "erreur :" + ex.Message + "\n" + ex.Source;
+				
 			}
 			
 			return options;
@@ -243,11 +246,11 @@ namespace MoulUtil.Forms.utils
 					}
 					
 					sourcePath = new DirectoryInfo(sourcePath).FullName;
-					MouliUtil mouliUtil = new MouliUtil();
+					MouliUtil mouliUtil = new MouliUtil(LOGGER);
 					Regex excludeRegex = new Regex("\\.(7z|rar|gz|gzip|zip)$");
 					List<String> toSaveFiles= mouliUtil.findFiles(sourcePath,  true, null, excludeRegex);
 					toSaveFiles = mouliUtil.excludeFiles(toSaveFiles, excludeRegex);
-					ZipUtil zipUtil = new ZipUtil();
+					ZipUtil zipUtil = new ZipUtil(LOGGER);
 					FileInfo fi =new FileInfo(options.getarchiveName());
 					
 					zipUtil.createSimpleArchive(9, Path.GetFullPath(path)+ "origine-"+fi.Name, toSaveFiles, backgroundWorker);
@@ -268,6 +271,7 @@ namespace MoulUtil.Forms.utils
 					
 				}
 			} catch(Exception exception) {
+				LOGGER.Error(exception);
 				MessageBox.Show("Erreur de copie de vers "+Path.GetFullPath(targetPath)+"\n "+exception.Message);
 			}
 		}

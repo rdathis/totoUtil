@@ -14,6 +14,7 @@ using MySql.Data.MySqlClient;
 using Renci.SshNet;
 using Renci.SshNet.Common;
 using cmdUtils.Objets;
+using log4net;
 
 namespace TestSQLOverSSH
 {
@@ -22,8 +23,8 @@ namespace TestSQLOverSSH
 		public static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");
-			
-			MouliUtil util=new MouliUtil();
+			log4net.ILog LOGGER =LogManager.GetLogger("TestSQLOverSSH");
+			MouliUtil util=new MouliUtil(LOGGER);
 			List <String> strs= util.findFiles("W:/meo-moulinettes/workspace/MID2317-SARLOPTIK95-i-4/",true, null, null);
 			//strs.Clear();
 			strs.Add("tralala.zip");
@@ -37,8 +38,6 @@ namespace TestSQLOverSSH
 				}
 				
 			}
-
-			               
 			return;
 			/*
 			TestSQLOverSSH testSQLOverSSH= new TestSQLOverSSH();

@@ -31,26 +31,29 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\Installer\libs\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="MySql.Data">
-      <HintPath>..\cmdUtils\libs\MySql.Data.dll</HintPath>
+      <HintPath>..\Installer\libs\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity">
-      <HintPath>..\cmdUtils\libs\MySql.Data.Entity.dll</HintPath>
+      <HintPath>..\Installer\libs\MySql.Data.Entity.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6">
-      <HintPath>..\cmdUtils\libs\MySql.Data.Entity.EF6.dll</HintPath>
+      <HintPath>..\Installer\libs\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Fabric.Plugin">
-      <HintPath>..\cmdUtils\libs\MySql.Fabric.Plugin.dll</HintPath>
+      <HintPath>..\Installer\libs\MySql.Fabric.Plugin.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Web">
-      <HintPath>..\cmdUtils\libs\MySql.Web.dll</HintPath>
+      <HintPath>..\Installer\libs\MySql.Web.dll</HintPath>
     </Reference>
     <Reference Include="Renci.SshNet">
-      <HintPath>..\TestSSH\bin\Debug\Renci.SshNet.dll</HintPath>
+      <HintPath>..\Installer\libs\Renci.SshNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">

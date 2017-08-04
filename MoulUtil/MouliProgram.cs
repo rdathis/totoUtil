@@ -7,26 +7,14 @@
  * Pour changer ce modèle utiliser Outils | Options | Codage | Editer les en-têtes standards.
  */
 using System;
-using System.Collections.Generic;
-
 using System.IO;
-using MoulUtil.Forms.utils;
-using Renci.SshNet;
-using cmdUtils;
 using cmdUtils.Objets;
-using cmdUtils.Objets.utils;
 using log4net;
 using log4net.Config;
-using log4net.Repository.Hierarchy;
-
 namespace MoulUtil
 {
-
 	class MouliProgram
 	{
-		// disable once FieldCanBeMadeReadOnly.Local
-		static log4net.ILog LOGGER = LogManager.GetLogger("mouliProgram");
-
 		// disable StringEndsWithIsCultureSpecific
 		public static void Main(string[] args)
 		{
@@ -38,8 +26,9 @@ namespace MoulUtil
 				Console.WriteLine("directory changed to "+Directory.GetCurrentDirectory());
 			}
 			//configure le ilog -- http://lutecefalco.developpez.com/tutoriels/dotnet/log4net/introduction/
-			
-			ConfigUtil configUtil = new ConfigUtil();
+
+			log4net.ILog LOGGER = LogManager.GetLogger("mouliProgram");
+			ConfigUtil configUtil = new ConfigUtil(LOGGER);
 			if(File.Exists(configUtil.getLoggerConfigFilePath())) {
 				XmlConfigurator.Configure(new Uri(configUtil.getLoggerConfigFilePath()));
 				LOGGER.Debug("config file : "+configUtil.getLoggerConfigFilePath());
@@ -49,6 +38,10 @@ namespace MoulUtil
 			
 			
 			ConfigDto configDto = configUtil.getConfig();
+			if(!configUtil.controleConfig(configDto) ) {
+				LOGGER.Error("bad config file");
+				throw new NotImplementedException ("unexpectable understood config file. read it, correct it");
+			}
 			configDto.basePath=tmpBasePath;
 			
 			LOGGER.Info("Moulinette util - ");
@@ -72,8 +65,6 @@ namespace MoulUtil
 			formPrepa.setWorkspacePath(sourceMoulinette);
 			formPrepa.setTargetSvgPath(configDto.getTargetSvgPath());
 			formPrepa.ShowDialog();
-			
-			//LOGGER.Info("Debut moulinette - chemin '"+sourceMoulinette+"'");
 		}
 	}
 }
