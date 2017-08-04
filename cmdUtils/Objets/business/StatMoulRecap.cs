@@ -22,19 +22,26 @@ namespace cmdUtils.Objets.business
 		private int stockZeroQty;
 		private int stockPosQty;
 		
-		public StatMoulRecap( //
-			String year, //
-			int visiteQty,  //
-			int stockQty,  //
-			int stockNegQty, int stockZeroQty, int stockPosQty) 
-		{
+		public StatMoulRecap(String year) {
 			this.year=year;
+		}
+
+		public void setVisiteQty(int value) {
 			this.visiteQty=visiteQty;
+		}
+		public void setStockQty(int value) {
 			this.stockQty=stockQty;
+		}
+		public void setStockNegQty(int value) {
 			this.stockNegQty=stockNegQty;
+		}
+		public void setStockZeroQty(int value) {
 			this.stockZeroQty=stockZeroQty;
+		}
+		public void setStockPosQty(int value) {
 			this.stockPosQty=stockPosQty;
 		}
+		
 		public String getYear() {
 			return year;
 		}

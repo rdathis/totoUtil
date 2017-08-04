@@ -8,6 +8,7 @@
  */
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace cmdUtils.Objets.business
 {
@@ -30,15 +31,32 @@ namespace cmdUtils.Objets.business
 		}
 		
 		private void readFile(String file) {
+			List<String, StatMoulRecap> liste = new List();
 			if (File.Exists(file)) {
 				String[] lignes = new MyUtil().readScript(file).Split('\n');
+				int mode=0;
 				for (int numLigne = 1; numLigne < lignes.GetLength(0); numLigne++) {
 					String ligne = lignes[numLigne].Replace('\r', ' ').Trim();
+					if(ligne.IndexOf("/")>0) {
 					String[] colonnes = ligne.Split('/');
 					if (colonnes.GetLength(0) > 1) {
+						String col0 = colonnes[0].Trim();
+						if(marquers.MARQUEUR_VISITE==col0) {
+							mode=0;
+						} else if(marquers.MARQUEUR_STOCK==col0) {
+							mode=1;
+						} else if(marquers.MARQUEUR_STOCKNEG==col0) {
+							mode=2;
+						} else if(marquers.MARQUEUR_STOCKNUL==col0) {
+							mode=3;
+						} else if(marquers.MARQUEUR_STOCKPOS==col0) {
+							mode=4;
+						} else if(mode>0) {
+							StatMoulRecap recap = new StatMoulRecap();
+						}
 //			qty = tab[0];
 //			year = tab[1]
-
+						}
 						
 
 					}
