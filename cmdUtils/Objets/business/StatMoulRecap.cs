@@ -27,19 +27,19 @@ namespace cmdUtils.Objets.business
 		}
 
 		public void setVisiteQty(int value) {
-			this.visiteQty=visiteQty;
+			this.visiteQty=value;
 		}
 		public void setStockQty(int value) {
-			this.stockQty=stockQty;
+			this.stockQty=value;
 		}
 		public void setStockNegQty(int value) {
-			this.stockNegQty=stockNegQty;
+			this.stockNegQty=value;
 		}
 		public void setStockZeroQty(int value) {
-			this.stockZeroQty=stockZeroQty;
+			this.stockZeroQty=value;
 		}
 		public void setStockPosQty(int value) {
-			this.stockPosQty=stockPosQty;
+			this.stockPosQty=value;
 		}
 		
 		public String getYear() {
@@ -58,7 +58,7 @@ namespace cmdUtils.Objets.business
 			return stockZeroQty;
 		}
 		public int getStockPosQty() {
-			return getStockPosQty;
+			return stockPosQty;
 		}
 	}
 }

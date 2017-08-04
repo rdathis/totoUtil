@@ -55,7 +55,7 @@ namespace cmdUtils.Objets
 			ScpClient client = new ScpClient(getConnectionInfo(server));
 			client.Connect();
 			client.Uploading += delegate(object sender, ScpUploadEventArgs e) {
-				Console.WriteLine("uploaded : " + e.Uploaded + " " + e.Filename + " " + e.Size);
+				//Console.WriteLine("uploaded : " + e.Uploaded + " " + e.Filename + " " + e.Size);
 				if (worker != null) {
 					worker.ReportProgress(e.Uploaded, e.Size);
 				}

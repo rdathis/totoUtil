@@ -23,8 +23,13 @@ namespace cmdUtils.Objets
 	public class MyUtil
 	{
 
+		private log4net.ILog  LOGGER;
 		public MyUtil()
 		{
+		}
+		public MyUtil(log4net.ILog  LOGGER)
+		{
+			this.LOGGER=LOGGER;
 		}
 		
 		public String buildconnString(String databaseName, String serverName, String user, String pwd) {

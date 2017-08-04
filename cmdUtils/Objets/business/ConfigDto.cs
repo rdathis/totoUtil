@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
-using log4net;
 using cmdUtils.Objets.business;
 
 namespace cmdUtils.Objets
@@ -126,9 +125,9 @@ namespace cmdUtils.Objets
 //		public String getAppPlink() {
 //			return getConfigParamValueByName(ConfigParam.ParamNamesType.appPlink);
 //		}
-		public void setAppPlink(String value) {
-			setConfigParamValueByName(ConfigParam.ParamNamesType.appPlink, value);
-		}
+//		public void setAppPlink(String value) {
+//			setConfigParamValueByName(ConfigParam.ParamNamesType.appPlink, value);
+//		}
 		public void setDefaultEmail(String value) {
 			setConfigParamValueByName(ConfigParam.ParamNamesType.defaultEmail, value);
 		}

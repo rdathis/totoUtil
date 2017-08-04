@@ -8,11 +8,14 @@
  */
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Serialization;
+using log4net;
+using cmdUtils.Objets.business;
 
 namespace cmdUtils.Objets
 {
@@ -21,11 +24,16 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public class ConfigUtil
 	{
+		private log4net.ILog  LOGGER;
 		
 		public ConfigUtil()
 		{
 		}
-		
+
+		public ConfigUtil(log4net.ILog  LOGGER)
+		{
+			this.LOGGER=LOGGER;
+		}
 		public ConfigDto readConfigXml(String path="")
 		{
 			
@@ -93,5 +101,42 @@ namespace cmdUtils.Objets
 			writeXml(configDto);
 		}
 
+		public bool controleConfig(ConfigDto configDto)
+		{
+			if(configDto==null) {
+				LOGGER.Error("null config");
+				return false;
+			}
+			
+			if(configDto.configParams==null) {
+				LOGGER.Error("null params");
+				return false;
+			}
+			if(configDto.getServeurs()==null || configDto.getServeurs().Count <1 ) {
+				LOGGER.Error("null servers");
+				return false;
+			}
+			if(configDto.getInstances()==null || configDto.getInstances().Count <1 ) {
+				LOGGER.Error("null instances");
+				return false;
+			}
+			if(configDto.getSqlCommands()==null || configDto.getSqlCommands().Count <1 ) {
+				LOGGER.Error("null commands");
+				return false;
+			}
+			foreach(ConfigParam.ParamNamesType type in Enum.GetValues(typeof(ConfigParam.ParamNamesType))) {
+				if(ConfigParam.ParamNamesType.INCONNU!=type && configDto.getConfigParamByName(type)==null) {
+					LOGGER.Error("null param  "+type.ToString());
+					//return false;
+				}
+			}
+			foreach(SqlCommandsType type in Enum.GetValues(typeof(SqlCommandsType))) {
+				if(configDto.getSqlCommand(type)==null) {
+					LOGGER.Error("null sqlCommand  "+type.ToString());
+					//return false;
+				}
+			}
+			return true;
+		}
 	}
 }

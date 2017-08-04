@@ -32,31 +32,31 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>W:\GitStuff\SharpZipLib\bin\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\Installer\libs\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>..\MoulUtil\bin\Debug\log4net.dll</HintPath>
+      <HintPath>..\Installer\libs\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="MySql.Data">
-      <HintPath>libs\MySql.Data.dll</HintPath>
+      <HintPath>..\Installer\libs\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity">
-      <HintPath>libs\MySql.Data.Entity.dll</HintPath>
+      <HintPath>..\Installer\libs\MySql.Data.Entity.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6">
-      <HintPath>libs\MySql.Data.Entity.EF6.dll</HintPath>
+      <HintPath>..\Installer\libs\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Fabric.Plugin">
-      <HintPath>libs\MySql.Fabric.Plugin.dll</HintPath>
+      <HintPath>..\Installer\libs\MySql.Fabric.Plugin.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Web">
-      <HintPath>libs\MySql.Web.dll</HintPath>
+      <HintPath>..\Installer\libs\MySql.Web.dll</HintPath>
     </Reference>
     <Reference Include="Renci.SshNet">
-      <HintPath>W:\GitStuff\SSH.NET\src\Renci.SshNet\bin\Debug\Renci.SshNet.dll</HintPath>
+      <HintPath>..\Installer\libs\Renci.SshNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -136,11 +136,6 @@
     <None Include="app.config" />
     <None Include="doc\mintty.txt" />
     <None Include="doc\TODO.txt" />
-    <None Include="libs\MySql.Data.dll" />
-    <None Include="libs\MySql.Data.Entity.dll" />
-    <None Include="libs\MySql.Data.Entity.EF6.dll" />
-    <None Include="libs\MySql.Fabric.Plugin.dll" />
-    <None Include="libs\MySql.Web.dll" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controles\NavigatorUserControl.resx">
@@ -154,7 +149,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="libs" />
     <Folder Include="doc" />
     <Folder Include="Controles" />
     <Folder Include="Forms" />

@@ -21,8 +21,6 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public class CmdUtil
 	{
-
-
 		MyUtil myUtil = new MyUtil();
 		//const string  mysqlShowDatabase_="show databases;";
 		private List<Regex> listeRegDatabase () {
@@ -31,9 +29,11 @@ namespace cmdUtils.Objets
 			listReg.Add(new Regex(@"administration"));
 			return listReg;
 		}
+		//private log4net.ILog LOGGER =LogManager.GetLogger("mouliProgram");
 		public CmdUtil()	{
 		}
 
+		//TODO:dégager
 		public string dingding()
 		{
 			return "(cat `cygpath -W`/Media/ding.wav > /dev/dsp) ";
@@ -183,14 +183,16 @@ namespace cmdUtils.Objets
 			
 		}
 		
-		public List <String> executeCommande(String cmd, String args) {
+		public List <String> executeCommande(String cmd, String args, log4net.ILog LOGGER=null) {
 			List <String> list = new List<String>();
 			
 			ProcessUtil pu = new ProcessUtil();
-			Console.WriteLine(cmd +" "+args);
+			if(LOGGER!=null) {
+				LOGGER.Info(cmd +" "+args);
+			}
 			// MessageBox.Show(cmd +" "+args);
 			Process p = pu.startProcess(cmd, args, ProcessWindowStyle.Minimized);
-/*
+			/*
 			try {
 				//if (p.ExitCode!=0) {
 					StreamReader srErr=p.StandardError;
@@ -204,7 +206,7 @@ namespace cmdUtils.Objets
 			} catch (Exception e) {
 				System.Diagnostics.Debug.Print("Exception : "+e);
 			}
-			*/
+			 */
 			StreamReader srOut= p.StandardOutput;
 			String [] sOut =  srOut.ReadToEnd().Split('\n');
 			foreach(String ss in sOut) {
@@ -408,7 +410,7 @@ Unknown._w(https://server/instance/application/78957C736ADB5FD05DCBA3DDACFEFF8F.
 			ProcessStartInfo ProcessInfo;
 			Process process;
 
-			// for dos command: 			
+			// for dos command:
 			//ProcessInfo = new ProcessStartInfo("cmd.exe", "/C " + Command);
 			ProcessInfo = new ProcessStartInfo(command, args);
 			ProcessInfo.CreateNoWindow = false;

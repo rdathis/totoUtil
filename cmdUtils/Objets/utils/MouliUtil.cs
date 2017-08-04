@@ -19,9 +19,11 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public class MouliUtil
 	{
+		private readonly log4net.ILog  LOGGER=null;
 		private MyUtil myUtil = new MyUtil();
-		public MouliUtil()
+		public MouliUtil(log4net.ILog  LOGGER)
 		{
+			this.LOGGER=LOGGER;
 		}
 		private String m01 = "01";
 
@@ -74,7 +76,7 @@ namespace cmdUtils.Objets
 				if (!File.Exists(path + getMag01() + getJoint())) {
 					MyUtil util = new MyUtil();
 					util.createFolderIfNotExists(path + getMag01() + getJoint());
-					Console.WriteLine("Creation de " + path + getMag01() + getJoint() + " ");
+					LOGGER.Info("Creation de " + path + getMag01() + getJoint() + " ");
 				}
 				if (File.Exists(path + getMag01() + getJoint() + ordotxt)) {
 					File.Delete(path + getMag01() + getJoint() + ordotxt);
@@ -118,7 +120,7 @@ namespace cmdUtils.Objets
 			if (extension != null) {
 				file += extension;
 			}
-			Console.WriteLine(" file : " + file + " ? " + File.Exists(file));
+			LOGGER.Info(" file : " + file + " ? " + File.Exists(file));
 			return File.Exists(file);
 		}
 
@@ -136,8 +138,8 @@ namespace cmdUtils.Objets
 			
 			rtb.AppendText("#libe:" + util.getItem(magasinList[0], "magasin_libelle") + " - url :" + util.getItem(magasinList[0], "url"));
 			rtb.AppendText("\n#cli_id:" + util.getItem(magasinList[0], "client_id"));
-			//Console.WriteLine("libe:"+util.getItem(magasinList[0], "magasin_libelle"));
-			//Console.WriteLine("cli_id:"+util.getItem(magasinList[0], "client_id"));
+			//LOGGER.Info("libe:"+util.getItem(magasinList[0], "magasin_libelle"));
+			//LOGGER.Info("cli_id:"+util.getItem(magasinList[0], "client_id"));
 			
 			texbox.Text = (string)util.getItem(magasinList[0], "magasin_libelle");
 			sql = "SELECT utilisateur_id,magasin_id FROM administration.utilisateurs where utilisateur_active=true AND magasin_id=" + magId + ";";
@@ -153,11 +155,11 @@ namespace cmdUtils.Objets
 			String[] tmp = source.Split('\n');
 			List<String> retour = new List<string>();
 			
-			Console.WriteLine(" source : " + source);
-			Console.WriteLine("size :" + tmp.Length);
+			LOGGER.Info(" source : " + source.Substring(0, 10) +" ... "+source.Substring(source.Length -11, 10));
+			LOGGER.Info("size :" + tmp.Length);
 			
 			for (int i = 0; i < tmp.Length; i++) {
-				Console.WriteLine(" i :" + i);
+				//LOGGER.Info(" i :" + i);
 				String ligne = tmp[i];
 				if (!options.isCommentaire(ligne)) {
 					ligne = ligne.Replace("\n", "");
@@ -172,9 +174,9 @@ namespace cmdUtils.Objets
 		public int analyseTopOrdoFixe(List<string> liste, string file, List<string> notFoundList)
 		{
 			int foundFiles = 0;
-			String path = "data/mag" + m01 + "/Joint/";
+			String path = getData()+getMag01()+getJoint();// "data/mag" + m01 + "/Joint/";
 			if (Directory.Exists(path) && (File.Exists(file))) {
-				MyUtil myUtil = new MyUtil();
+				//MyUtil myUtil = new MyUtil();
 				String[] lignes = myUtil.readScript(file).Split('\n');
 				//commencer ligne 2, cause titre.
 				for (int numLigne = 1; numLigne < lignes.GetLength(0); numLigne++) {

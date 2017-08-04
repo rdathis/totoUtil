@@ -8,11 +8,9 @@
  */
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
 using MoulUtil.Forms.utils;
-using cmdUtils.Objets.utils;
 namespace cmdUtils.Objets
 {
 	/// <summary>
@@ -25,13 +23,17 @@ namespace cmdUtils.Objets
 		public static int compressionStandard=5;
 		public static int compressionMinimum=0;
 		
-		public ZipUtil()
+		private readonly log4net.ILog  LOGGER=null;
+		public ZipUtil(log4net.ILog  LOGGER)
 		{
+			this.LOGGER=LOGGER;
 		}
+		
 		private Boolean testDir(string directory, Boolean allowEmptyString=false) {
 			if (directory!=null) {
 				if (directory.Trim().Length>0) {
 					if (!Directory.Exists(directory)) {
+						LOGGER.Error("chemin archive inexistant : '"+directory+"'");
 						throw new Exception("chemin archive inexistant : '"+directory+"'");
 					}
 					return true;
@@ -44,15 +46,17 @@ namespace cmdUtils.Objets
 		}
 		public void createArchive(ZipUtilOptions options)/**/ {
 			if (options==null) {
+				LOGGER.Error("options non renseignees");
 				throw new Exception("options non renseignees");
 			}
 			if (!testDir(options.getArchiveDir())) {
 				if ((options.getArchiveDir()==null)|| (options.getArchiveDir().Length<1)) {
+					LOGGER.Error("archive non renseignee ");
 					throw new Exception("archive non renseignee ");
 				} else {
+					LOGGER.Error("chemin inexistant : '"+options.getArchiveDir()+"'");
 					throw new Exception("chemin inexistant : '"+options.getArchiveDir()+"'");
 				}
-				
 			}
 			
 			List<FileInfo> fileInfos = new List<FileInfo>();
@@ -99,7 +103,7 @@ namespace cmdUtils.Objets
 				compressionLevel=compressionStandard;
 			}
 
-			Console.WriteLine(" Taux de compression : "+compressionLevel);
+			LOGGER.Info(" Taux de compression : "+compressionLevel);
 			try
 			{
 				using (ZipOutputStream zip = new ZipOutputStream(File.Create(archiveName))) {
@@ -111,13 +115,13 @@ namespace cmdUtils.Objets
 					int nb=0;
 					if(backgroundWorker!=null) {
 						backgroundWorker.setNbOperation(fichiers.Count);
-						                                
+						
 					}
 					foreach (String fichier in fichiers) {
 						FileInfo file = new FileInfo(fichier);
 						
 						ZipEntry entry = new ZipEntry(fichier);
-						Console.WriteLine (" ZipUtil - ajout "+fichier	);
+						LOGGER.Info(" ZipUtil - ajout "+fichier + " ("+entry.Size+")");
 
 						entry.DateTime = DateTime.Now;
 						zip.PutNextEntry(entry);
@@ -139,50 +143,8 @@ namespace cmdUtils.Objets
 			}
 			catch(Exception ex)
 			{
-				Console.WriteLine("Exception during processing {0}", ex);
+				LOGGER.Error(ex.Message + "\n" + ex.Source + "\n"+ ex.StackTrace);
 			}
-			
 		}
-		/*
-		public void createSimpleArchive(string archiveName, List<FileInfo>fichiers)
-		{
-			if ( archiveName.Length < 2 ) {
-				Console.WriteLine("Usage: CreateZipFile Path ZipFile");
-				return;
-			}
-			try
-			{
-
-				using (ZipOutputStream zip = new ZipOutputStream(File.Create(archiveName))) {
-					
-					zip.SetLevel(9); // 0 - store only to 9 - means best compression
-					byte[] buffer = new byte[4096];
-					foreach (FileInfo file in fichiers) {
-						
-						ZipEntry entry = new ZipEntry(file.Name);
-						Console.WriteLine (" ZipUtil - ajout "+file.Name);
-
-						entry.DateTime = DateTime.Now;
-						zip.PutNextEntry(entry);
-						
-						using ( FileStream fileStream = file.OpenRead() ) {
-							int sourceBytes;
-							do {
-								sourceBytes = fileStream.Read(buffer, 0, buffer.Length);
-								zip.Write(buffer, 0, sourceBytes);
-							} while ( sourceBytes > 0 );
-						}
-					}
-
-					zip.Finish();
-					zip.Close();
-				}
-			}
-			catch(Exception ex)
-			{
-				Console.WriteLine("Exception during processing {0}", ex);
-			}
-			
-		}*/
 	}
 }

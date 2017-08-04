@@ -14,7 +14,7 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public class ConfigParam {
 		public enum ParamNamesType	{
-			[XmlEnum("moulinetteSource")] moulinetteSource,
+			//[XmlEnum("moulinetteSource")] moulinetteSource,
 			[XmlEnum("history")] history,
 			
 			[XmlEnum("targetSvgPath")] targetSvgPath,
@@ -22,7 +22,7 @@ namespace cmdUtils.Objets
 			[XmlEnum("databaseAdminPwd")] databaseAdminPwd,
 			[XmlEnum("databaseAdminName")] databaseAdminName,
 			[XmlEnum("defaultPassword")] defaultPassword,
-			[XmlEnum("appPlink")] appPlink,
+			//[XmlEnum("appPlink")] appPlink,
 			[XmlEnum("defaultEmail")] defaultEmail,
 			[XmlEnum("workingDir")] workingDir,
 			[XmlEnum("emails")] emails,

@@ -10,18 +10,11 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
-using System.Net.Mime;
-using System.Security.Cryptography;
 using System.Windows.Forms;
-using System.Xml;
-using MySql.Data.MySqlClient;
 using cmdUtils.Objets;
-using MySql.Data;
 
 
 namespace cmdUtils
@@ -39,10 +32,12 @@ namespace cmdUtils
 		List <AssoControleParam> configListeControles = new List<AssoControleParam>();
 		
 		CmdUtil cmdUtils = new CmdUtil();
-		MouliUtil mouliUtil = new MouliUtil();
+		//log4net.ILog LOGGER =LogManager.GetLogger("mouliProgram");
+		MouliUtil mouliUtil = null;
 		MoulinetteAction moulinetteAction = new MoulinetteAction();
 		ConfigSectionSettings cfg =	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
 
+		
 		const int mysqlPort=3306;
 		const int redirectedPort=43306;
 
@@ -51,6 +46,7 @@ namespace cmdUtils
 		{
 			InitializeComponent();
 
+			//log4net.ILog LOGGER =LogManager.GetLogger("mouliProgram");
 			initConfig();
 			populate();
 		}
@@ -363,9 +359,9 @@ namespace cmdUtils
 		}
 		void BntMoulZipItClick(object sender, EventArgs e)
 		{
-			
+			 
 			txtFinal.Text = "testZip.zip";
-			ZipUtil zipUtil = new ZipUtil();
+			//ZipUtil zipUtil = new ZipUtil(LOGGER);
 			//
 			ZipUtilOptions zop = new ZipUtilOptions();
 			zop.setArchiveDir(cfg.moulDstPath);
@@ -383,7 +379,7 @@ namespace cmdUtils
 			//zop.g
 			zop.setSourceSelection(cfg.moulFichiers.Split(' '));
 			try {
-				zipUtil.createArchive(zop);
+				//zipUtil.createArchive(zop);
 			} catch (Exception ex) {
 				MessageBox.Show("Erreur : " + ex.Message);
 			}
