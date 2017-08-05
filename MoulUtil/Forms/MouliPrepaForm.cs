@@ -40,6 +40,8 @@ namespace MoulUtil
 		private String infoMessage=null;
 		private String sauvegardeProgressMessage=null;
 		private Double sauvegardeProgressValue=-1;
+		private int sauvegardeBtnEnabled=-1;
+		private int sauvegardeBtnVisible=-1;
 		
 		
 		public MouliPrepaForm(ConfigDto configDto, log4net.ILog  LOGGER)
@@ -217,7 +219,8 @@ namespace MoulUtil
 				return;
 			}
 			
-			sauvegardeBtn.Enabled = false;
+			sauvegardeBtnEnabled=0;
+			//sauvegardeBtn.Enabled = false;
 			statusMessage = "Préparation de la sauvegarde ...";
 			tmpDir = Path.GetFullPath(targetDir).Replace('/', '\\');
 			tmpDir = new DirectoryInfo(tmpDir).Parent.FullName;
@@ -233,7 +236,8 @@ namespace MoulUtil
 				try {
 					statusMessage = "begin";
 					sauvegardeProgressMessage = " debut";
-					sauvegardeBtn.Visible = false;
+					//sauvegardeBtn.Visible = false;
+					sauvegardeBtnVisible=0;
 					sauvegardeProgressValue=-1;
 				} catch (Exception ex) {
 					Console.WriteLine("still exception here ..." + ex.Message);
@@ -252,7 +256,8 @@ namespace MoulUtil
 				sauvegardeProgressMessage = statusMessage;
 			};
 			MouliProgressWorker.EndWorkerCallBack endWorkerCallBack = value => {
-				sauvegardeBtn.Enabled = true;
+				//sauvegardeBtn.Enabled = true;
+				sauvegardeBtnEnabled=1;
 				sauvegardeProgressValue=-1;
 				sauvegardeProgressMessage= "sauvegarde finie";
 			};
@@ -459,6 +464,22 @@ namespace MoulUtil
 				if(sauvegardeProgressValue>=0) {
 					toolStripProgressBar.Value = (int) sauvegardeProgressValue;
 					sauvegardeProgressValue=-1;
+				}
+				if(sauvegardeBtnVisible>-1) {
+					sauvegardeBtnVisible=-1;
+					if(sauvegardeBtnVisible==0) {
+						sauvegardeBtn.Visible=false;
+					} else {
+						sauvegardeBtn.Visible=true;
+					}
+				}
+				if(sauvegardeBtnEnabled>-1) {
+					sauvegardeBtnEnabled=-1;
+					if(sauvegardeBtnEnabled==0) {
+						sauvegardeBtn.Enabled=false;
+					} else {
+						sauvegardeBtn.Enabled=true;
+					}
 				}
 			} catch (Exception exception) {
 				LOGGER.Error(exception);
