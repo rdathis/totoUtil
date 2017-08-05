@@ -104,7 +104,7 @@ namespace MoulUtil
 		{
 			if (!registryUtil.existsHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key)) {
 				;
-				Console.WriteLine("Creation de la clef de registre");
+				LOGGER.Warn("Creation de la clef de registre");
 				registryUtil.setHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key, Directory.GetCurrentDirectory() + "\\");
 			}
 		}
@@ -126,7 +126,7 @@ namespace MoulUtil
 				connectWorker = new ConnectServerBackgroundWorker();
 				
 				LOGGER.Info("avant go");
-				connectWorker.prepare(sshClientAdmin, meoServeur, leftPort, rightPort, rechMagIdBox);
+				connectWorker.prepare(sshClientAdmin, meoServeur, leftPort, rightPort, rechMagIdBox, LOGGER);
 				
 				MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = str => {
 					LOGGER.InfoFormat("Notification received for: {0}", str);
@@ -140,7 +140,7 @@ namespace MoulUtil
 
 				MouliProgressWorker.EndWorkerSshClientCallBack endWorkerCallBack = (message, sshClient, textbox) => {
 					if (sshClient == null) {
-						Console.WriteLine("Exception message :" + message);
+						LOGGER.Error("Exception message :" + message);
 						statusMessage = "SSH : Exception message :" + message;
 						
 					} else {
@@ -240,7 +240,7 @@ namespace MoulUtil
 					sauvegardeBtnVisible=0;
 					sauvegardeProgressValue=-1;
 				} catch (Exception ex) {
-					Console.WriteLine("still exception here ..." + ex.Message);
+					LOGGER.Error(ex);
 				}
 			};
 			MouliProgressWorker.ProgressWorkerCallBack progressWorkerCallBack = value => {
@@ -289,7 +289,7 @@ namespace MoulUtil
 				calculeMoulinettePath();
 				String path = workspaceZoneBox.Text;
 				mouliUtilOptions.setArchiveName(mouliUtil.calculeArchiveName(workingPath+path));
-				Console.WriteLine("name: " + mouliUtilOptions.getarchiveName());
+				LOGGER.Info("name: " + mouliUtilOptions.getarchiveName());
 			}
 		}
 
@@ -338,7 +338,7 @@ namespace MoulUtil
 		}
 		void ServeursContextMenuOpening(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			Console.WriteLine("in menu");
+			LOGGER.Info("in menu");
 		}
 		void PuttyToolStripMenuItemClick(object sender, EventArgs e)
 		{

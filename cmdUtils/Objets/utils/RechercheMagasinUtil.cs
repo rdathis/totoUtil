@@ -12,19 +12,24 @@ using MoulUtil.Forms.utils;
 using cmdUtils.Objets;
 
 namespace cmdUtils {
+	
 
 	public class RechercheMagasinUtil {
 		//const String mouliUtilConfigPath="w:/meo-moulinettes/";
 		const String dbName="administration";
 		private ConfigUtil configUtil = new ConfigUtil();
 		private ConfigDto configDto=null;
+		private log4net.ILog LOGGER;
 		
+		public RechercheMagasinUtil (log4net.ILog LOGGER) {
+			this.LOGGER=LOGGER;
+		}
 		public SshClient doConnection(MeoServeur serveur, int localPort, int forwardPort, MouliProgressWorker worker) {
 			List<KeyValuePair<int, int>>portsList = new List<KeyValuePair<int, int>>();
 			
 			portsList.Add(new KeyValuePair<int, int>(localPort, forwardPort));
 			SshUtil sshUtil =new SshUtil();
-			SshClient sshClient = sshUtil.getClientWithForwardedPorts(serveur, portsList);
+			SshClient sshClient = sshUtil.getClientWithForwardedPorts(serveur, portsList, LOGGER);
 			if(worker!=null) {
 				worker.ReportProgress(1, 1);
 				
@@ -65,7 +70,7 @@ namespace cmdUtils {
 					return ("server is null");
 				}
 				//SshClient client = doConnection(adminServeur, newPort, 3306);
-				client = getAdminServeur(adminServeur, hiddenPort, visiblePort);
+				client = getAdminServeur(adminServeur, hiddenPort, visiblePort, LOGGER);
 				if(client==null) {
 					return "ssh connection failed";
 				}
@@ -125,12 +130,12 @@ namespace cmdUtils {
 		}
 		
 		//tmp stuff, to clear
-		private static SshClient getAdminServeur(MeoServeur serveur, int hiddenPort, int visiblePort) {
+		private static SshClient getAdminServeur(MeoServeur serveur, int hiddenPort, int visiblePort, log4net.ILog LOGGER) {
 			
 			SshUtil sshUtil = new SshUtil();
 			List<KeyValuePair<int, int>>portsList = new List<KeyValuePair<int, int>>();
 			portsList.Add(new KeyValuePair<int, int>(hiddenPort, visiblePort));
-			return sshUtil.getClientWithForwardedPorts(serveur, portsList);
+			return sshUtil.getClientWithForwardedPorts(serveur, portsList, LOGGER);
 		}
 	}
 }

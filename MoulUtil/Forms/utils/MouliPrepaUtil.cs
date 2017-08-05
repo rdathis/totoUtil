@@ -238,9 +238,9 @@ namespace MoulUtil.Forms.utils
 					String path=targetPath+"/"+subPath;
 					String fileName=new FileInfo(options.getarchiveName()).Name;
 					
-					Console.WriteLine("path:"+path);
-					Console.WriteLine("path:"+Path.GetFullPath(path));
-					Console.WriteLine("fileName:"+fileName);
+					LOGGER.Info("path:"+path);
+					LOGGER.Info("path:"+Path.GetFullPath(path));
+					LOGGER.Info("fileName:"+fileName);
 					if(File.Exists(options.getarchiveName())) {
 						File.Copy(options.getarchiveName(), Path.GetFullPath(path)+fileName, true);
 					}

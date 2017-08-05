@@ -26,13 +26,13 @@ namespace MoulUtil
 		private MouliUtilOptions options = null;
 		private ConnectServerBackgroundWorker connectWorker = new ConnectServerBackgroundWorker();
 		private SshClient sshClient=null;
-		private log4net.ILog  ILOG;
+		private log4net.ILog  LOGGER;
 		private String detailMessage=null;
 		private Boolean doTotaux=false;
 		
 		public MouliSQLForm(log4net.ILog  ILOG, String magId, MouliUtilOptions options) {
 			InitializeComponent();
-			this.ILOG=ILOG;
+			this.LOGGER=ILOG;
 			this.magId=magId;
 			this.options=options;
 			//
@@ -64,26 +64,26 @@ namespace MoulUtil
 			int rightPort = int.Parse(tunnelStr.Substring(tunnelStr.IndexOf(":", StringComparison.Ordinal) + 1));
 			sqlPort=leftPort;
 			
-			ILOG.Info("preparation connectBW");
-			connectWorker.prepare(sshClient, meoServeur, leftPort, rightPort, null);
+			LOGGER.Info("preparation connectBW");
+			connectWorker.prepare(sshClient, meoServeur, leftPort, rightPort, null, LOGGER);
 			
 			MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = str => {
-				ILOG.InfoFormat("Notification received for: {0}", str);
+				LOGGER.InfoFormat("Notification received for: {0}", str);
 				//?? plantage: toolStripStatusLabel1.Text = name;
 				try {
 					detailMessage="connecting to " + meoServeur.nom + " by ssh (" + tunnelStr + ")...";
 				} catch (Exception ex) {
-					ILOG.Error("still exception here ..." + ex.Message);
+					LOGGER.Error("still exception here ..." + ex.Message);
 				}
 			};
 			//
 
 			MouliProgressWorker.EndWorkerSshClientCallBack endWorkerCallBack = (message, tmpSshClient, textbox) => {
 				if (tmpSshClient == null) {
-					ILOG.Error("Exception message :" + message);
+					LOGGER.Error("Exception message :" + message);
 					detailMessage = "SSH : Exception message :" + message;
 				} else {
-					ILOG.Info("connected");
+					LOGGER.Info("connected");
 					sshClient = tmpSshClient;
 					doTotaux=true;
 					detailMessage= "connected";
@@ -196,7 +196,7 @@ namespace MoulUtil
 				}
 
 			} catch (Exception exception) {
-				ILOG.Error(exception);
+				LOGGER.Error(exception);
 			}
 		}
 	}

@@ -80,7 +80,7 @@ namespace cmdUtils.Objets
 				DirectoryInfo di = new DirectoryInfo(baseDir);
 				foreach(string pattern in selection) {
 					if(pattern!=null) {
-						Console.WriteLine("Pattern  "+pattern);
+						LOGGER.Info("Pattern  "+pattern);
 						pattrn=pattern;
 						foreach (FileInfo fi in di.GetFiles(pattern)) {
 							fichiers.Add(fi);

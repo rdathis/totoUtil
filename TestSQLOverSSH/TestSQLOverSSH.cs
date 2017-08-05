@@ -20,6 +20,7 @@ namespace TestSQLOverSSH
 {
 	class TestSQLOverSSH
 	{
+		
 		public static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");
@@ -58,6 +59,8 @@ namespace TestSQLOverSSH
 			int originalPort=3306;
 			int forwardPort=13306;
 			
+			log4net.ILog LOGGER =LogManager.GetLogger("TestSQLOverSSH");
+			
 			SshUtil sshutil =new SshUtil();
 			MeoServeur serveur =new MeoServeur();
 			serveur.adresse=sshserver;
@@ -67,7 +70,7 @@ namespace TestSQLOverSSH
 			KeyValuePair<int, int> kvp =   new KeyValuePair<int, int>(originalPort, forwardPort);
 			portsList.Add(kvp);
 			
-			var xclient= sshutil.getClientWithForwardedPorts(serveur, portsList );
+			var xclient= sshutil.getClientWithForwardedPorts(serveur, portsList, LOGGER);
 			
 			String sql="SELECT * FROM magasins limit 1;";
 			using (MySqlConnection con = getConn("127.0.0.1", forwardPort, myuser, mypassword, dbname)) {

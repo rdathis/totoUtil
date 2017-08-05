@@ -14,6 +14,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using log4net;
 using cmdUtils.Objets;
 
 
@@ -32,7 +33,7 @@ namespace cmdUtils
 		List <AssoControleParam> configListeControles = new List<AssoControleParam>();
 		
 		CmdUtil cmdUtils = new CmdUtil();
-		//log4net.ILog LOGGER =LogManager.GetLogger("mouliProgram");
+		log4net.ILog LOGGER =LogManager.GetLogger("mouliProgram");
 		MouliUtil mouliUtil = null;
 		MoulinetteAction moulinetteAction = new MoulinetteAction();
 		ConfigSectionSettings cfg =	ConfigSectionSettings.GetSection(ConfigurationUserLevel.PerUserRoamingAndLocal);
@@ -165,7 +166,8 @@ namespace cmdUtils
 			
 		}
 		private void prepareAdminServeur(IAsyncResult result) {
-			RechercheMagasinUtil rechercheUtil = new RechercheMagasinUtil();
+			/*
+			RechercheMagasinUtil rechercheUtil = new RechercheMagasinUtil(LOGGER);
 			try {
 				String etat= rechercheUtil.getAdminServeur(ref adminServeurSshClient, mysqlPort, redirectedPort);
 				if(etat=="") {
@@ -176,6 +178,7 @@ namespace cmdUtils
 			} catch(Exception exception) {
 				reportError(exception);
 			}
+			*/
 		}
 
 		void populateMoulinettes()
@@ -417,7 +420,7 @@ namespace cmdUtils
 
 			if (magId.Length > 0) {
 				rtb.Clear();
-				RechercheMagasinUtil rechercheUtil = new RechercheMagasinUtil();
+				RechercheMagasinUtil rechercheUtil = new RechercheMagasinUtil(LOGGER);
 				
 				rtb.AppendText(rechercheUtil.getMagasinDescription(magId, ref adminServeurSshClient, mysqlPort, redirectedPort, false));
 			}
