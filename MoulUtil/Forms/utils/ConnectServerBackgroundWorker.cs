@@ -24,6 +24,7 @@ namespace MoulUtil.Forms.utils
 		private int port1=0;
 		private int port2=0;
 		private TextBox textbox;
+		private log4net.ILog LOGGER;
 		public ConnectServerBackgroundWorker()
 		{
 			this.WorkerSupportsCancellation = true;
@@ -34,19 +35,20 @@ namespace MoulUtil.Forms.utils
 			this.sshUtil = new SshUtil();
 			
 		}
-		public void prepare(SshClient sshClient, MeoServeur server, int port1, int port2, TextBox textbox) {
+		public void prepare(SshClient sshClient, MeoServeur server, int port1, int port2, TextBox textbox, log4net.ILog LOGGER) {
 			this.server=server;
 			this.sshClient = sshClient;
 			this.port1=port1;
 			this.port2=port2;
 			this.textbox=textbox;
+			this.LOGGER=LOGGER;
 		}
 		
 		
 		public void connectAdminBW_DoWork(object sender, DoWorkEventArgs e)
 		{
 			doStartWorker("Debut du travail ");
-			RechercheMagasinUtil rechercheUtil = new RechercheMagasinUtil();
+			RechercheMagasinUtil rechercheUtil = new RechercheMagasinUtil(LOGGER);
 			sshClient = rechercheUtil.doConnection(server, port1, port2, this);
 			doEndWorkerSshClientCallBack("fini", sshClient, textbox);
 		}

@@ -21,7 +21,6 @@ namespace MoulUtil.Forms.utils
 		private int progression=0;
 		private MouliUtil mouliUtil = null;
 		private ConfigDto configDto=null;
-		//private const String scriptModele  + "/conf/modele.moulinette"
 		private log4net.ILog  LOGGER=null;
 		
 		public MouliActionUtil(MouliActionForm form, ConfigDto configDto, log4net.ILog  LOGGER)
@@ -153,7 +152,7 @@ namespace MoulUtil.Forms.utils
 					file = file.ToLower();
 				}
 				path += mouliUtil.getJoint();
-				Console.WriteLine("ordo_top_fixe :" + path + file);
+				LOGGER.Info("ordo_top_fixe :" + path + file);
 				selectionJ[0] = file;
 			}
 			
@@ -165,7 +164,7 @@ namespace MoulUtil.Forms.utils
 			mouliUtil.writeJobFile(scriptJobMoulinetteFile, scriptMoulinetteFile, options);
 			
 			String dataMag = (mouliUtil.getData() + mouliUtil.getMag01());
-			Console.WriteLine("Complete archive .." + dataMag);
+			LOGGER.Info("Complete archive .." + dataMag);
 			String dataMagJoint = dataMag + "Joint/";
 			selectionY = ConvertisseurUtil.convertitListArray(selectionYfiles);
 			
@@ -253,7 +252,7 @@ namespace MoulUtil.Forms.utils
 				outputFile.NewLine = "\n";
 				outputFile.WriteLine(DateTime.Now+ " prepa moulinette : "+sourceMoulinette + " "+getDetails(options));
 			} catch (Exception e) {
-				Console.WriteLine(e);
+				LOGGER.Error(e);
 			} finally {
 				outputFile.Close();
 			}
@@ -306,16 +305,16 @@ namespace MoulUtil.Forms.utils
 			//majProgression(99);
 			// Fin
 			Directory.SetCurrentDirectory (configDto.getProgramPath());
-			Console.WriteLine("fin archive "+job.getArchiveName());
+			LOGGER.Info("fin archive "+job.getArchiveName());
 			printRecap(job.getStatRecap());
 		}
 		private void printRecap( MouliStatRecap statRecap)
 		{
 			foreach(String s in statRecap.notFoundList) {
-				Console.WriteLine("Absent : "+s);
+				LOGGER.Warn("Absent : "+s);
 			}
-			Console.WriteLine(" PDF : trouvés : "+statRecap.foundFiles+"  -- NON TROUVES : "+statRecap.notFoundList.Count);
-			Console.WriteLine(" fichiers  présents : ("+statRecap.datamag+"/) : "+statRecap.mag01FilesTotal+"  (Joint/) : "+statRecap.jointDocsTotal);
+			LOGGER.Info(" PDF : trouvés : "+statRecap.foundFiles+"  -- NON TROUVES : "+statRecap.notFoundList.Count);
+			LOGGER.Info(" fichiers  présents : ("+statRecap.datamag+"/) : "+statRecap.mag01FilesTotal+"  (Joint/) : "+statRecap.jointDocsTotal);
 		}
 	}
 }

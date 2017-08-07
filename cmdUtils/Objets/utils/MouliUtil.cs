@@ -176,7 +176,21 @@ namespace cmdUtils.Objets
 			int foundFiles = 0;
 			String path = getData()+getMag01()+getJoint();// "data/mag" + m01 + "/Joint/";
 			if (Directory.Exists(path) && (File.Exists(file))) {
-				//MyUtil myUtil = new MyUtil();
+				//rustique
+				string[] totalLst= Directory.GetFiles(path, "*.*");
+				string[] pngLst= Directory.GetFiles(path, "*.png");
+				string[] jpgLst= Directory.GetFiles(path, "*.jpg");
+				string[] jpegLst= Directory.GetFiles(path, "*.jpeg");
+				string[] pdfLst= Directory.GetFiles(path, "*.pdf");
+				LOGGER.Info("fichiers :"+totalLst.Length
+				            +" pdf:"+pdfLst.Length
+				            +" png:"+pngLst.Length
+				            +" jpg:"+(jpgLst.Length+jpegLst.Length));
+				if(pngLst.Length+jpgLst.Length+jpegLst.Length+pdfLst.Length < 1) {
+					LOGGER.Warn("no hot files here : "+path);
+					return foundFiles;
+				}
+
 				String[] lignes = myUtil.readScript(file).Split('\n');
 				//commencer ligne 2, cause titre.
 				for (int numLigne = 1; numLigne < lignes.GetLength(0); numLigne++) {

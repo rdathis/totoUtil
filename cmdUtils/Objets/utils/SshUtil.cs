@@ -102,7 +102,8 @@ namespace cmdUtils.Objets
 			return liste;
 		}
 		
-		public SshClient getClientWithForwardedPorts(MeoServeur serveur, List<KeyValuePair<int, int>>portsList)
+		private log4net.ILog  LOGGER=null;
+		public SshClient getClientWithForwardedPorts(MeoServeur serveur, List<KeyValuePair<int, int>>portsList, log4net.ILog LOGGER)
 		{
 			SshClient client = new SshClient(getConnectionInfo(serveur));
 			client.Connect();
@@ -111,8 +112,8 @@ namespace cmdUtils.Objets
 				foreach (KeyValuePair<int, int> forwardedPort  in portsList) {
 					int local = forwardedPort.Key;
 					int distant = forwardedPort.Value;
-					Console.WriteLine(" Ajout forward : (local) :" + local);
-					Console.WriteLine(" Ajout forward : (distant) :" + distant);
+					LOGGER.Info(" Ajout forward : (local) :" + local);
+					LOGGER.Info(" Ajout forward : (distant) :" + distant);
 					//ForwardedPort port = new ForwardedPortRemote(serveur.getAdresse(), (uint) distant, "127.0.0.1", (uint) local);
 					//
 					ForwardedPort port = new ForwardedPortLocal("127.0.0.1", (uint)local, "127.0.0.1", (uint)distant);
@@ -125,7 +126,7 @@ namespace cmdUtils.Objets
 
 				//client.Disconnect();
 			} else {
-				Console.WriteLine("Client " + serveur.adresse + " cannot be reached...");
+				LOGGER.Warn("Client " + serveur.adresse + " cannot be reached...");
 			}
 			return client;
 		}
