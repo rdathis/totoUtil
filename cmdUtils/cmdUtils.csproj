@@ -126,6 +126,7 @@
     <Compile Include="Objets\utils\RegistryUtil.cs" />
     <Compile Include="Objets\utils\RichTextBoxUtilcs.cs" />
     <Compile Include="Objets\utils\SshUtil.cs" />
+    <Compile Include="Objets\utils\ToolTipUtil.cs" />
     <Compile Include="Objets\utils\TreeViewUtil.cs" />
     <Compile Include="Objets\utils\ZipUtil.cs" />
     <Compile Include="Objets\YFiles.cs" />

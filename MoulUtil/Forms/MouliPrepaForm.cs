@@ -9,6 +9,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Net.Sockets;
 using System.Windows.Forms;
 using Renci.SshNet;
 using cmdUtils.Objets;
@@ -40,6 +41,7 @@ namespace MoulUtil
 		private String infoMessage=null;
 		private String sauvegardeProgressMessage=null;
 		private Double sauvegardeProgressValue=-1;
+		private ToolTipUtil	toolTipUtil = new ToolTipUtil();
 		
 		
 		public MouliPrepaForm(ConfigDto configDto, log4net.ILog  LOGGER)
@@ -78,11 +80,37 @@ namespace MoulUtil
 			svgFinalNavigatorUserControl.setBoxes(targetSvgPathBox, targetNameBox);
 			sourceNavigatorUserControl.setBox(sourceBaseComboBox);
 			populateSourceBox(configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.moulinetteSource));
-			
-			ToolTip t = new ToolTip();
-			t.SetToolTip(workingDirBox, "test tooltip");
+			populateToolTips();
 		}
 
+		void populateToolTips()
+		{
+			toolTipUtil.add(this.rechMagIdBox, "MagId magasin");
+			toolTipUtil.add(this.workingDirBox, "Espace de travail (workspace)");
+			toolTipUtil.add(this.magDescBox, "Description du magasin");
+			toolTipUtil.add(this.propositionBox, "Proposition de chemin pour les données à préparer");
+			toolTipUtil.add(this.sourceBaseComboBox, "Liste des sources des données possibles");
+			toolTipUtil.add(this.sourceFilterBox, "Filtrage dans les sources");
+			toolTipUtil.add(this.sourceListBox, "Choix de la source de donnée");
+//			
+			toolTipUtil.add(this.workspaceBaseBox, "Répertoire de base");
+			toolTipUtil.add(this.workspaceZoneBox, "répertoire de travail");
+//			
+			toolTipUtil.add(this.targetSvgPathBox, "Répertoire des sauvegardes");
+			toolTipUtil.add(this.targetNameBox, "nom de la sauvegarde");
+//			
+			toolTipUtil.add(this.sqlBtn, "Accès aux requêtes (totaux, purges...)");
+			toolTipUtil.add(this.configBtn, "Paramètrages");
+//
+			toolTipUtil.add(this.historyLabel, "Accès à l'historique");
+			toolTipUtil.add(this.serveursContextMenu, "Connection directs aux serveurs (Putty)");
+//
+			toolTipUtil.add(this.rechMagIdBtn, "Rechercher un magasin avec ce magId");
+			toolTipUtil.add(this.createBtn, "Créer ce répertoire de travail ");
+			toolTipUtil.add(this.sauvegardeBtn, "Sauvegarder les données");
+			toolTipUtil.add(this.prepareBtn, "Préparer les données");
+			toolTipUtil.add(this.copyBtn, "Copier le chemin proposé vers la préparation et la sauvegarde");
+		}
 		void populateSourceBox(string str)
 		{
 			sourceBaseComboBox.Items.Clear();
