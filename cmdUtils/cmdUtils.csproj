@@ -125,6 +125,7 @@
     <Compile Include="Objets\utils\RechercheMagasinUtil.cs" />
     <Compile Include="Objets\utils\RegistryUtil.cs" />
     <Compile Include="Objets\utils\RichTextBoxUtilcs.cs" />
+    <Compile Include="Objets\utils\SoundUtil.cs" />
     <Compile Include="Objets\utils\SshUtil.cs" />
     <Compile Include="Objets\utils\ToolTipUtil.cs" />
     <Compile Include="Objets\utils\TreeViewUtil.cs" />

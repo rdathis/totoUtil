@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using MoulUtil.Forms.utils;
 using cmdUtils;
 using cmdUtils.Objets;
+using cmdUtils.Objets.utils;
 
 namespace MoulUtil
 {
@@ -30,6 +31,7 @@ namespace MoulUtil
 		private RichTextBoxUtil richTextBoxUtil=new RichTextBoxUtil();
 		// disable FieldCanBeMadeReadOnly.Local
 		private log4net.ILog LOGGER=null;
+		private ToolTipUtil toolTipUtil=new ToolTipUtil();
 		//
 		//just for timer + bgworker
 		private String progressBoxText=null;
@@ -67,6 +69,40 @@ namespace MoulUtil
 			AnalyseLabelClick(null, null);
 		}
 		
+		void populateToolTips()
+		{
+			toolTipUtil.add(this.purgeClientChkBox, "Demander un import des données CLIENTS sans extensions (dossiers de moins de 10 ans)");
+			toolTipUtil.add(this.purgeStockChkBox, "Demander un import des données STOCK sans extensions (stock nul ou neg. limité à 1 an plein)");
+			toolTipUtil.add(this.irrisMagTBox, "Numero de mag dans irris (de mag01 à  mag99 ?)");
+			toolTipUtil.add(this.path, "chemin de la moulinette");
+			toolTipUtil.add(this.dateTimePicker, "Choix de la date d'installation des données(à 8h00 du matin)");
+			toolTipUtil.add(this.magIdTextBox, "magId ");
+
+			toolTipUtil.add(this.analyseLabel, "Analyser les données pour calculer les options");
+
+			toolTipUtil.add(this.optionCCheckBox, "Inclure les données CLIENT dans le traitement");
+			toolTipUtil.add(this.optionSCheckBox, "Inclure les données STOCK dans le traitement");
+			toolTipUtil.add(this.optionJCheckBox, "Inclure les documents du mag01/Joint/.. dans le traitement (pdf, jpg, png)");
+			toolTipUtil.add(this.optionDCheckBox, "Inclure les documents du ord01/ et doc01/ (irris)");
+			toolTipUtil.add(this.optionC1CheckBox, "ANNULER une moulinette CLIENT");
+			toolTipUtil.add(this.optionS1CheckBox, "ANNULER une moulinette STOCK");
+
+			toolTipUtil.add(this.propositionMailsListBox, "Choix d'emails possibles");
+			toolTipUtil.add(this.puttyLink, "lancer un putty vers ce serveur");
+			toolTipUtil.add(this.pscpLink, "copier les données avec pscp (préférer '[upload]' ");
+
+			toolTipUtil.add(this.emailTextbox, "Email qui recevra les notifications de début et de fin du des traitements");
+			toolTipUtil.add(this.progressTextBox, "progression ");
+
+			toolTipUtil.add(this.visuJobLabel, "Afficher le contenu du fichier 'job' (planification) ");
+			toolTipUtil.add(this.visuScriptLabel, "afficher le contenu du fichier 'script' (exécution du traitement) ");
+
+			toolTipUtil.add(this.goButton, "Lancer la création de l'archive");
+			toolTipUtil.add(this.uploadButton, "Uploader l'archive vers le serveur cible");
+			toolTipUtil.add(this.installBtn, "Installer le job sur le serveur cible (à la date paramétrée plus haut)");
+			toolTipUtil.add(this.exitButton, "Fermer la fenêtre");
+		}
+		
 		void prepareTimer()
 		{
 			formTimer.Interval=500;
@@ -100,7 +136,7 @@ namespace MoulUtil
 			pscpLink.Visible = false;
 			dateTimePicker.Value = new MouliUtil(LOGGER).calculeNextPlannedJob();
 			prepareTimer();
-			
+			populateToolTips();
 			activeExtension(purgeClientChkBox, options.getExtensionClient());
 			activeExtension(purgeStockChkBox, options.getExtensionStock());
 			installBtn.Enabled = false;

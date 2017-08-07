@@ -10,6 +10,7 @@ using MoulUtil.Forms.utils;
 using Renci.SshNet;
 using cmdUtils.Objets;
 using cmdUtils.Objets.business;
+using cmdUtils.Objets.utils;
 namespace MoulUtil
 {
 	/// <summary>
@@ -26,9 +27,10 @@ namespace MoulUtil
 		private MouliUtilOptions options = null;
 		private ConnectServerBackgroundWorker connectWorker = new ConnectServerBackgroundWorker();
 		private SshClient sshClient=null;
-		private log4net.ILog  LOGGER;
+		private readonly log4net.ILog  LOGGER;
 		private String detailMessage=null;
 		private Boolean doTotaux=false;
+		private ToolTipUtil toolTipUtil = new ToolTipUtil ();
 		
 		public MouliSQLForm(log4net.ILog  ILOG, String magId, MouliUtilOptions options) {
 			InitializeComponent();
@@ -125,7 +127,25 @@ namespace MoulUtil
 			
 			visiteLimiteBox.Enabled=false;
 			stockLimiteBox.Enabled=false;
+			populateToolTips();
 		}
+
+		void populateToolTips()
+		{
+			toolTipUtil.add(this.magasinIdBox, "magasin Id");
+			toolTipUtil.add(this.totauxLabel, "Afficher les totaux actuels pour ce magasin");
+			toolTipUtil.add(this.anneeStockPurgeBox, "Critère d'année de purge (stock)");
+			toolTipUtil.add(this.statStockLabel, "Lancer la requête d'état du stock pour ce magasin");
+			toolTipUtil.add(this.stockLimiteBox, "Information : limite actuelle de stock pour ce magasin");
+			toolTipUtil.add(this.purgeStockLabel, "lancer la purge de stock sur ce magasin, en fonction de la date critère");
+			toolTipUtil.add(this.anneeVisitePurgeBox, "Critère d'année de purge (visites)");
+			toolTipUtil.add(this.statVisitesLabel, "Lancer la requête d'état des visites pour ce magasin");
+			toolTipUtil.add(this.visiteLimiteBox, "Information : limite actuelle de visites pour ce magasin");
+			toolTipUtil.add(this.purgeVisitesLabel, "Lancer la purge des visites sur ce magasin, en fonction de la date critère");
+			toolTipUtil.add(this.detailmagasinBox, "Informations générales sur le magasin");
+			toolTipUtil.add(this.dataGridView1, "Résultat des requêtes ");
+		}
+
 		private void doStatStock() {
 			populateGrid(statStockLabel.Tag.ToString(), anneeStockPurgeBox.Text);
 			purgeStockLabel.Visible=true;

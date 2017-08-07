@@ -91,7 +91,7 @@ namespace MoulUtil.Forms.utils
 			String originalDir = Directory.GetCurrentDirectory();
 			Directory.SetCurrentDirectory(sourceMoulinette);
 			
-	
+			
 			MouliStatRecap statsRecap = new MouliStatRecap();
 			List<String> liste = populateListe(false, options, statsRecap);
 			mouliUtil = new MouliUtil(LOGGER);
@@ -153,7 +153,10 @@ namespace MoulUtil.Forms.utils
 				}
 				path += mouliUtil.getJoint();
 				LOGGER.Info("ordo_top_fixe :" + path + file);
-				selectionJ[0] = file;
+				
+				if (filtreFichiers(filtre, options, JFiles.ordo_top_fixe)) {
+					selectionJ[0] = file;
+				}
 			}
 			
 			String scriptMoulinetteFile= options.getScriptFileName();
@@ -215,6 +218,13 @@ namespace MoulUtil.Forms.utils
 		{
 			if(filtre) {
 				return (((isStock(yfile) && options.doStock))|| (isClient(yfile) && options.doClient));
+			}
+			return true;
+		}
+		private bool filtreFichiers(bool filtre, MouliUtilOptions options, JFiles jfile)
+		{
+			if(filtre) {
+				return (options.doJoint);
 			}
 			return true;
 		}
@@ -281,9 +291,9 @@ namespace MoulUtil.Forms.utils
 			
 			MouliStatRecap statsRecap = new MouliStatRecap();
 			
-			//Actualisation de la liste des fichier, en fonction des options.  
+			//Actualisation de la liste des fichier, en fonction des options.
 			List<String> liste = populateListe(true, job.getOptions(), statsRecap);
-			//			
+			//
 			if (job.getOptions()!=null) {
 				List <String> doc01 = job.getOptions().getDoc01();
 				List <String> ord01 = job.getOptions().getOrd01();
