@@ -93,11 +93,12 @@ namespace MoulUtil.Forms.utils
 			}
 		}
 
-		private void createMock(string path)
+		public void createMock(string path, string magIrris)
 		{
 			
 			MouliUtil mouliUtil = new MouliUtil(LOGGER);
 			String dataPath=mouliUtil.getData();
+			mouliUtil.setMagasinIrris(magIrris);
 			String magPath=mouliUtil.getMag01();
 			String extension = ".d";
 			
@@ -119,7 +120,8 @@ namespace MoulUtil.Forms.utils
 		                                          TextBox magDescBox, //
 		                                          TextBox propositionBox,//
 		                                          String workingPath, //
-		                                          Button sqlBtn//
+		                                          Button sqlBtn, //
+		                                          String magIrris //
 		                                         ) {
 			
 			MouliUtilOptions options=null;
@@ -136,7 +138,7 @@ namespace MoulUtil.Forms.utils
 				propositionBox.Text = configDto.getWorkingDir()+rep;
 				propositionBox.Text =rep;
 				mouliPrepaForm.CreateBtnClick(null, null);
-				createMock(workingPath+propositionBox.Text);
+				createMock(workingPath+propositionBox.Text, magIrris);
 				options = new MouliUtilOptions();
 				options.setMagId(rechMagIdBox.Text);
 				options.setInstanceName("meo_test");

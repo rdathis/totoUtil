@@ -45,6 +45,10 @@ namespace MoulUtil
 			this.workspaceBaseBox = new System.Windows.Forms.TextBox();
 			this.workspaceZoneBox = new System.Windows.Forms.TextBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.MockBtn = new System.Windows.Forms.Button();
+			this.magIrrisBox = new System.Windows.Forms.TextBox();
+			this.label2 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
 			this.workingDirBox = new System.Windows.Forms.TextBox();
 			this.workspaceLabel = new System.Windows.Forms.Label();
 			this.createBtn = new System.Windows.Forms.Button();
@@ -54,10 +58,8 @@ namespace MoulUtil
 			this.sourceBaseComboBox = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.workspaceNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
-			this.navigatorUserControl2 = new cmdUtils.Controles.NavigatorUserControl();
 			this.zonePrepaNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
 			this.prepareBtn = new System.Windows.Forms.Button();
-			this.userControl11 = new cmdUtils.TotoRectangle();
 			this.targetNameBox = new System.Windows.Forms.TextBox();
 			this.targetSvgPathBox = new System.Windows.Forms.TextBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -65,7 +67,6 @@ namespace MoulUtil
 			this.svgFinalNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
 			this.svgBaseNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
 			this.sauvegardeBtn = new System.Windows.Forms.Button();
-			this.userControl12 = new cmdUtils.TotoRectangle();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolTipLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
@@ -88,18 +89,19 @@ namespace MoulUtil
 			// 
 			// rechMagIdBtn
 			// 
-			this.rechMagIdBtn.Location = new System.Drawing.Point(130, 49);
+			this.rechMagIdBtn.BackColor = System.Drawing.SystemColors.Control;
+			this.rechMagIdBtn.Location = new System.Drawing.Point(208, 45);
 			this.rechMagIdBtn.Name = "rechMagIdBtn";
-			this.rechMagIdBtn.Size = new System.Drawing.Size(75, 23);
+			this.rechMagIdBtn.Size = new System.Drawing.Size(95, 23);
 			this.rechMagIdBtn.TabIndex = 1;
-			this.rechMagIdBtn.Text = "recherche";
-			this.rechMagIdBtn.UseVisualStyleBackColor = true;
+			this.rechMagIdBtn.Text = "&Recherche ";
+			this.rechMagIdBtn.UseVisualStyleBackColor = false;
 			this.rechMagIdBtn.Click += new System.EventHandler(this.RechMagIdBtnClick);
 			// 
 			// rechMagIdBox
 			// 
 			this.rechMagIdBox.AcceptsReturn = true;
-			this.rechMagIdBox.Location = new System.Drawing.Point(12, 49);
+			this.rechMagIdBox.Location = new System.Drawing.Point(90, 45);
 			this.rechMagIdBox.Name = "rechMagIdBox";
 			this.rechMagIdBox.Size = new System.Drawing.Size(108, 20);
 			this.rechMagIdBox.TabIndex = 0;
@@ -117,13 +119,13 @@ namespace MoulUtil
 			this.magDescBox.Location = new System.Drawing.Point(311, 13);
 			this.magDescBox.Multiline = true;
 			this.magDescBox.Name = "magDescBox";
-			this.magDescBox.Size = new System.Drawing.Size(325, 85);
+			this.magDescBox.Size = new System.Drawing.Size(328, 120);
 			this.magDescBox.TabIndex = 4;
 			// 
 			// sourceListBox
 			// 
 			this.sourceListBox.FormattingEnabled = true;
-			this.sourceListBox.Location = new System.Drawing.Point(37, 149);
+			this.sourceListBox.Location = new System.Drawing.Point(38, 192);
 			this.sourceListBox.Name = "sourceListBox";
 			this.sourceListBox.Size = new System.Drawing.Size(624, 95);
 			this.sourceListBox.TabIndex = 8;
@@ -146,6 +148,11 @@ namespace MoulUtil
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.BackColor = System.Drawing.Color.PowderBlue;
+			this.groupBox1.Controls.Add(this.MockBtn);
+			this.groupBox1.Controls.Add(this.magIrrisBox);
+			this.groupBox1.Controls.Add(this.label2);
+			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Controls.Add(this.workingDirBox);
 			this.groupBox1.Controls.Add(this.workspaceLabel);
 			this.groupBox1.Controls.Add(this.createBtn);
@@ -153,19 +160,54 @@ namespace MoulUtil
 			this.groupBox1.Controls.Add(this.magDescBox);
 			this.groupBox1.Controls.Add(this.rechMagIdBtn);
 			this.groupBox1.Controls.Add(this.rechMagIdBox);
+			this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.groupBox1.Location = new System.Drawing.Point(25, 0);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(644, 105);
+			this.groupBox1.Size = new System.Drawing.Size(644, 139);
 			this.groupBox1.TabIndex = 8;
 			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "rechercheMagasin";
+			this.groupBox1.Text = "Recherche du Magasin";
+			// 
+			// MockBtn
+			// 
+			this.MockBtn.BackColor = System.Drawing.SystemColors.Control;
+			this.MockBtn.Location = new System.Drawing.Point(252, 78);
+			this.MockBtn.Name = "MockBtn";
+			this.MockBtn.Size = new System.Drawing.Size(51, 23);
+			this.MockBtn.TabIndex = 12;
+			this.MockBtn.Text = "&Mock";
+			this.MockBtn.UseVisualStyleBackColor = false;
+			this.MockBtn.Click += new System.EventHandler(this.MockBtnClick);
+			// 
+			// magIrrisBox
+			// 
+			this.magIrrisBox.Location = new System.Drawing.Point(90, 78);
+			this.magIrrisBox.Name = "magIrrisBox";
+			this.magIrrisBox.Size = new System.Drawing.Size(57, 20);
+			this.magIrrisBox.TabIndex = 11;
+			// 
+			// label2
+			// 
+			this.label2.Location = new System.Drawing.Point(1, 81);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(96, 18);
+			this.label2.TabIndex = 10;
+			this.label2.Text = "Num. Mag IRRIS";
+			// 
+			// label1
+			// 
+			this.label1.Location = new System.Drawing.Point(6, 45);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(78, 20);
+			this.label1.TabIndex = 9;
+			this.label1.Text = "magId";
 			// 
 			// workingDirBox
 			// 
 			this.workingDirBox.AccessibleDescription = "AAA";
-			this.workingDirBox.Location = new System.Drawing.Point(103, 19);
+			this.workingDirBox.Location = new System.Drawing.Point(90, 19);
 			this.workingDirBox.Name = "workingDirBox";
-			this.workingDirBox.Size = new System.Drawing.Size(179, 20);
+			this.workingDirBox.Size = new System.Drawing.Size(192, 20);
 			this.workingDirBox.TabIndex = 8;
 			// 
 			// workspaceLabel
@@ -178,32 +220,34 @@ namespace MoulUtil
 			// 
 			// createBtn
 			// 
-			this.createBtn.Location = new System.Drawing.Point(253, 76);
+			this.createBtn.BackColor = System.Drawing.SystemColors.Control;
+			this.createBtn.Location = new System.Drawing.Point(252, 111);
 			this.createBtn.Name = "createBtn";
 			this.createBtn.Size = new System.Drawing.Size(51, 23);
 			this.createBtn.TabIndex = 6;
 			this.createBtn.Text = "&Create";
-			this.createBtn.UseVisualStyleBackColor = true;
+			this.createBtn.UseVisualStyleBackColor = false;
 			this.createBtn.Click += new System.EventHandler(this.CreateBtnClick);
 			// 
 			// propositionBox
 			// 
-			this.propositionBox.Location = new System.Drawing.Point(13, 78);
+			this.propositionBox.Location = new System.Drawing.Point(12, 113);
 			this.propositionBox.Name = "propositionBox";
 			this.propositionBox.Size = new System.Drawing.Size(234, 20);
 			this.propositionBox.TabIndex = 5;
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.BackColor = System.Drawing.Color.LightBlue;
 			this.groupBox2.Controls.Add(this.sourceNavigatorUserControl);
 			this.groupBox2.Controls.Add(this.sourceBaseComboBox);
 			this.groupBox2.Controls.Add(this.sourceFilterBox);
-			this.groupBox2.Location = new System.Drawing.Point(24, 111);
+			this.groupBox2.Location = new System.Drawing.Point(25, 154);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(644, 142);
 			this.groupBox2.TabIndex = 9;
 			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "source";
+			this.groupBox2.Text = "Source des données";
 			// 
 			// sourceNavigatorUserControl
 			// 
@@ -223,16 +267,15 @@ namespace MoulUtil
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.BackColor = System.Drawing.Color.DeepSkyBlue;
 			this.groupBox3.Controls.Add(this.workspaceNavigatorUserControl);
-			this.groupBox3.Controls.Add(this.navigatorUserControl2);
 			this.groupBox3.Controls.Add(this.zonePrepaNavigatorUserControl);
 			this.groupBox3.Controls.Add(this.prepareBtn);
 			this.groupBox3.Controls.Add(this.workspaceBaseBox);
 			this.groupBox3.Controls.Add(this.workspaceZoneBox);
-			this.groupBox3.Controls.Add(this.userControl11);
-			this.groupBox3.Location = new System.Drawing.Point(25, 261);
+			this.groupBox3.Location = new System.Drawing.Point(26, 304);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(644, 43);
+			this.groupBox3.Size = new System.Drawing.Size(644, 53);
 			this.groupBox3.TabIndex = 10;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Zone préparation";
@@ -245,39 +288,24 @@ namespace MoulUtil
 			this.workspaceNavigatorUserControl.Size = new System.Drawing.Size(85, 23);
 			this.workspaceNavigatorUserControl.TabIndex = 19;
 			// 
-			// navigatorUserControl2
-			// 
-			this.navigatorUserControl2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			this.navigatorUserControl2.Location = new System.Drawing.Point(177, 16);
-			this.navigatorUserControl2.Name = "navigatorUserControl2";
-			this.navigatorUserControl2.Size = new System.Drawing.Size(8, 8);
-			this.navigatorUserControl2.TabIndex = 18;
-			// 
 			// zonePrepaNavigatorUserControl
 			// 
 			this.zonePrepaNavigatorUserControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			this.zonePrepaNavigatorUserControl.Location = new System.Drawing.Point(130, 0);
+			this.zonePrepaNavigatorUserControl.Location = new System.Drawing.Point(221, 1);
 			this.zonePrepaNavigatorUserControl.Name = "zonePrepaNavigatorUserControl";
 			this.zonePrepaNavigatorUserControl.Size = new System.Drawing.Size(85, 23);
 			this.zonePrepaNavigatorUserControl.TabIndex = 17;
 			// 
 			// prepareBtn
 			// 
-			this.prepareBtn.Location = new System.Drawing.Point(562, 0);
+			this.prepareBtn.BackColor = System.Drawing.SystemColors.Control;
+			this.prepareBtn.Location = new System.Drawing.Point(490, 0);
 			this.prepareBtn.Name = "prepareBtn";
-			this.prepareBtn.Size = new System.Drawing.Size(75, 23);
+			this.prepareBtn.Size = new System.Drawing.Size(147, 23);
 			this.prepareBtn.TabIndex = 13;
-			this.prepareBtn.Text = "&Prepare";
-			this.prepareBtn.UseVisualStyleBackColor = true;
+			this.prepareBtn.Text = "&Preparer les données";
+			this.prepareBtn.UseVisualStyleBackColor = false;
 			this.prepareBtn.Click += new System.EventHandler(this.PrepareBtnClick);
-			// 
-			// userControl11
-			// 
-			this.userControl11.BackColor = System.Drawing.Color.Red;
-			this.userControl11.Location = new System.Drawing.Point(312, 0);
-			this.userControl11.Name = "userControl11";
-			this.userControl11.Size = new System.Drawing.Size(332, 59);
-			this.userControl11.TabIndex = 16;
 			// 
 			// targetNameBox
 			// 
@@ -295,19 +323,19 @@ namespace MoulUtil
 			// 
 			// groupBox4
 			// 
+			this.groupBox4.BackColor = System.Drawing.Color.LightSkyBlue;
 			this.groupBox4.Controls.Add(this.sauvegardeProgressTextBox);
 			this.groupBox4.Controls.Add(this.svgFinalNavigatorUserControl);
 			this.groupBox4.Controls.Add(this.svgBaseNavigatorUserControl);
 			this.groupBox4.Controls.Add(this.sauvegardeBtn);
 			this.groupBox4.Controls.Add(this.targetNameBox);
 			this.groupBox4.Controls.Add(this.targetSvgPathBox);
-			this.groupBox4.Controls.Add(this.userControl12);
-			this.groupBox4.Location = new System.Drawing.Point(25, 320);
+			this.groupBox4.Location = new System.Drawing.Point(26, 363);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(644, 76);
+			this.groupBox4.Size = new System.Drawing.Size(644, 88);
 			this.groupBox4.TabIndex = 13;
 			this.groupBox4.TabStop = false;
-			this.groupBox4.Text = "Sauvegarde";
+			this.groupBox4.Text = "Sauvegarde du résultat";
 			// 
 			// sauvegardeProgressTextBox
 			// 
@@ -330,28 +358,21 @@ namespace MoulUtil
 			// svgBaseNavigatorUserControl
 			// 
 			this.svgBaseNavigatorUserControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			this.svgBaseNavigatorUserControl.Location = new System.Drawing.Point(130, 0);
+			this.svgBaseNavigatorUserControl.Location = new System.Drawing.Point(221, 0);
 			this.svgBaseNavigatorUserControl.Name = "svgBaseNavigatorUserControl";
-			this.svgBaseNavigatorUserControl.Size = new System.Drawing.Size(85, 23);
+			this.svgBaseNavigatorUserControl.Size = new System.Drawing.Size(83, 23);
 			this.svgBaseNavigatorUserControl.TabIndex = 18;
 			// 
 			// sauvegardeBtn
 			// 
-			this.sauvegardeBtn.Location = new System.Drawing.Point(563, 0);
+			this.sauvegardeBtn.BackColor = System.Drawing.SystemColors.Control;
+			this.sauvegardeBtn.Location = new System.Drawing.Point(490, 0);
 			this.sauvegardeBtn.Name = "sauvegardeBtn";
-			this.sauvegardeBtn.Size = new System.Drawing.Size(75, 23);
+			this.sauvegardeBtn.Size = new System.Drawing.Size(148, 23);
 			this.sauvegardeBtn.TabIndex = 14;
-			this.sauvegardeBtn.Text = "&sauvegarde";
-			this.sauvegardeBtn.UseVisualStyleBackColor = true;
+			this.sauvegardeBtn.Text = "&Sauvegarder les données";
+			this.sauvegardeBtn.UseVisualStyleBackColor = false;
 			this.sauvegardeBtn.Click += new System.EventHandler(this.SauvegardeBtnClick);
-			// 
-			// userControl12
-			// 
-			this.userControl12.BackColor = System.Drawing.Color.Red;
-			this.userControl12.Location = new System.Drawing.Point(312, 0);
-			this.userControl12.Name = "userControl12";
-			this.userControl12.Size = new System.Drawing.Size(332, 43);
-			this.userControl12.TabIndex = 17;
 			// 
 			// statusStrip1
 			// 
@@ -378,7 +399,7 @@ namespace MoulUtil
 			// copyBtn
 			// 
 			this.copyBtn.BackColor = System.Drawing.Color.Red;
-			this.copyBtn.Location = new System.Drawing.Point(8, 56);
+			this.copyBtn.Location = new System.Drawing.Point(2, 111);
 			this.copyBtn.Name = "copyBtn";
 			this.copyBtn.Size = new System.Drawing.Size(29, 17);
 			this.copyBtn.TabIndex = 15;
@@ -390,7 +411,7 @@ namespace MoulUtil
 			// sqlBtn
 			// 
 			this.sqlBtn.Enabled = false;
-			this.sqlBtn.Location = new System.Drawing.Point(24, 414);
+			this.sqlBtn.Location = new System.Drawing.Point(25, 457);
 			this.sqlBtn.Name = "sqlBtn";
 			this.sqlBtn.Size = new System.Drawing.Size(75, 23);
 			this.sqlBtn.TabIndex = 16;
@@ -402,7 +423,7 @@ namespace MoulUtil
 			// 
 			this.configBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
 			this.configBtn.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.configBtn.Location = new System.Drawing.Point(24, 454);
+			this.configBtn.Location = new System.Drawing.Point(220, 457);
 			this.configBtn.Name = "configBtn";
 			this.configBtn.Size = new System.Drawing.Size(75, 23);
 			this.configBtn.TabIndex = 17;
@@ -416,9 +437,9 @@ namespace MoulUtil
 			| System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.targetTreeView.ContextMenuStrip = this.serveursContextMenu;
-			this.targetTreeView.Location = new System.Drawing.Point(336, 402);
+			this.targetTreeView.Location = new System.Drawing.Point(337, 455);
 			this.targetTreeView.Name = "targetTreeView";
-			this.targetTreeView.Size = new System.Drawing.Size(345, 332);
+			this.targetTreeView.Size = new System.Drawing.Size(345, 279);
 			this.targetTreeView.TabIndex = 18;
 			this.targetTreeView.DoubleClick += new System.EventHandler(this.TargetTreeViewDoubleClick);
 			this.targetTreeView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TargetTreeViewMouseClick);
@@ -450,11 +471,11 @@ namespace MoulUtil
 			// 
 			this.historyLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
 			this.historyLabel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-			this.historyLabel.Location = new System.Drawing.Point(128, 412);
+			this.historyLabel.Location = new System.Drawing.Point(129, 455);
 			this.historyLabel.Name = "historyLabel";
 			this.historyLabel.Size = new System.Drawing.Size(66, 25);
 			this.historyLabel.TabIndex = 19;
-			this.historyLabel.Text = "history";
+			this.historyLabel.Text = "&history";
 			this.historyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.historyLabel.Click += new System.EventHandler(this.HistoryLabelClick);
 			// 
@@ -494,6 +515,10 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Button MockBtn;
+		private System.Windows.Forms.TextBox magIrrisBox;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label label1;
 		private cmdUtils.Controles.NavigatorUserControl sourceNavigatorUserControl;
 		private System.Windows.Forms.ComboBox sourceBaseComboBox;
 		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
@@ -503,7 +528,6 @@ namespace MoulUtil
 		private cmdUtils.Controles.NavigatorUserControl svgFinalNavigatorUserControl;
 		private cmdUtils.Controles.NavigatorUserControl svgBaseNavigatorUserControl;
 		private cmdUtils.Controles.NavigatorUserControl workspaceNavigatorUserControl;
-		private cmdUtils.Controles.NavigatorUserControl navigatorUserControl2;
 
 			private cmdUtils.Controles.NavigatorUserControl zonePrepaNavigatorUserControl;
 			private System.Windows.Forms.ToolStripMenuItem mysqlToolStripMenuItem;
@@ -514,8 +538,6 @@ namespace MoulUtil
 			private System.Windows.Forms.Button sqlBtn;
 			private System.Windows.Forms.TextBox workingDirBox;
 			private System.Windows.Forms.Label workspaceLabel;
-			private cmdUtils.TotoRectangle userControl12;
-			private cmdUtils.TotoRectangle userControl11;
 			private System.Windows.Forms.Button copyBtn;
 			private System.Windows.Forms.Button createBtn;
 			private System.Windows.Forms.TextBox propositionBox;

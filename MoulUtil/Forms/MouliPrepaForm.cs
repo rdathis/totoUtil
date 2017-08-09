@@ -73,6 +73,7 @@ namespace MoulUtil
 			this.workingDirBox.Text = workspacePath;
 			this.workspaceBaseBox.Text = workspacePath;
 			mouliUtil = new MouliUtil(LOGGER);
+			magIrrisBox.Text=mouliUtil.getMagasinIrris();
 			cmdUtil = new CmdUtil();
 			new TreeViewUtil(configDto.instances, configDto.serveurs).populateTargets(targetTreeView);
 			//
@@ -312,7 +313,7 @@ namespace MoulUtil
 			MeoInstance adminInstance = MeoInstance.findInstanceByInstanceName(configDto.instances, "administration");
 			MeoServeur adminServeur = MeoServeur.findServeurByName(configDto.serveurs, adminInstance.serveur);
 			
-			mouliUtilOptions = mouliPrepaUtil.rechercheMagasin(adminServeur, rechMagIdBox, magDescBox, propositionBox, workingPath, sqlBtn);
+			mouliUtilOptions = mouliPrepaUtil.rechercheMagasin(adminServeur, rechMagIdBox, magDescBox, propositionBox, workingPath, sqlBtn, magIrrisBox.Text);
 			if (mouliUtilOptions != null) {
 				calculeMoulinettePath();
 				String path = workspaceZoneBox.Text;
@@ -511,6 +512,13 @@ namespace MoulUtil
 				}
 			} catch (Exception exception) {
 				LOGGER.Error(exception);
+			}
+		}
+		void MockBtnClick(object sender, EventArgs e)
+		{
+			if(propositionBox.Text!="") {
+				CreateBtnClick(null, null);
+				mouliPrepaUtil.createMock(propositionBox.Text, magIrrisBox.Text);
 			}
 		}
 	}

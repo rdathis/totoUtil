@@ -38,6 +38,9 @@ namespace cmdUtils.Objets
 		{
 			m01 = str;
 		}
+		public String getMagasinIrris() {
+			return m01;
+		}
 
 
 		private String formatPath(String path)
