@@ -34,18 +34,54 @@ namespace cmdUtils.Objets
 		{
 			this.LOGGER=LOGGER;
 		}
-		public ConfigDto readConfigXml(String path="")
+		public ConfigDto readConfigXml(String path="", String configFile=MouliConfig.commonConfigFile)
 		{
 			
 			XmlSerializer serializer = new XmlSerializer(typeof(ConfigDto));
 			
-			FileStream fileStream = new FileStream(path+MouliConfig.commonConfigFile, FileMode.Open);
+			FileStream fileStream = new FileStream(path+configFile, FileMode.Open);
 			ConfigDto dto = (ConfigDto)serializer.Deserialize(fileStream);
 			fileStream.Close();
 			//
 			dto.setProgramPath(Directory.GetCurrentDirectory());
 			//
 			return dto;
+		}
+		private void mergeConfig(ConfigDto main, ConfigDto secondary) {
+			// Params
+			foreach(ConfigParam newparam in  secondary.configParams) {
+				ConfigParam oldparam= main.getConfigParamByName(newparam.nom);
+				oldparam.Value=newparam.Value;
+			}
+			//Serveurs
+			foreach(MeoServeur newServeur in  secondary.serveurs) {
+				MeoServeur oldServeur= MeoServeur.findServeurByName(main.serveurs, newServeur.nom);
+				if(oldServeur!=null) {
+					main.serveurs.Remove(oldServeur);
+					main.serveurs.Add(newServeur);
+				}
+			}
+			//Instances
+			foreach(MeoInstance newInstance in  secondary.instances) {
+				MeoInstance oldInstance= MeoInstance.findInstanceByInstanceName(main.instances, newInstance.nom);
+				if(oldInstance!=null) {
+					main.instances.Remove(oldInstance);
+					main.instances.Add(newInstance);
+				}
+			}
+			//SQL
+			foreach(MeoSql newSql in  secondary.sqlcommands) {
+				if(main.getSql(newSql.nom)!=null) {
+					SqlCommandsType commande=(SqlCommandsType)main.getSql(newSql.nom);
+					MeoSql sql = main.getSql(commande);
+					if(sql!=null) {
+						main.sqlcommands.Remove(sql);
+						main.sqlcommands.Add(newSql);
+					}
+				}
+
+			}
+
 		}
 		private void writeXml(ConfigDto dto)
 		{
