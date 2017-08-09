@@ -16,43 +16,58 @@ namespace cmdUtils.Objets.utils
 	{
 		
 		
-		private String media=Environment.GetEnvironmentVariable("windir")+"/media/";
-		private Boolean exists=false;
-		public static class SOUNDS {
+		private String media = Environment.GetEnvironmentVariable("windir") + "/media/";
+		private Boolean exists = false;
+		public static class SOUNDS
+		{
 			public static readonly string
 				CHORD = "chord.wav",
-			DING = "ding.wav",
-			TADA= "tada.wav",
-			ERROR= "windows error.wav",
-			NOTIFY ="notify.wav";
+				DING = "ding.wav",
+				TADA = "tada.wav",
+				ERROR = "windows error.wav",
+				NOTIFY = "notify.wav";
 			
 		}
 		public SoundUtil()
 		{
-			exists=Directory.Exists(media);
-			/*
-		public string dingding()
-		{
-			return "(cat `cygpath -W`/Media/ding.wav > /dev/dsp) ";
+			exists = Directory.Exists(media);
 		}
-			 */
-		}
-	
 		public void play(string file)
 		{
-			if(File.Exists(file)) {
+			if (File.Exists(file)) {
 				new System.Media.SoundPlayer(file).Play();
 			}
 		}
 
-		public void playDingDing() {
-			if(exists) {
-				play("ding.wav");
+		public void playDingDing()
+		{
+			if (exists) {
+				play(SOUNDS.DING);
 			}
 		}
-		//chord.wav
-		//tada
-		//windows error
-		//notify
+		public void playChord()
+		{
+			if (exists) {
+				play(SOUNDS.CHORD);
+			}
+		}
+		public void playTada()
+		{
+			if (exists) {
+				play(SOUNDS.TADA);
+			}
+		}
+		public void playError()
+		{
+			if (exists) {
+				play(SOUNDS.ERROR);
+			}
+		}
+		public void playNotify()
+		{
+			if (exists) {
+				play(SOUNDS.NOTIFY);
+			}
+		}
 	}
 }

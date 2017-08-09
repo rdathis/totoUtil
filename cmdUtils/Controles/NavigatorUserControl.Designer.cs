@@ -40,14 +40,16 @@ namespace cmdUtils.Controles
 			// 
 			// navigButton
 			// 
-			this.navigButton.BackColor = System.Drawing.SystemColors.Control;
+			this.navigButton.AutoSize = true;
+			this.navigButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.navigButton.BackColor = System.Drawing.Color.Transparent;
+			this.navigButton.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.navigButton.ForeColor = System.Drawing.Color.Red;
 			this.navigButton.Image = ((System.Drawing.Image)(resources.GetObject("navigButton.Image")));
-			this.navigButton.Location = new System.Drawing.Point(3, 3);
+			this.navigButton.Location = new System.Drawing.Point(0, 0);
 			this.navigButton.Name = "navigButton";
-			this.navigButton.Size = new System.Drawing.Size(75, 23);
+			this.navigButton.Size = new System.Drawing.Size(82, 30);
 			this.navigButton.TabIndex = 0;
-			this.navigButton.Text = "go!";
 			this.navigButton.UseVisualStyleBackColor = false;
 			this.navigButton.Click += new System.EventHandler(this.NavigButtonClick);
 			this.navigButton.MouseHover += new System.EventHandler(this.NavigButtonMouseHover);
@@ -56,11 +58,12 @@ namespace cmdUtils.Controles
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			this.BackColor = System.Drawing.Color.Transparent;
 			this.Controls.Add(this.navigButton);
 			this.Name = "NavigatorUserControl";
 			this.Size = new System.Drawing.Size(82, 30);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 		private System.Windows.Forms.Button navigButton;
