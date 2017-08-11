@@ -303,6 +303,7 @@ namespace MoulUtil
 			this.irrisMagTBox.Location = new System.Drawing.Point(126, 46);
 			this.irrisMagTBox.MaxLength = 2;
 			this.irrisMagTBox.Name = "irrisMagTBox";
+			this.irrisMagTBox.ReadOnly = true;
 			this.irrisMagTBox.Size = new System.Drawing.Size(97, 20);
 			this.irrisMagTBox.TabIndex = 25;
 			// 

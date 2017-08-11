@@ -132,7 +132,6 @@ namespace MoulUtil
 		public void controleRegistre()
 		{
 			if (!registryUtil.existsHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key)) {
-				;
 				LOGGER.Warn("Creation de la clef de registre");
 				registryUtil.setHKCUString(RegistryUtil.mouliUtilPath, RegistryUtil.key, Directory.GetCurrentDirectory() + "\\");
 			}
@@ -200,6 +199,7 @@ namespace MoulUtil
 			}
 			if (workspaceBaseBox.Text.Length > 0 && workspaceZoneBox.Text.Length > 0) {
 //
+				mouliUtilOptions.setNumeroMagasinIrris(magIrrisBox.Text);
 				mouliUtilOptions.setWorkspacePath(workspaceBaseBox.Text);
 				String path = workspaceZoneBox.Text;
 				if (path.StartsWith("workspace/", StringComparison.Ordinal)) {
@@ -326,6 +326,7 @@ namespace MoulUtil
 		{
 			String proposition = workingDirBox.Text+propositionBox.Text;
 			if (proposition.Length > 0) {
+				mouliUtil.setMagasinIrris(magIrrisBox.Text);
 				mouliUtil.createArbo(proposition);
 				if (sender != null) {// cause mag zero
 					cmdUtil.executeCommande("explorer", Path.GetFullPath(proposition));
@@ -356,7 +357,7 @@ namespace MoulUtil
 		}
 		void SqlBtnClick(object sender, EventArgs e)
 		{
-			sqlForm = new MouliSQLForm(LOGGER, this.rechMagIdBox.Text, mouliUtilOptions);
+			sqlForm = new MouliSQLForm(LOGGER, this.rechMagIdBox.Text, mouliUtilOptions, configDto);
 			sqlForm.Show();
 		}
 		void ConfigBtnClick(object sender, EventArgs e)

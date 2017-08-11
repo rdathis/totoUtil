@@ -32,16 +32,17 @@ namespace MoulUtil
 		private Boolean doTotaux=false;
 		private ToolTipUtil toolTipUtil = new ToolTipUtil ();
 		
-		public MouliSQLForm(log4net.ILog  ILOG, String magId, MouliUtilOptions options) {
+		public MouliSQLForm(log4net.ILog  ILOG, String magId, MouliUtilOptions options, ConfigDto configDto) {
 			InitializeComponent();
 			this.LOGGER=ILOG;
 			this.magId=magId;
 			this.options=options;
+			this.configDto=configDto;
 			//
 			prepareTimer();
 			//
-			ConfigUtil configUtil= new ConfigUtil();
-			configDto = configUtil.getConfig();
+//			ConfigUtil configUtil= new ConfigUtil();
+//			configDto = configUtil.getConfig();
 			//
 			this.instance=MeoInstance.findInstanceByInstanceName(configDto.instances, options.getInstanceName());
 			myUtil=new MyUtil();

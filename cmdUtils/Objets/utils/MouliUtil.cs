@@ -33,7 +33,6 @@ namespace cmdUtils.Objets
 				callback(message);
 			}
 		}
-
 		public void setMagasinIrris(string str)
 		{
 			m01 = str;
@@ -41,8 +40,6 @@ namespace cmdUtils.Objets
 		public String getMagasinIrris() {
 			return m01;
 		}
-
-
 		private String formatPath(String path)
 		{
 			if (!path.EndsWith("/")) {

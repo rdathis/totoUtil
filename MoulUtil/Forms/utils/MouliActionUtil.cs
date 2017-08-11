@@ -120,7 +120,8 @@ namespace MoulUtil.Forms.utils
 			
 			String path = mouliUtil.getData() + mouliUtil.getMag01();
 			List <String> selectionYfiles = new List<string>();
-
+			mouliUtil.setMagasinIrris(options.getNumeroMagasinIrris());
+	
 			String basePath=options.getWorkspacePath()+options.getWorkingPath();
 			// Collecte des fichiers presents
 			foreach (YFiles yfile in Enum.GetValues(typeof(YFiles))) {

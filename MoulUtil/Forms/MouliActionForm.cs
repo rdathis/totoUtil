@@ -50,7 +50,7 @@ namespace MoulUtil
 			setInstances(configDto.getInstances());
 			setPath(path);
 			setMagId(options.getMagId());
-			setMagasinIrris("01");
+			setMagasinIrris(options.getNumeroMagasinIrris());
 			this.LOGGER=LOGGER;
 			prepare();
 			MeoInstance instance = MeoInstance.findInstanceByInstanceName(configDto.getInstances(), options.getInstanceName());

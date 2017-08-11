@@ -28,6 +28,7 @@ namespace MoulUtil.Forms.utils
 		{
 			this.mouliPrepaForm=mouliPrepaForm;
 			this.configDto=configDto;
+			this.LOGGER=LOGGER;
 		}
 
 		//inutilise, conserve pour usage futur eventuel
@@ -160,10 +161,17 @@ namespace MoulUtil.Forms.utils
 
 			String cnxString = myUtil.buildconnString(database, "127.0.0.1", user, pwd, port);
 			sql = sql + " WHERE magasins.magasin_id=" + rechMagIdBox.Text;
+			List<List<KeyValuePair<String, object>>> magasinList = null;
 			try {
-				var magasinList = myUtil.getListResultAsKeyValue(cnxString, sql);
+				magasinList = myUtil.getListResultAsKeyValue(cnxString, sql);
+			} catch(Exception ex) {
+				LOGGER.Error(ex);
+				magDescBox.Text = "erreur accès aux données :" + ex.Message + "\n" + ex.Source;
+				MessageBox.Show("erreur accès aux données : "+ex.Message);
+				return null;
+			}
+			try {
 				magDescBox.Text = "";
-				
 				magDescBox.Text = s;
 				List<KeyValuePair<String, Object>> ligne = magasinList[0];
 				if (ligne.Count > 0) {
@@ -180,9 +188,6 @@ namespace MoulUtil.Forms.utils
 					options.setWorkingPath(proposition);
 					//magasinUrl=ligne[2].Value.ToString();
 					//proposition = configDto.getWorkingDir()+ proposition;
-					
-					
-					
 					
 					options.setWorkspacePath(workingPath);
 					if(magInstance!=null) {
@@ -214,7 +219,7 @@ namespace MoulUtil.Forms.utils
 			} catch (Exception ex) {
 				LOGGER.Error(ex);
 				magDescBox.Text = "erreur :" + ex.Message + "\n" + ex.Source;
-				
+				MessageBox.Show("Erreur : "+ex.Message);
 			}
 			
 			return options;

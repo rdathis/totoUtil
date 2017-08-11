@@ -24,7 +24,7 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public class ConfigUtil
 	{
-		private log4net.ILog  LOGGER;
+		private readonly log4net.ILog  LOGGER;
 		
 		public ConfigUtil()
 		{
