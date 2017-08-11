@@ -26,7 +26,7 @@ namespace cmdUtils.Objets
 		public List <MeoSql> sqlcommands;
 		
 		public List<ConfigParam> configParams;
-	
+		
 		public void setProgramPath(String value) {
 			programPath=value;
 		}
@@ -46,6 +46,14 @@ namespace cmdUtils.Objets
 			foreach(MeoSql meoSql in sqlcommands) {
 				if(meoSql.nom.Equals(commande.ToString())) {
 					return meoSql;
+				}
+			}
+			return null;
+		}
+		public Object getSql(String nom) {
+			foreach(SqlCommandsType commands in Enum.GetValues(typeof(SqlCommandsType))) {
+				if(commands.ToString().Equals(nom) ) {
+					return commands;
 				}
 			}
 			return null;
