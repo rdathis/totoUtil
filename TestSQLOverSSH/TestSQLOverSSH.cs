@@ -26,7 +26,7 @@ namespace TestSQLOverSSH
 			Console.WriteLine("Hello World!");
 			log4net.ILog LOGGER =LogManager.GetLogger("TestSQLOverSSH");
 			MouliUtil util=new MouliUtil(LOGGER);
-			List <String> strs= util.findFiles("W:/meo-moulinettes/workspace/MID2317-SARLOPTIK95-i-4/",true, null, null);
+			List <String> strs= util.findFiles("W:/meo-moulinettes/workspace/MID2317-SARLOPTIK95-i-4/",true, false, null, null);
 			//strs.Clear();
 			strs.Add("tralala.zip");
 			strs.Add("tralala.7z");

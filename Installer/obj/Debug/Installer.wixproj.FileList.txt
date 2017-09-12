@@ -1,2 +1,7 @@
 obj\\Debug\Files.wixobj
 obj\\Debug\TotoSetup.wixobj
+M:\github\totoUtil\Installer\bin\Debug\Installer.msi
+M:\github\totoUtil\Installer\bin\Debug\Installer.wixpdb
+obj\\Debug\Installer.wixproj.BindContentsFileListnull.txt
+obj\\Debug\Installer.wixproj.BindOutputsFileListnull.txt
+obj\\Debug\Installer.wixproj.BindBuiltOutputsFileListnull.txt

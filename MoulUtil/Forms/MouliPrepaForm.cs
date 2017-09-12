@@ -7,10 +7,12 @@
  * Pour changer ce modèle utiliser Outils | Options | Codage | Editer les en-têtes standards.
  */
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Net.Sockets;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using Renci.SshNet;
 using cmdUtils.Objets;
 using cmdUtils.Objets.utils;
@@ -519,7 +521,39 @@ namespace MoulUtil
 		{
 			if(propositionBox.Text!="") {
 				CreateBtnClick(null, null);
-				mouliPrepaUtil.createMock(propositionBox.Text, magIrrisBox.Text);
+				
+	//String proposition = workingDirBox.Text+propositionBox.Text;
+//			if (proposition.Length > 0) {
+				//mouliUtil.setMagasinIrris(magIrrisBox.Text);				
+				mouliPrepaUtil.createMock(workingDirBox.Text+propositionBox.Text, magIrrisBox.Text);
+			}
+		}
+		void SourceBaseComboBoxTextUpdate(object sender, EventArgs e)
+		{
+			populateSourceListBox(sourceBaseComboBox.Text);
+		}
+		void SourceBaseComboBoxSelectionChangeCommitted(object sender, EventArgs e)
+		{
+			populateSourceListBox(sourceBaseComboBox.SelectedItem.ToString());
+		}
+		void populateSourceListBox(String path) {
+			this.sourceListBox.Items.Clear();
+			List<String> liste = mouliPrepaUtil.populateSourceBaseListBox(path, this.sourceFilterBox.Text);
+			if(liste!=null) {
+				int idx=-1;
+				foreach(String str in liste) {
+					idx=this.sourceListBox.Items.Add(str);
+				}
+			}
+		}
+		void SourceFilterBoxKeyUp(object sender, KeyEventArgs e)
+		{
+			populateSourceListBox(sourceBaseComboBox.Text);
+		}
+		void SourceListBoxDoubleClick(object sender, EventArgs e)
+		{
+			if(sourceListBox.SelectedItem !=null &&sourceListBox.SelectedItem.ToString()!="") {
+				cmdUtil.openWindowsExplorer(sourceListBox.SelectedItem.ToString());
 			}
 		}
 	}

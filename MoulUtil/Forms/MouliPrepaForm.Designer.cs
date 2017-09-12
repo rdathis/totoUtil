@@ -113,6 +113,8 @@ namespace MoulUtil
 			this.sourceFilterBox.Name = "sourceFilterBox";
 			this.sourceFilterBox.Size = new System.Drawing.Size(239, 20);
 			this.sourceFilterBox.TabIndex = 3;
+			this.sourceFilterBox.Text = "*";
+			this.sourceFilterBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SourceFilterBoxKeyUp);
 			// 
 			// magDescBox
 			// 
@@ -129,6 +131,7 @@ namespace MoulUtil
 			this.sourceListBox.Name = "sourceListBox";
 			this.sourceListBox.Size = new System.Drawing.Size(624, 95);
 			this.sourceListBox.TabIndex = 8;
+			this.sourceListBox.DoubleClick += new System.EventHandler(this.SourceListBoxDoubleClick);
 			// 
 			// workspaceBaseBox
 			// 
@@ -264,6 +267,8 @@ namespace MoulUtil
 			this.sourceBaseComboBox.Name = "sourceBaseComboBox";
 			this.sourceBaseComboBox.Size = new System.Drawing.Size(297, 21);
 			this.sourceBaseComboBox.TabIndex = 4;
+			this.sourceBaseComboBox.SelectionChangeCommitted += new System.EventHandler(this.SourceBaseComboBoxSelectionChangeCommitted);
+			this.sourceBaseComboBox.TextUpdate += new System.EventHandler(this.SourceBaseComboBoxTextUpdate);
 			// 
 			// groupBox3
 			// 

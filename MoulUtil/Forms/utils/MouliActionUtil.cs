@@ -23,12 +23,12 @@ namespace MoulUtil.Forms.utils
 		private ConfigDto configDto=null;
 		private log4net.ILog  LOGGER=null;
 		
-		public MouliActionUtil(MouliActionForm form, ConfigDto configDto, log4net.ILog  LOGGER)
+		public MouliActionUtil(MouliActionForm form, ConfigDto configDto, log4net.ILog  LOGGER, MouliUtil mouliUtil)
 		{
 			this.form = form;
 			this.configDto=configDto;
 			this.LOGGER=LOGGER;
-			mouliUtil = new MouliUtil(LOGGER);
+			this.mouliUtil = mouliUtil;
 		}
 		
 		public String getJobContent(String sourceMoulinette, MouliUtilOptions options, ConfigDto configDto) {
@@ -94,7 +94,7 @@ namespace MoulUtil.Forms.utils
 			
 			MouliStatRecap statsRecap = new MouliStatRecap();
 			List<String> liste = populateListe(false, options, statsRecap);
-			mouliUtil = new MouliUtil(LOGGER);
+			//mouliUtil = new MouliUtil(LOGGER);
 			zipUtil = null;
 			majProgression(50);
 			MouliJob job = new MouliJob(archiveName, originalDir, liste, statsRecap, startDateTime, options, sourceMoulinette);

@@ -414,22 +414,35 @@ namespace cmdUtils.Objets
 			return archiveName;
 		}
 		
-		public List<String> findFiles(String path, Boolean recursive, Regex includeFilter, Regex excludeFilter)
+		public List<String> findFiles(String path, Boolean recursive, Boolean withFolders, String includeFilter, Regex excludeFilter)
 		{
 			List<String> retour = null;
 			if (!Directory.Exists(path)) {
 				return retour;
 			}
 			retour = new List<String>();
-			String[] fichiers = Directory.GetFiles(path);
-			String[] reps = Directory.GetDirectories(path);
+			String[] fichiers = Directory.GetFiles(path, includeFilter);
 			if (recursive) {
+				String[] reps = Directory.GetDirectories(path, includeFilter);
 				foreach (String rep in reps) {
-					retour.AddRange(findFiles(rep, true, includeFilter, excludeFilter));
+					retour.AddRange(findFiles(rep, true, withFolders, includeFilter, excludeFilter));
 				}
 			}
+			if(withFolders) {
+				String[] reps = Directory.GetDirectories(path, includeFilter);
+				foreach (String rep in reps) {
+					FileInfo fileInfo = new FileInfo(rep);
+					if((excludeFilter==null) || !Regex.IsMatch(fileInfo.Name, excludeFilter.ToString(), RegexOptions.IgnoreCase)) {
+						retour.Add(fileInfo.FullName.Replace("\\", "/")+"/");
+					}
+				}
+			}
+			
 			foreach (String fichier in fichiers) {
-				retour.Add(fichier);
+				FileInfo fileInfo = new FileInfo(fichier);
+				if((excludeFilter==null) || !Regex.IsMatch(fileInfo.Name, excludeFilter.ToString(), RegexOptions.IgnoreCase)) {
+					retour.Add(fichier);
+				}
 			}
 			return retour;
 		}

@@ -63,8 +63,8 @@ namespace MoulUtil.Forms.utils
 		public string normaliseNom(string str)
 		{
 			str=RemoveDiacritics(str);
-			str=str.Replace(" ", "").Replace("'", "").Replace("\"", "");
-			
+			str=str.Replace(" ", "").Replace("'", "").Replace("\"", "").Replace("'", "");
+
 			return str;
 		}
 		//degage les accents
@@ -255,7 +255,7 @@ namespace MoulUtil.Forms.utils
 					sourcePath = new DirectoryInfo(sourcePath).FullName;
 					MouliUtil mouliUtil = new MouliUtil(LOGGER);
 					Regex excludeRegex = new Regex("\\.(7z|rar|gz|gzip|zip)$");
-					List<String> toSaveFiles= mouliUtil.findFiles(sourcePath,  true, null, excludeRegex);
+					List<String> toSaveFiles= mouliUtil.findFiles(sourcePath,  true, false, null, excludeRegex);
 					toSaveFiles = mouliUtil.excludeFiles(toSaveFiles, excludeRegex);
 					ZipUtil zipUtil = new ZipUtil(LOGGER);
 					FileInfo fi =new FileInfo(options.getarchiveName());
@@ -287,5 +287,11 @@ namespace MoulUtil.Forms.utils
 				Process.Start("chrome", @url);
 			}
 		}
+		
+		public List<String> populateSourceBaseListBox(string source, string filter)
+		{
+			MouliUtil mouliUtil = new MouliUtil(LOGGER);
+			return mouliUtil.findFiles(source, false, true, filter, null);
+		}		
 	}
 }

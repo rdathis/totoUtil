@@ -26,6 +26,7 @@ namespace MoulUtil
 		private MouliJob job = null;
 		private ConfigDto configDto;
 		private String magId = null;
+		private MouliUtil mouliUtil = null;
 		private MouliUtilOptions options = null;
 		private MouliActionUtil mouliActionUtil;
 		private RichTextBoxUtil richTextBoxUtil=new RichTextBoxUtil();
@@ -52,6 +53,7 @@ namespace MoulUtil
 			setMagId(options.getMagId());
 			setMagasinIrris(options.getNumeroMagasinIrris());
 			this.LOGGER=LOGGER;
+			mouliUtil= new MouliUtil(LOGGER);
 			prepare();
 			MeoInstance instance = MeoInstance.findInstanceByInstanceName(configDto.getInstances(), options.getInstanceName());
 			if (instance != null && instance.getServeur() != null) {
@@ -134,7 +136,7 @@ namespace MoulUtil
 		{
 			puttyLink.Visible = false;
 			pscpLink.Visible = false;
-			dateTimePicker.Value = new MouliUtil(LOGGER).calculeNextPlannedJob();
+			dateTimePicker.Value = mouliUtil.calculeNextPlannedJob();
 			prepareTimer();
 			populateToolTips();
 			activeExtension(purgeClientChkBox, options.getExtensionClient());
@@ -142,7 +144,7 @@ namespace MoulUtil
 			installBtn.Enabled = false;
 			progressTextBox.Visible = false;
 			emailTextbox.Text = configDto.getDefaultEmail();
-			mouliActionUtil = new MouliActionUtil(this, configDto, LOGGER);
+			mouliActionUtil = new MouliActionUtil(this, configDto, LOGGER, mouliUtil);
 			String propositions = configDto.getConfigParamByName(ConfigParam.ParamNamesType.emails).Value;
 			if(propositions!=null) {
 				propositionMailsListBox.Items.Clear();
@@ -154,7 +156,6 @@ namespace MoulUtil
 					}
 				}
 			}
-			
 		}
 
 		void activeExtension(CheckBox chkBox, MoulinettePurgeOptionTypes moulinettePurgeOptionTypes)
@@ -370,7 +371,7 @@ namespace MoulUtil
 								String serverTargetPath = server.getTranspo();
 								sshUtil.unzipArchive(server, serverTargetPath, job);
 								
-								MouliUtil mouliUtil = new MouliUtil(LOGGER);
+								
 								
 								CmdUtil cmdUtil = new CmdUtil();
 								
