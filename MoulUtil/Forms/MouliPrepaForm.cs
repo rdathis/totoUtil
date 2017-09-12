@@ -522,9 +522,6 @@ namespace MoulUtil
 			if(propositionBox.Text!="") {
 				CreateBtnClick(null, null);
 				
-	//String proposition = workingDirBox.Text+propositionBox.Text;
-//			if (proposition.Length > 0) {
-				//mouliUtil.setMagasinIrris(magIrrisBox.Text);				
 				mouliPrepaUtil.createMock(workingDirBox.Text+propositionBox.Text, magIrrisBox.Text);
 			}
 		}
