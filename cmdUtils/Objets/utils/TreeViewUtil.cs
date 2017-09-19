@@ -24,7 +24,7 @@ namespace cmdUtils.Objets
 			this.serveurs=serveurs;
 		}
 		
-		public void populateTargets(TreeView tv)
+		public void populateTargets(TreeView tv, String meoInstanceName=null)
 		{
 			if (serveurs != null) {
 				foreach (MeoServeur serveur in serveurs) {
@@ -37,18 +37,29 @@ namespace cmdUtils.Objets
 						node.ForeColor = Color.Yellow;
 						node.ToolTipText = "Serveur de Prod";
 					}
-					completeInstances(node, serveur.getNom());
+					TreeNode selectedNode = completeInstances(node, serveur.getNom(), meoInstanceName);
+					if(selectedNode!=null) {
+						tv.SelectedNode = selectedNode;
+					}
 					node.ExpandAll();
 				}
 			}
 		}
-		private void completeInstances(TreeNode node, String serverName)
+		private TreeNode completeInstances(TreeNode node, String serverName, String meoInstanceName)
 		{
+			TreeNode selectedNode = null;
 			foreach (MeoInstance instance in instances) {
 				if (instance.getServeur() == serverName) {
 					TreeNode childNode = node.Nodes.Add(instance.getNom());
+					if(instance.getNom()==meoInstanceName) {
+						childNode.ForeColor = Color.DarkBlue;
+						childNode.BackColor = Color.Yellow;
+						childNode.ToolTipText = "Instance cible";
+						selectedNode = childNode;
+					}
 				}
 			}
+			return selectedNode;
 		}
 
 	}

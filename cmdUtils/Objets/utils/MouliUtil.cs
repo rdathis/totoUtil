@@ -414,6 +414,21 @@ namespace cmdUtils.Objets
 			return archiveName;
 		}
 		
+		private String[] getFiles(String path, String includeFilter) {
+			if(includeFilter!=null) {
+				return Directory.GetFiles(path, includeFilter);
+			} else {
+				return Directory.GetFiles(path);
+			}
+		}
+		private String[] getDirectories(String path, String includeFilter) {
+			if(includeFilter!=null) {
+				return Directory.GetDirectories(path, includeFilter);
+			} else {
+				return Directory.GetDirectories(path);
+			}
+		}
+		
 		public List<String> findFiles(String path, Boolean recursive, Boolean withFolders, String includeFilter, Regex excludeFilter)
 		{
 			List<String> retour = null;
@@ -421,15 +436,15 @@ namespace cmdUtils.Objets
 				return retour;
 			}
 			retour = new List<String>();
-			String[] fichiers = Directory.GetFiles(path, includeFilter);
+			String[] fichiers = getFiles(path, includeFilter);
 			if (recursive) {
-				String[] reps = Directory.GetDirectories(path, includeFilter);
+				String[] reps = getDirectories(path, includeFilter);
 				foreach (String rep in reps) {
 					retour.AddRange(findFiles(rep, true, withFolders, includeFilter, excludeFilter));
 				}
 			}
 			if(withFolders) {
-				String[] reps = Directory.GetDirectories(path, includeFilter);
+				String[] reps = getDirectories(path, includeFilter);
 				foreach (String rep in reps) {
 					FileInfo fileInfo = new FileInfo(rep);
 					if((excludeFilter==null) || !Regex.IsMatch(fileInfo.Name, excludeFilter.ToString(), RegexOptions.IgnoreCase)) {

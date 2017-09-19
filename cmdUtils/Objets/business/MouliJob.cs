@@ -26,6 +26,10 @@ namespace cmdUtils
 		private MouliUtilOptions options;
 		private String moulinettePath;
 		private MouliProgressWorker backgroundWorker;
+		private String detailClient=null;
+		private String detailStock=null;
+		private String detailJoint=null;
+		private String detailDoc=null;
 
 		public MouliJob(String archiveName,
 		                String originalDir,
@@ -92,6 +96,31 @@ namespace cmdUtils
 		public MouliProgressWorker getBackgroundWorker()
 		{
 			return this.backgroundWorker;
+		}
+		
+		public void setDetailClient (String value) {
+			detailClient=value;
+		}
+		public String getDetailClient () {
+			return detailClient;
+		}
+		public void setDetailStock (String value) {
+			detailStock=value;
+		}
+		public String getDetailStock () {
+			return detailStock;
+		}
+		public void setDetailJoint (String value) {
+			detailJoint=value;
+		}
+		public String getDetailJoint () {
+			return detailJoint;
+		}
+		public void setDetailDoc (String value) {
+			detailDoc=value;
+		}
+		public String getDetailDoc () {
+			return detailDoc;
 		}
 	}
 }

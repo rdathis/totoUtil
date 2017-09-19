@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using cmdUtils;
 using cmdUtils.Objets;
 
@@ -92,12 +93,22 @@ namespace MoulUtil.Forms.utils
 			Directory.SetCurrentDirectory(sourceMoulinette);
 			
 			
+			String detailClient=null;
+			String detailStock=null;
+			String detailJoint=null;
+			String detailDoc=null;
 			MouliStatRecap statsRecap = new MouliStatRecap();
-			List<String> liste = populateListe(false, options, statsRecap);
+			List<String> liste = populateListe(false, options, statsRecap, detailClient, detailStock, detailJoint, detailDoc);
 			//mouliUtil = new MouliUtil(LOGGER);
 			zipUtil = null;
 			majProgression(50);
+			
 			MouliJob job = new MouliJob(archiveName, originalDir, liste, statsRecap, startDateTime, options, sourceMoulinette);
+			job.setDetailClient(detailClient);
+			job.setDetailStock(detailStock);
+			job.setDetailJoint(detailJoint);
+			job.setDetailDoc(detailDoc);
+			//
 			return job;
 		}
 		
@@ -111,25 +122,28 @@ namespace MoulUtil.Forms.utils
 //			}
 		}
 
-		private List<String> populateListe(Boolean filtre, MouliUtilOptions options,  MouliStatRecap statsRecap, Boolean toLowerCase = true) {
+		private List<String> populateListe(Boolean filtre, MouliUtilOptions options,  MouliStatRecap statsRecap, String detailClient, String detailStock, String detailJoint, String detailDoc, Boolean toLowerCase = true) {
 			String[] selectionY = null;
 			String[] selectionJ = null;
 			
 			List<String> liste = new List<String>();
+			List<YFiles> missingList = new List<YFiles>();
 			selectionJ = new string[1];
 			
 			String path = mouliUtil.getData() + mouliUtil.getMag01();
 			List <String> selectionYfiles = new List<string>();
 			mouliUtil.setMagasinIrris(options.getNumeroMagasinIrris());
-	
+			
 			String basePath=options.getWorkspacePath()+options.getWorkingPath();
 			// Collecte des fichiers presents
 			foreach (YFiles yfile in Enum.GetValues(typeof(YFiles))) {
+				missingList.Add(yfile);
 				String file = yfile.ToString();
 				if (toLowerCase) {
 					file = file.ToLower();
 				}
 				if (mouliUtil.checkIfFileExists(basePath, mouliUtil.getData(), mouliUtil.getMag01(), file, ".d")) {
+					missingList.Remove(yfile);
 					statsRecap.mag01FilesTotal++;
 					file += ".d";
 					if(YFiles.YCLIENTS==yfile) {
@@ -146,6 +160,14 @@ namespace MoulUtil.Forms.utils
 					}
 				}
 				majProgression();
+			}
+			foreach(YFiles yfile in missingList) {
+				if(isStock(yfile)) {
+					detailStock=yfile+" ";
+				}
+				if(isClient(yfile)) {
+					detailClient=yfile+" ";
+				}
 			}
 			if (mouliUtil.checkOrdoFixe(mouliUtil.getData())) {
 				String file = JFiles.ordo_top_fixe + ".txt";
@@ -291,9 +313,14 @@ namespace MoulUtil.Forms.utils
 			job.setStart(DateTime.Now);
 			
 			MouliStatRecap statsRecap = new MouliStatRecap();
+
+			String detailClient=null;
+			String detailStock=null;
+			String detailJoint=null;
+			String detailDoc=null;
 			
 			//Actualisation de la liste des fichier, en fonction des options.
-			List<String> liste = populateListe(true, job.getOptions(), statsRecap);
+			List<String> liste = populateListe(true, job.getOptions(), statsRecap, detailClient, detailStock, detailJoint, detailDoc);
 			//
 			if (job.getOptions()!=null) {
 				List <String> doc01 = job.getOptions().getDoc01();

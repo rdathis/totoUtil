@@ -406,9 +406,9 @@ namespace MoulUtil
 			this.copyBtn.BackColor = System.Drawing.Color.Red;
 			this.copyBtn.Location = new System.Drawing.Point(2, 111);
 			this.copyBtn.Name = "copyBtn";
-			this.copyBtn.Size = new System.Drawing.Size(29, 17);
+			this.copyBtn.Size = new System.Drawing.Size(39, 23);
 			this.copyBtn.TabIndex = 15;
-			this.copyBtn.Text = "!";
+			this.copyBtn.Text = "&Maj";
 			this.copyBtn.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			this.copyBtn.UseVisualStyleBackColor = false;
 			this.copyBtn.Click += new System.EventHandler(this.CopyBtnClick);

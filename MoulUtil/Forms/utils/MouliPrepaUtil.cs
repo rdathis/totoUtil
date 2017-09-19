@@ -108,7 +108,7 @@ namespace MoulUtil.Forms.utils
 				if(!value) {
 					String file=path+dataPath+magPath+ yfile.ToString().ToLower() +extension;
 					StreamWriter outputFile = new StreamWriter(file);
-					outputFile.WriteLine("## MOCK : "+yfile);
+					//outputFile.WriteLine("## MOCK : "+yfile);
 					outputFile.Close();
 				}
 			}

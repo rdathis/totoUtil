@@ -77,7 +77,8 @@ namespace MoulUtil
 			mouliUtil = new MouliUtil(LOGGER);
 			magIrrisBox.Text=mouliUtil.getMagasinIrris();
 			cmdUtil = new CmdUtil();
-			new TreeViewUtil(configDto.instances, configDto.serveurs).populateTargets(targetTreeView);
+			populateTargetBox(null);
+			
 			//
 			zonePrepaNavigatorUserControl.setBox(workspaceBaseBox);
 			workspaceNavigatorUserControl.setBoxes(workspaceBaseBox, workspaceZoneBox);
@@ -87,7 +88,9 @@ namespace MoulUtil
 			populateSourceBox(configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.moulinetteSource));
 			populateToolTips();
 		}
-
+		private void populateTargetBox(String instanceName) {
+			new TreeViewUtil(configDto.instances, configDto.serveurs).populateTargets(targetTreeView, instanceName);
+		}
 		void populateToolTips()
 		{
 			toolTipUtil.add(this.rechMagIdBox, "MagId magasin");
@@ -283,14 +286,15 @@ namespace MoulUtil
 				}
 				sauvegardeProgressValue = prc;
 				sauvegardeProgressMessage = (value + " / " + worker.getNbOperation() + " (" + prc + ")%");
-				statusMessage = "progression : " + (value) + "%  - x / " + worker.getNbOperation();
+				statusMessage = "progression : " + (prc) + "%  - "+value+" / " + worker.getNbOperation();
 				sauvegardeProgressMessage = statusMessage;
 			};
 			MouliProgressWorker.EndWorkerCallBack endWorkerCallBack = value => {
 				//sauvegardeBtn.Enabled = true;
 				sauvegardeBtnEnabled=1;
-				sauvegardeProgressValue=-1;
+				sauvegardeProgressValue= 100; //100 %
 				sauvegardeProgressMessage= "sauvegarde finie";
+				statusMessage=sauvegardeProgressMessage;
 			};
 			//
 			worker.setStartWorkerCallBack(startWorkerCallBack);
@@ -321,6 +325,8 @@ namespace MoulUtil
 				String path = workspaceZoneBox.Text;
 				mouliUtilOptions.setArchiveName(mouliUtil.calculeArchiveName(workingPath+path));
 				LOGGER.Info("name: " + mouliUtilOptions.getarchiveName());
+				
+				populateTargetBox(mouliUtilOptions.getInstanceName());
 			}
 		}
 
@@ -541,6 +547,7 @@ namespace MoulUtil
 				foreach(String str in liste) {
 					idx=this.sourceListBox.Items.Add(str);
 				}
+				this.sourceListBox.Sorted=true;
 			}
 		}
 		void SourceFilterBoxKeyUp(object sender, KeyEventArgs e)

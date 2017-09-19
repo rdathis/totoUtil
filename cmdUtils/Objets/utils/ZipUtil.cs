@@ -115,7 +115,6 @@ namespace cmdUtils.Objets
 					int nb=0;
 					if(backgroundWorker!=null) {
 						backgroundWorker.setNbOperation(fichiers.Count);
-						
 					}
 					foreach (String fichier in fichiers) {
 						FileInfo file = new FileInfo(fichier);
@@ -134,7 +133,7 @@ namespace cmdUtils.Objets
 							} while ( sourceBytes > 0 );
 						}
 						if(backgroundWorker!=null) {
-							backgroundWorker.ReportProgress(nb++);
+							backgroundWorker.ReportProgress(++nb);
 						}
 					}
 					zip.Finish();

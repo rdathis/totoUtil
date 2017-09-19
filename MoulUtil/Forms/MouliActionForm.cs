@@ -433,12 +433,19 @@ namespace MoulUtil
 			if (optionC1CheckBox.Checked) {
 				optionCCheckBox.Checked = false;
 			}
+			if(optionCCheckBox.Checked && job.getDetailClient()!=null) {
+				MessageBox.Show("Absents:"+job.getDetailClient(), "Controle fichiers client");
+			}
 		}
 		void OptionSCheckBoxCheckedChanged(object sender, EventArgs e)
 		{
 			if (optionS1CheckBox.Checked) {
 				optionSCheckBox.Checked = false;
 			}
+			if(optionSCheckBox.Checked && job.getDetailStock()!=null) {
+				MessageBox.Show("Absents:"+job.getDetailStock(), "Controle fichiers Stock");
+			}
+			
 		}
 		void OptionS1CheckBoxCheckedChanged(object sender, EventArgs e)
 		{
@@ -451,12 +458,19 @@ namespace MoulUtil
 			if (optionDCheckBox.Checked) {
 				optionJCheckBox.Checked = false;
 			}
+			if(optionJCheckBox.Checked && job.getDetailJoint()!=null) {
+				MessageBox.Show("Absents:"+job.getDetailJoint(), "Controle fichiers Joints");
+			}
 		}
 		void OptionDCheckBoxCheckedChanged(object sender, EventArgs e)
 		{
 			if (optionJCheckBox.Checked) {
 				optionDCheckBox.Checked = false;
 			}
+			if(optionDCheckBox.Checked && job.getDetailDoc()!=null) {
+				MessageBox.Show("Absents:"+job.getDetailDoc(), "Controle fichiers Doc & Ord");
+			}
+			
 		}
 		void VisuJobLabelClick(object sender, EventArgs e)
 		{
