@@ -21,7 +21,10 @@ namespace cmdUtils.Objets
 		private const int anneesConservationVisiteSiPurge = 10;
 		private String magId;
 		private String instanceName;
+		private String instancePath;
 		private String instanceCommande;
+		private string tomcatPath;
+		private String javaCmd;
 		private String lots;
 		private List<String> doc01;
 		private List<String> ord01;
@@ -60,6 +63,18 @@ namespace cmdUtils.Objets
 		{
 			return instanceName;
 		}
+		public String getInstancePath()
+		{
+			return instancePath;
+		}
+		public String getTomcatPath()
+		{
+			return tomcatPath;
+		}
+		public String getJavaCmd()
+		{
+			return javaCmd;
+		}
 		public String getLots()
 		{
 			return calculateLots();
@@ -83,6 +98,10 @@ namespace cmdUtils.Objets
 		public void setInstanceName(String value)
 		{
 			instanceName = value;
+		}
+		public void setInstancePath(String value)
+		{
+			instancePath = value;
 		}
 		public void  setLots(String value)
 		{
@@ -115,6 +134,14 @@ namespace cmdUtils.Objets
 		public void setInstanceCommande(String value)
 		{
 			instanceCommande = value;
+		}
+		public void setTomcatPath(String value)
+		{
+			tomcatPath = value;
+		}
+		public void setJavaCmd(String value)
+		{
+			javaCmd = value;
 		}
 		public void setDefaultEmail(String value)
 		{

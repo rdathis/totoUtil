@@ -56,8 +56,11 @@ namespace cmdUtils.Objets
 			get ;
 			set;
 		}
-		
-		
+		[XmlAttribute]
+		public String meopath{
+			get ;
+			set;
+		}
 		
 		public String getServeur() {
 			return serveur;

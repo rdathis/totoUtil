@@ -192,6 +192,7 @@ namespace MoulUtil.Forms.utils
 					options.setWorkspacePath(workingPath);
 					if(magInstance!=null) {
 						options.setInstanceName(magInstance.getNom());
+						options.setInstancePath(magInstance.meopath);
 						options.setInstanceCommande(magInstance.getMeocli());
 					}
 					options.setMagId(rechMagIdBox.Text);

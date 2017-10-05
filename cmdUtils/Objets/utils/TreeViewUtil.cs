@@ -26,6 +26,7 @@ namespace cmdUtils.Objets
 		
 		public void populateTargets(TreeView tv, String meoInstanceName=null)
 		{
+			tv.Nodes.Clear();
 			if (serveurs != null) {
 				foreach (MeoServeur serveur in serveurs) {
 					TreeNode node = tv.Nodes.Add(serveur.getNom());
@@ -40,8 +41,11 @@ namespace cmdUtils.Objets
 					TreeNode selectedNode = completeInstances(node, serveur.getNom(), meoInstanceName);
 					if(selectedNode!=null) {
 						tv.SelectedNode = selectedNode;
+						node.Expand();
+					} else {
+						node.Collapse();
 					}
-					node.ExpandAll();
+					//node.ExpandAll();
 				}
 			}
 		}

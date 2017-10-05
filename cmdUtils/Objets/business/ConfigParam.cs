@@ -26,6 +26,8 @@ namespace cmdUtils.Objets
 			[XmlEnum("defaultEmail")] defaultEmail,
 			[XmlEnum("workingDir")] workingDir,
 			[XmlEnum("emails")] emails,
+			[XmlEnum("tomcatpath")] tomcatpath,
+			[XmlEnum("javacmd")] javacmd,
 			//[XmlEnum("databasePath")] databasePath,
 			//[XmlEnum("databaseTunneling")] databaseTunneling,
 			//
@@ -38,8 +40,6 @@ namespace cmdUtils.Objets
 			[XmlEnum("password")] password,
 			[XmlEnum("url")] url
 		}
-		
-		
 		
 		[XmlAttribute]
 		public ParamNamesType nom { get; set ;}

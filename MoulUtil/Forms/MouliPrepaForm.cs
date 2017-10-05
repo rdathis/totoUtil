@@ -292,7 +292,7 @@ namespace MoulUtil
 			MouliProgressWorker.EndWorkerCallBack endWorkerCallBack = value => {
 				//sauvegardeBtn.Enabled = true;
 				sauvegardeBtnEnabled=1;
-				sauvegardeProgressValue= 100; //100 %
+				sauvegardeProgressValue= 0; //100 %
 				sauvegardeProgressMessage= "sauvegarde finie";
 				statusMessage=sauvegardeProgressMessage;
 			};

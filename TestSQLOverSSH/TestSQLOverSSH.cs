@@ -15,6 +15,7 @@ using Renci.SshNet;
 using Renci.SshNet.Common;
 using cmdUtils.Objets;
 using log4net;
+using FastRsync.Core;
 
 namespace TestSQLOverSSH
 {
@@ -23,6 +24,7 @@ namespace TestSQLOverSSH
 		
 		public static void Main(string[] args)
 		{
+			
 			Console.WriteLine("Hello World!");
 			log4net.ILog LOGGER =LogManager.GetLogger("TestSQLOverSSH");
 			MouliUtil util=new MouliUtil(LOGGER);

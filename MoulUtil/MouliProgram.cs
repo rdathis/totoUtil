@@ -18,13 +18,6 @@ namespace MoulUtil
 		// disable StringEndsWithIsCultureSpecific
 		public static void Main(string[] args)
 		{
-			String tmpBasePath=Directory.GetCurrentDirectory();
-			if(tmpBasePath.ToLower().EndsWith("\\bin") && !Directory.Exists("conf") &&  Directory.Exists("..\\conf")) {
-				
-				Directory.SetCurrentDirectory("..");
-				tmpBasePath=Directory.GetCurrentDirectory();
-				Console.WriteLine("directory changed to "+Directory.GetCurrentDirectory());
-			}
 			//configure le ilog -- http://lutecefalco.developpez.com/tutoriels/dotnet/log4net/introduction/
 
 			log4net.ILog LOGGER = LogManager.GetLogger("mouliProgram");
@@ -36,6 +29,13 @@ namespace MoulUtil
 				Console.WriteLine("Erreur fichier log absent : "+configUtil.getLoggerConfigFilePath());
 			}
 			
+			String tmpBasePath=Directory.GetCurrentDirectory();
+			if(tmpBasePath.ToLower().EndsWith("\\bin") && !Directory.Exists("conf") &&  Directory.Exists("..\\conf")) {
+				
+				Directory.SetCurrentDirectory("..");
+				tmpBasePath=Directory.GetCurrentDirectory();
+				Console.WriteLine("directory changed to "+Directory.GetCurrentDirectory());
+			}
 			
 			ConfigDto configDto = configUtil.getConfig();
 			if(!configUtil.controleConfig(configDto) ) {

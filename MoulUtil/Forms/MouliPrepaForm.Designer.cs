@@ -41,10 +41,10 @@ namespace MoulUtil
 			this.rechMagIdBox = new System.Windows.Forms.TextBox();
 			this.sourceFilterBox = new System.Windows.Forms.TextBox();
 			this.magDescBox = new System.Windows.Forms.TextBox();
-			this.sourceListBox = new System.Windows.Forms.ListBox();
 			this.workspaceBaseBox = new System.Windows.Forms.TextBox();
 			this.workspaceZoneBox = new System.Windows.Forms.TextBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.statMagLabel = new System.Windows.Forms.Label();
 			this.MockBtn = new System.Windows.Forms.Button();
 			this.magIrrisBox = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
@@ -54,6 +54,7 @@ namespace MoulUtil
 			this.createBtn = new System.Windows.Forms.Button();
 			this.propositionBox = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.sourceListBox = new System.Windows.Forms.ListBox();
 			this.sourceNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
 			this.sourceBaseComboBox = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -121,17 +122,8 @@ namespace MoulUtil
 			this.magDescBox.Location = new System.Drawing.Point(311, 13);
 			this.magDescBox.Multiline = true;
 			this.magDescBox.Name = "magDescBox";
-			this.magDescBox.Size = new System.Drawing.Size(328, 120);
+			this.magDescBox.Size = new System.Drawing.Size(328, 206);
 			this.magDescBox.TabIndex = 4;
-			// 
-			// sourceListBox
-			// 
-			this.sourceListBox.FormattingEnabled = true;
-			this.sourceListBox.Location = new System.Drawing.Point(38, 192);
-			this.sourceListBox.Name = "sourceListBox";
-			this.sourceListBox.Size = new System.Drawing.Size(624, 95);
-			this.sourceListBox.TabIndex = 8;
-			this.sourceListBox.DoubleClick += new System.EventHandler(this.SourceListBoxDoubleClick);
 			// 
 			// workspaceBaseBox
 			// 
@@ -152,6 +144,7 @@ namespace MoulUtil
 			// groupBox1
 			// 
 			this.groupBox1.BackColor = System.Drawing.Color.PowderBlue;
+			this.groupBox1.Controls.Add(this.statMagLabel);
 			this.groupBox1.Controls.Add(this.MockBtn);
 			this.groupBox1.Controls.Add(this.magIrrisBox);
 			this.groupBox1.Controls.Add(this.label2);
@@ -166,10 +159,18 @@ namespace MoulUtil
 			this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.groupBox1.Location = new System.Drawing.Point(25, 0);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(644, 139);
+			this.groupBox1.Size = new System.Drawing.Size(644, 225);
 			this.groupBox1.TabIndex = 8;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Recherche du Magasin";
+			// 
+			// statMagLabel
+			// 
+			this.statMagLabel.Location = new System.Drawing.Point(6, 146);
+			this.statMagLabel.Name = "statMagLabel";
+			this.statMagLabel.Size = new System.Drawing.Size(297, 20);
+			this.statMagLabel.TabIndex = 13;
+			this.statMagLabel.Text = "Stats";
 			// 
 			// MockBtn
 			// 
@@ -242,15 +243,25 @@ namespace MoulUtil
 			// groupBox2
 			// 
 			this.groupBox2.BackColor = System.Drawing.Color.LightBlue;
+			this.groupBox2.Controls.Add(this.sourceListBox);
 			this.groupBox2.Controls.Add(this.sourceNavigatorUserControl);
 			this.groupBox2.Controls.Add(this.sourceBaseComboBox);
 			this.groupBox2.Controls.Add(this.sourceFilterBox);
-			this.groupBox2.Location = new System.Drawing.Point(25, 154);
+			this.groupBox2.Location = new System.Drawing.Point(25, 231);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(644, 142);
 			this.groupBox2.TabIndex = 9;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Source des données";
+			// 
+			// sourceListBox
+			// 
+			this.sourceListBox.FormattingEnabled = true;
+			this.sourceListBox.Location = new System.Drawing.Point(9, 41);
+			this.sourceListBox.Name = "sourceListBox";
+			this.sourceListBox.Size = new System.Drawing.Size(624, 95);
+			this.sourceListBox.TabIndex = 22;
+			this.sourceListBox.DoubleClick += new System.EventHandler(this.SourceListBoxDoubleClick);
 			// 
 			// sourceNavigatorUserControl
 			// 
@@ -278,7 +289,7 @@ namespace MoulUtil
 			this.groupBox3.Controls.Add(this.prepareBtn);
 			this.groupBox3.Controls.Add(this.workspaceBaseBox);
 			this.groupBox3.Controls.Add(this.workspaceZoneBox);
-			this.groupBox3.Location = new System.Drawing.Point(26, 304);
+			this.groupBox3.Location = new System.Drawing.Point(26, 381);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(644, 53);
 			this.groupBox3.TabIndex = 10;
@@ -335,7 +346,7 @@ namespace MoulUtil
 			this.groupBox4.Controls.Add(this.sauvegardeBtn);
 			this.groupBox4.Controls.Add(this.targetNameBox);
 			this.groupBox4.Controls.Add(this.targetSvgPathBox);
-			this.groupBox4.Location = new System.Drawing.Point(26, 363);
+			this.groupBox4.Location = new System.Drawing.Point(26, 440);
 			this.groupBox4.Name = "groupBox4";
 			this.groupBox4.Size = new System.Drawing.Size(644, 88);
 			this.groupBox4.TabIndex = 13;
@@ -416,7 +427,7 @@ namespace MoulUtil
 			// sqlBtn
 			// 
 			this.sqlBtn.Enabled = false;
-			this.sqlBtn.Location = new System.Drawing.Point(25, 457);
+			this.sqlBtn.Location = new System.Drawing.Point(25, 534);
 			this.sqlBtn.Name = "sqlBtn";
 			this.sqlBtn.Size = new System.Drawing.Size(75, 23);
 			this.sqlBtn.TabIndex = 16;
@@ -428,7 +439,7 @@ namespace MoulUtil
 			// 
 			this.configBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
 			this.configBtn.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.configBtn.Location = new System.Drawing.Point(220, 457);
+			this.configBtn.Location = new System.Drawing.Point(220, 534);
 			this.configBtn.Name = "configBtn";
 			this.configBtn.Size = new System.Drawing.Size(75, 23);
 			this.configBtn.TabIndex = 17;
@@ -442,9 +453,9 @@ namespace MoulUtil
 			| System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.targetTreeView.ContextMenuStrip = this.serveursContextMenu;
-			this.targetTreeView.Location = new System.Drawing.Point(337, 455);
+			this.targetTreeView.Location = new System.Drawing.Point(337, 534);
 			this.targetTreeView.Name = "targetTreeView";
-			this.targetTreeView.Size = new System.Drawing.Size(345, 279);
+			this.targetTreeView.Size = new System.Drawing.Size(345, 200);
 			this.targetTreeView.TabIndex = 18;
 			this.targetTreeView.DoubleClick += new System.EventHandler(this.TargetTreeViewDoubleClick);
 			this.targetTreeView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TargetTreeViewMouseClick);
@@ -476,7 +487,7 @@ namespace MoulUtil
 			// 
 			this.historyLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
 			this.historyLabel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-			this.historyLabel.Location = new System.Drawing.Point(129, 455);
+			this.historyLabel.Location = new System.Drawing.Point(129, 532);
 			this.historyLabel.Name = "historyLabel";
 			this.historyLabel.Size = new System.Drawing.Size(66, 25);
 			this.historyLabel.TabIndex = 19;
@@ -496,7 +507,6 @@ namespace MoulUtil
 			this.Controls.Add(this.copyBtn);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.groupBox4);
-			this.Controls.Add(this.sourceListBox);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox3);
@@ -520,6 +530,7 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.Label statMagLabel;
 		private System.Windows.Forms.Button MockBtn;
 		private System.Windows.Forms.TextBox magIrrisBox;
 		private System.Windows.Forms.Label label2;

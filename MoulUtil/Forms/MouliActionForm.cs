@@ -298,6 +298,7 @@ namespace MoulUtil
 		{
 			options.setInstanceCommande(instance.getMeocli());
 			options.setInstanceName(instance.getNom());
+			options.setInstancePath(instance.meopath);
 			
 			options.setIsJoint(false);
 			options.setDefaultEmail(configDto.getDefaultEmail());
@@ -309,6 +310,8 @@ namespace MoulUtil
 			
 			options.setExtensionClient(calculExtension(purgeClientChkBox));
 			options.setExtensionStock(calculExtension(purgeStockChkBox));
+			options.setTomcatPath(configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.tomcatpath));
+			options.setJavaCmd(configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.javacmd));
 			return options;
 		}
 
@@ -510,7 +513,6 @@ namespace MoulUtil
 				}
 				richTextBoxUtil.dcolorit(visuRichTexBox, ligne, color);
 			}
-			
 			
 			//visuRichTexBox.Enabled=false;
 			visuRichTexBox.Visible = !visuRichTexBox.Visible;

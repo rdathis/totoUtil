@@ -45,6 +45,9 @@ namespace cmdUtils
 			ligne = ligne.Replace("<%magIRRIS%>", options.getNumeroMagasinIrris());
 			ligne = ligne.Replace("<%ARG%>", lot);
 			ligne = ligne.Replace("<%instanceName%>", options.getInstanceName());
+			ligne = ligne.Replace("<%meoPath%>", options.getInstancePath());
+			ligne = ligne.Replace("<%tomcatPath%>", options.getTomcatPath());
+			ligne = ligne.Replace("<%javaCmd%>", options.getJavaCmd());
 			ligne = ligne.Replace("<%instanceCommande%>", options.getInstanceCommande());
 
 			if (options.getIsJoint()) {
