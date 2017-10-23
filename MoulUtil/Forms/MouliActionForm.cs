@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+using MoulUtil.Forms;
 using MoulUtil.Forms.utils;
 using cmdUtils;
 using cmdUtils.Objets;
@@ -571,6 +572,14 @@ namespace MoulUtil
 			} catch (Exception exception) {
 				LOGGER.Error(exception);
 			}
+		}
+		void StatsYToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			String msg =job.getStatRecap().recapHtml;
+			HtmlViewForm form = new HtmlViewForm(msg);
+			form.Show();
+			//String msg=mouliActionUtil.doStatAnalyses(options, job, pathLabel.Text, configDto);
+			//MessageBox.Show(msg);
 		}
 		
 	}

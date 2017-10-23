@@ -94,6 +94,8 @@
     <Compile Include="Objets\business\JFiles.cs" />
     <Compile Include="Objets\business\MeoInstance.cs" />
     <Compile Include="Objets\business\MeoServeur.cs" />
+    <Compile Include="Objets\business\MouliAnalyseRecap.cs" />
+    <Compile Include="Objets\business\MouliAnneeRecap.cs" />
     <Compile Include="Objets\business\MouliConfig.cs" />
     <Compile Include="Objets\business\MouliJob.cs" />
     <Compile Include="Objets\business\MoulinetteAction.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="Objets\MeoSql.cs" />
     <Compile Include="Objets\MySQLDico.cs" />
     <Compile Include="Objets\FilterReg.cs" />
+    <Compile Include="Objets\utils\BcdUtil.cs" />
     <Compile Include="Objets\utils\CmdUtil.cs" />
     <Compile Include="Objets\utils\ConfigUtil.cs" />
     <Compile Include="Objets\utils\ConvertisseurUtil.cs" />

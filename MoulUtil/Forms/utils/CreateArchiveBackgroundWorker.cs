@@ -8,6 +8,7 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 using cmdUtils;
+using System.IO;
 //using cmdUtils.Objets;
 using MoulUtil.Forms.utils;
 
@@ -59,6 +60,9 @@ namespace MoulUtil.Forms.utils
 					str = ("Error: " + e.Error.Message);
 				} else {
 					str =  " Fini";
+					
+					FileInfo info = new FileInfo(job.getArchiveName());
+					str+=(":"+info.Length);
 				}
 				
 				getEndWorkerCallBack().Invoke(str);

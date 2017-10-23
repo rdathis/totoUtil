@@ -102,7 +102,7 @@ namespace cmdUtils.Objets
 			return liste;
 		}
 		
-		private log4net.ILog  LOGGER=null;
+		//private log4net.ILog  LOGGER=null;
 		public SshClient getClientWithForwardedPorts(MeoServeur serveur, List<KeyValuePair<int, int>>portsList, log4net.ILog LOGGER)
 		{
 			SshClient client = new SshClient(getConnectionInfo(serveur));

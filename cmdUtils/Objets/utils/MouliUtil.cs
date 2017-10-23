@@ -256,8 +256,9 @@ namespace cmdUtils.Objets
 			List <String> liste = new List<string>();
 			liste.Add("## job file automatique, pour planifier la maj");
 			
+			liste.Add("## date format : HH:mm MM/dd/YYYY (heure:minutes(space)Mois/Jour/Annee) ");
 			liste.Add("export jobtime='" + jobtime + "'");
-			liste.Add("echo /bin/sh " + scriptMoulinetteFile + " -mail | at $jobtime  ");
+			liste.Add("echo /usr/bin/nice -n +10 /bin/sh " + scriptMoulinetteFile + " -mail | at $jobtime  ");
 			//
 			String mailTo = options.getDefaultEmail();
 			String mailCmd = "mail -s \"planification moulinette + " + scriptMoulinetteFile + " ($jobtime)\" " + mailTo + " < " + scriptMoulinetteFile;

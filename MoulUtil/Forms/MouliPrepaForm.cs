@@ -37,15 +37,15 @@ namespace MoulUtil
 		private RegistryUtil registryUtil = null;
 		private SshClient sshClientAdmin = null;
 		private ConnectServerBackgroundWorker connectWorker = null;
-		private readonly log4net.ILog  LOGGER;
+		private readonly log4net.ILog LOGGER;
 		//Pour le timer
-		private String statusMessage=null;
-		private String infoMessage=null;
-		private String sauvegardeProgressMessage=null;
-		private Double sauvegardeProgressValue=-1;
+		private String statusMessage = null;
+		private String infoMessage = null;
+		private String sauvegardeProgressMessage = null;
+		private Double sauvegardeProgressValue = -1;
 		private ToolTipUtil	toolTipUtil = new ToolTipUtil();
-		private int sauvegardeBtnEnabled=-1;
-		private int sauvegardeBtnVisible=-1;
+		private int sauvegardeBtnEnabled = -1;
+		private int sauvegardeBtnVisible = -1;
 		
 		
 		public MouliPrepaForm(ConfigDto configDto, log4net.ILog  LOGGER)
@@ -58,7 +58,8 @@ namespace MoulUtil
 			rechMagIdBox.Focus();
 		}
 
-		private void prepare() {
+		private void prepare()
+		{
 			this.rechMagIdBtn.Enabled = false;
 			prepareTimer();
 			//
@@ -70,12 +71,12 @@ namespace MoulUtil
 			} else {
 				workspacePath = configDto.getWorkingDir();
 			}
-			workspacePath=workspacePath.Replace("\\", "/");
+			workspacePath = workspacePath.Replace("\\", "/");
 			
 			this.workingDirBox.Text = workspacePath;
 			this.workspaceBaseBox.Text = workspacePath;
 			mouliUtil = new MouliUtil(LOGGER);
-			magIrrisBox.Text=mouliUtil.getMagasinIrris();
+			magIrrisBox.Text = mouliUtil.getMagasinIrris();
 			cmdUtil = new CmdUtil();
 			populateTargetBox(null);
 			
@@ -88,7 +89,8 @@ namespace MoulUtil
 			populateSourceBox(configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.moulinetteSource));
 			populateToolTips();
 		}
-		private void populateTargetBox(String instanceName) {
+		private void populateTargetBox(String instanceName)
+		{
 			new TreeViewUtil(configDto.instances, configDto.serveurs).populateTargets(targetTreeView, instanceName);
 		}
 		void populateToolTips()
@@ -100,13 +102,13 @@ namespace MoulUtil
 			toolTipUtil.add(this.sourceBaseComboBox, "Liste des sources des données possibles");
 			toolTipUtil.add(this.sourceFilterBox, "Filtrage dans les sources");
 			toolTipUtil.add(this.sourceListBox, "Choix de la source de donnée");
-//			
+//
 			toolTipUtil.add(this.workspaceBaseBox, "Répertoire de base");
 			toolTipUtil.add(this.workspaceZoneBox, "répertoire de travail");
-//			
+//
 			toolTipUtil.add(this.targetSvgPathBox, "Répertoire des sauvegardes");
 			toolTipUtil.add(this.targetNameBox, "nom de la sauvegarde");
-//			
+//
 			toolTipUtil.add(this.sqlBtn, "Accès aux requêtes (totaux, purges...)");
 			toolTipUtil.add(this.configBtn, "Paramètrages");
 //
@@ -122,15 +124,15 @@ namespace MoulUtil
 		void populateSourceBox(string str)
 		{
 			sourceBaseComboBox.Items.Clear();
-			string[] tablo=str.Split('|');
-			for(int i=0;i<tablo.Length;i++) {
+			string[] tablo = str.Split('|');
+			for (int i = 0; i < tablo.Length; i++) {
 				sourceBaseComboBox.Items.Add(tablo[i]);
 			}
 		}
 
 		void prepareTimer()
 		{
-			connectTimer.Interval=500;
+			connectTimer.Interval = 500;
 			connectTimer.Tick += new EventHandler(TimerEventProcessor);
 			connectTimer.Start();
 		}
@@ -181,8 +183,8 @@ namespace MoulUtil
 						Console.WriteLine("connected on server");
 						LOGGER.Info("connected");
 						sshClientAdmin = sshClient;
-						statusMessage = "connected at "+meoServeur.nom +":/"+adminInstance.nom;
-						infoMessage= "connected";
+						statusMessage = "connected at " + meoServeur.nom + ":/" + adminInstance.nom;
+						infoMessage = "connected";
 					}
 				};
 
@@ -200,6 +202,7 @@ namespace MoulUtil
 		void PrepareBtnClick(object sender, EventArgs e)
 		{
 			if (mouliUtilOptions == null) {
+				LOGGER.Info("options are null");
 				return;
 			}
 			if (workspaceBaseBox.Text.Length > 0 && workspaceZoneBox.Text.Length > 0) {
@@ -211,9 +214,17 @@ namespace MoulUtil
 					path = path.Replace("workspace/", "");
 				}
 				mouliUtilOptions.setWorkingPath(path);
-				if(!Directory.Exists(workspaceBaseBox.Text + path)) {
-					toolTipLabel.Text = ("chemin absent : '"+workspaceBaseBox.Text + path+"'");
+				if (!Directory.Exists(workspaceBaseBox.Text + path)) {
+					toolTipLabel.Text = ("chemin absent : '" + workspaceBaseBox.Text + path + "'");
+					LOGGER.Info(toolTipLabel.Text);
 					return;
+				}
+				try {
+					StreamWriter sw = new StreamWriter(workspaceBaseBox.Text + path + "magasin.txt");
+					sw.Write(magIrrisBox.Text);
+					sw.Close();
+				} catch (Exception ex) {
+					LOGGER.Error(ex);
 				}
 //
 				MouliActionForm form = new MouliActionForm(mouliUtilOptions, configDto, LOGGER, workspaceZoneBox.Text);
@@ -244,16 +255,16 @@ namespace MoulUtil
 			String tmpDir = new DirectoryInfo(workspaceBaseBox.Text).FullName;
 			String sourceDir = tmpDir + "/" + workspaceZoneBox.Text;
 			String targetDir = Path.GetFullPath(targetSvgPathBox.Text) + "\\" + targetNameBox.Text;
-			if(!Directory.Exists(sourceDir)) {
-				toolTipLabel.Text = ("chemin absent : '"+sourceDir+"'");
+			if (!Directory.Exists(sourceDir)) {
+				toolTipLabel.Text = ("chemin absent : '" + sourceDir + "'");
 				return;
 			}
-			if(!Directory.Exists(targetSvgPathBox.Text)) {
-				toolTipLabel.Text = ("chemin absent : '"+targetSvgPathBox.Text+"'");
+			if (!Directory.Exists(targetSvgPathBox.Text)) {
+				toolTipLabel.Text = ("chemin absent : '" + targetSvgPathBox.Text + "'");
 				return;
 			}
 			
-			sauvegardeBtnEnabled=0;
+			sauvegardeBtnEnabled = 0;
 			//sauvegardeBtn.Enabled = false;
 			statusMessage = "Préparation de la sauvegarde ...";
 			tmpDir = Path.GetFullPath(targetDir).Replace('/', '\\');
@@ -271,8 +282,8 @@ namespace MoulUtil
 					statusMessage = "begin";
 					sauvegardeProgressMessage = " debut";
 					//sauvegardeBtn.Visible = false;
-					sauvegardeBtnVisible=0;
-					sauvegardeProgressValue=-1;
+					sauvegardeBtnVisible = 0;
+					sauvegardeProgressValue = -1;
 				} catch (Exception ex) {
 					LOGGER.Error(ex);
 				}
@@ -286,15 +297,15 @@ namespace MoulUtil
 				}
 				sauvegardeProgressValue = prc;
 				sauvegardeProgressMessage = (value + " / " + worker.getNbOperation() + " (" + prc + ")%");
-				statusMessage = "progression : " + (prc) + "%  - "+value+" / " + worker.getNbOperation();
+				statusMessage = "progression : " + (prc) + "%  - " + value + " / " + worker.getNbOperation();
 				sauvegardeProgressMessage = statusMessage;
 			};
 			MouliProgressWorker.EndWorkerCallBack endWorkerCallBack = value => {
 				//sauvegardeBtn.Enabled = true;
-				sauvegardeBtnEnabled=1;
-				sauvegardeProgressValue= 0; //100 %
-				sauvegardeProgressMessage= "sauvegarde finie";
-				statusMessage=sauvegardeProgressMessage;
+				sauvegardeBtnEnabled = 1;
+				sauvegardeProgressValue = 0; //100 %
+				sauvegardeProgressMessage = "sauvegarde finie";
+				statusMessage = sauvegardeProgressMessage;
 			};
 			//
 			worker.setStartWorkerCallBack(startWorkerCallBack);
@@ -307,6 +318,7 @@ namespace MoulUtil
 		void RechMagIdBtnClick(object sender, EventArgs e)
 		{
 			rechercheMagasin();
+			sourceFilterBox.Text = "MID" + rechMagIdBox.Text + "*";
 		}
 
 		void rechercheMagasin()
@@ -323,16 +335,31 @@ namespace MoulUtil
 			if (mouliUtilOptions != null) {
 				calculeMoulinettePath();
 				String path = workspaceZoneBox.Text;
-				mouliUtilOptions.setArchiveName(mouliUtil.calculeArchiveName(workingPath+path));
+				mouliUtilOptions.setArchiveName(mouliUtil.calculeArchiveName(workingPath + path));
 				LOGGER.Info("name: " + mouliUtilOptions.getarchiveName());
 				
 				populateTargetBox(mouliUtilOptions.getInstanceName());
+				sourceFilterBox.Text="*"+rechMagIdBox.Text+"*";
+			}
+			String fi = workspaceBaseBox.Text + workspaceZoneBox.Text + "magasin.txt";
+			if (File.Exists(fi)) {
+				try {
+					StreamReader sr = new StreamReader(fi);
+					String val = sr.ReadLine();
+					sr.Close();
+					if ((val.Length == 2) && (val != magIrrisBox.Text)) {
+						magIrrisBox.Text = val;
+						calculeMoulinettePath();
+					}
+				} catch (Exception ex) {
+					LOGGER.Error(ex);
+				}
 			}
 		}
 
 		public void CreateBtnClick(object sender, EventArgs e)
 		{
-			String proposition = workingDirBox.Text+propositionBox.Text;
+			String proposition = workingDirBox.Text + propositionBox.Text;
 			if (proposition.Length > 0) {
 				mouliUtil.setMagasinIrris(magIrrisBox.Text);
 				mouliUtil.createArbo(proposition);
@@ -482,41 +509,42 @@ namespace MoulUtil
 			worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker.sauvegardeBW_RunWorkerCompleted);
 			return worker;
 		}
-		private void TimerEventProcessor(Object myObject, EventArgs myEventArgs) {
+		private void TimerEventProcessor(Object myObject, EventArgs myEventArgs)
+		{
 			try {
-				if(infoMessage!=null) {
+				if (infoMessage != null) {
 					magDescBox.Text = infoMessage;
-					infoMessage=null;
-					rechMagIdBtn.Enabled=true;
+					infoMessage = null;
+					rechMagIdBtn.Enabled = true;
 					rechercheMagasin();
 				}
-				if(statusMessage!=null) {
-					statusStrip1.Text=statusMessage;
+				if (statusMessage != null) {
+					statusStrip1.Text = statusMessage;
 					toolTipLabel.Text = statusMessage;
-					statusMessage=null;
+					statusMessage = null;
 				}
-				if(sauvegardeProgressMessage!=null) {
-					sauvegardeProgressTextBox.Text= sauvegardeProgressMessage;
-					sauvegardeProgressMessage=null;
+				if (sauvegardeProgressMessage != null) {
+					sauvegardeProgressTextBox.Text = sauvegardeProgressMessage;
+					sauvegardeProgressMessage = null;
 				}
-				if(sauvegardeProgressValue>=0) {
-					toolStripProgressBar.Value = (int) sauvegardeProgressValue;
-					sauvegardeProgressValue=-1;
+				if (sauvegardeProgressValue >= 0) {
+					toolStripProgressBar.Value = (int)sauvegardeProgressValue;
+					sauvegardeProgressValue = -1;
 				}
-				if(sauvegardeBtnVisible>-1) {
-					sauvegardeBtnVisible=-1;
-					if(sauvegardeBtnVisible==0) {
-						sauvegardeBtn.Visible=false;
+				if (sauvegardeBtnVisible > -1) {
+					sauvegardeBtnVisible = -1;
+					if (sauvegardeBtnVisible == 0) {
+						sauvegardeBtn.Visible = false;
 					} else {
-						sauvegardeBtn.Visible=true;
+						sauvegardeBtn.Visible = true;
 					}
 				}
-				if(sauvegardeBtnEnabled>-1) {
-					sauvegardeBtnEnabled=-1;
-					if(sauvegardeBtnEnabled==0) {
-						sauvegardeBtn.Enabled=false;
+				if (sauvegardeBtnEnabled > -1) {
+					sauvegardeBtnEnabled = -1;
+					if (sauvegardeBtnEnabled == 0) {
+						sauvegardeBtn.Enabled = false;
 					} else {
-						sauvegardeBtn.Enabled=true;
+						sauvegardeBtn.Enabled = true;
 					}
 				}
 			} catch (Exception exception) {
@@ -525,10 +553,10 @@ namespace MoulUtil
 		}
 		void MockBtnClick(object sender, EventArgs e)
 		{
-			if(propositionBox.Text!="") {
+			if (propositionBox.Text != "") {
 				CreateBtnClick(null, null);
 				
-				mouliPrepaUtil.createMock(workingDirBox.Text+propositionBox.Text, magIrrisBox.Text);
+				mouliPrepaUtil.createMock(workingDirBox.Text + propositionBox.Text, magIrrisBox.Text);
 			}
 		}
 		void SourceBaseComboBoxTextUpdate(object sender, EventArgs e)
@@ -539,15 +567,16 @@ namespace MoulUtil
 		{
 			populateSourceListBox(sourceBaseComboBox.SelectedItem.ToString());
 		}
-		void populateSourceListBox(String path) {
+		void populateSourceListBox(String path)
+		{
 			this.sourceListBox.Items.Clear();
 			List<String> liste = mouliPrepaUtil.populateSourceBaseListBox(path, this.sourceFilterBox.Text);
-			if(liste!=null) {
-				int idx=-1;
-				foreach(String str in liste) {
-					idx=this.sourceListBox.Items.Add(str);
+			if (liste != null) {
+				int idx = -1;
+				foreach (String str in liste) {
+					idx = this.sourceListBox.Items.Add(str);
 				}
-				this.sourceListBox.Sorted=true;
+				this.sourceListBox.Sorted = true;
 			}
 		}
 		void SourceFilterBoxKeyUp(object sender, KeyEventArgs e)
@@ -556,8 +585,23 @@ namespace MoulUtil
 		}
 		void SourceListBoxDoubleClick(object sender, EventArgs e)
 		{
-			if(sourceListBox.SelectedItem !=null &&sourceListBox.SelectedItem.ToString()!="") {
+			if (sourceListBox.SelectedItem != null && sourceListBox.SelectedItem.ToString() != "") {
 				cmdUtil.openWindowsExplorer(sourceListBox.SelectedItem.ToString());
+			}
+		}
+		void DefinirToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			actionDefinirInstance(targetTreeView);
+		}
+		void actionDefinirInstance(TreeView treeView)
+		{
+			LOGGER.Debug("actionDefinirInstance()");
+			MeoInstance meoInstance = getSelectedInstance(treeView);
+			if (meoInstance != null) {
+				populateTargetBox(meoInstance.nom);
+				mouliUtilOptions.setInstanceName(meoInstance.nom);
+				mouliUtilOptions.setInstanceCommande(meoInstance.meocli);
+				mouliUtilOptions.setInstancePath(meoInstance.meopath);
 			}
 		}
 	}

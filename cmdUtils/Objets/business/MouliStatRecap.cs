@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using cmdUtils.Objets;
+using cmdUtils.Objets.business;
 namespace cmdUtils.Objets {
 	
 	public class MouliStatRecap {
@@ -21,6 +22,8 @@ namespace cmdUtils.Objets {
 		public int ord01DocsTotal;
 		public int doc01DocsTotal;
 		public string datamag;
+		public List<MouliAnneeRecap> listeRecapAnnee;
+		public String recapHtml;
 		public MouliStatRecap() {
 			
 		}

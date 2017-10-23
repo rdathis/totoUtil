@@ -53,6 +53,8 @@ namespace MoulUtil
 			this.programmesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.puttiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.cmdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.analyseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.statsYToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
@@ -175,7 +177,8 @@ namespace MoulUtil
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.raccoursToolStripMenuItem,
-			this.programmesToolStripMenuItem});
+			this.programmesToolStripMenuItem,
+			this.analyseToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(726, 24);
@@ -229,14 +232,29 @@ namespace MoulUtil
 			// puttiesToolStripMenuItem
 			// 
 			this.puttiesToolStripMenuItem.Name = "puttiesToolStripMenuItem";
-			this.puttiesToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.puttiesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.puttiesToolStripMenuItem.Text = "putties";
 			// 
 			// cmdToolStripMenuItem
 			// 
 			this.cmdToolStripMenuItem.Name = "cmdToolStripMenuItem";
-			this.cmdToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.cmdToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.cmdToolStripMenuItem.Text = "cmd";
+			// 
+			// analyseToolStripMenuItem
+			// 
+			this.analyseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.statsYToolStripMenuItem});
+			this.analyseToolStripMenuItem.Name = "analyseToolStripMenuItem";
+			this.analyseToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+			this.analyseToolStripMenuItem.Text = "analyse";
+			// 
+			// statsYToolStripMenuItem
+			// 
+			this.statsYToolStripMenuItem.Name = "statsYToolStripMenuItem";
+			this.statsYToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.statsYToolStripMenuItem.Text = "stats Y";
+			this.statsYToolStripMenuItem.Click += new System.EventHandler(this.StatsYToolStripMenuItemClick);
 			// 
 			// statusStrip1
 			// 
@@ -535,6 +553,8 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.ToolStripMenuItem analyseToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem statsYToolStripMenuItem;
 		private System.Windows.Forms.Timer formTimer;
 		private System.Windows.Forms.ListBox propositionMailsListBox;
 		private System.Windows.Forms.Label analyseLabel;

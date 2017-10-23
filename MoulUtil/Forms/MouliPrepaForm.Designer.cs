@@ -78,6 +78,7 @@ namespace MoulUtil
 			this.serveursContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.mysqlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.puttyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.definirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.historyLabel = new System.Windows.Forms.Label();
 			this.connectTimer = new System.Windows.Forms.Timer(this.components);
 			this.groupBox1.SuspendLayout();
@@ -464,24 +465,32 @@ namespace MoulUtil
 			// 
 			this.serveursContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.mysqlToolStripMenuItem,
-			this.puttyToolStripMenuItem});
+			this.puttyToolStripMenuItem,
+			this.definirToolStripMenuItem});
 			this.serveursContextMenu.Name = "serveursContextMenu";
-			this.serveursContextMenu.Size = new System.Drawing.Size(102, 48);
+			this.serveursContextMenu.Size = new System.Drawing.Size(153, 92);
 			this.serveursContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ServeursContextMenuOpening);
 			// 
 			// mysqlToolStripMenuItem
 			// 
 			this.mysqlToolStripMenuItem.Name = "mysqlToolStripMenuItem";
-			this.mysqlToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+			this.mysqlToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.mysqlToolStripMenuItem.Text = "mysql";
 			this.mysqlToolStripMenuItem.Click += new System.EventHandler(this.MysqlToolStripMenuItemClick);
 			// 
 			// puttyToolStripMenuItem
 			// 
 			this.puttyToolStripMenuItem.Name = "puttyToolStripMenuItem";
-			this.puttyToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
+			this.puttyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.puttyToolStripMenuItem.Text = "putty";
 			this.puttyToolStripMenuItem.Click += new System.EventHandler(this.PuttyToolStripMenuItemClick);
+			// 
+			// definirToolStripMenuItem
+			// 
+			this.definirToolStripMenuItem.Name = "definirToolStripMenuItem";
+			this.definirToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.definirToolStripMenuItem.Text = "définir";
+			this.definirToolStripMenuItem.Click += new System.EventHandler(this.DefinirToolStripMenuItemClick);
 			// 
 			// historyLabel
 			// 
@@ -530,6 +539,7 @@ namespace MoulUtil
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.ToolStripMenuItem definirToolStripMenuItem;
 		private System.Windows.Forms.Label statMagLabel;
 		private System.Windows.Forms.Button MockBtn;
 		private System.Windows.Forms.TextBox magIrrisBox;

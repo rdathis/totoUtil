@@ -238,8 +238,9 @@ namespace MoulUtil.Forms.utils
 			return null;
 		}
 
-		public void sauvegardeMoulinette(String sourcePath, string targetPath, MouliUtilOptions options, MouliProgressWorker backgroundWorker)
+		public List<String> sauvegardeMoulinette( String sourcePath, string targetPath, MouliUtilOptions options, MouliProgressWorker backgroundWorker)
 		{
+			List<String> retour = new List<string>();
 			try {
 				if(options!=null) {
 					String subPath="MEO"+DateTime.Now.Year+"/";
@@ -251,6 +252,7 @@ namespace MoulUtil.Forms.utils
 					LOGGER.Info("fileName:"+fileName);
 					if(File.Exists(options.getarchiveName())) {
 						File.Copy(options.getarchiveName(), Path.GetFullPath(path)+fileName, true);
+						retour.Add(Path.GetFullPath(path)+fileName);
 					}
 					
 					sourcePath = new DirectoryInfo(sourcePath).FullName;
@@ -262,7 +264,8 @@ namespace MoulUtil.Forms.utils
 					FileInfo fi =new FileInfo(options.getarchiveName());
 					
 					zipUtil.createSimpleArchive(9, Path.GetFullPath(path)+ "origine-"+fi.Name, toSaveFiles, backgroundWorker);
-					return;
+					retour.Add(Path.GetFullPath(path)+ "origine-"+fi.Name);
+					
 					
 					//creation zip sur cible, liste de fichiers a faire, en excluant *.zip, *.rar, *gz, *.7z
 					//1 - faire la liste filtree
@@ -282,6 +285,7 @@ namespace MoulUtil.Forms.utils
 				LOGGER.Error(exception);
 				MessageBox.Show("Erreur de copie de vers "+Path.GetFullPath(targetPath)+"\n "+exception.Message);
 			}
+			return retour;
 		}
 		public void startBrowser(String url) {
 			if(url!=null) {

@@ -16,6 +16,7 @@ namespace MoulUtil
 	class MouliProgram
 	{
 		// disable StringEndsWithIsCultureSpecific
+		[STAThread] //critical : sinon impossible d'utiliser le webbrowser
 		public static void Main(string[] args)
 		{
 			//configure le ilog -- http://lutecefalco.developpez.com/tutoriels/dotnet/log4net/introduction/
@@ -31,7 +32,6 @@ namespace MoulUtil
 			
 			String tmpBasePath=Directory.GetCurrentDirectory();
 			if(tmpBasePath.ToLower().EndsWith("\\bin") && !Directory.Exists("conf") &&  Directory.Exists("..\\conf")) {
-				
 				Directory.SetCurrentDirectory("..");
 				tmpBasePath=Directory.GetCurrentDirectory();
 				Console.WriteLine("directory changed to "+Directory.GetCurrentDirectory());
