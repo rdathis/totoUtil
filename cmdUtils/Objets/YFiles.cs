@@ -15,29 +15,41 @@ namespace cmdUtils.Objets
 	/// Description of YFiles.
 	/// </summary>
 	/// 
-	public enum YFiles
+	public static class YFILES
 	{
-		YCLIENTS,
-		YFOURNI,
-		YMARQUE,
-		YFORMULE,
-		YSTOCAT,
-		YSTOCK,
-//		YHISTO, // not ready yet
-		YVITALE,
-		YTOPTIC,
-		YTOPSUIT,
-		YTLENTI,
-		YTDIVERS,
-		YOBSERV,
-		YTOBSERV,
-		YTPL,
-		YTPE,
-		YTFACTUR,
-		YCODLIB,
-		YREMISE,
-		YOPHTAL,
-		YDOCUMENT
+		public enum YFiles
+		{
+			YCLIENTS,
+			YFOURNI,
+			YMARQUE,
+			YFORMULE,
+			YSTOCAT,
+			YSTOCK,
+			//		YHISTO, // not ready yet
+			YVITALE,
+			YTOPTIC,
+			YTOPSUIT,
+			YTLENTI,
+			YTDIVERS,
+			YOBSERV,
+			YTOBSERV,
+			YTPL,
+			YTPE,
+			YTFACTUR,
+			YCODLIB,
+			YREMISE,
+			YOPHTAL,
+			YDOCUMENT
 			
+		}
+		public static Boolean isStock(YFiles yfile)
+		{
+			return (YFiles.YFORMULE == yfile || YFiles.YFOURNI == yfile || YFiles.YMARQUE == yfile || YFiles.YSTOCAT == yfile || YFiles.YSTOCK == yfile);
+		}
+		public static Boolean isClient(YFiles yfile)
+		{
+			return !isStock(yfile); //shortcut.
+		}
+		//TODO:add lengths & positions
 	}
 }

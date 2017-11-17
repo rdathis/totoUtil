@@ -120,22 +120,22 @@
   <data name="richTextBox2.Text" xml:space="preserve">
     <value>Hibernate: /* SELECT visite.client.nom,  visite.client.prenom,  visite.dateVisite,  case when tpe.gestionSS = true then SUM(tpd.montantSS) ELSE 0 END, SUM(tpd.montantMutuelle) + SUM(tpd.montantMutSS), m.nom, rm.libelle, fse.bloqueCPAM, fse.etatCPAM, fse.id, tpe.destinataireRemboursementSS, visite.id, visite.client.id, visite.type,  SUM((article.prixVenteModifieTTC * article.quantite) - (CASE WHEN article.remise is not null then article.remise.montantRemise ELSE 0d END)),  fse.etatSecurisationFse,  fse.numeroFactureWI,  fse.numeroFacture  FROM FSE fse left join fse.visiteAbstract visite  left join visite.client client  left join visite.avoir avoir  left join visite.equipements equipement  left join equipement.articleVisiteSet article  left join article.tiersPayantDetailSet tpd  left join tpd.tiersPayantEntete tpe  left join tpe.regimeMutuelle rm  left join rm.mutuelle m  WHERE  fse.dateSuppression IS NULL and visite.id is not null AND ((avoir IS NULL) OR (avoir IS NOT NULL AND avoir.dateSuppression IS NOT NULL)) and tpe.typeTiersPayant LIKE 'C'  AND  ((fse.etatCPAM LIKE 'A') OR (fse.etatCPAM LIKE 'I') OR (fse.etatCPAM LIKE 'R')) AND  visite.dateSuppression=null GROUP BY fse.id ORDER BY visite.client.nom asc */ select client10_.NOM as col_0_0_, client10_.PRENOM as col_1_0_, visiteabst1_.DATE_VISITE as col_2_0_, case when tierspayan7_.GESTION_SS=1 then sum(tierspayan6_.MONTANT_SS) else 0 end as col_3_0_, sum(tierspayan6_.MONTANT_MUTUELLE)+sum(tierspayan6_.MONTANT_MUT_SS) as col_4_0_, mutuelle9_.NOM as col_5_0_, regimemutu8_.LIBELLE as col_6_0_, fse0_.BLOQUE_CPAM as col_7_0_, fse0_.ETAT_CPAM as col_8_0_, fse0_.ID as col_9_0_, tierspayan7_.DESTINATAIRE_REMBOURSEMENT_SS as col_10_0_, visiteabst1_.ID as col_11_0_, visiteabst1_.CLIENT_ID as col_12_0_, visiteabst1_.TYPE_DOSSIER as col_13_0_, sum(articlevis5_.PRIX_VENTE_MODIFIE_TTC*articlevis5_.QUANTITE-(case when articlevis5_.CODE_REMISE is not null or articlevis5_.MONTANT_REMISE is not null then articlevis5_.MONTANT_REMISE else 0 end)) as col_14_0_, fse0_.ETAT_SECURISATION_FSE as col_15_0_, fse0_.NUMERO_FACTURE_WI as col_16_0_, fse0_.NUMERO_FACTURE as col_17_0_ from fse fse0_ left outer join visite_abstract visiteabst1_ on fse0_.ID=visiteabst1_.FSE_ID and visiteabst1_.MAG_ID = ? left outer join client client2_ on visiteabst1_.CLIENT_ID=client2_.ID left outer join facture_abstract avoir3_ on visiteabst1_.AVOIR_ID=avoir3_.ID left outer join equipement equipement4_ on visiteabst1_.ID=equipement4_.VISITE_ABSTRACT_ID left outer join article_visite articlevis5_ on equipement4_.ID=articlevis5_.EQUIPEMENT_ID left outer join tiers_payant_detail tierspayan6_ on articlevis5_.ID=tierspayan6_.ARTICLE_VISITE_ID left outer join tiers_payant_entete tierspayan7_ on tierspayan6_.TIERS_PAYANT_ENTETE_ID=tierspayan7_.ID left outer join regime_mutuelle regimemutu8_ on tierspayan7_.REGIME_MUTUELLE_ID=regimemutu8_.ID left outer join mutuelle mutuelle9_ on regimemutu8_.MUTUELLE_ID=mutuelle9_.ID, client client10_ where fse0_.MAG_ID = ? and visiteabst1_.CLIENT_ID=client10_.ID and (fse0_.DATE_SUPPRESSION is null) and (visiteabst1_.ID is not null) and (avoir3_.ID is null or (avoir3_.ID is not null) and (avoir3_.DATE_SUPPRESSION is not null)) and (tierspayan7_.TYPE_TIERS_PAYANT like 'C') and (fse0_.ETAT_CPAM like 'A' or fse0_.ETAT_CPAM like 'I' or fse0_.ETAT_CPAM like 'R') and (visiteabst1_.DATE_SUPPRESSION is null) group by fse0_.ID order by client10_.NOM asc</value>
   </data>
-  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>126, 17</value>
-  </metadata>
-  <metadata name="dataSet1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>237, 17</value>
-  </metadata>
-  <metadata name="notifyIcon1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>334, 17</value>
-  </metadata>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>440, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>17, 17</value>
+  </data>
+  <data name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>126, 17</value>
+  </data>
+  <data name="dataSet1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>237, 17</value>
+  </data>
+  <data name="notifyIcon1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>334, 17</value>
+  </data>
+  <data name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>440, 17</value>
+  </data>
   <data name="cygwinToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8

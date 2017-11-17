@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 using MoulUtil.Forms;
@@ -30,18 +31,19 @@ namespace MoulUtil
 		private MouliUtil mouliUtil = null;
 		private MouliUtilOptions options = null;
 		private MouliActionUtil mouliActionUtil;
-		private RichTextBoxUtil richTextBoxUtil=new RichTextBoxUtil();
+		private RichTextBoxUtil richTextBoxUtil = new RichTextBoxUtil();
 		// disable FieldCanBeMadeReadOnly.Local
-		private log4net.ILog LOGGER=null;
-		private ToolTipUtil toolTipUtil=new ToolTipUtil();
+		private log4net.ILog LOGGER = null;
+		private ToolTipUtil toolTipUtil = new ToolTipUtil();
 		//
 		//just for timer + bgworker
-		private String progressBoxText=null;
-		private String toolStripStatusLabelText=null;
-		private int toolStripProgressBarValue=-1;
-		private Boolean finalFlag=false;
-		private Boolean installBtnEnabled=false;
-		private Boolean finalUploadFlag=false;
+		private String progressBoxText = null;
+		private String toolStripStatusLabelText = null;
+		private String toolStringArchiveLabelText = null;
+		private int toolStripProgressBarValue = -1;
+		private Boolean finalFlag = false;
+		private Boolean installBtnEnabled = false;
+		private Boolean finalUploadFlag = false;
 
 		public MouliActionForm(MouliUtilOptions options, ConfigDto configDto, log4net.ILog  LOGGER, string path)
 		{
@@ -53,8 +55,8 @@ namespace MoulUtil
 			setPath(path);
 			setMagId(options.getMagId());
 			setMagasinIrris(options.getNumeroMagasinIrris());
-			this.LOGGER=LOGGER;
-			mouliUtil= new MouliUtil(LOGGER);
+			this.LOGGER = LOGGER;
+			mouliUtil = new MouliUtil(LOGGER);
 			prepare();
 			MeoInstance instance = MeoInstance.findInstanceByInstanceName(configDto.getInstances(), options.getInstanceName());
 			if (instance != null && instance.getServeur() != null) {
@@ -78,7 +80,7 @@ namespace MoulUtil
 			toolTipUtil.add(this.purgeStockChkBox, "Demander un import des données STOCK sans extensions (stock nul ou neg. limité à 1 an plein)");
 			toolTipUtil.add(this.irrisMagTBox, "Numero de mag dans irris (de mag01 à  mag99 ?)");
 			toolTipUtil.add(this.path, "chemin de la moulinette");
-			toolTipUtil.add(this.dateTimePicker, "Choix de la date d'installation des données(à 8h00 du matin)");
+			toolTipUtil.add(this.dateTimePicker, "Choix de la date d'installation des données(à 7h00 du matin)");
 			toolTipUtil.add(this.magIdTextBox, "magId ");
 
 			toolTipUtil.add(this.analyseLabel, "Analyser les données pour calculer les options");
@@ -104,11 +106,13 @@ namespace MoulUtil
 			toolTipUtil.add(this.uploadButton, "Uploader l'archive vers le serveur cible");
 			toolTipUtil.add(this.installBtn, "Installer le job sur le serveur cible (à la date paramétrée plus haut)");
 			toolTipUtil.add(this.exitButton, "Fermer la fenêtre");
+			toolTipUtil.add(this.limiteYearStockTBox, "Limiter le nombre d'année dans la reprise du stock");
+			toolTipUtil.add(this.limiteYearVisiteTBox, "Limiter le nombre d'année dans la reprise des visites");
 		}
 		
 		void prepareTimer()
 		{
-			formTimer.Interval=500;
+			formTimer.Interval = 500;
 			formTimer.Tick += new EventHandler(TimerEventProcessor);
 			formTimer.Start();
 		}
@@ -145,14 +149,17 @@ namespace MoulUtil
 			installBtn.Enabled = false;
 			progressTextBox.Visible = false;
 			emailTextbox.Text = configDto.getDefaultEmail();
+			limiteYearStockTBox.Text = options.getLimiteYearStock();
+			limiteYearVisiteTBox.Text = options.getLimiteYearVisites();
+			;
 			mouliActionUtil = new MouliActionUtil(this, configDto, LOGGER, mouliUtil);
 			String propositions = configDto.getConfigParamByName(ConfigParam.ParamNamesType.emails).Value;
-			if(propositions!=null) {
+			if (propositions != null) {
 				propositionMailsListBox.Items.Clear();
-				String [] tablo=propositions.Split(',');
+				String[] tablo = propositions.Split(',');
 				propositionMailsListBox.Items.Add(emailTextbox.Text);
-				if(tablo!=null) {
-					for(int i=0;i<tablo.Length;i++) {
+				if (tablo != null) {
+					for (int i = 0; i < tablo.Length; i++) {
 						propositionMailsListBox.Items.Add(tablo[i]);
 					}
 				}
@@ -190,9 +197,25 @@ namespace MoulUtil
 		void completeOptions()
 		{
 			configDto.setDefaultEmail(emailTextbox.Text);
-			options = updateMouliUtilOption(MeoInstance.findInstanceByInstanceName(configDto.getInstances(), options.getInstanceName()));
+			try {
+				options = updateMouliUtilOption(MeoInstance.findInstanceByInstanceName(configDto.getInstances(), options.getInstanceName()));
+			} catch (Exception exc) {
+				LOGGER.Error(exc);
+				MessageBox.Show("Erreur : " + exc.Message + " \n" + exc.StackTrace);
+			}
 		}
 
+		// disable once ParameterHidesMember
+		string calculArchiveInfo(MouliJob job)
+		{
+			if(File.Exists(job.getArchiveName())) {
+				FileInfo finfo = new FileInfo(job.getArchiveName());
+				String info = BytesToString(finfo.Length);
+				return info;
+			} else {
+				return "";
+			}
+		}
 		void GoButtonClick(object sender, EventArgs e)
 		{
 			goButton.Enabled = false;
@@ -224,7 +247,9 @@ namespace MoulUtil
 				MouliProgressWorker.EndWorkerCallBack endWorkerCallBack = value => {
 					toolStripStatusLabelText = "fini";
 					toolStripProgressBarValue = 0;
-					finalFlag=true;
+					finalFlag = true;
+					
+					this.toolStringArchiveLabelText = calculArchiveInfo(job);
 				};
 				//
 				worker.setStartWorkerCallBack(startWorkerCallBack);
@@ -313,6 +338,8 @@ namespace MoulUtil
 			options.setExtensionStock(calculExtension(purgeStockChkBox));
 			options.setTomcatPath(configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.tomcatpath));
 			options.setJavaCmd(configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.javacmd));
+			options.setLimiteYearStock(limiteYearStockTBox.Text);
+			options.setLimiteYearVisites(limiteYearVisiteTBox.Text);
 			return options;
 		}
 
@@ -352,9 +379,9 @@ namespace MoulUtil
 						worker.prepare(server, targetPath, job.getArchiveName());
 						
 						MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = name => {
-							this.toolStripStatusLabelText=name;
+							this.toolStripStatusLabelText = name;
 							try {
-								progressBoxText=" debut";
+								progressBoxText = " debut";
 								toolStripProgressBarValue = 0;
 							} catch (Exception ex) {
 								LOGGER.Error("still exception here ..." + ex.Message);
@@ -365,11 +392,11 @@ namespace MoulUtil
 							if (value <= 100) {
 								toolStripProgressBarValue = value;//bug
 							}
-							toolStripStatusLabelText= "progression upload : " + (value) + "%  - x / " + worker.getNbOperation();
+							toolStripStatusLabelText = "progression upload : " + (value) + "%  - x / " + worker.getNbOperation();
 							progressBoxText = toolStripStatusLabelText;
 						};
 						MouliProgressWorker.EndWorkerCallBack endWorkerCallBack = value => {
-							finalUploadFlag=true;
+							finalUploadFlag = true;
 
 							try {
 								String serverTargetPath = server.getTranspo();
@@ -380,10 +407,10 @@ namespace MoulUtil
 								CmdUtil cmdUtil = new CmdUtil();
 								
 								String cmd = mouliUtil.getUnzipCmd(server, serverTargetPath, job);
-								String commandeFile = job.getOriginalDir()+"/"+ job.getMoulinettePath() + "install.file";
+								String commandeFile = job.getOriginalDir() + "/" + job.getMoulinettePath() + "install.file";
 								mouliUtil.writeInstallMoulinetteFile(cmd, commandeFile);
-								this.toolStripStatusLabelText= "finished";
-								installBtnEnabled=true;
+								this.toolStripStatusLabelText = "finished";
+								installBtnEnabled = true;
 							} catch (Exception ex) {
 								progressBoxText = "Exception : " + ex.Message;
 								LOGGER.Error(ex);
@@ -402,7 +429,16 @@ namespace MoulUtil
 				}
 			}
 		}
-
+		String BytesToString(long byteCount)
+		{
+			string[] suf = { "B", "Kb", "Mb", "Gb", "Tb", "Pb", "Eb" }; //Longs run out around EB
+			if (byteCount == 0)
+				return "0" + suf[0];
+			long bytes = Math.Abs(byteCount);
+			int place = Convert.ToInt32(Math.Floor(Math.Log(bytes, 1024)));
+			double num = Math.Round(bytes / Math.Pow(1024, place), 1);
+			return (Math.Sign(byteCount) * num).ToString() + " " + suf[place];
+		}
 		// disable once ParameterHidesMember
 		void setMagId(string magId)
 		{
@@ -437,8 +473,8 @@ namespace MoulUtil
 			if (optionC1CheckBox.Checked) {
 				optionCCheckBox.Checked = false;
 			}
-			if(optionCCheckBox.Checked && job.getDetailClient()!=null) {
-				MessageBox.Show("Absents:"+job.getDetailClient(), "Controle fichiers client");
+			if (optionCCheckBox.Checked && job.getDetailClient() != null) {
+				MessageBox.Show("Absents:" + job.getDetailClient(), "Controle fichiers client");
 			}
 		}
 		void OptionSCheckBoxCheckedChanged(object sender, EventArgs e)
@@ -446,8 +482,8 @@ namespace MoulUtil
 			if (optionS1CheckBox.Checked) {
 				optionSCheckBox.Checked = false;
 			}
-			if(optionSCheckBox.Checked && job.getDetailStock()!=null) {
-				MessageBox.Show("Absents:"+job.getDetailStock(), "Controle fichiers Stock");
+			if (optionSCheckBox.Checked && job.getDetailStock() != null) {
+				MessageBox.Show("Absents:" + job.getDetailStock(), "Controle fichiers Stock");
 			}
 			
 		}
@@ -462,8 +498,8 @@ namespace MoulUtil
 			if (optionDCheckBox.Checked) {
 				optionJCheckBox.Checked = false;
 			}
-			if(optionJCheckBox.Checked && job.getDetailJoint()!=null) {
-				MessageBox.Show("Absents:"+job.getDetailJoint(), "Controle fichiers Joints");
+			if (optionJCheckBox.Checked && job.getDetailJoint() != null) {
+				MessageBox.Show("Absents:" + job.getDetailJoint(), "Controle fichiers Joints");
 			}
 		}
 		void OptionDCheckBoxCheckedChanged(object sender, EventArgs e)
@@ -471,8 +507,8 @@ namespace MoulUtil
 			if (optionJCheckBox.Checked) {
 				optionDCheckBox.Checked = false;
 			}
-			if(optionDCheckBox.Checked && job.getDetailDoc()!=null) {
-				MessageBox.Show("Absents:"+job.getDetailDoc(), "Controle fichiers Doc & Ord");
+			if (optionDCheckBox.Checked && job.getDetailDoc() != null) {
+				MessageBox.Show("Absents:" + job.getDetailDoc(), "Controle fichiers Doc & Ord");
 			}
 			
 		}
@@ -506,9 +542,9 @@ namespace MoulUtil
 			//visuRichTexBox.Text = str;
 			visuRichTexBox.Clear();
 			string[] tablo = str.Split('\n');
-			for(int i=0;i<tablo.Length;i++) {
-				String ligne = tablo[i]+"\n";
-				Color color=Color.DarkBlue;
+			for (int i = 0; i < tablo.Length; i++) {
+				String ligne = tablo[i] + "\n";
+				Color color = Color.DarkBlue;
 				if (ligne.StartsWith("#", StringComparison.Ordinal)) {
 					color = Color.DarkGreen;
 				}
@@ -525,48 +561,64 @@ namespace MoulUtil
 		}
 		void AnalyseLabelClick(object sender, EventArgs e)
 		{
-			completeOptions();
-			job = mouliActionUtil.doAnalyse(pathLabel.Text, options, configDto);
-			analyseJob(job);
+			try {
+				completeOptions();
+				job = mouliActionUtil.doAnalyse(pathLabel.Text, options, configDto);
+				analyseJob(job);
+				toolStripArchiveInfoLabel.Text =calculArchiveInfo(job);
+			} catch (Exception exc) {
+				LOGGER.Error(exc);
+				MessageBox.Show("Erreur analyse : " + exc.Message + "\n" + exc.StackTrace);
+			}
 		}
 		void PropositionMailsListBoxDoubleClick(object sender, EventArgs e)
 		{
-			if(propositionMailsListBox.SelectedItem!=null) {
+			if (propositionMailsListBox.SelectedItem != null) {
 				emailTextbox.Text = propositionMailsListBox.SelectedItem.ToString();
 			}
 		}
-		private void TimerEventProcessor(Object myObject, EventArgs myEventArgs) {
+		private void TimerEventProcessor(Object myObject, EventArgs myEventArgs)
+		{
 			
 			try {
-				if(progressBoxText!=null) {
-					progressTextBox.Text  = progressBoxText;
-					progressBoxText=null;
+				if (progressBoxText != null) {
+					progressTextBox.Text = progressBoxText;
+					progressBoxText = null;
 				}
-				if(toolStripStatusLabelText!=null) {
-					toolStripStatusLabel1.Text =toolStripStatusLabelText;
-					toolStripStatusLabelText=null;
+				if (toolStripStatusLabelText != null) {
+					toolStripStatusLabel1.Text = toolStripStatusLabelText;
+					toolStripStatusLabelText = null;
 				}
-				if(toolStripProgressBarValue>=0) {
-					toolStripProgressBar1.Value=toolStripProgressBarValue;
-					toolStripProgressBarValue=-1;
+				if (toolStripProgressBarValue >= 0) {
+					toolStripProgressBar1.Value = toolStripProgressBarValue;
+					toolStripProgressBarValue = -1;
 				}
-				if(finalFlag) {
-					finalFlag=false;
+				if (finalFlag) {
+					finalFlag = false;
 					goButton.Enabled = true;
+					goButton.ForeColor = Color.Blue;
 					uploadButton.Enabled = true;
 					if (pscpLink.Tag != null) {
 						pscpLink.Visible = true;
 					}
+					if (zipEtUploadCheckbox.Checked) {
+						UploadButtonClick(null, null);
+					}
 				}
-				if(installBtnEnabled) {
+				if (installBtnEnabled) {
 					installBtn.Enabled = true;
-					installBtnEnabled=false;
+					installBtnEnabled = false;
 				}
-				if(finalUploadFlag) {
+				if (finalUploadFlag) {
 					toolStripProgressBarValue = 0;
 					goButton.Enabled = true;
 					uploadButton.Enabled = true;
+					uploadButton.ForeColor = Color.Blue;
 					toolStripStatusLabelText = "done, unzip...";
+				}
+				if (toolStringArchiveLabelText != null) {
+					toolStripArchiveInfoLabel.Text = toolStringArchiveLabelText;
+					toolStringArchiveLabelText = null;
 				}
 
 			} catch (Exception exception) {
@@ -575,7 +627,7 @@ namespace MoulUtil
 		}
 		void StatsYToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			String msg =job.getStatRecap().recapHtml;
+			String msg = job.getStatRecap().recapHtml;
 			HtmlViewForm form = new HtmlViewForm(msg);
 			form.Show();
 			//String msg=mouliActionUtil.doStatAnalyses(options, job, pathLabel.Text, configDto);

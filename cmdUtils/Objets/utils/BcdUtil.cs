@@ -11,6 +11,24 @@ namespace cmdUtils.Objets.utils
 	/// <summary>
 	/// lecture des valeurs
 	/// </summary>
+	/// 
+/*
+valeur [0] : 192
+valeur [1] : 0
+valeur [2] : 0
+valeur [3] : 0
+valeur [4] : 0
+valeur [5] : 0
+valeur [6] : 10
+valeur [7] : 0
+-> 0
+
+c000000000004a00 -> 4.00
+c000000000006a00 -> 6.00
+[79, -1, -1, -1, -1, -1, -27, -1] 'b000000000001a00' ->-1
+[-64, 0, 0, 0, 0, 0, 26, 0] -> 'c000000000001a00' -> 1
+ 
+*/ 
 	public class BcdUtil
 	{
 		readonly log4net.ILog LOGGER;
@@ -35,27 +53,9 @@ namespace cmdUtils.Objets.utils
 			
 			long valeur;
 			String str = "";
-			/*
-valeur [0] : 192
-valeur [1] : 0
-valeur [2] : 0
-valeur [3] : 0
-valeur [4] : 0
-valeur [5] : 0
-valeur [6] : 10
-valeur [7] : 0
--> 0
-
-c000000000004a00 -> 4.00
-c000000000006a00 -> 6.00
-[79, -1, -1, -1, -1, -1, -27, -1] 'b000000000001a00' ->-1
-[-64, 0, 0, 0, 0, 0, 26, 0] -> 'c000000000001a00' -> 1
-s			 */
 			Boolean negatif = false;
 			if ((bcd.Length > 0) && (Convert.ToInt16(bcd[0]) == 79)) {
 				negatif = true;
-//			} else if((bcd.Length > 0) && (Convert.ToInt16(bcd[0]) != 192)) {
-//				negatif=negatif;
 			}
 
 			for (int i = 0; i < bcd.Length; i++) {

@@ -117,6 +117,7 @@ namespace MoulUtil.Forms.utils
 			job.setDetailJoint(detailJoint);
 			job.setDetailDoc(detailDoc);
 			
+			
 			doStatAnalyses(options, job, sourceMoulinette, configDto);
 
 			//
@@ -141,7 +142,7 @@ namespace MoulUtil.Forms.utils
 			String[] selectionJ = null;
 			
 			List<String> liste = new List<String>();
-			List<YFiles> missingList = new List<YFiles>();
+			List<YFILES.YFiles> missingList = new List<YFILES.YFiles>();
 			selectionJ = new string[1];
 			
 			String path = mouliUtil.getData() + mouliUtil.getMag01();
@@ -150,7 +151,7 @@ namespace MoulUtil.Forms.utils
 			
 			String basePath = options.getWorkspacePath() + options.getWorkingPath();
 			// Collecte des fichiers presents
-			foreach (YFiles yfile in Enum.GetValues(typeof(YFiles))) {
+			foreach (YFILES.YFiles yfile in Enum.GetValues(typeof(YFILES.YFiles))) {
 				missingList.Add(yfile);
 				String file = yfile.ToString();
 				if (toLowerCase) {
@@ -160,11 +161,11 @@ namespace MoulUtil.Forms.utils
 					missingList.Remove(yfile);
 					statsRecap.mag01FilesTotal++;
 					file += ".d";
-					if (YFiles.YCLIENTS == yfile) {
+					if (YFILES.YFiles.YCLIENTS == yfile) {
 						statsRecap.mag01ClientTotal++;
 						
 					}
-					if (YFiles.YSTOCAT == yfile || YFiles.YSTOCK == yfile) {
+					if (YFILES.YFiles.YSTOCAT == yfile || YFILES.YFiles.YSTOCK == yfile) {
 						statsRecap.mag01StockTotal++;
 					}
 
@@ -175,11 +176,11 @@ namespace MoulUtil.Forms.utils
 				}
 				majProgression();
 			}
-			foreach (YFiles yfile in missingList) {
-				if (isStock(yfile)) {
+			foreach (YFILES.YFiles yfile in missingList) {
+				if (YFILES.isStock(yfile)) {
 					detailStock = yfile + " ";
 				}
-				if (isClient(yfile)) {
+				if (YFILES.isClient(yfile)) {
 					detailClient = yfile + " ";
 				}
 			}
@@ -251,10 +252,10 @@ namespace MoulUtil.Forms.utils
 			return liste;
 		}
 
-		private bool filtreFichiers(bool filtre, MouliUtilOptions options, YFiles yfile)
+		private bool filtreFichiers(bool filtre, MouliUtilOptions options, YFILES.YFiles yfile)
 		{
 			if (filtre) {
-				return (((isStock(yfile) && options.doStock)) || (isClient(yfile) && options.doClient));
+				return (((YFILES.isStock(yfile) && options.doStock)) || (YFILES.isClient(yfile) && options.doClient));
 			}
 			return true;
 		}
@@ -266,15 +267,6 @@ namespace MoulUtil.Forms.utils
 			return true;
 		}
 
-
-		private Boolean isStock(YFiles yfile)
-		{
-			return (YFiles.YFORMULE == yfile || YFiles.YFOURNI == yfile || YFiles.YMARQUE == yfile || YFiles.YSTOCAT == yfile || YFiles.YSTOCK == yfile);
-		}
-		private Boolean isClient(YFiles yfile)
-		{
-			return !isStock(yfile); //shortcut.
-		}
 		private bool filtreFichier(bool filtre, bool isNecessary)
 		{
 			return ((filtre && isNecessary) || filtre == false);
@@ -425,18 +417,19 @@ namespace MoulUtil.Forms.utils
 			retourList.Sort(new MouliAnneeRecap.MouliAnneeRecapComparer());
 			return retourList;
 		}
+
 		public string doStatAnalyses(MouliUtilOptions options, MouliJob job, string text, ConfigDto configDto)
 		{
 			String path = text;
-			MouliAnalyseRecap opRecap = doStatAnalyse(options, job, path, YFiles.YTOPTIC);
-			MouliAnalyseRecap leRecap = doStatAnalyse(options, job, path, YFiles.YTLENTI);
-			MouliAnalyseRecap stRecap = doStatAnalyse(options, job, path, YFiles.YSTOCK);
+			MouliAnalyseRecap opRecap = doStatAnalyse(options, job, path, YFILES.YFiles.YTOPTIC);
+			MouliAnalyseRecap leRecap = doStatAnalyse(options, job, path, YFILES.YFiles.YTLENTI);
+			MouliAnalyseRecap stRecap = doStatAnalyse(options, job, path, YFILES.YFiles.YSTOCK);
 			List<MouliAnneeRecap> liste = doListeRecap(opRecap, leRecap, stRecap);
 			String str = "nbV : O=" + opRecap.getNb() + " T=" + leRecap.getNb() + " ==>" + (opRecap.getNb() + leRecap.getNb());
 			str += "\n";
 			str += "St   :" + stRecap.getNb();
 			
-			String recapHtmlFile = "recap-MID" + options.getMagId() + ".html";
+			String recapHtmlFile = options.getHtmlRecapFile();
 			
 			String recapHtml = buildRecapHtml(options, liste);
 			
@@ -556,32 +549,36 @@ namespace MoulUtil.Forms.utils
 			s.Append(" <td class='tttotal' colspan='2'>" + (tsTo) + "</td>");
 			s.Append("</tr>\n");
 			
-			s.Append("</table></body></html>");
+			s.Append("</table>");
+			
+			s.Append("<P align='center'><i>G&eacute;n&eacute;r&eacute; le "+DateTime.Now.ToString());
+			s.Append("</i></P>");
+			s.Append("</body></html>");
 			return s.ToString();
 		}
-		private int getEnregLength(YFiles yfile)
+		private int getEnregLength(YFILES.YFiles yfile)
 		{
-			if (YFiles.YTOPTIC.Equals(yfile)) {
+			if (YFILES.YFiles.YTOPTIC.Equals(yfile)) {
 				return 1800;
-			} else if (YFiles.YTLENTI.Equals(yfile)) {
+			} else if (YFILES.YFiles.YTLENTI.Equals(yfile)) {
 				return 1010;
-			} else if (YFiles.YSTOCK.Equals(yfile)) {
+			} else if (YFILES.YFiles.YSTOCK.Equals(yfile)) {
 				return 473;
-			} else if (YFiles.YSTOCAT.Equals(yfile)) {
+			} else if (YFILES.YFiles.YSTOCAT.Equals(yfile)) {
 				return 256;
 			}
 			return -1;
 		}
-		private String getYfileYear(byte[] buffer, YFiles yfile)
+		private String getYfileYear(byte[] buffer, YFILES.YFiles yfile)
 		{
 			
 			int deb = 0;
 			String year = null;
-			if (YFiles.YTOPTIC.Equals(yfile) || YFiles.YTLENTI.Equals(yfile)) {
+			if (YFILES.YFiles.YTOPTIC.Equals(yfile) || YFILES.YFiles.YTLENTI.Equals(yfile)) {
 				deb = 4;
-			} else if (YFiles.YSTOCK.Equals(yfile)) {
+			} else if (YFILES.YFiles.YSTOCK.Equals(yfile)) {
 				deb = 159;
-			} else if (YFiles.YSTOCAT.Equals(yfile)) {
+			} else if (YFILES.YFiles.YSTOCAT.Equals(yfile)) {
 				deb = 23;
 			}
 			
@@ -595,13 +592,13 @@ namespace MoulUtil.Forms.utils
 			return year;
 		}
 		
-		byte getYfileMarqueur(byte[] buffer, YFiles yfile)
+		byte getYfileMarqueur(byte[] buffer, YFILES.YFiles yfile)
 		{
-			if (YFiles.YTOPTIC.Equals(yfile) || YFiles.YTLENTI.Equals(yfile)) {
+			if (YFILES.YFiles.YTOPTIC.Equals(yfile) || YFILES.YFiles.YTLENTI.Equals(yfile)) {
 				return buffer[13];
-			} else if (YFiles.YSTOCK.Equals(yfile)) {
+			} else if (YFILES.YFiles.YSTOCK.Equals(yfile)) {
 				return buffer[17];
-			} else if (YFiles.YSTOCAT.Equals(yfile)) {
+			} else if (YFILES.YFiles.YSTOCAT.Equals(yfile)) {
 				return buffer[17];
 			} else {
 				return 0;
@@ -611,9 +608,9 @@ namespace MoulUtil.Forms.utils
 		SortedDictionary<string, string> doStcAnalyse(MouliJob job, MouliUtilOptions options)
 		{
 			SortedDictionary<String, string> stcDico = new SortedDictionary<string, string>();
-			YFiles yfile = YFiles.YSTOCAT;
+			YFILES.YFiles yfile = YFILES.YFiles.YSTOCAT;
 			String fileName = job.getOriginalDir() + "/" + options.getWorkingPath() + mouliUtil.getData() + mouliUtil.getMag01() + yfile + ".d";
-			int length = getEnregLength(YFiles.YSTOCAT);
+			int length = getEnregLength(YFILES.YFiles.YSTOCAT);
 			int nb = 0;
 			int nbt = 0;
 
@@ -657,11 +654,11 @@ namespace MoulUtil.Forms.utils
 			}
 			return clef;
 		}
-		private MouliAnalyseRecap doStatAnalyse(MouliUtilOptions options, MouliJob job, string path, YFiles yfile)
+		private MouliAnalyseRecap doStatAnalyse(MouliUtilOptions options, MouliJob job, string path, YFILES.YFiles yfile)
 		{
 			mouliUtil.setMagasinIrris(options.getNumeroMagasinIrris());
 			SortedDictionary<String, String> stcDico = null;
-			if (YFiles.YSTOCK.Equals(yfile)) {
+			if (YFILES.YFiles.YSTOCK.Equals(yfile)) {
 				stcDico = doStcAnalyse(job, options);
 			}
 			//
@@ -689,7 +686,7 @@ namespace MoulUtil.Forms.utils
 							
 							byte controle = buffer[length - 1];
 							String year = null;
-							if (YFiles.YSTOCK.Equals(yfile)) {
+							if (YFILES.YFiles.YSTOCK.Equals(yfile)) {
 								String clef = getStKey(buffer);
 								if (stcDico.ContainsKey(clef)) {
 									year = stcDico[clef];
@@ -706,7 +703,7 @@ namespace MoulUtil.Forms.utils
 								if (dico.ContainsKey(year)) {
 									tablo = dico[year];
 								}
-								if (YFiles.YSTOCK.Equals(yfile)) {
+								if (YFILES.YFiles.YSTOCK.Equals(yfile)) {
 									long qte = (long)bcdUtil.getDoubleBcd(buffer, 191, 8);
 									
 									if (qte < 0) {

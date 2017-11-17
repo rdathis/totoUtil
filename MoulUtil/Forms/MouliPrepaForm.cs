@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Net.Sockets;
 using System.Windows.Forms;
@@ -46,13 +47,15 @@ namespace MoulUtil
 		private ToolTipUtil	toolTipUtil = new ToolTipUtil();
 		private int sauvegardeBtnEnabled = -1;
 		private int sauvegardeBtnVisible = -1;
+		private string versionInfo;
 		
 		
-		public MouliPrepaForm(ConfigDto configDto, log4net.ILog  LOGGER)
+		public MouliPrepaForm(ConfigDto configDto, log4net.ILog  LOGGER, String versionInfo)
 		{
 			InitializeComponent();
 			this.configDto = configDto;
 			this.LOGGER = LOGGER;
+			this.versionInfo=versionInfo;
 			prepare();
 			
 			rechMagIdBox.Focus();
@@ -87,12 +90,21 @@ namespace MoulUtil
 			svgFinalNavigatorUserControl.setBoxes(targetSvgPathBox, targetNameBox);
 			sourceNavigatorUserControl.setBox(sourceBaseComboBox);
 			populateSourceBox(configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.moulinetteSource));
+			sourceBaseComboBox.Text = configDto.getConfigParamValueByName(ConfigParam.ParamNamesType.defaultSourcePath);
 			populateToolTips();
+			populateVersionInfo();
 		}
+
 		private void populateTargetBox(String instanceName)
 		{
 			new TreeViewUtil(configDto.instances, configDto.serveurs).populateTargets(targetTreeView, instanceName);
 		}
+
+		void populateVersionInfo()
+		{
+			toolStripVersionInfo.Text = versionInfo;
+		}
+
 		void populateToolTips()
 		{
 			toolTipUtil.add(this.rechMagIdBox, "MagId magasin");
@@ -151,46 +163,53 @@ namespace MoulUtil
 		{
 			if (check) {
 				MeoInstance adminInstance = MeoInstance.findInstanceByInstanceName(configDto.instances, "administration");
-				MeoServeur meoServeur = MeoServeur.findServeurByName(configDto.serveurs, adminInstance.serveur);
-				
-				String tunnelStr = meoServeur.getTunnel();
-				int leftPort = int.Parse(tunnelStr.Substring(0, tunnelStr.IndexOf(":", StringComparison.Ordinal)));
-				int rightPort = int.Parse(tunnelStr.Substring(tunnelStr.IndexOf(":", StringComparison.Ordinal) + 1));
-				
-				LOGGER.Info("avant bw");
-				connectWorker = new ConnectServerBackgroundWorker();
-				
-				LOGGER.Info("avant go");
-				connectWorker.prepare(sshClientAdmin, meoServeur, leftPort, rightPort, rechMagIdBox, LOGGER);
-				
-				MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = str => {
-					LOGGER.InfoFormat("Notification received for: {0}", str);
-					try {
-						statusMessage = "connecting to " + meoServeur.nom + " by ssh (" + tunnelStr + ")...";
-					} catch (Exception ex) {
-						LOGGER.Error("still exception here ..." + ex.Message);
-					}
-				};
-				//
-
-				MouliProgressWorker.EndWorkerSshClientCallBack endWorkerCallBack = (message, sshClient, textbox) => {
-					if (sshClient == null) {
-						LOGGER.Error("Exception message :" + message);
-						statusMessage = "SSH : Exception message :" + message;
+				if(adminInstance!=null) {
+					MeoServeur meoServeur = MeoServeur.findServeurByName(configDto.serveurs, adminInstance.serveur);
+					if(meoServeur!=null) {
+						String tunnelStr = meoServeur.getTunnel();
+						int leftPort = int.Parse(tunnelStr.Substring(0, tunnelStr.IndexOf(":", StringComparison.Ordinal)));
+						int rightPort = int.Parse(tunnelStr.Substring(tunnelStr.IndexOf(":", StringComparison.Ordinal) + 1));
 						
-					} else {
+						LOGGER.Info("avant bw");
+						connectWorker = new ConnectServerBackgroundWorker();
+						
+						LOGGER.Info("avant go");
+						connectWorker.prepare(sshClientAdmin, meoServeur, leftPort, rightPort, rechMagIdBox, LOGGER);
+						
+						MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = str => {
+							LOGGER.InfoFormat("Notification received for: {0}", str);
+							try {
+								statusMessage = "connecting to " + meoServeur.nom + " by ssh (" + tunnelStr + ")...";
+							} catch (Exception ex) {
+								LOGGER.Error("still exception here ..." + ex.Message);
+							}
+						};
 						//
-						Console.WriteLine("connected on server");
-						LOGGER.Info("connected");
-						sshClientAdmin = sshClient;
-						statusMessage = "connected at " + meoServeur.nom + ":/" + adminInstance.nom;
-						infoMessage = "connected";
-					}
-				};
 
-				connectWorker.setStartWorkerCallBack(startWorkerCallBack);
-				connectWorker.setEndWorkerSshClientCallBack(endWorkerCallBack);
-				connectWorker.RunWorkerAsync();
+						MouliProgressWorker.EndWorkerSshClientCallBack endWorkerCallBack = (message, sshClient, textbox) => {
+							if (sshClient == null) {
+								LOGGER.Error("Exception message :" + message);
+								statusMessage = "SSH : Exception message :" + message;
+								
+							} else {
+								//
+								Console.WriteLine("connected on server");
+								LOGGER.Info("connected");
+								sshClientAdmin = sshClient;
+								statusMessage = "connected at " + meoServeur.nom + ":/" + adminInstance.nom;
+								infoMessage = "connected";
+							}
+						};
+
+						connectWorker.setStartWorkerCallBack(startWorkerCallBack);
+						connectWorker.setEndWorkerSshClientCallBack(endWorkerCallBack);
+						connectWorker.RunWorkerAsync();
+					} else {
+						MessageBox.Show("Pas de serveur pour admin instance");
+					}
+				} else {
+					MessageBox.Show("Pas de d'admin instance");
+				}
 			} else {
 				plinkProcess = mouliPrepaUtil.startPlink(configDto, rechMagIdBox);
 			}
@@ -201,34 +220,16 @@ namespace MoulUtil
 		}
 		void PrepareBtnClick(object sender, EventArgs e)
 		{
+			prepareMouliUtilOptions();
 			if (mouliUtilOptions == null) {
 				LOGGER.Info("options are null");
 				return;
 			}
+			
 			if (workspaceBaseBox.Text.Length > 0 && workspaceZoneBox.Text.Length > 0) {
-//
-				mouliUtilOptions.setNumeroMagasinIrris(magIrrisBox.Text);
-				mouliUtilOptions.setWorkspacePath(workspaceBaseBox.Text);
-				String path = workspaceZoneBox.Text;
-				if (path.StartsWith("workspace/", StringComparison.Ordinal)) {
-					path = path.Replace("workspace/", "");
-				}
-				mouliUtilOptions.setWorkingPath(path);
-				if (!Directory.Exists(workspaceBaseBox.Text + path)) {
-					toolTipLabel.Text = ("chemin absent : '" + workspaceBaseBox.Text + path + "'");
-					LOGGER.Info(toolTipLabel.Text);
-					return;
-				}
-				try {
-					StreamWriter sw = new StreamWriter(workspaceBaseBox.Text + path + "magasin.txt");
-					sw.Write(magIrrisBox.Text);
-					sw.Close();
-				} catch (Exception ex) {
-					LOGGER.Error(ex);
-				}
-//
 				MouliActionForm form = new MouliActionForm(mouliUtilOptions, configDto, LOGGER, workspaceZoneBox.Text);
 				form.ShowDialog();
+				prepareBtn.ForeColor = Color.Blue;
 			} else {
 				workspaceBaseBox.Focus();
 			}
@@ -263,7 +264,26 @@ namespace MoulUtil
 				toolTipLabel.Text = ("chemin absent : '" + targetSvgPathBox.Text + "'");
 				return;
 			}
-			
+
+			String targetBaseDir =new DirectoryInfo(targetDir).Parent.FullName;
+			const string rapports="/rapports/";
+			if(!Directory.Exists(targetBaseDir +rapports)) {
+				try {
+					Directory.CreateDirectory(targetBaseDir +rapports);
+				} catch (Exception ex) {
+					LOGGER.Error("error : "+targetBaseDir +rapports);
+					LOGGER.Error(ex.Message);
+				}
+			}
+			if(Directory.Exists(targetBaseDir +rapports)) {
+				try {
+					File.Copy(sourceDir+mouliUtilOptions.getHtmlRecapFile(),targetBaseDir +rapports +mouliUtilOptions.getHtmlRecapFile());
+				} catch (Exception ex) {
+					LOGGER.Error("error : "+targetBaseDir +rapports);
+					LOGGER.Error(ex.Message);
+				}
+				
+			}
 			sauvegardeBtnEnabled = 0;
 			//sauvegardeBtn.Enabled = false;
 			statusMessage = "Préparation de la sauvegarde ...";
@@ -318,7 +338,7 @@ namespace MoulUtil
 		void RechMagIdBtnClick(object sender, EventArgs e)
 		{
 			rechercheMagasin();
-			sourceFilterBox.Text = "MID" + rechMagIdBox.Text + "*";
+			sourceFilterBox.Text = "*" + rechMagIdBox.Text + "*";
 		}
 
 		void rechercheMagasin()
@@ -355,6 +375,14 @@ namespace MoulUtil
 					LOGGER.Error(ex);
 				}
 			}
+			if(sourceBaseComboBox.Text!=null) {
+				populateSourceListBox(sourceBaseComboBox.Text);
+				if(sourceListBox.Items.Count==1) {
+					sourceListBox.SelectedIndex=0;
+					choisirSource();
+				}
+			}
+			rechMagIdBtn.ForeColor = Color.Blue;
 		}
 
 		public void CreateBtnClick(object sender, EventArgs e)
@@ -366,6 +394,7 @@ namespace MoulUtil
 				if (sender != null) {// cause mag zero
 					cmdUtil.executeCommande("explorer", Path.GetFullPath(proposition));
 				}
+				createBtn.ForeColor = Color.Blue;
 			}
 		}
 		void CopyBtnClick(object sender, EventArgs e)
@@ -378,7 +407,13 @@ namespace MoulUtil
 			String str = propositionBox.Text.Trim();
 			if (str.Length > 0) {
 				String subPath = "MEO" + DateTime.Now.Year + "/";
-				mouliUtil.safeCreateDirectory(targetSvgPathBox.Text + "/" + subPath);
+				try {
+					mouliUtil.safeCreateDirectory(targetSvgPathBox.Text + "/" + subPath);
+				} catch(Exception exception) {
+					MessageBox.Show("impossible d'accéder à "+ targetSvgPathBox.Text + "/" + subPath);
+					return str;
+				}
+				
 				workspaceZoneBox.Text = str;
 				targetNameBox.Text = subPath + str.Replace(workingDirBox.Text, "");
 			}
@@ -394,6 +429,7 @@ namespace MoulUtil
 		{
 			sqlForm = new MouliSQLForm(LOGGER, this.rechMagIdBox.Text, mouliUtilOptions, configDto);
 			sqlForm.Show();
+			sqlBtn.ForeColor = Color.Blue;
 		}
 		void ConfigBtnClick(object sender, EventArgs e)
 		{
@@ -516,7 +552,11 @@ namespace MoulUtil
 					magDescBox.Text = infoMessage;
 					infoMessage = null;
 					rechMagIdBtn.Enabled = true;
-					rechercheMagasin();
+					
+					//not really corrected
+					if(rechMagIdBox.Text.Length>3) {
+						rechercheMagasin();
+					}
 				}
 				if (statusMessage != null) {
 					statusStrip1.Text = statusMessage;
@@ -545,6 +585,7 @@ namespace MoulUtil
 						sauvegardeBtn.Enabled = false;
 					} else {
 						sauvegardeBtn.Enabled = true;
+						sauvegardeBtn.ForeColor = Color.Blue;
 					}
 				}
 			} catch (Exception exception) {
@@ -557,6 +598,7 @@ namespace MoulUtil
 				CreateBtnClick(null, null);
 				
 				mouliPrepaUtil.createMock(workingDirBox.Text + propositionBox.Text, magIrrisBox.Text);
+				MockBtn.ForeColor = Color.Blue;
 			}
 		}
 		void SourceBaseComboBoxTextUpdate(object sender, EventArgs e)
@@ -603,6 +645,59 @@ namespace MoulUtil
 				mouliUtilOptions.setInstanceCommande(meoInstance.meocli);
 				mouliUtilOptions.setInstancePath(meoInstance.meopath);
 			}
+		}
+		void TriDataBtnClick(object sender, EventArgs e)
+		{
+			prepareMouliUtilOptions();
+			List<String> liste=new List<string>();
+			for(int i=0;i<	sourceListBox.Items.Count;i++) {
+				liste.Add(sourceListBox.Items[i].ToString());
+			}
+			ExtraireForm extraireForm = new ExtraireForm(LOGGER,  liste, mouliUtilOptions);
+			extraireForm.Show();
+			triDataBtn.ForeColor = Color.Blue;
+		}
+		void ChoisirToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			choisirSource();
+		}
+		private void choisirSource() {
+			//
+			if(sourceListBox.SelectedItem!=null && (String) sourceListBox.SelectedItem!="") {
+				sourceBaseComboBox.Text =sourceListBox.SelectedItem.ToString();
+				sourceFilterBox.Text="*";
+				SourceBaseComboBoxTextUpdate(null, null);
+			}
+			//
+		}
+		private void prepareMouliUtilOptions() {
+			if (mouliUtilOptions == null) {
+				return;
+			}
+			
+			if (workspaceBaseBox.Text.Length > 0 && workspaceZoneBox.Text.Length > 0) {
+//
+				mouliUtilOptions.setNumeroMagasinIrris(magIrrisBox.Text);
+				mouliUtilOptions.setWorkspacePath(workspaceBaseBox.Text);
+				String path = workspaceZoneBox.Text;
+				if (path.StartsWith("workspace/", StringComparison.Ordinal)) {
+					path = path.Replace("workspace/", "");
+				}
+				mouliUtilOptions.setWorkingPath(path);
+				if (!Directory.Exists(workspaceBaseBox.Text + path)) {
+					toolTipLabel.Text = ("chemin absent : '" + workspaceBaseBox.Text + path + "'");
+					LOGGER.Info(toolTipLabel.Text);
+					return;
+				}
+				try {
+					StreamWriter sw = new StreamWriter(workspaceBaseBox.Text + path + "magasin.txt");
+					sw.Write(magIrrisBox.Text);
+					sw.Close();
+				} catch (Exception ex) {
+					LOGGER.Error(ex);
+				}
+			}
+			
 		}
 	}
 }

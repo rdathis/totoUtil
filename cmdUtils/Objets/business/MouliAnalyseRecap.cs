@@ -14,20 +14,20 @@ namespace cmdUtils.Objets.business
 	/// </summary>
 	public class MouliAnalyseRecap
 	{
-		private YFiles yfile;
+		private YFILES.YFiles yfile;
 		private int nb;
 		private int nbt;
 		//
 		//tablo[0]:neg, tablo[1]:nul, tablo[2]:pos   
 		private SortedDictionary<String, int[]> dico = new SortedDictionary<string, int[]>();
-		public MouliAnalyseRecap(YFiles yfile, int nb, int nbt, SortedDictionary<String, int[]> dico )
+		public MouliAnalyseRecap(YFILES.YFiles yfile, int nb, int nbt, SortedDictionary<String, int[]> dico )
 		{
 			this.yfile=yfile;
 			this.nb=nb;
 			this.nbt=nbt;
 			this.dico=dico;
 		}
-		public YFiles getYfile() {
+		public YFILES.YFiles getYfile() {
 			return this.yfile;
 		}
 		public int getNb() {

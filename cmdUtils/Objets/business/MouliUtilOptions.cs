@@ -32,8 +32,8 @@ namespace cmdUtils.Objets
 		private DateTime dateJob;
 		private String defaultEmail;
 		private String numeroMagasinIrris;
-		private String limiteVisite;
-		private String limiteStock;
+		private String limiteVisite;//cf extension [ON]
+		private String limiteStock;//cf extension [ON]
 		private String archiveName;
 		//
 		private MoulinettePurgeOptionTypes extensionClient = MoulinettePurgeOptionTypes.INCONNU;
@@ -51,6 +51,8 @@ namespace cmdUtils.Objets
 		public Boolean doJoint=false;
 		public Boolean doAnnulationClient=false;
 		public Boolean doAnnulationStock=false;
+		private String limiteYearStock;////cf demande client
+		private String limiteYearVisites;
 		public MouliUtilOptions()
 		{
 			//
@@ -262,6 +264,26 @@ namespace cmdUtils.Objets
 		public String getWorkingPath()
 		{
 			return workingPath;
+		}
+		public String getLimiteYearStock() {
+			return limiteYearStock;
+		}
+		public String getLimiteYearVisites() {
+			return limiteYearVisites;
+		}
+		public void setLimiteYearStock(String value) {
+			limiteYearStock=value;
+		}
+		public void setLimiteYearVisites(String value) {
+			limiteYearVisites=value;
+		}
+
+		public String getHtmlRecapFile() {
+			if(magId!=null) {
+				return ("recap-MID" + magId + ".html");
+			} else {
+				return null;
+			}
 		}
 
 		public String calculateLots()

@@ -38,7 +38,6 @@ namespace MoulUtil
 			this.components = new System.ComponentModel.Container();
 			this.goButton = new System.Windows.Forms.Button();
 			this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
-			this.pathLabel = new System.Windows.Forms.Label();
 			this.uploadButton = new System.Windows.Forms.Button();
 			this.puttyLink = new System.Windows.Forms.LinkLabel();
 			this.pscpLink = new System.Windows.Forms.LinkLabel();
@@ -58,14 +57,13 @@ namespace MoulUtil
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+			this.toolStripArchiveInfoLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.path = new System.Windows.Forms.Label();
 			this.magIdTextBox = new System.Windows.Forms.TextBox();
 			this.pathTextBox = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.magIrrisLabel = new System.Windows.Forms.Label();
 			this.irrisMagTBox = new System.Windows.Forms.TextBox();
-			this.purgeClientChkBox = new System.Windows.Forms.CheckBox();
-			this.purgeStockChkBox = new System.Windows.Forms.CheckBox();
 			this.progressTextBox = new System.Windows.Forms.TextBox();
 			this.installBtn = new System.Windows.Forms.Button();
 			this.optionCCheckBox = new System.Windows.Forms.CheckBox();
@@ -84,8 +82,20 @@ namespace MoulUtil
 			this.propositionMailsListBox = new System.Windows.Forms.ListBox();
 			this.formTimer = new System.Windows.Forms.Timer(this.components);
 			this.progressBar1 = new System.Windows.Forms.ProgressBar();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.purgeStockChkBox = new System.Windows.Forms.CheckBox();
+			this.purgeClientChkBox = new System.Windows.Forms.CheckBox();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.limiteYearVisiteTBox = new System.Windows.Forms.TextBox();
+			this.limiteYearStockTBox = new System.Windows.Forms.TextBox();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
+			this.pathLabel = new System.Windows.Forms.Label();
+			this.zipEtUploadCheckbox = new System.Windows.Forms.CheckBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
+			this.groupBox1.SuspendLayout();
+			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// goButton
@@ -102,18 +112,10 @@ namespace MoulUtil
 			// dateTimePicker
 			// 
 			this.dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-			this.dateTimePicker.Location = new System.Drawing.Point(24, 79);
+			this.dateTimePicker.Location = new System.Drawing.Point(37, 79);
 			this.dateTimePicker.Name = "dateTimePicker";
-			this.dateTimePicker.Size = new System.Drawing.Size(200, 20);
+			this.dateTimePicker.Size = new System.Drawing.Size(187, 20);
 			this.dateTimePicker.TabIndex = 2;
-			// 
-			// pathLabel
-			// 
-			this.pathLabel.Location = new System.Drawing.Point(12, 13);
-			this.pathLabel.Name = "pathLabel";
-			this.pathLabel.Size = new System.Drawing.Size(282, 23);
-			this.pathLabel.TabIndex = 4;
-			this.pathLabel.Text = "target";
 			// 
 			// uploadButton
 			// 
@@ -232,13 +234,13 @@ namespace MoulUtil
 			// puttiesToolStripMenuItem
 			// 
 			this.puttiesToolStripMenuItem.Name = "puttiesToolStripMenuItem";
-			this.puttiesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.puttiesToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.puttiesToolStripMenuItem.Text = "putties";
 			// 
 			// cmdToolStripMenuItem
 			// 
 			this.cmdToolStripMenuItem.Name = "cmdToolStripMenuItem";
-			this.cmdToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.cmdToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.cmdToolStripMenuItem.Text = "cmd";
 			// 
 			// analyseToolStripMenuItem
@@ -252,7 +254,7 @@ namespace MoulUtil
 			// statsYToolStripMenuItem
 			// 
 			this.statsYToolStripMenuItem.Name = "statsYToolStripMenuItem";
-			this.statsYToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.statsYToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.statsYToolStripMenuItem.Text = "stats Y";
 			this.statsYToolStripMenuItem.Click += new System.EventHandler(this.StatsYToolStripMenuItemClick);
 			// 
@@ -260,7 +262,8 @@ namespace MoulUtil
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.toolStripStatusLabel1,
-			this.toolStripProgressBar1});
+			this.toolStripProgressBar1,
+			this.toolStripArchiveInfoLabel});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 408);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(726, 22);
@@ -277,6 +280,12 @@ namespace MoulUtil
 			// 
 			this.toolStripProgressBar1.Name = "toolStripProgressBar1";
 			this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
+			// 
+			// toolStripArchiveInfoLabel
+			// 
+			this.toolStripArchiveInfoLabel.Name = "toolStripArchiveInfoLabel";
+			this.toolStripArchiveInfoLabel.Size = new System.Drawing.Size(128, 17);
+			this.toolStripArchiveInfoLabel.Text = "toolStripArchiveInfoLabel";
 			// 
 			// path
 			// 
@@ -295,14 +304,14 @@ namespace MoulUtil
 			// 
 			// pathTextBox
 			// 
-			this.pathTextBox.Location = new System.Drawing.Point(300, 47);
+			this.pathTextBox.Location = new System.Drawing.Point(300, 54);
 			this.pathTextBox.Name = "pathTextBox";
 			this.pathTextBox.Size = new System.Drawing.Size(154, 20);
 			this.pathTextBox.TabIndex = 22;
 			// 
 			// label2
 			// 
-			this.label2.Location = new System.Drawing.Point(236, 50);
+			this.label2.Location = new System.Drawing.Point(236, 57);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(58, 18);
 			this.label2.TabIndex = 21;
@@ -310,7 +319,7 @@ namespace MoulUtil
 			// 
 			// magIrrisLabel
 			// 
-			this.magIrrisLabel.Location = new System.Drawing.Point(37, 46);
+			this.magIrrisLabel.Location = new System.Drawing.Point(37, 53);
 			this.magIrrisLabel.Name = "magIrrisLabel";
 			this.magIrrisLabel.Size = new System.Drawing.Size(83, 22);
 			this.magIrrisLabel.TabIndex = 24;
@@ -318,30 +327,12 @@ namespace MoulUtil
 			// 
 			// irrisMagTBox
 			// 
-			this.irrisMagTBox.Location = new System.Drawing.Point(126, 46);
+			this.irrisMagTBox.Location = new System.Drawing.Point(126, 53);
 			this.irrisMagTBox.MaxLength = 2;
 			this.irrisMagTBox.Name = "irrisMagTBox";
 			this.irrisMagTBox.ReadOnly = true;
 			this.irrisMagTBox.Size = new System.Drawing.Size(97, 20);
 			this.irrisMagTBox.TabIndex = 25;
-			// 
-			// purgeClientChkBox
-			// 
-			this.purgeClientChkBox.Location = new System.Drawing.Point(149, 23);
-			this.purgeClientChkBox.Name = "purgeClientChkBox";
-			this.purgeClientChkBox.Size = new System.Drawing.Size(89, 24);
-			this.purgeClientChkBox.TabIndex = 26;
-			this.purgeClientChkBox.Text = "purger Client";
-			this.purgeClientChkBox.UseVisualStyleBackColor = true;
-			// 
-			// purgeStockChkBox
-			// 
-			this.purgeStockChkBox.Location = new System.Drawing.Point(254, 23);
-			this.purgeStockChkBox.Name = "purgeStockChkBox";
-			this.purgeStockChkBox.Size = new System.Drawing.Size(89, 24);
-			this.purgeStockChkBox.TabIndex = 27;
-			this.purgeStockChkBox.Text = "purger Stock";
-			this.purgeStockChkBox.UseVisualStyleBackColor = true;
 			// 
 			// progressTextBox
 			// 
@@ -354,7 +345,8 @@ namespace MoulUtil
 			// 
 			// installBtn
 			// 
-			this.installBtn.Location = new System.Drawing.Point(187, 377);
+			this.installBtn.Enabled = false;
+			this.installBtn.Location = new System.Drawing.Point(376, 377);
 			this.installBtn.Name = "installBtn";
 			this.installBtn.Size = new System.Drawing.Size(92, 23);
 			this.installBtn.TabIndex = 29;
@@ -502,11 +494,103 @@ namespace MoulUtil
 			this.progressBar1.Size = new System.Drawing.Size(585, 23);
 			this.progressBar1.TabIndex = 44;
 			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.purgeStockChkBox);
+			this.groupBox1.Controls.Add(this.purgeClientChkBox);
+			this.groupBox1.Location = new System.Drawing.Point(491, 37);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(217, 45);
+			this.groupBox1.TabIndex = 45;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Extensions ";
+			// 
+			// purgeStockChkBox
+			// 
+			this.purgeStockChkBox.Location = new System.Drawing.Point(117, 15);
+			this.purgeStockChkBox.Name = "purgeStockChkBox";
+			this.purgeStockChkBox.Size = new System.Drawing.Size(89, 24);
+			this.purgeStockChkBox.TabIndex = 29;
+			this.purgeStockChkBox.Text = "limiter Stock";
+			this.purgeStockChkBox.UseVisualStyleBackColor = true;
+			// 
+			// purgeClientChkBox
+			// 
+			this.purgeClientChkBox.Location = new System.Drawing.Point(12, 15);
+			this.purgeClientChkBox.Name = "purgeClientChkBox";
+			this.purgeClientChkBox.Size = new System.Drawing.Size(89, 24);
+			this.purgeClientChkBox.TabIndex = 28;
+			this.purgeClientChkBox.Text = "limiter Client";
+			this.purgeClientChkBox.UseVisualStyleBackColor = true;
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.limiteYearVisiteTBox);
+			this.groupBox2.Controls.Add(this.limiteYearStockTBox);
+			this.groupBox2.Controls.Add(this.label4);
+			this.groupBox2.Controls.Add(this.label3);
+			this.groupBox2.Location = new System.Drawing.Point(488, 88);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(209, 44);
+			this.groupBox2.TabIndex = 46;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "limiter les années récupérées";
+			// 
+			// limiteYearVisiteTBox
+			// 
+			this.limiteYearVisiteTBox.Location = new System.Drawing.Point(54, 14);
+			this.limiteYearVisiteTBox.Name = "limiteYearVisiteTBox";
+			this.limiteYearVisiteTBox.Size = new System.Drawing.Size(50, 20);
+			this.limiteYearVisiteTBox.TabIndex = 47;
+			// 
+			// limiteYearStockTBox
+			// 
+			this.limiteYearStockTBox.Location = new System.Drawing.Point(153, 13);
+			this.limiteYearStockTBox.Name = "limiteYearStockTBox";
+			this.limiteYearStockTBox.Size = new System.Drawing.Size(50, 20);
+			this.limiteYearStockTBox.TabIndex = 4;
+			// 
+			// label4
+			// 
+			this.label4.Location = new System.Drawing.Point(110, 14);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(43, 20);
+			this.label4.TabIndex = 1;
+			this.label4.Text = "stock";
+			// 
+			// label3
+			// 
+			this.label3.Location = new System.Drawing.Point(6, 16);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(43, 20);
+			this.label3.TabIndex = 0;
+			this.label3.Text = "visites";
+			// 
+			// pathLabel
+			// 
+			this.pathLabel.Location = new System.Drawing.Point(33, 30);
+			this.pathLabel.Name = "pathLabel";
+			this.pathLabel.Size = new System.Drawing.Size(421, 23);
+			this.pathLabel.TabIndex = 47;
+			// 
+			// zipEtUploadCheckbox
+			// 
+			this.zipEtUploadCheckbox.Location = new System.Drawing.Point(187, 380);
+			this.zipEtUploadCheckbox.Name = "zipEtUploadCheckbox";
+			this.zipEtUploadCheckbox.Size = new System.Drawing.Size(129, 20);
+			this.zipEtUploadCheckbox.TabIndex = 48;
+			this.zipEtUploadCheckbox.Text = "Enchainer";
+			this.zipEtUploadCheckbox.UseVisualStyleBackColor = true;
+			// 
 			// MouliActionForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(726, 430);
+			this.Controls.Add(this.zipEtUploadCheckbox);
+			this.Controls.Add(this.pathLabel);
+			this.Controls.Add(this.groupBox2);
+			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.progressBar1);
 			this.Controls.Add(this.propositionMailsListBox);
 			this.Controls.Add(this.analyseLabel);
@@ -524,8 +608,6 @@ namespace MoulUtil
 			this.Controls.Add(this.optionCCheckBox);
 			this.Controls.Add(this.installBtn);
 			this.Controls.Add(this.progressTextBox);
-			this.Controls.Add(this.purgeStockChkBox);
-			this.Controls.Add(this.purgeClientChkBox);
 			this.Controls.Add(this.irrisMagTBox);
 			this.Controls.Add(this.magIrrisLabel);
 			this.Controls.Add(this.pathTextBox);
@@ -538,7 +620,6 @@ namespace MoulUtil
 			this.Controls.Add(this.pscpLink);
 			this.Controls.Add(this.puttyLink);
 			this.Controls.Add(this.uploadButton);
-			this.Controls.Add(this.pathLabel);
 			this.Controls.Add(this.dateTimePicker);
 			this.Controls.Add(this.exitButton);
 			this.Controls.Add(this.goButton);
@@ -549,10 +630,22 @@ namespace MoulUtil
 			this.menuStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.ToolStripStatusLabel toolStripArchiveInfoLabel;
+		private System.Windows.Forms.CheckBox zipEtUploadCheckbox;
+		private System.Windows.Forms.Label pathLabel;
+		private System.Windows.Forms.TextBox limiteYearStockTBox;
+		private System.Windows.Forms.TextBox limiteYearVisiteTBox;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.ToolStripMenuItem analyseToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem statsYToolStripMenuItem;
 		private System.Windows.Forms.Timer formTimer;
@@ -590,7 +683,6 @@ namespace MoulUtil
 		private System.Windows.Forms.LinkLabel puttyLink;
 		private System.Windows.Forms.ProgressBar progressBar1;
 		private System.Windows.Forms.Button uploadButton;
-		private System.Windows.Forms.Label pathLabel;
 		private System.Windows.Forms.DateTimePicker dateTimePicker;
 		private System.Windows.Forms.Button exitButton;
 		private System.Windows.Forms.Button goButton;

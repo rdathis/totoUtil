@@ -44,7 +44,6 @@ namespace MoulUtil
 			this.workspaceBaseBox = new System.Windows.Forms.TextBox();
 			this.workspaceZoneBox = new System.Windows.Forms.TextBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.statMagLabel = new System.Windows.Forms.Label();
 			this.MockBtn = new System.Windows.Forms.Button();
 			this.magIrrisBox = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
@@ -58,6 +57,7 @@ namespace MoulUtil
 			this.sourceNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
 			this.sourceBaseComboBox = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.triDataBtn = new System.Windows.Forms.Button();
 			this.workspaceNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
 			this.zonePrepaNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
 			this.prepareBtn = new System.Windows.Forms.Button();
@@ -71,6 +71,7 @@ namespace MoulUtil
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolTipLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+			this.toolStripVersionInfo = new System.Windows.Forms.ToolStripStatusLabel();
 			this.copyBtn = new System.Windows.Forms.Button();
 			this.sqlBtn = new System.Windows.Forms.Button();
 			this.configBtn = new System.Windows.Forms.Button();
@@ -81,12 +82,15 @@ namespace MoulUtil
 			this.definirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.historyLabel = new System.Windows.Forms.Label();
 			this.connectTimer = new System.Windows.Forms.Timer(this.components);
+			this.sourcesMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.choisirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.serveursContextMenu.SuspendLayout();
+			this.sourcesMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// rechMagIdBtn
@@ -145,7 +149,6 @@ namespace MoulUtil
 			// groupBox1
 			// 
 			this.groupBox1.BackColor = System.Drawing.Color.PowderBlue;
-			this.groupBox1.Controls.Add(this.statMagLabel);
 			this.groupBox1.Controls.Add(this.MockBtn);
 			this.groupBox1.Controls.Add(this.magIrrisBox);
 			this.groupBox1.Controls.Add(this.label2);
@@ -164,14 +167,6 @@ namespace MoulUtil
 			this.groupBox1.TabIndex = 8;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Recherche du Magasin";
-			// 
-			// statMagLabel
-			// 
-			this.statMagLabel.Location = new System.Drawing.Point(6, 146);
-			this.statMagLabel.Name = "statMagLabel";
-			this.statMagLabel.Size = new System.Drawing.Size(297, 20);
-			this.statMagLabel.TabIndex = 13;
-			this.statMagLabel.Text = "Stats";
 			// 
 			// MockBtn
 			// 
@@ -257,10 +252,12 @@ namespace MoulUtil
 			// 
 			// sourceListBox
 			// 
+			this.sourceListBox.ContextMenuStrip = this.sourcesMenuStrip;
 			this.sourceListBox.FormattingEnabled = true;
 			this.sourceListBox.Location = new System.Drawing.Point(9, 41);
 			this.sourceListBox.Name = "sourceListBox";
 			this.sourceListBox.Size = new System.Drawing.Size(624, 95);
+			this.sourceListBox.Sorted = true;
 			this.sourceListBox.TabIndex = 22;
 			this.sourceListBox.DoubleClick += new System.EventHandler(this.SourceListBoxDoubleClick);
 			// 
@@ -284,7 +281,10 @@ namespace MoulUtil
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox3.BackColor = System.Drawing.Color.DeepSkyBlue;
+			this.groupBox3.Controls.Add(this.triDataBtn);
 			this.groupBox3.Controls.Add(this.workspaceNavigatorUserControl);
 			this.groupBox3.Controls.Add(this.zonePrepaNavigatorUserControl);
 			this.groupBox3.Controls.Add(this.prepareBtn);
@@ -296,6 +296,18 @@ namespace MoulUtil
 			this.groupBox3.TabIndex = 10;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Zone préparation";
+			// 
+			// triDataBtn
+			// 
+			this.triDataBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.triDataBtn.BackColor = System.Drawing.SystemColors.Control;
+			this.triDataBtn.Location = new System.Drawing.Point(425, 1);
+			this.triDataBtn.Name = "triDataBtn";
+			this.triDataBtn.Size = new System.Drawing.Size(82, 23);
+			this.triDataBtn.TabIndex = 20;
+			this.triDataBtn.Text = "&Extraire";
+			this.triDataBtn.UseVisualStyleBackColor = false;
+			this.triDataBtn.Click += new System.EventHandler(this.TriDataBtnClick);
 			// 
 			// workspaceNavigatorUserControl
 			// 
@@ -315,12 +327,13 @@ namespace MoulUtil
 			// 
 			// prepareBtn
 			// 
+			this.prepareBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.prepareBtn.BackColor = System.Drawing.SystemColors.Control;
-			this.prepareBtn.Location = new System.Drawing.Point(490, 0);
+			this.prepareBtn.Location = new System.Drawing.Point(513, 0);
 			this.prepareBtn.Name = "prepareBtn";
-			this.prepareBtn.Size = new System.Drawing.Size(147, 23);
+			this.prepareBtn.Size = new System.Drawing.Size(124, 23);
 			this.prepareBtn.TabIndex = 13;
-			this.prepareBtn.Text = "&Preparer les données";
+			this.prepareBtn.Text = "&Preparer données";
 			this.prepareBtn.UseVisualStyleBackColor = false;
 			this.prepareBtn.Click += new System.EventHandler(this.PrepareBtnClick);
 			// 
@@ -395,7 +408,8 @@ namespace MoulUtil
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.toolTipLabel,
-			this.toolStripProgressBar});
+			this.toolStripProgressBar,
+			this.toolStripVersionInfo});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 737);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(681, 22);
@@ -412,6 +426,13 @@ namespace MoulUtil
 			// 
 			this.toolStripProgressBar.Name = "toolStripProgressBar";
 			this.toolStripProgressBar.Size = new System.Drawing.Size(100, 16);
+			// 
+			// toolStripVersionInfo
+			// 
+			this.toolStripVersionInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+			this.toolStripVersionInfo.Name = "toolStripVersionInfo";
+			this.toolStripVersionInfo.Size = new System.Drawing.Size(102, 17);
+			this.toolStripVersionInfo.Text = "toolStripVersionInfo";
 			// 
 			// copyBtn
 			// 
@@ -468,27 +489,27 @@ namespace MoulUtil
 			this.puttyToolStripMenuItem,
 			this.definirToolStripMenuItem});
 			this.serveursContextMenu.Name = "serveursContextMenu";
-			this.serveursContextMenu.Size = new System.Drawing.Size(153, 92);
+			this.serveursContextMenu.Size = new System.Drawing.Size(105, 70);
 			this.serveursContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ServeursContextMenuOpening);
 			// 
 			// mysqlToolStripMenuItem
 			// 
 			this.mysqlToolStripMenuItem.Name = "mysqlToolStripMenuItem";
-			this.mysqlToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.mysqlToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
 			this.mysqlToolStripMenuItem.Text = "mysql";
 			this.mysqlToolStripMenuItem.Click += new System.EventHandler(this.MysqlToolStripMenuItemClick);
 			// 
 			// puttyToolStripMenuItem
 			// 
 			this.puttyToolStripMenuItem.Name = "puttyToolStripMenuItem";
-			this.puttyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.puttyToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
 			this.puttyToolStripMenuItem.Text = "putty";
 			this.puttyToolStripMenuItem.Click += new System.EventHandler(this.PuttyToolStripMenuItemClick);
 			// 
 			// definirToolStripMenuItem
 			// 
 			this.definirToolStripMenuItem.Name = "definirToolStripMenuItem";
-			this.definirToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.definirToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
 			this.definirToolStripMenuItem.Text = "définir";
 			this.definirToolStripMenuItem.Click += new System.EventHandler(this.DefinirToolStripMenuItemClick);
 			// 
@@ -503,6 +524,20 @@ namespace MoulUtil
 			this.historyLabel.Text = "&history";
 			this.historyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.historyLabel.Click += new System.EventHandler(this.HistoryLabelClick);
+			// 
+			// sourcesMenuStrip
+			// 
+			this.sourcesMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.choisirToolStripMenuItem});
+			this.sourcesMenuStrip.Name = "sourcesMenuStrip";
+			this.sourcesMenuStrip.Size = new System.Drawing.Size(105, 26);
+			// 
+			// choisirToolStripMenuItem
+			// 
+			this.choisirToolStripMenuItem.Name = "choisirToolStripMenuItem";
+			this.choisirToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
+			this.choisirToolStripMenuItem.Text = "choisir";
+			this.choisirToolStripMenuItem.Click += new System.EventHandler(this.ChoisirToolStripMenuItemClick);
 			// 
 			// MouliPrepaForm
 			// 
@@ -535,12 +570,16 @@ namespace MoulUtil
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
 			this.serveursContextMenu.ResumeLayout(false);
+			this.sourcesMenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.ToolStripMenuItem choisirToolStripMenuItem;
+		private System.Windows.Forms.ContextMenuStrip sourcesMenuStrip;
+		private System.Windows.Forms.Button triDataBtn;
+		private System.Windows.Forms.ToolStripStatusLabel toolStripVersionInfo;
 		private System.Windows.Forms.ToolStripMenuItem definirToolStripMenuItem;
-		private System.Windows.Forms.Label statMagLabel;
 		private System.Windows.Forms.Button MockBtn;
 		private System.Windows.Forms.TextBox magIrrisBox;
 		private System.Windows.Forms.Label label2;

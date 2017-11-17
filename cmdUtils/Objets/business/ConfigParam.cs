@@ -28,6 +28,7 @@ namespace cmdUtils.Objets
 			[XmlEnum("emails")] emails,
 			[XmlEnum("tomcatpath")] tomcatpath,
 			[XmlEnum("javacmd")] javacmd,
+			[XmlEnum("defaultSourcePath")] defaultSourcePath,
 			//[XmlEnum("databasePath")] databasePath,
 			//[XmlEnum("databaseTunneling")] databaseTunneling,
 			//

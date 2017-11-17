@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>MoulUtil</RootNamespace>
     <AssemblyName>MoulUtil</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <NoWin32Manifest>False</NoWin32Manifest>
     <SignAssembly>False</SignAssembly>
@@ -19,6 +19,7 @@
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -75,6 +76,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\ExtraireForm.cs" />
+    <Compile Include="Forms\ExtraireForm.Designer.cs">
+      <DependentUpon>ExtraireForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\HtmlViewForm.cs" />
     <Compile Include="Forms\HtmlViewForm.Designer.cs">
       <DependentUpon>HtmlViewForm.cs</DependentUpon>
@@ -116,6 +121,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\ExtraireForm.resx">
+      <DependentUpon>ExtraireForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\HtmlViewForm.resx">
       <DependentUpon>HtmlViewForm.cs</DependentUpon>
     </EmbeddedResource>

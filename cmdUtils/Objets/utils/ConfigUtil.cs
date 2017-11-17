@@ -24,7 +24,7 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public class ConfigUtil
 	{
-		private readonly log4net.ILog  LOGGER;
+		private readonly log4net.ILog LOGGER;
 		
 		public ConfigUtil()
 		{
@@ -32,14 +32,14 @@ namespace cmdUtils.Objets
 
 		public ConfigUtil(log4net.ILog  LOGGER)
 		{
-			this.LOGGER=LOGGER;
+			this.LOGGER = LOGGER;
 		}
-		public ConfigDto readConfigXml(String path="", String configFile=MouliConfig.commonConfigFile)
+		public ConfigDto readConfigXml(String path = "", String configFile = MouliConfig.commonConfigFile)
 		{
 			
 			XmlSerializer serializer = new XmlSerializer(typeof(ConfigDto));
 			
-			FileStream fileStream = new FileStream(path+configFile, FileMode.Open);
+			FileStream fileStream = new FileStream(path + configFile, FileMode.Open);
 			ConfigDto dto = (ConfigDto)serializer.Deserialize(fileStream);
 			fileStream.Close();
 			//
@@ -47,34 +47,36 @@ namespace cmdUtils.Objets
 			//
 			return dto;
 		}
-		private void mergeConfig(ConfigDto main, ConfigDto secondary) {
+		/*complete the main config file (common.) with the secondary file (common.perso.) */
+		private void mergeConfig(ConfigDto main, ConfigDto secondary)
+		{
 			// Params
-			foreach(ConfigParam newparam in  secondary.configParams) {
-				ConfigParam oldparam= main.getConfigParamByName(newparam.nom);
-				oldparam.Value=newparam.Value;
+			foreach (ConfigParam newparam in  secondary.configParams) {
+				ConfigParam oldparam = main.getConfigParamByName(newparam.nom);
+				oldparam.Value = newparam.Value;
 			}
 			//Serveurs
-			foreach(MeoServeur newServeur in  secondary.serveurs) {
-				MeoServeur oldServeur= MeoServeur.findServeurByName(main.serveurs, newServeur.nom);
-				if(oldServeur!=null) {
+			foreach (MeoServeur newServeur in  secondary.serveurs) {
+				MeoServeur oldServeur = MeoServeur.findServeurByName(main.serveurs, newServeur.nom);
+				if (oldServeur != null) {
 					main.serveurs.Remove(oldServeur);
 					main.serveurs.Add(newServeur);
 				}
 			}
 			//Instances
-			foreach(MeoInstance newInstance in  secondary.instances) {
-				MeoInstance oldInstance= MeoInstance.findInstanceByInstanceName(main.instances, newInstance.nom);
-				if(oldInstance!=null) {
+			foreach (MeoInstance newInstance in  secondary.instances) {
+				MeoInstance oldInstance = MeoInstance.findInstanceByInstanceName(main.instances, newInstance.nom);
+				if (oldInstance != null) {
 					main.instances.Remove(oldInstance);
 					main.instances.Add(newInstance);
 				}
 			}
 			//SQL
-			foreach(MeoSql newSql in  secondary.sqlcommands) {
-				if(main.getSql(newSql.nom)!=null) {
-					SqlCommandsType commande=(SqlCommandsType)main.getSql(newSql.nom);
+			foreach (MeoSql newSql in  secondary.sqlcommands) {
+				if (main.getSql(newSql.nom) != null) {
+					SqlCommandsType commande = (SqlCommandsType)main.getSql(newSql.nom);
 					MeoSql sql = main.getSql(commande);
-					if(sql!=null) {
+					if (sql != null) {
 						main.sqlcommands.Remove(sql);
 						main.sqlcommands.Add(newSql);
 					}
@@ -93,7 +95,8 @@ namespace cmdUtils.Objets
 			
 		}
 		
-		public String getConfigFilePath() {
+		public String getExeConfigFilePath()
+		{
 			//rem:faux
 			Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 			String path = config.FilePath;
@@ -104,75 +107,120 @@ namespace cmdUtils.Objets
 
 		public void saveOldConfig()
 		{
-			String config=MouliConfig.commonConfigFile;
+			String config = MouliConfig.commonConfigFile;
 			//File file = FileInfo new File(config);
-			FileInfo file =new FileInfo(config);
+			FileInfo file = new FileInfo(config);
 			DateTime date = DateTime.Now;
-			long ts= date.Ticks;
+			long ts = date.Ticks;
 			
-			const String savePath="/save/";
-			String newFileName = file.Directory+savePath +file.Name + "-"+ts+""+file.Extension;
-			if(!Directory.Exists(file.Directory+savePath)) {
-				Directory.CreateDirectory(file.Directory+savePath);
+			const String savePath = "/save/";
+			String newFileName = file.Directory + savePath + file.Name + "-" + ts + "" + file.Extension;
+			if (!Directory.Exists(file.Directory + savePath)) {
+				Directory.CreateDirectory(file.Directory + savePath);
 			}
 			File.Copy(config, newFileName);
 		}
-		public String getLoggerConfigFilePath() {
-			String str=""+MouliConfig.commonLoggingConfigFile;
-			str = Directory.GetCurrentDirectory() + @"/"+MouliConfig.commonLoggingConfigFile;
+		public String getLoggerConfigFilePath()
+		{
+			String str = "" + MouliConfig.commonConfigFile;
+			str = Directory.GetCurrentDirectory() + @"/" + MouliConfig.commonLoggingConfigFile;
 			return (str);
 		}
+		public String getPersoConfigFilePath()
+		{
+			String str = Directory.GetCurrentDirectory() + @"/" + MouliConfig.commonPersoConfigFile;
+			return (str);
+		}
+		public String getConfigFilePath()
+		{
+			String str = Directory.GetCurrentDirectory() + @"/" + MouliConfig.commonConfigFile;
+			return (str);
+		}
+
 		public ConfigDto getConfig()
 		{
 			Console.WriteLine("config:" + getConfigFilePath());
-			
-			// testWriteXml(dto);
-			ConfigDto dto = readConfigXml();
-			
-			
-			return dto;
+			String path="";
+			//
+			if (!isExistsConfigFile()) {
+				if (isExistsPersoConfigFile()) {
+					ConfigDto persoConfigDto = readConfigXml(path, getPersoConfigFilePath());
+					return persoConfigDto;
+				} else {
+					return null;
+				}
+			}
+			//
+			ConfigDto configDto = readConfigXml();
+			if (isExistsPersoConfigFile()) {
+				ConfigDto persoDto = readConfigXml("", MouliConfig.commonPersoConfigFile);
+				if (configDto != null && persoDto != null) {
+					mergeConfig(configDto, persoDto);
+				} else if (persoDto != null) {
+					configDto = persoDto;
+				}
+			}
+			return configDto;
 		}
-		public void saveConfig(ConfigDto configDto) {
+		public void saveConfig(ConfigDto configDto)
+		{
 			Console.WriteLine("saving config:" + getConfigFilePath());
 			writeXml(configDto);
 		}
 
 		public bool controleConfig(ConfigDto configDto)
 		{
-			if(configDto==null) {
+			if (configDto == null) {
 				LOGGER.Error("null config");
 				return false;
 			}
 			
-			if(configDto.configParams==null) {
+			if (configDto.configParams == null) {
 				LOGGER.Error("null params");
 				return false;
 			}
-			if(configDto.getServeurs()==null || configDto.getServeurs().Count <1 ) {
+			if (configDto.getServeurs() == null || configDto.getServeurs().Count < 1) {
 				LOGGER.Error("null servers");
 				return false;
 			}
-			if(configDto.getInstances()==null || configDto.getInstances().Count <1 ) {
+			if (configDto.getInstances() == null || configDto.getInstances().Count < 1) {
 				LOGGER.Error("null instances");
 				return false;
 			}
-			if(configDto.getSqlCommands()==null || configDto.getSqlCommands().Count <1 ) {
+			if (configDto.getSqlCommands() == null || configDto.getSqlCommands().Count < 1) {
 				LOGGER.Error("null commands");
 				return false;
 			}
-			foreach(ConfigParam.ParamNamesType type in Enum.GetValues(typeof(ConfigParam.ParamNamesType))) {
-				if(ConfigParam.ParamNamesType.INCONNU!=type && configDto.getConfigParamByName(type)==null) {
-					LOGGER.Error("null param  "+type.ToString());
+			foreach (ConfigParam.ParamNamesType type in Enum.GetValues(typeof(ConfigParam.ParamNamesType))) {
+				if (ConfigParam.ParamNamesType.INCONNU != type && configDto.getConfigParamByName(type) == null) {
+					LOGGER.Error("null param  " + type.ToString());
 					//return false;
 				}
 			}
-			foreach(SqlCommandsType type in Enum.GetValues(typeof(SqlCommandsType))) {
-				if(configDto.getSqlCommand(type)==null) {
-					LOGGER.Error("null sqlCommand  "+type.ToString());
-					//return false;
+			foreach (SqlCommandsType type in Enum.GetValues(typeof(SqlCommandsType))) {
+				if (configDto.getSqlCommand(type) == null) {
+					LOGGER.Error("null sqlCommand  " + type.ToString());
 				}
 			}
 			return true;
 		}
+
+		public bool isExistsLoggerConfigFile()
+		{
+			return File.Exists(getLoggerConfigFilePath());
+		}
+		public bool isExistsPersoConfigFile()
+		{
+			return File.Exists(getPersoConfigFilePath());
+		}
+		public bool isExistsConfigFile()
+		{
+			return File.Exists(getConfigFilePath());
+		}
+		//		public bool isExistsConfigFile()
+		//		{
+		//			return File.Exists(getConfigFilePath());
+		//		}
+		
 	}
 }

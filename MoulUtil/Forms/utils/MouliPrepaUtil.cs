@@ -103,7 +103,7 @@ namespace MoulUtil.Forms.utils
 			String magPath=mouliUtil.getMag01();
 			String extension = ".d";
 			
-			foreach (YFiles yfile in Enum.GetValues(typeof(YFiles))) {
+			foreach (YFILES.YFiles yfile in Enum.GetValues(typeof(YFILES.YFiles))) {
 				Boolean value = mouliUtil.checkIfFileExists(path, dataPath, magPath, yfile.ToString(), extension);
 				if(!value) {
 					String file=path+dataPath+magPath+ yfile.ToString().ToLower() +extension;
@@ -145,6 +145,8 @@ namespace MoulUtil.Forms.utils
 				options.setInstanceName("meo_test");
 				options.setWorkspacePath(workingPath);
 				options.setWorkingPath(rep);
+				options.setLimiteYearStock("99");
+				options.setLimiteYearVisites("99");
 				return options;
 			}
 			MyUtil myUtil = new MyUtil();
@@ -157,6 +159,7 @@ namespace MoulUtil.Forms.utils
 			int port = int.Parse(tmpStr.Substring(0, tmpStr.IndexOf(":", StringComparison.Ordinal)));
 			const string connectedBySSH = "connected by SSH \r\n";
 			String s = connectedBySSH;
+			s+="[mag_id] = '"+rechMagIdBox.Text+"' \r\n";
 			String proposition = "";
 
 			String cnxString = myUtil.buildconnString(database, "127.0.0.1", user, pwd, port);
@@ -201,6 +204,8 @@ namespace MoulUtil.Forms.utils
 					String extensionVisite = ligne[6].Value.ToString();
 					options.setLimiteStock(ligne[3].Value.ToString());
 					options.setLimiteVisite(ligne[4].Value.ToString());
+					options.setLimiteYearStock("99");
+					options.setLimiteYearVisites("99");
 					
 					if(extensionStock=="1") {
 						options.setExtensionStock(MoulinettePurgeOptionTypes.CLIENT_POSSEDE_EXTENSION);

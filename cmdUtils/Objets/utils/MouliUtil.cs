@@ -88,7 +88,7 @@ namespace cmdUtils.Objets
 		}
 		public void checkIfYFilesExists(String path, RichTextBox rtb, string dataPath, string magPath, String extension)
 		{
-			foreach (YFiles yfile in Enum.GetValues(typeof(YFiles))) {
+			foreach (YFILES.YFiles yfile in Enum.GetValues(typeof(YFILES.YFiles))) {
 				Boolean value = checkIfFileExists(path, dataPath, magPath, yfile.ToString(), extension);
 				String str = yfile.ToString() + "\n";
 				if (value) {
@@ -129,17 +129,10 @@ namespace cmdUtils.Objets
 			
 			string sql = "select * from administration.magasins where magasin_id=" + magId;
 			MyUtil util = new MyUtil();
-			// MeoInstance instance=configDto.getInstances().
-			//ici:
-			// (1) ssh connection, port
-			// (2) find instance by name 'administration,'
-			string cstr = util.doConnString(cfg);
-			var magasinList = util.getListResultAsKeyValue(cstr, sql);
+			string cstr = util.doConnString(cfg);			var magasinList = util.getListResultAsKeyValue(cstr, sql);
 			
 			rtb.AppendText("#libe:" + util.getItem(magasinList[0], "magasin_libelle") + " - url :" + util.getItem(magasinList[0], "url"));
 			rtb.AppendText("\n#cli_id:" + util.getItem(magasinList[0], "client_id"));
-			//LOGGER.Info("libe:"+util.getItem(magasinList[0], "magasin_libelle"));
-			//LOGGER.Info("cli_id:"+util.getItem(magasinList[0], "client_id"));
 			
 			texbox.Text = (string)util.getItem(magasinList[0], "magasin_libelle");
 			sql = "SELECT utilisateur_id,magasin_id FROM administration.utilisateurs where utilisateur_active=true AND magasin_id=" + magId + ";";
@@ -252,16 +245,20 @@ namespace cmdUtils.Objets
 		
 		public List<String> genereJob(string scriptJobFile, string scriptMoulinetteFile, MouliUtilOptions options)
 		{
-			String jobtime = formatDateJob(options.getDateJob());
+			String jobTime = formatDateJob(options.getDateJob());
+			String mailTo = options.getDefaultEmail();
+			//
 			List <String> liste = new List<string>();
 			liste.Add("## job file automatique, pour planifier la maj");
 			
 			liste.Add("## date format : HH:mm MM/dd/YYYY (heure:minutes(space)Mois/Jour/Annee) ");
-			liste.Add("export jobtime='" + jobtime + "'");
-			liste.Add("echo /usr/bin/nice -n +10 /bin/sh " + scriptMoulinetteFile + " -mail | at $jobtime  ");
+			liste.Add("export jobTime='" + jobTime + "'");
+			liste.Add("export mailTo='" + mailTo + "'");
+			liste.Add("##");
+			liste.Add("echo /usr/bin/nice -n +10 /bin/sh " + scriptMoulinetteFile + " -mail | at $jobTime  ");
 			//
-			String mailTo = options.getDefaultEmail();
-			String mailCmd = "mail -s \"planification moulinette + " + scriptMoulinetteFile + " ($jobtime)\" " + mailTo + " < " + scriptMoulinetteFile;
+			
+			String mailCmd = "mail -s \"planification moulinette + " + scriptMoulinetteFile + " ($jobTime)\" $mailTo < " + scriptMoulinetteFile;
 			liste.Add(mailCmd);
 			
 			return liste;
@@ -285,7 +282,7 @@ namespace cmdUtils.Objets
 			while (tmpDate.DayOfWeek == DayOfWeek.Saturday || tmpDate.DayOfWeek == DayOfWeek.Sunday) {
 				tmpDate = tmpDate.AddDays(1);
 			}
-			DateTime jobPlanned = new DateTime(tmpDate.Year, tmpDate.Month, tmpDate.Day, 08, 0, 0);
+			DateTime jobPlanned = new DateTime(tmpDate.Year, tmpDate.Month, tmpDate.Day, 07, 0, 0);
 			return jobPlanned;
 		}
 
@@ -375,6 +372,7 @@ namespace cmdUtils.Objets
 				Directory.CreateDirectory(path);
 				r = true;
 			}
+
 			return r;
 		}
 		
