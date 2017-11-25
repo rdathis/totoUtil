@@ -15,6 +15,23 @@ namespace cmdUtils.Objets
 	/// </summary>
 	public partial class ConfigDto
 	{
+		
+		//volatile
+		public string assemblyName {
+			get;
+			set;
+		}
+		//volatile
+		public string versionInfo {
+			get;
+			set;
+		}
+		//volatile
+		public string buildDateTime {
+			get;
+			set;
+		}
+
 		// !! no //[XmlAttribute], volatile
 		private String programPath =null;
 		//[XmlAttribute]
