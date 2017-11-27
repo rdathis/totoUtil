@@ -26,10 +26,12 @@ namespace MoulUtil
 			//configure le ilog -- http://lutecefalco.developpez.com/tutoriels/dotnet/log4net/introduction/
 
 			String versionInfo = null;
+			String assemblyFullName="";
 			DateTime buildDateTime = DateTime.Now;
 			{
 				Assembly assem = Assembly.GetExecutingAssembly();
 				AssemblyName assemName = assem.GetName();
+				assemblyFullName=assem.FullName();
 				Version version = assemName.Version;
 				//Console.WriteLine("{0}, Version {1}", assemName.Name, ver.ToString());
 				versionInfo = string.Format("{0}, Version {1}", assemName.Name, version.ToString());
@@ -87,6 +89,9 @@ namespace MoulUtil
 			}
 			
 			configDto.basePath = tmpBasePath;
+			configDto.assemblyName=assemblyFullName;
+			configDto.buildDateTime=buildDateTime;
+			configDto.versionInfo=versionInfo;
 			
 			LOGGER.Info("Moulinette util - ");
 			LOGGER.Info(" Args (" + args.Length + ")");
