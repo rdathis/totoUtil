@@ -248,8 +248,7 @@ namespace MoulUtil.Forms.utils
 			List<String> retour = new List<string>();
 			try {
 				if(options!=null) {
-					String subPath="MEO"+DateTime.Now.Year+"/";
-					String path=targetPath+"/"+subPath;
+					String path=targetPath;
 					String fileName=new FileInfo(options.getarchiveName()).Name;
 					
 					LOGGER.Info("path:"+path);
@@ -262,7 +261,7 @@ namespace MoulUtil.Forms.utils
 					
 					sourcePath = new DirectoryInfo(sourcePath).FullName;
 					MouliUtil mouliUtil = new MouliUtil(LOGGER);
-					Regex excludeRegex = new Regex("\\.(7z|rar|gz|gzip|zip)$");
+					Regex excludeRegex = new Regex("\\.(7z|rar|gz|tgz|gzip|zip)$");
 					List<String> toSaveFiles= mouliUtil.findFiles(sourcePath,  true, false, null, excludeRegex);
 					toSaveFiles = mouliUtil.excludeFiles(toSaveFiles, excludeRegex);
 					ZipUtil zipUtil = new ZipUtil(LOGGER);

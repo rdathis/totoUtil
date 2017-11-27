@@ -24,6 +24,7 @@ namespace MoulUtil.Forms.utils
 		private int nbOperation=-1;
 		private int doneOperation=0;
 		private String info="";
+		private String activeFile="";
 		private StartWorkerCallBack startWorkerCallBack=null;
 		private ProgressWorkerCallBack progressWorkerCallBack=null;
 		private EndWorkerCallBack endWorkerCallBack=null;
@@ -34,6 +35,16 @@ namespace MoulUtil.Forms.utils
 		public void ReportProgress(long done, long total) {
 			ReportProgress((int)(done / ((double)total) * 100));
 		}
+
+		public void setActiveFile(string fichier)
+		{
+			activeFile=fichier;
+		}
+		public String getActiveFile()
+		{
+			return activeFile;
+		}
+
 		//
 		public void setNbOperation(int nb) {
 			this.nbOperation=nb;

@@ -38,11 +38,8 @@ namespace MoulUtil
 					TimeSpan.TicksPerSecond * 2 * version.Revision)); // seconds since midnight, (multiply by 2 to get original)
 				versionInfo += " du " + buildDateTime.ToString();
 			}
-			
-			
 			log4net.ILog LOGGER = LogManager.GetLogger("mouliProgram");
 			ConfigUtil configUtil = new ConfigUtil(LOGGER);
-			
 			
 			if (configUtil.isExistsLoggerConfigFile()) {
 				XmlConfigurator.Configure(new Uri(configUtil.getLoggerConfigFilePath()));

@@ -31,6 +31,10 @@ namespace MoulUtil.Forms.utils
 		
 		public void creaArchiveBW_DoWork(object sender, DoWorkEventArgs e)
 		{
+			// disable once RedundantThisQualifier
+			if(this.CancellationPending) {
+				e.Cancel = true;
+			}
 			doStartWorker("Debut du travail "  + job.getArchiveName());
 			mouliActionUtil.doArchive(job);
 			
@@ -45,6 +49,9 @@ namespace MoulUtil.Forms.utils
 //				}
 //				//this.progressTextBox.Text = (e.ProgressPercentage.ToString() +" / "+getNbOperation()+  " ("+prc+")%");
 //			}
+			if(this.CancellationPending) {
+				//this.do
+			}
 			doProgressWorker(e.ProgressPercentage);
 		}
 		public void creaArchiveBW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

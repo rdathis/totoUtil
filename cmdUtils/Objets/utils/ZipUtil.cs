@@ -134,6 +134,7 @@ namespace cmdUtils.Objets
 						}
 						if(backgroundWorker!=null) {
 							backgroundWorker.ReportProgress(++nb);
+							backgroundWorker.setActiveFile(fichier);
 						}
 					}
 					zip.Finish();

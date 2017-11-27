@@ -54,10 +54,12 @@ namespace MoulUtil
 			this.propositionBox = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.sourceListBox = new System.Windows.Forms.ListBox();
+			this.sourcesMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.choisirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.sourceNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
 			this.sourceBaseComboBox = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.triDataBtn = new System.Windows.Forms.Button();
+			this.extraireBtn = new System.Windows.Forms.Button();
 			this.workspaceNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
 			this.zonePrepaNavigatorUserControl = new cmdUtils.Controles.NavigatorUserControl();
 			this.prepareBtn = new System.Windows.Forms.Button();
@@ -82,15 +84,15 @@ namespace MoulUtil
 			this.definirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.historyLabel = new System.Windows.Forms.Label();
 			this.connectTimer = new System.Windows.Forms.Timer(this.components);
-			this.sourcesMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.choisirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.fileZillaStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
+			this.sourcesMenuStrip.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.serveursContextMenu.SuspendLayout();
-			this.sourcesMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// rechMagIdBtn
@@ -115,9 +117,10 @@ namespace MoulUtil
 			// 
 			// sourceFilterBox
 			// 
-			this.sourceFilterBox.Location = new System.Drawing.Point(398, 12);
+			this.sourceFilterBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.sourceFilterBox.Location = new System.Drawing.Point(491, 12);
 			this.sourceFilterBox.Name = "sourceFilterBox";
-			this.sourceFilterBox.Size = new System.Drawing.Size(239, 20);
+			this.sourceFilterBox.Size = new System.Drawing.Size(145, 20);
 			this.sourceFilterBox.TabIndex = 3;
 			this.sourceFilterBox.Text = "*";
 			this.sourceFilterBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SourceFilterBoxKeyUp);
@@ -238,6 +241,8 @@ namespace MoulUtil
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox2.BackColor = System.Drawing.Color.LightBlue;
 			this.groupBox2.Controls.Add(this.sourceListBox);
 			this.groupBox2.Controls.Add(this.sourceNavigatorUserControl);
@@ -245,36 +250,55 @@ namespace MoulUtil
 			this.groupBox2.Controls.Add(this.sourceFilterBox);
 			this.groupBox2.Location = new System.Drawing.Point(25, 231);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(644, 142);
+			this.groupBox2.Size = new System.Drawing.Size(642, 142);
 			this.groupBox2.TabIndex = 9;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Source des données";
 			// 
 			// sourceListBox
 			// 
+			this.sourceListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.sourceListBox.ContextMenuStrip = this.sourcesMenuStrip;
 			this.sourceListBox.FormattingEnabled = true;
 			this.sourceListBox.Location = new System.Drawing.Point(9, 41);
 			this.sourceListBox.Name = "sourceListBox";
-			this.sourceListBox.Size = new System.Drawing.Size(624, 95);
+			this.sourceListBox.Size = new System.Drawing.Size(622, 95);
 			this.sourceListBox.Sorted = true;
 			this.sourceListBox.TabIndex = 22;
 			this.sourceListBox.DoubleClick += new System.EventHandler(this.SourceListBoxDoubleClick);
 			// 
+			// sourcesMenuStrip
+			// 
+			this.sourcesMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.choisirToolStripMenuItem});
+			this.sourcesMenuStrip.Name = "sourcesMenuStrip";
+			this.sourcesMenuStrip.Size = new System.Drawing.Size(105, 26);
+			// 
+			// choisirToolStripMenuItem
+			// 
+			this.choisirToolStripMenuItem.Name = "choisirToolStripMenuItem";
+			this.choisirToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
+			this.choisirToolStripMenuItem.Text = "choisir";
+			this.choisirToolStripMenuItem.Click += new System.EventHandler(this.ChoisirToolStripMenuItemClick);
+			// 
 			// sourceNavigatorUserControl
 			// 
+			this.sourceNavigatorUserControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.sourceNavigatorUserControl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			this.sourceNavigatorUserControl.Location = new System.Drawing.Point(312, 9);
+			this.sourceNavigatorUserControl.Location = new System.Drawing.Point(405, 8);
 			this.sourceNavigatorUserControl.Name = "sourceNavigatorUserControl";
 			this.sourceNavigatorUserControl.Size = new System.Drawing.Size(80, 24);
 			this.sourceNavigatorUserControl.TabIndex = 21;
 			// 
 			// sourceBaseComboBox
 			// 
+			this.sourceBaseComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.sourceBaseComboBox.FormattingEnabled = true;
 			this.sourceBaseComboBox.Location = new System.Drawing.Point(9, 12);
 			this.sourceBaseComboBox.Name = "sourceBaseComboBox";
-			this.sourceBaseComboBox.Size = new System.Drawing.Size(297, 21);
+			this.sourceBaseComboBox.Size = new System.Drawing.Size(390, 21);
 			this.sourceBaseComboBox.TabIndex = 4;
 			this.sourceBaseComboBox.SelectionChangeCommitted += new System.EventHandler(this.SourceBaseComboBoxSelectionChangeCommitted);
 			this.sourceBaseComboBox.TextUpdate += new System.EventHandler(this.SourceBaseComboBoxTextUpdate);
@@ -284,7 +308,7 @@ namespace MoulUtil
 			this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox3.BackColor = System.Drawing.Color.DeepSkyBlue;
-			this.groupBox3.Controls.Add(this.triDataBtn);
+			this.groupBox3.Controls.Add(this.extraireBtn);
 			this.groupBox3.Controls.Add(this.workspaceNavigatorUserControl);
 			this.groupBox3.Controls.Add(this.zonePrepaNavigatorUserControl);
 			this.groupBox3.Controls.Add(this.prepareBtn);
@@ -292,22 +316,22 @@ namespace MoulUtil
 			this.groupBox3.Controls.Add(this.workspaceZoneBox);
 			this.groupBox3.Location = new System.Drawing.Point(26, 381);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(644, 53);
+			this.groupBox3.Size = new System.Drawing.Size(642, 53);
 			this.groupBox3.TabIndex = 10;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Zone préparation";
 			// 
-			// triDataBtn
+			// extraireBtn
 			// 
-			this.triDataBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.triDataBtn.BackColor = System.Drawing.SystemColors.Control;
-			this.triDataBtn.Location = new System.Drawing.Point(425, 1);
-			this.triDataBtn.Name = "triDataBtn";
-			this.triDataBtn.Size = new System.Drawing.Size(82, 23);
-			this.triDataBtn.TabIndex = 20;
-			this.triDataBtn.Text = "&Extraire";
-			this.triDataBtn.UseVisualStyleBackColor = false;
-			this.triDataBtn.Click += new System.EventHandler(this.TriDataBtnClick);
+			this.extraireBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.extraireBtn.BackColor = System.Drawing.SystemColors.Control;
+			this.extraireBtn.Location = new System.Drawing.Point(423, 1);
+			this.extraireBtn.Name = "extraireBtn";
+			this.extraireBtn.Size = new System.Drawing.Size(82, 23);
+			this.extraireBtn.TabIndex = 20;
+			this.extraireBtn.Text = "&Extraire";
+			this.extraireBtn.UseVisualStyleBackColor = false;
+			this.extraireBtn.Click += new System.EventHandler(this.ExtraireBtnClick);
 			// 
 			// workspaceNavigatorUserControl
 			// 
@@ -329,7 +353,7 @@ namespace MoulUtil
 			// 
 			this.prepareBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.prepareBtn.BackColor = System.Drawing.SystemColors.Control;
-			this.prepareBtn.Location = new System.Drawing.Point(513, 0);
+			this.prepareBtn.Location = new System.Drawing.Point(511, 0);
 			this.prepareBtn.Name = "prepareBtn";
 			this.prepareBtn.Size = new System.Drawing.Size(124, 23);
 			this.prepareBtn.TabIndex = 13;
@@ -412,7 +436,7 @@ namespace MoulUtil
 			this.toolStripVersionInfo});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 737);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(681, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(679, 22);
 			this.statusStrip1.TabIndex = 14;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -477,7 +501,7 @@ namespace MoulUtil
 			this.targetTreeView.ContextMenuStrip = this.serveursContextMenu;
 			this.targetTreeView.Location = new System.Drawing.Point(337, 534);
 			this.targetTreeView.Name = "targetTreeView";
-			this.targetTreeView.Size = new System.Drawing.Size(345, 200);
+			this.targetTreeView.Size = new System.Drawing.Size(343, 200);
 			this.targetTreeView.TabIndex = 18;
 			this.targetTreeView.DoubleClick += new System.EventHandler(this.TargetTreeViewDoubleClick);
 			this.targetTreeView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TargetTreeViewMouseClick);
@@ -487,29 +511,31 @@ namespace MoulUtil
 			this.serveursContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.mysqlToolStripMenuItem,
 			this.puttyToolStripMenuItem,
+			this.fileZillaStripMenuItem,
+			this.toolStripSeparator1,
 			this.definirToolStripMenuItem});
 			this.serveursContextMenu.Name = "serveursContextMenu";
-			this.serveursContextMenu.Size = new System.Drawing.Size(105, 70);
+			this.serveursContextMenu.Size = new System.Drawing.Size(153, 120);
 			this.serveursContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ServeursContextMenuOpening);
 			// 
 			// mysqlToolStripMenuItem
 			// 
 			this.mysqlToolStripMenuItem.Name = "mysqlToolStripMenuItem";
-			this.mysqlToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
+			this.mysqlToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.mysqlToolStripMenuItem.Text = "mysql";
 			this.mysqlToolStripMenuItem.Click += new System.EventHandler(this.MysqlToolStripMenuItemClick);
 			// 
 			// puttyToolStripMenuItem
 			// 
 			this.puttyToolStripMenuItem.Name = "puttyToolStripMenuItem";
-			this.puttyToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
+			this.puttyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.puttyToolStripMenuItem.Text = "putty";
 			this.puttyToolStripMenuItem.Click += new System.EventHandler(this.PuttyToolStripMenuItemClick);
 			// 
 			// definirToolStripMenuItem
 			// 
 			this.definirToolStripMenuItem.Name = "definirToolStripMenuItem";
-			this.definirToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
+			this.definirToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.definirToolStripMenuItem.Text = "définir";
 			this.definirToolStripMenuItem.Click += new System.EventHandler(this.DefinirToolStripMenuItemClick);
 			// 
@@ -525,25 +551,23 @@ namespace MoulUtil
 			this.historyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.historyLabel.Click += new System.EventHandler(this.HistoryLabelClick);
 			// 
-			// sourcesMenuStrip
+			// fileZillaStripMenuItem
 			// 
-			this.sourcesMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.choisirToolStripMenuItem});
-			this.sourcesMenuStrip.Name = "sourcesMenuStrip";
-			this.sourcesMenuStrip.Size = new System.Drawing.Size(105, 26);
+			this.fileZillaStripMenuItem.Name = "fileZillaStripMenuItem";
+			this.fileZillaStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.fileZillaStripMenuItem.Text = "fileZilla";
+			this.fileZillaStripMenuItem.Click += new System.EventHandler(this.FileZillaStripMenuItemClick);
 			// 
-			// choisirToolStripMenuItem
+			// toolStripSeparator1
 			// 
-			this.choisirToolStripMenuItem.Name = "choisirToolStripMenuItem";
-			this.choisirToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
-			this.choisirToolStripMenuItem.Text = "choisir";
-			this.choisirToolStripMenuItem.Click += new System.EventHandler(this.ChoisirToolStripMenuItemClick);
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
 			// 
 			// MouliPrepaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(681, 759);
+			this.ClientSize = new System.Drawing.Size(679, 759);
 			this.Controls.Add(this.historyLabel);
 			this.Controls.Add(this.targetTreeView);
 			this.Controls.Add(this.configBtn);
@@ -563,6 +587,7 @@ namespace MoulUtil
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
+			this.sourcesMenuStrip.ResumeLayout(false);
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
@@ -570,14 +595,15 @@ namespace MoulUtil
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
 			this.serveursContextMenu.ResumeLayout(false);
-			this.sourcesMenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
+		private System.Windows.Forms.ToolStripMenuItem fileZillaStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem choisirToolStripMenuItem;
 		private System.Windows.Forms.ContextMenuStrip sourcesMenuStrip;
-		private System.Windows.Forms.Button triDataBtn;
+		private System.Windows.Forms.Button extraireBtn;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripVersionInfo;
 		private System.Windows.Forms.ToolStripMenuItem definirToolStripMenuItem;
 		private System.Windows.Forms.Button MockBtn;

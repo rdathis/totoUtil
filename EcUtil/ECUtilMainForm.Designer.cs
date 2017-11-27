@@ -35,6 +35,7 @@ namespace EcUtil
 		private void InitializeComponent()
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.cmdTextBox = new System.Windows.Forms.TextBox();
 			this.progressLabel = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -47,7 +48,6 @@ namespace EcUtil
 			this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
 			this.newNameBox = new System.Windows.Forms.TextBox();
 			this.copyBtn = new System.Windows.Forms.Button();
-			this.cmdTextBox = new System.Windows.Forms.TextBox();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
@@ -69,6 +69,13 @@ namespace EcUtil
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "...";
+			// 
+			// cmdTextBox
+			// 
+			this.cmdTextBox.Location = new System.Drawing.Point(24, 356);
+			this.cmdTextBox.Name = "cmdTextBox";
+			this.cmdTextBox.Size = new System.Drawing.Size(651, 20);
+			this.cmdTextBox.TabIndex = 11;
 			// 
 			// progressLabel
 			// 
@@ -104,7 +111,7 @@ namespace EcUtil
 			this.copyDevePropChBox.Name = "copyDevePropChBox";
 			this.copyDevePropChBox.Size = new System.Drawing.Size(209, 24);
 			this.copyDevePropChBox.TabIndex = 11;
-			this.copyDevePropChBox.Text = "tomove";
+			this.copyDevePropChBox.Text = "copy developper.properties";
 			this.copyDevePropChBox.UseVisualStyleBackColor = true;
 			// 
 			// copyREclipChBox
@@ -181,13 +188,6 @@ namespace EcUtil
 			this.copyBtn.Text = "copy as :";
 			this.copyBtn.UseVisualStyleBackColor = true;
 			this.copyBtn.Click += new System.EventHandler(this.CopyBtnClick);
-			// 
-			// cmdTextBox
-			// 
-			this.cmdTextBox.Location = new System.Drawing.Point(24, 356);
-			this.cmdTextBox.Name = "cmdTextBox";
-			this.cmdTextBox.Size = new System.Drawing.Size(651, 20);
-			this.cmdTextBox.TabIndex = 11;
 			// 
 			// ECUtilMainForm
 			// 

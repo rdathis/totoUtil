@@ -405,6 +405,13 @@ Unknown._w(https://server/instance/application/78957C736ADB5FD05DCBA3DDACFEFF8F.
 			retour+=":"+serverTargetPath;
 			return (retour);
 		}
+
+		public string buildFileZillaArgs(MeoServeur meoServeur)
+		{
+			String str="sftp://"+meoServeur.utilisateur+":"+meoServeur.password+"@"+meoServeur.adresse;
+			return str;
+		}
+
 		public Process executeCommandAsDetachedProcess(string command, string args)
 		{
 			ProcessStartInfo ProcessInfo;
@@ -421,5 +428,22 @@ Unknown._w(https://server/instance/application/78957C736ADB5FD05DCBA3DDACFEFF8F.
 			//Process.Close();
 			return process;
 		}
+//		public ProcessInfo getDetachedProcess(string command, string args)
+//		{
+//			ProcessStartInfo ProcessInfo;
+//			//Process process;
+//
+//			// for dos command:
+//			//ProcessInfo = new ProcessStartInfo("cmd.exe", "/C " + Command);
+//			ProcessInfo = new ProcessStartInfo(command, args);
+//			ProcessInfo.CreateNoWindow = false;
+//			ProcessInfo.UseShellExecute = false;
+//			//process.StartInfo = ProcessInfo;
+//			//process = Process.Start(ProcessInfo);
+//			//Process.WaitForExit(Timeout);
+//			//ExitCode = Process.ExitCode;
+//			//Process.Close();
+//			return ProcessInfo;
+//		}
 	}
 }

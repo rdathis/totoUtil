@@ -56,6 +56,9 @@
     <Reference Include="MySql.Web">
       <HintPath>..\Installer\libs\MySql.Web.dll</HintPath>
     </Reference>
+    <Reference Include="NVelocity">
+      <HintPath>..\packages\NVelocity.1.0.3\lib\NVelocity.dll</HintPath>
+    </Reference>
     <Reference Include="Renci.SshNet">
       <HintPath>..\Installer\libs\Renci.SshNet.dll</HintPath>
     </Reference>
@@ -105,6 +108,7 @@
     <Compile Include="Objets\business\MouliStatRecap.cs" />
     <Compile Include="Objets\business\MouliUtilOptions.cs" />
     <Compile Include="Objets\business\MouliUtilOptionsTraductor.cs" />
+    <Compile Include="Objets\business\RecapHtmlGenerator.cs" />
     <Compile Include="Objets\business\SqlCommandsType.cs" />
     <Compile Include="Objets\business\StatMoulReader.cs" />
     <Compile Include="Objets\business\StatMoulRecap.cs" />
@@ -142,6 +146,7 @@
     <None Include="app.config" />
     <None Include="doc\mintty.txt" />
     <None Include="doc\TODO.txt" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controles\NavigatorUserControl.resx">

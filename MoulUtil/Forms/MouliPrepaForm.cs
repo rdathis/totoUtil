@@ -55,7 +55,7 @@ namespace MoulUtil
 			InitializeComponent();
 			this.configDto = configDto;
 			this.LOGGER = LOGGER;
-			this.versionInfo=versionInfo;
+			this.versionInfo = versionInfo;
 			prepare();
 			
 			rechMagIdBox.Focus();
@@ -163,9 +163,9 @@ namespace MoulUtil
 		{
 			if (check) {
 				MeoInstance adminInstance = MeoInstance.findInstanceByInstanceName(configDto.instances, "administration");
-				if(adminInstance!=null) {
+				if (adminInstance != null) {
 					MeoServeur meoServeur = MeoServeur.findServeurByName(configDto.serveurs, adminInstance.serveur);
-					if(meoServeur!=null) {
+					if (meoServeur != null) {
 						String tunnelStr = meoServeur.getTunnel();
 						int leftPort = int.Parse(tunnelStr.Substring(0, tunnelStr.IndexOf(":", StringComparison.Ordinal)));
 						int rightPort = int.Parse(tunnelStr.Substring(tunnelStr.IndexOf(":", StringComparison.Ordinal) + 1));
@@ -265,30 +265,55 @@ namespace MoulUtil
 				return;
 			}
 
-			String targetBaseDir =new DirectoryInfo(targetDir).Parent.FullName;
-			const string rapports="/rapports/";
-			if(!Directory.Exists(targetBaseDir +rapports)) {
+			String tmpTargetBaseDir = new DirectoryInfo(targetDir).FullName;
+			String targetBaseDir = new DirectoryInfo(targetDir).Parent.FullName;
+			if (!Directory.Exists(targetBaseDir)) {
 				try {
-					Directory.CreateDirectory(targetBaseDir +rapports);
+					Directory.CreateDirectory(targetBaseDir);
 				} catch (Exception ex) {
-					LOGGER.Error("error : "+targetBaseDir +rapports);
+					LOGGER.Error("error : " + targetBaseDir);
+					LOGGER.Error(ex.Message);
+					MessageBox.Show("dir absent : " + targetBaseDir);
+					return;
+				}
+			}
+			const string rapports = "/rapports/";
+			if (!Directory.Exists(targetBaseDir + rapports)) {
+				try {
+					Directory.CreateDirectory(targetBaseDir + rapports);
+				} catch (Exception ex) {
+					LOGGER.Error("error : " + targetBaseDir + rapports);
 					LOGGER.Error(ex.Message);
 				}
 			}
-			if(Directory.Exists(targetBaseDir +rapports)) {
+			if (Directory.Exists(targetBaseDir + rapports)) {
 				try {
-					File.Copy(sourceDir+mouliUtilOptions.getHtmlRecapFile(),targetBaseDir +rapports +mouliUtilOptions.getHtmlRecapFile());
+					String sourceFile = sourceDir + mouliUtilOptions.getHtmlRecapFile();
+					String targetFile = targetBaseDir + rapports + mouliUtilOptions.getHtmlRecapFile();
+					File.Copy(sourceFile, targetFile);
 				} catch (Exception ex) {
-					LOGGER.Error("error : "+targetBaseDir +rapports);
+					LOGGER.Error("error : " + targetBaseDir + rapports);
 					LOGGER.Error(ex.Message);
 				}
 				
+			}
+			//targetDir+=targetNameBox.Text;
+			targetBaseDir = tmpTargetBaseDir;
+			if (!Directory.Exists(targetBaseDir)) {
+				try {
+					Directory.CreateDirectory(targetBaseDir);
+				} catch (Exception ex) {
+					LOGGER.Error("error : " + targetBaseDir);
+					LOGGER.Error(ex.Message);
+					MessageBox.Show("dir absent : " + targetBaseDir);
+					return;
+				}
 			}
 			sauvegardeBtnEnabled = 0;
 			//sauvegardeBtn.Enabled = false;
 			statusMessage = "Préparation de la sauvegarde ...";
 			tmpDir = Path.GetFullPath(targetDir).Replace('/', '\\');
-			tmpDir = new DirectoryInfo(tmpDir).Parent.FullName;
+			tmpDir = new DirectoryInfo(tmpDir).FullName;
 			if (!Directory.Exists(tmpDir)) {
 				mouliUtil.safeCreateDirectory(tmpDir);
 			}
@@ -313,11 +338,17 @@ namespace MoulUtil
 				double prc = 0;
 				if (worker.getNbOperation() != 0) {
 					prc = value / ((double)worker.getNbOperation()) * 100;
-					prc = Math.Round(prc, 3);
+					prc = Math.Round(prc, 1);
 				}
 				sauvegardeProgressValue = prc;
 				sauvegardeProgressMessage = (value + " / " + worker.getNbOperation() + " (" + prc + ")%");
-				statusMessage = "progression : " + (prc) + "%  - " + value + " / " + worker.getNbOperation();
+				String activeFile = "";
+				if (worker.getActiveFile() != null) {
+					activeFile = worker.getActiveFile();
+				}
+				sauvegardeProgressMessage = activeFile + " " + sauvegardeProgressMessage;
+
+				statusMessage = "progression : " + (prc) + "%  - " + value + " / " + worker.getNbOperation() + " | " + activeFile;
 				sauvegardeProgressMessage = statusMessage;
 			};
 			MouliProgressWorker.EndWorkerCallBack endWorkerCallBack = value => {
@@ -332,7 +363,7 @@ namespace MoulUtil
 			worker.setProgressWorkerCallBack(progressWorkerCallBack);
 			worker.setEndWorkerCallBack(endWorkerCallBack);
 			//
-			worker.prepare(mouliPrepaUtil, mouliUtilOptions, sourceDir, targetSvgPathBox.Text);
+			worker.prepare(mouliPrepaUtil, mouliUtilOptions, sourceDir, targetBaseDir);
 			worker.RunWorkerAsync();
 		}
 		void RechMagIdBtnClick(object sender, EventArgs e)
@@ -359,7 +390,7 @@ namespace MoulUtil
 				LOGGER.Info("name: " + mouliUtilOptions.getarchiveName());
 				
 				populateTargetBox(mouliUtilOptions.getInstanceName());
-				sourceFilterBox.Text="*"+rechMagIdBox.Text+"*";
+				sourceFilterBox.Text = "*" + rechMagIdBox.Text + "*";
 			}
 			String fi = workspaceBaseBox.Text + workspaceZoneBox.Text + "magasin.txt";
 			if (File.Exists(fi)) {
@@ -375,10 +406,10 @@ namespace MoulUtil
 					LOGGER.Error(ex);
 				}
 			}
-			if(sourceBaseComboBox.Text!=null) {
+			if (sourceBaseComboBox.Text != null) {
 				populateSourceListBox(sourceBaseComboBox.Text);
-				if(sourceListBox.Items.Count==1) {
-					sourceListBox.SelectedIndex=0;
+				if (sourceListBox.Items.Count == 1) {
+					sourceListBox.SelectedIndex = 0;
 					choisirSource();
 				}
 			}
@@ -409,8 +440,9 @@ namespace MoulUtil
 				String subPath = "MEO" + DateTime.Now.Year + "/";
 				try {
 					mouliUtil.safeCreateDirectory(targetSvgPathBox.Text + "/" + subPath);
-				} catch(Exception exception) {
-					MessageBox.Show("impossible d'accéder à "+ targetSvgPathBox.Text + "/" + subPath);
+				} catch (Exception exception) {
+					MessageBox.Show("impossible d'accéder à " + targetSvgPathBox.Text + "/" + subPath);
+					LOGGER.Error(exception);
 					return str;
 				}
 				
@@ -554,7 +586,7 @@ namespace MoulUtil
 					rechMagIdBtn.Enabled = true;
 					
 					//not really corrected
-					if(rechMagIdBox.Text.Length>3) {
+					if (rechMagIdBox.Text.Length > 3) {
 						rechercheMagasin();
 					}
 				}
@@ -646,31 +678,36 @@ namespace MoulUtil
 				mouliUtilOptions.setInstancePath(meoInstance.meopath);
 			}
 		}
-		void TriDataBtnClick(object sender, EventArgs e)
+		void ExtraireBtnClick(object sender, EventArgs e)
 		{
 			prepareMouliUtilOptions();
-			List<String> liste=new List<string>();
-			for(int i=0;i<	sourceListBox.Items.Count;i++) {
+			List<String> liste = new List<string>();
+			for (int i = 0; i <	sourceListBox.Items.Count; i++) {
 				liste.Add(sourceListBox.Items[i].ToString());
 			}
-			ExtraireForm extraireForm = new ExtraireForm(LOGGER,  liste, mouliUtilOptions);
+			if (!Directory.Exists(propositionBox.Text)) {
+				CreateBtnClick(null, null);
+			}
+			ExtraireForm extraireForm = new ExtraireForm(LOGGER, liste, mouliUtilOptions);
 			extraireForm.Show();
-			triDataBtn.ForeColor = Color.Blue;
+			extraireBtn.ForeColor = Color.Blue;
 		}
 		void ChoisirToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			choisirSource();
 		}
-		private void choisirSource() {
+		private void choisirSource()
+		{
 			//
-			if(sourceListBox.SelectedItem!=null && (String) sourceListBox.SelectedItem!="") {
-				sourceBaseComboBox.Text =sourceListBox.SelectedItem.ToString();
-				sourceFilterBox.Text="*";
+			if (sourceListBox.SelectedItem != null && (String)sourceListBox.SelectedItem != "") {
+				sourceBaseComboBox.Text = sourceListBox.SelectedItem.ToString();
+				sourceFilterBox.Text = "*";
 				SourceBaseComboBoxTextUpdate(null, null);
 			}
 			//
 		}
-		private void prepareMouliUtilOptions() {
+		private void prepareMouliUtilOptions()
+		{
 			if (mouliUtilOptions == null) {
 				return;
 			}
@@ -698,6 +735,35 @@ namespace MoulUtil
 				}
 			}
 			
+		}
+		void FileZillaStripMenuItemClick(object sender, EventArgs e)
+		{
+			actionFileZilla(targetTreeView);
+		}
+
+		void actionFileZilla(TreeView treeView)
+		{
+			LOGGER.Debug("actionFileZilla()");
+			MeoServeur meoServeur = null;
+			MeoInstance meoInstance = getSelectedInstance(treeView);
+			if (meoInstance != null) {
+				meoServeur = MeoServeur.findServeurByName(configDto.serveurs, meoInstance.serveur);
+			} else {
+				meoServeur = getSelectedServeur(treeView);
+			}
+			if (meoServeur != null) {
+				String args = cmdUtil.buildFileZillaArgs(meoServeur);
+				args+=meoServeur.transpo+"/"+propositionBox.Text;
+				//"C:\Program Files (x86)\FileZillaFTPClient\filezilla.exe" sftp://user:pw@ip/path/
+				
+				//TODO:make a param
+				String cmd="C:\\Program Files (x86)\\FileZillaFTPClient\\filezilla.exe";
+				try {
+					cmdUtil.executeCommandAsDetachedProcess(cmd, args);
+				} catch(Exception e) {
+					LOGGER.Error(e);
+				}
+			}
 		}
 	}
 }

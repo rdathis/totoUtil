@@ -38,6 +38,9 @@
     <Reference Include="Microsoft.CSharp">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="NVelocity">
+      <HintPath>..\packages\NVelocity.1.0.3\lib\NVelocity.dll</HintPath>
+    </Reference>
     <Reference Include="slf4net">
       <HintPath>..\packages\slf4net.0.1.14.1\lib\net35\slf4net.dll</HintPath>
     </Reference>
@@ -64,6 +67,16 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\cmdUtils\cmdUtils.csproj">
+      <Project>{82161C4E-7D1B-4168-B4FB-5916BC45348B}</Project>
+      <Name>cmdUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MoulUtil\MoulUtil.csproj">
+      <Project>{880EF030-A914-4C46-88BA-E83D9D37F69C}</Project>
+      <Name>MoulUtil</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

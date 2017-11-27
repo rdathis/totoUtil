@@ -44,6 +44,7 @@ namespace MoulUtil
 		private Boolean finalFlag = false;
 		private Boolean installBtnEnabled = false;
 		private Boolean finalUploadFlag = false;
+		private CreateArchiveBackgroundWorker createArchiveWorker=null;
 
 		public MouliActionForm(MouliUtilOptions options, ConfigDto configDto, log4net.ILog  LOGGER, string path)
 		{
@@ -218,15 +219,27 @@ namespace MoulUtil
 		}
 		void GoButtonClick(object sender, EventArgs e)
 		{
-			goButton.Enabled = false;
+			//non pres:il faut redecouper le travail du worker.
+//			if(goButton.Tag!=null) {
+//				if(createArchiveWorker!=null && createArchiveWorker.IsBusy) {
+//					createArchiveWorker.CancelAsync();
+//				}
+//				toolStripStatusLabelText = "archive Cancelled";
+//				progressTextBox.Text=toolStripStatusLabelText;
+//				goButton.Text = (string)goButton.Tag;
+//				return;
+//			}
+//			goButton.Tag=goButton.Text;
+//			goButton.Text = "&Cancel";
+			//goButton.Enabled = false;
 			uploadButton.Enabled = false;
 			progressTextBox.Visible = true;
 			progressTextBox.Enabled = false;
 			toolStripStatusLabelText = "doing archive";
 			try {
 				completeOptions();
-				CreateArchiveBackgroundWorker worker = CreateArchiveBackgroundWorker.createWorker();
-				worker.prepare(job, mouliActionUtil);
+				createArchiveWorker = CreateArchiveBackgroundWorker.createWorker();
+				createArchiveWorker.prepare(job, mouliActionUtil);
 				
 				MouliProgressWorker.StartWorkerCallBack startWorkerCallBack = name => {
 					toolStripStatusLabelText = name;
@@ -241,23 +254,24 @@ namespace MoulUtil
 					if (value <= 100) {
 						toolStripProgressBarValue = value;//bug
 					}
-					toolStripStatusLabelText = "progression moulinette : " + (value) + "%  - x / " + worker.getNbOperation();
+					toolStripStatusLabelText = "progression moulinette : " + (value) + "%  - x / " + createArchiveWorker.getNbOperation();
 					progressBoxText = toolStripStatusLabelText;
 				};
 				MouliProgressWorker.EndWorkerCallBack endWorkerCallBack = value => {
 					toolStripStatusLabelText = "fini";
 					toolStripProgressBarValue = 0;
 					finalFlag = true;
+					goButton.Tag=null;
 					
 					this.toolStringArchiveLabelText = calculArchiveInfo(job);
 				};
 				//
-				worker.setStartWorkerCallBack(startWorkerCallBack);
-				worker.setProgressWorkerCallBack(progressWorkerCallBack);
-				worker.setEndWorkerCallBack(endWorkerCallBack);
+				createArchiveWorker.setStartWorkerCallBack(startWorkerCallBack);
+				createArchiveWorker.setProgressWorkerCallBack(progressWorkerCallBack);
+				createArchiveWorker.setEndWorkerCallBack(endWorkerCallBack);
 				//
-				job.setBackgroundWorker(worker);
-				worker.RunWorkerAsync();
+				job.setBackgroundWorker(createArchiveWorker);
+				createArchiveWorker.RunWorkerAsync();
 
 			} catch (Exception ex) {
 				MessageBox.Show(" Exception : " + ex.Message + "\n" + ex.Source + "\n" + ex.StackTrace);

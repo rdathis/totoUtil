@@ -431,7 +431,9 @@ namespace MoulUtil.Forms.utils
 			
 			String recapHtmlFile = options.getHtmlRecapFile();
 			
-			String recapHtml = buildRecapHtml(options, liste);
+			
+			RecapHtmlGenerator generator = new RecapHtmlGenerator(liste, options);
+			String recapHtml = generator.generate();
 			
 			job.getStatRecap().listeRecapAnnee = liste;
 			job.getStatRecap().recapHtml = recapHtml;
@@ -444,117 +446,6 @@ namespace MoulUtil.Forms.utils
 				LOGGER.Error(ex);
 			}
 			return str;
-		}
-
-
-		string buildRecapHtml(MouliUtilOptions options, List<MouliAnneeRecap> liste)
-		{
-			StringBuilder s = new StringBuilder();
-			
-			//TODO:move in a model file.
-			s.Append("<html><head><title>Recap visites et stocks magasin</title>\n");
-			
-			s.Append("<style> \n");
-			s.Append("tr:nth-child(even) {background: #CCC} \n");
-			s.Append("tr:nth-child(odd) {background: #FFF} \n");
-
-			s.Append(".separator { background: pink } \n");
-			s.Append(".lyear { background: lightgrey } \n");
-			s.Append(".hyear, .hvis, .hstk, .hcumul, .htotal{ width: 80px ; background: lightgrey} \n");
-			s.Append(".lvis, .lstk, .ltotal, .lcumul { text-align:right } \n");
-			s.Append(".lvis { background: lightblue } \n");
-			s.Append(".lstk { background: lightgreen } \n");
-			s.Append(".ltotal, .lcumul { font-weight: bold } \n");
-			s.Append(".ttyear, .ttvis, .ttstk, .tttotal { font-weight: bold; text-align:right } \n");
-			s.Append(".tttotal { font-weight: bold; text-align:center ; background: lightgrey} \n");
-			s.Append(".ttvis {font: blue; text-align:right; background: lightgrey} \n");
-			s.Append(".ttstk {font: green; text-align:right; background: lightgrey}\n");
-			s.Append(".ttyear {background: lightgrey}\n");
-			s.Append("</style>\n");
-			//
-			s.Append("\n</head>\n<body><h1>Recap visites et stocks magasin</h1>");
-			//
-			s.Append("<ul><li>Magasin Num:");
-			s.Append(options.getMagId());
-			s.Append("</li></ul>\n");
-			
-			s.Append("<table id='recap'>");
-			s.Append("\n<tr>");
-			s.Append(" <th class='hyear'>Annee</th>");
-			s.Append(" <td class='separator' rowspan='" + liste.Count + 1 + 1 + "'>&nbsp</td>");
-			s.Append(" <th class='hvis'>V. OPT</th>");
-			s.Append(" <th class='hvis'>V. LEN</th>");
-			s.Append(" <th class='htotal'>TOTAL</th>");
-			s.Append(" <th class='hcumul'>Cumul V</th>");
-			s.Append(" <td class='separator' rowspan='" + liste.Count + 1 + 1 + "'>&nbsp</td>");
-			s.Append(" <th class='hstk'>Stock NEG</th>");
-			s.Append(" <th class='hstk'>Stock NUL</th>");
-			s.Append(" <th class='hstk'>Stock Pos</th>");
-			s.Append(" <th  class='htotal'>TOTAL</th>");
-			s.Append(" <th class='hcumul'>Cumul S</th>");
-			s.Append(" <td class='separator' rowspan='" + liste.Count + 1 + 1 + "'>&nbsp</td>");
-			s.Append("</tr>\n");
-			
-			int tnVO = 0;
-			int tnVL = 0;
-			int tnVT = 0;
-			//
-			int tsNe = 0;
-			int tsNu = 0;
-			int tsPo = 0;
-			int tsTo = 0;
-			foreach (MouliAnneeRecap yearRecap in liste) {
-				int nVO = yearRecap.getNbVisO();
-				int nVL = yearRecap.getNbVisL();
-				int nVT = nVO + nVL;
-				//
-				int sNe = yearRecap.getNbStNeg();
-				int sNu = yearRecap.getNbStNul();
-				int sPo = yearRecap.getNbStPos();
-				int sTo = sNe + sNu + sPo;
-				//
-				tnVO += nVO;
-				tnVL += nVL;
-				tnVT += nVT;
-				//
-				tsNe += sNe;
-				tsNu += sNu;
-				tsPo += sPo;
-				tsTo += sTo;
-				//
-				s.Append("\n<tr>");
-				s.Append(" <td class='lyear'>" + yearRecap.getYear() + "</td>");
-				s.Append(" <td class='lvis'>" + nVO + "</td>");
-				s.Append(" <td class='lvis'>" + nVL + "</td>");
-				s.Append(" <td class='ltotal'>" + nVT + "</td>");
-				s.Append(" <td class='lcumul'>" + tnVT + "</td>");
-				//s.Append(" <td class='separator' rowspan='"+liste.Count+"'>&nbsp</td>");
-				s.Append(" <td class='lstk'>" + sNe + "</td>");
-				s.Append(" <td class='lstk'>" + sNu + "</td>");
-				s.Append(" <td class='lstk'>" + sPo + "</td>");
-				s.Append(" <td  class='ltotal'>" + (sTo) + "</td>");
-				s.Append(" <td  class='lcumul'>" + (tsTo) + "</td>");
-				s.Append("</tr>\n");
-				
-			}
-			s.Append("\n<tr>");
-			s.Append(" <td class='ttyear'>" + liste.Count + " annees</td>");
-			s.Append(" <td class='ttvis'>" + tnVO + "</td>");
-			s.Append(" <td class='ttvis'>" + tnVL + "</td>");
-			s.Append(" <td class='tttotal' colspan='2'>" + tnVT + "</td>");
-			//s.Append(" <td class='separator' rowspan='"+liste.Count+"'>&nbsp</td>");
-			s.Append(" <td class='ttstk'>" + tsNe + "</td>");
-			s.Append(" <td class='ttstk'>" + tsNu + "</td>");
-			s.Append(" <td class='ttstk'>" + tsPo + "</td>");
-			s.Append(" <td class='tttotal' colspan='2'>" + (tsTo) + "</td>");
-			s.Append("</tr>\n");
-			
-			s.Append("</table>");
-			
-			s.Append("<P align='center'><i>G&eacute;n&eacute;r&eacute; le "+DateTime.Now.ToString());
-			s.Append("</i></P>");
-			s.Append("</body></html>");
-			return s.ToString();
 		}
 		private int getEnregLength(YFILES.YFiles yfile)
 		{

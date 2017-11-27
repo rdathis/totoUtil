@@ -37,6 +37,7 @@ namespace EcUtil
 		void populateWorkspaces(string text)
 		{
 			String [] tab = System.IO.Directory.GetDirectories(text,"w*");
+			wkspacesLView.Items.Clear();
 			for(int i=0;i<tab.Length;i++) {
 				wkspacesLView.Items.Add(tab[i]);
 			}
@@ -139,6 +140,7 @@ namespace EcUtil
 		void CopyBtnClick(object sender, EventArgs e)
 		{
 			actionCopy(getWorkspace(), newNameBox.Text, copyREclipChBox.Checked, copyDevePropChBox.Checked);
+			populate();
 		}
 
 		private Boolean parsePreferences() {
